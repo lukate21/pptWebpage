@@ -45,6 +45,11 @@
 <body>
 	<header>
 		<h1>header part</h1>
+		<ul>
+			<li>오늘의차트</li>
+			<li>로그인</li>
+			<li>회원가입</li>
+		</ul>
 		<hr style="border: 2px solid" />
 	</header>
 	<section>

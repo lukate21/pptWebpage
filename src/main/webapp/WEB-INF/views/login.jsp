@@ -23,7 +23,7 @@
 		<link rel="stylesheet" href="${context}/assets/css/ace-rtl.min.css" />
 <title>PPT-제법 쓸만한 예측 툴</title>
 </head>
-<body class="login-layout">
+<body class="login-layout light-login">
 		<div class="main-container">
 			<div class="main-content">
 				<div class="row">
@@ -33,7 +33,7 @@
 								<h1>
 									<i class="ace-icon fa fa-leaf green"></i>
 									<span class="red">PPT </span>
-									<span class="white" id="id-text2">제법 쓸만한 예측 툴</span>
+									<span class="grey" id="id-text2">제법 쓸만한 예측 툴</span>
 								</h1>
 								<h4 class="blue" id="id-company-text">&copy; .PPT</h4>
 							</div>
@@ -110,12 +110,12 @@
 										<div class="widget-main">
 											<h4 class="header red lighter bigger">
 												<i class="ace-icon fa fa-key"></i>
-												Retrieve Password
+												비밀번호 재발급
 											</h4>
 
 											<div class="space-6"></div>
 											<p>
-												Enter your email and to receive instructions
+												이메일을 입력해주시면 임시번호를 전송해 드립니다
 											</p>
 
 											<form>
@@ -130,7 +130,7 @@
 													<div class="clearfix">
 														<button type="button" class="width-35 pull-right btn btn-sm btn-danger">
 															<i class="ace-icon fa fa-lightbulb-o"></i>
-															<span class="bigger-110">Send Me!</span>
+															<span class="bigger-110">전송</span>
 														</button>
 													</div>
 												</fieldset>
@@ -224,7 +224,7 @@
 								</div><!-- /.signup-box -->
 							</div><!-- /.position-relative -->
 
-							<div class="navbar-fixed-top align-right">
+							<!-- <div class="navbar-fixed-top align-right">
 								<br />
 								&nbsp;
 								<a id="btn-login-dark" href="#">Dark</a>
@@ -237,7 +237,7 @@
 								&nbsp;
 								<a id="btn-login-light" href="#">Light</a>
 								&nbsp; &nbsp; &nbsp;
-							</div>
+							</div> -->
 						</div>
 					</div><!-- /.col -->
 				</div><!-- /.row -->
@@ -272,7 +272,7 @@
 			
 			
 			//you don't need this, just used for changing background
-			jQuery(function($) {
+			 /* jQuery(function($) {
 			 $('#btn-login-dark').on('click', function(e) {
 				$('body').attr('class', 'login-layout');
 				$('#id-text2').attr('class', 'white');
@@ -293,9 +293,9 @@
 				$('#id-company-text').attr('class', 'light-blue');
 				
 				e.preventDefault();
-			 });
+			 });  
 			 
-			});
+			});*/
 		</script>
 	</body>
 </html>
