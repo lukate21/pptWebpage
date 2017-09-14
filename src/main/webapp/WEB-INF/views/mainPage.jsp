@@ -16,47 +16,239 @@
 <link rel="stylesheet"
 	href="${context}/assets/font-awesome/4.5.0/css/font-awesome.min.css" />
 
-<!-- page specific plugin styles -->
-<link rel="stylesheet"
-	href="${context}/assets/css/jquery-ui.custom.min.css" />
-<link rel="stylesheet"
-	href="${context}/assets/css/jquery.gritter.min.css" />
+	
+<!-- GLOBAL MANDATORY STYLES -->
+<link href="http://fonts.googleapis.com/css?family=Hind:300,400,500,600,700" rel="stylesheet" type="text/css">
+<link href="${context}/assets/acecv/vendor/simple-line-icons/css/simple-line-icons.css" rel="stylesheet" type="text/css"/>
+<link href="${context}/assets/acecv/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css"/>
 
-<!-- text fonts -->
-<link rel="stylesheet"
-	href="${context}/assets/css/fonts.googleapis.com.css" />
+<!-- PAGE LEVEL PLUGIN STYLES -->
+<link href="${context}/assets/acecv/css/animate.css" rel="stylesheet">
+<link href="${context}/assets/acecv/vendor/swiper/css/swiper.min.css" rel="stylesheet" type="text/css"/>
 
-<!-- ace styles -->
-<link rel="stylesheet" href="${context}/assets/css/ace.min.css"
-	class="ace-main-stylesheet" id="main-ace-style" />
+<!-- THEME STYLES -->
+  <link href="${context}/assets/acecv/css/layout.min.css" rel="stylesheet" type="text/css"/>
 
 <!--[if lte IE 9]>
 			<link rel="stylesheet" href="assets/css/ace-part2.min.css" class="ace-main-stylesheet" />
 		<![endif]-->
-<link rel="stylesheet" href="${context}/assets/css/ace-skins.min.css" />
-<link rel="stylesheet" href="${context}/assets/css/ace-rtl.min.css" />
+<%-- <link rel="stylesheet" href="${context}/assets/css/ace-skins.min.css" />
+<link rel="stylesheet" href="${context}/assets/css/ace-rtl.min.css" /> --%>
+<%-- <link rel="stylesheet" href="${context}/assets/css/ace.min.css" /> --%>
 
 <link rel="stylesheet" href="${context}/assets/owlcarousel/assets/owl.carousel.min.css" />
 <link rel="stylesheet" href="${context}/assets/owlcarousel/assets/owl.theme.default.min.css" />
 
-<script src="${context}/assets/js/ace-extra.min.js"></script>
+<%-- <script src="${context}/assets/js/ace-extra.min.js"></script> --%>
 
 </head>
-<body>
-	<header>
-		<h1>header part</h1>
-		<ul>
-			<li>오늘의차트</li>
-			<li>로그인</li>
-			<li>회원가입</li>
-		</ul>
-		<hr style="border: 2px solid" />
-	</header>
-	<section>
-		메인페이지입니다<br /> 홈 화면이 될수도 있습니다.<br />&nbsp;&nbsp;
-		<button class="btn" id="btnLogin" onclick="goLogin()">login</button>
-	</section>
-	<footer> footer part </footer>
+<body id="body" data-spy="scroll" data-target=".header">
+	<header class="header navbar-fixed-top">
+            <!-- Navbar -->
+            <nav class="navbar" role="navigation">
+                <div class="container">
+                    <!-- Brand and toggle get grouped for better mobile display -->
+                    <div class="menu-container js_nav-item">
+                        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".nav-collapse">
+                            <span class="sr-only">Toggle navigation</span>
+                            <span class="toggle-icon"></span>
+                        </button>
+
+                        <!-- Logo -->
+                        <div class="logo">
+                            <a class="logo-wrap" href="hello.do">
+                                <img class="logo-img" src="${context}/assets/acecv/img/logo.png" alt="Asentus Logo">
+                            </a>
+                        </div>
+                        <!-- End Logo -->
+                    </div>
+
+                    <!-- Collect the nav links, forms, and other content for toggling -->
+                    <div class="collapse navbar-collapse nav-collapse">
+                        <div class="menu-container">
+                            <ul class="nav navbar-nav navbar-nav-right">
+                                <li class="js_nav-item nav-item"><a class="nav-item-child nav-item-hover" href="#">HOME</a></li>
+                                <li class="js_nav-item nav-item"><a class="nav-item-child nav-item-hover" href="#body">기업검색</a></li>
+                                <li class="js_nav-item nav-item"><a class="nav-item-child nav-item-hover" href="#about">사용자포트폴리오</a></li>
+                                <li class="js_nav-item nav-item"><a class="nav-item-child nav-item-hover" href="#experience">증권거래소</a></li>
+                                <li class="js_nav-item nav-item"><a class="nav-item-child nav-item-hover" href="login.do">로그인</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                    <!-- End Navbar Collapse -->
+                </div>
+            </nav>
+            <!-- Navbar -->
+        </header>
+
+        <!--========== PAGE LAYOUT ==========-->
+        <!-- About -->
+        <div id="about" class="promo-block">
+            <div class="container">
+                <!--// end row -->
+            </div>
+        </div>
+        <!-- End About -->
+
+        <!-- Experience -->
+        <div id="experience">
+            <div class="row">
+                    <div class="col-sm-7">
+                        <div class="section-seperator margin-b-50">
+                            <div class="margin-b-50">
+                                <div class="margin-b-30">
+                                    <h2>NEWS HEADLINE</h2>
+                                    <p>I'm Alisa Portman, orem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
+                                    <p>Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+                                </div>
+                                <a href="#" class="btn-theme btn-theme-md btn-default-bg text-uppercase">Download my CV</a>
+                            </div>
+                        </div>
+
+                        <h2>RT NEWS IN CATEGORY</h2>
+                        <!-- Progress Box -->
+                        <div class="progress-box">
+                            <h5>Adobe Illustrator <span class="color-heading pull-right">87%</span></h5>
+                            <div class="progress">
+                                <div class="progress-bar bg-color-base" role="progressbar" data-width="87"></div>
+                            </div>
+                        </div>
+                        <div class="progress-box">
+                            <h5>Adobe Photoshop <span class="color-heading pull-right">96%</span></h5>
+                            <div class="progress">
+                                <div class="progress-bar bg-color-base" role="progressbar" data-width="96"></div>
+                            </div>
+                        </div>
+                        <div class="progress-box">
+                            <h5>Graphic Design <span class="color-heading pull-right">77%</span></h5>
+                            <div class="progress">
+                                <div class="progress-bar bg-color-base" role="progressbar" data-width="77"></div>
+                            </div>
+                        </div>
+                        <!-- End Progress Box -->
+                    </div>
+                    <div class="col-sm-5 sm-margin-b-60">
+                       <h4><a href="#">KOSPI KOSDAQ</a> <span class="text-uppercase margin-l-20">chart</span></h4>
+                       <p>Lorem ipsum dolor sit amet consectetur adipiscing elit sed tempor incdidunt ut laboret dolor magna ut consequat siad esqudiat dolor</p>
+						<br/>
+                       
+                       <h4><a href="#">즐겨찾기 인기 종목</a> <span class="text-uppercase margin-l-20">favorite</span></h4>
+                       <p>Lorem ipsum dolor sit amet consectetur adipiscing elit sed tempor incdidunt ut laboret dolor magna ut consequat siad esqudiat dolor</p>
+                       <br/>
+                        <h4><a href="#">추천종목</a> <span class="text-uppercase margin-l-20">best</span></h4>
+                        <p>Lorem ipsum dolor sit amet consectetur adipiscing elit sed tempor incdidunt ut laboret dolor magna ut consequat siad esqudiat dolor</p>
+                    </div>
+                </div>
+                
+        </div>
+        <!-- End Experience -->
+
+        <!-- Work -->
+        <div id="work">
+            <div class="container content-lg">
+                <div class="row margin-b-40">
+                    <div class="col-sm-6">
+                        <h2>Latest Products</h2>
+                        <p>Lorem ipsum dolor sit amet consectetur adipiscing elit sed tempor incididunt ut laboret dolore magna aliqua enim minim veniam exercitation</p>
+                    </div>
+                </div>
+                <!--// end row -->
+
+                <div class="row">
+                    <!-- Latest Products -->
+                    <div class="col-sm-4 sm-margin-b-50">
+                        <div class="margin-b-20">
+                            <div class="wow zoomIn" data-wow-duration=".3" data-wow-delay=".1s">
+                                <img class="img-responsive" src="${context}/assets/acecv/img/970x647/01.jpg" alt="Latest Products Image">
+                            </div>
+                        </div>
+                        <h4><a href="#">Triangle Roof</a> <span class="text-uppercase margin-l-20">Management</span></h4>
+                        <p>Lorem ipsum dolor sit amet consectetur adipiscing elit sed tempor incdidunt ut laboret dolor magna ut consequat siad esqudiat dolor</p>
+                        <a class="link" href="#">Read More</a>
+                    </div>
+                    <!-- End Latest Products -->
+
+                    <!-- Latest Products -->
+                    <div class="col-sm-4 sm-margin-b-50">
+                        <div class="margin-b-20">
+                            <div class="wow zoomIn" data-wow-duration=".3" data-wow-delay=".1s">
+                                <img class="img-responsive" src="${context}/assets/acecv/img/970x647/02.jpg" alt="Latest Products Image">
+                            </div>
+                        </div>
+                        <h4><a href="#">Curved Corners</a> <span class="text-uppercase margin-l-20">Developmeny</span></h4>
+                        <p>Lorem ipsum dolor sit amet consectetur adipiscing elit sed tempor incdidunt ut laboret dolor magna ut consequat siad esqudiat dolor</p>
+                        <a class="link" href="#">Read More</a>
+                    </div>
+                    <!-- End Latest Products -->
+
+                    <!-- Latest Products -->
+                    <div class="col-sm-4 sm-margin-b-50">
+                        <div class="margin-b-20">
+                            <div class="wow zoomIn" data-wow-duration=".3" data-wow-delay=".1s">
+                                <img class="img-responsive" src="${context}/assets/acecv/img/970x647/03.jpg" alt="Latest Products Image">
+                            </div>
+                        </div>
+                        <h4><a href="#">Bird On Green</a> <span class="text-uppercase margin-l-20">Design</span></h4>
+                        <p>Lorem ipsum dolor sit amet consectetur adipiscing elit sed tempor incdidunt ut laboret dolor magna ut consequat siad esqudiat dolor</p>
+                        <a class="link" href="#">Read More</a>
+                    </div>
+                    <!-- End Latest Products -->
+                </div>
+                <!--// end row -->
+            </div>
+        </div>
+        <!-- End Work -->
+
+        <!-- Clients -->
+        <div class="bg-color-sky-light">
+            <div class="content-lg container">
+                <!-- Swiper Clients -->
+                <div class="swiper-slider swiper-clients">
+                    <!-- Swiper Wrapper -->
+                    <div class="swiper-wrapper">
+                        <div class="swiper-slide">
+                            <img class="swiper-clients-img" src="${context}/assets/acecv/img/clients/01.png" alt="Clients Logo">
+                        </div>
+                        <div class="swiper-slide">
+                            <img class="swiper-clients-img" src="${context}/assets/acecv/img/clients/02.png" alt="Clients Logo">
+                        </div>
+                        <div class="swiper-slide">
+                            <img class="swiper-clients-img" src="${context}/assets/acecv/img/clients/03.png" alt="Clients Logo">
+                        </div>
+                        <div class="swiper-slide">
+                            <img class="swiper-clients-img" src="${context}/assets/acecv/img/clients/04.png" alt="Clients Logo">
+                        </div>
+                        <div class="swiper-slide">
+                            <img class="swiper-clients-img" src="${context}/assets/acecv/img/clients/05.png" alt="Clients Logo">
+                        </div>
+                        <div class="swiper-slide">
+                            <img class="swiper-clients-img" src="${context}/assets/acecv/img/clients/06.png" alt="Clients Logo">
+                        </div>
+                    </div>
+                    <!-- End Swiper Wrapper -->
+                </div>
+                <!-- End Swiper Clients -->
+            </div>
+        </div>
+        <!-- End Clients -->
+
+        
+        <!-- End Contact -->
+        <!--========== END PAGE LAYOUT ==========-->
+	<!--========== FOOTER ==========-->
+        <footer class="footer">
+            <div class="content container">
+                <div class="row">
+                    <div class="col-xs-6">
+                        <img class="footer-logo" src="${context}/assets/acecv/img/logo.png" alt="Acecv Logo">
+                    </div>
+                    <div class="col-xs-6 text-right sm-text-left">
+                        <p class="margin-b-0"><a class="fweight-700" href="login.do">Acecv</a> Theme Powered by: <a class="fweight-700" href="http://www.keenthemes.com/">KeenThemes.com</a></p>
+                    </div>
+                </div>
+                <!--// end row -->
+            </div>
+        </footer>
 
 	<div class="bootbox modal fade bootbox-prompt in" id="myModal"
 		tabindex="-1" role="dialog" style="display: none;">
@@ -102,18 +294,34 @@
 	<!-- javascript file -->
 	<script src="${context}/assets/js/jquery-2.1.4.min.js"></script>
 	<script src="${context}/assets/js/bootstrap.min.js"></script>
-	<script src="${context}/assets/js/jquery-ui.custom.min.js"></script>
+	<%-- <script src="${context}/assets/js/jquery-ui.custom.min.js"></script>
 	<script src="${context}/assets/js/jquery.ui.touch-punch.min.js"></script>
-	<script src="${context}/assets/js/bootbox.js"></script>
 	<script src="${context}/assets/js/jquery.easypiechart.min.js"></script>
 	<script src="${context}/assets/js/jquery.gritter.min.js"></script>
 	<script src="${context}/assets/js/jquery.colorbox.min.js"></script>
-	<script src="${context}/assets/js/spin.js"></script>
+	<script src="${context}/assets/js/spin.js"></script> --%>
+	<script src="${context}/assets/js/bootbox.js"></script>
 	<script src="${context}/assets/owlcarousel/owl.carousel.js"></script>
+	
+	 <!-- CORE PLUGINS -->
+    <script src="${context}/assets/acecv/vendor/jquery-migrate.min.js" type="text/javascript"></script>
+	<!-- PAGE LEVEL PLUGINS -->
+     <script src="${context}/assets/acecv/vendor/jquery.easing.js" type="text/javascript"></script>
+     <script src="${context}/assets/acecv/vendor/jquery.back-to-top.js" type="text/javascript"></script>
+     <script src="${context}/assets/acecv/vendor/jquery.smooth-scroll.js" type="text/javascript"></script>
+     <script src="${context}/assets/acecv/vendor/jquery.wow.min.js" type="text/javascript"></script>
+     <script src="${context}/assets/acecv/vendor/jquery.parallax.min.js" type="text/javascript"></script>
+     <script src="${context}/assets/acecv/vendor/jquery.appear.js" type="text/javascript"></script>
+     <script src="${context}/assets/acecv/vendor/swiper/js/swiper.jquery.min.js" type="text/javascript"></script>
+	 <!-- PAGE LEVEL SCRIPTS -->
+     <script src="${context}/assets/acecv/js/layout.js" type="text/javascript"></script>
+     <script src="${context}/assets/acecv/js/components/progress-bar.min.js" type="text/javascript"></script>
+     <script src="${context}/assets/acecv/js/components/swiper.min.js" type="text/javascript"></script>
+     <script src="${context}/assets/acecv/js/components/wow.min.js" type="text/javascript"></script>
 	<!-- ace scripts -->
-	<script src="${context}/assets/js/ace-elements.min.js"></script>
+	<%-- <script src="${context}/assets/js/ace-elements.min.js"></script>
 	<script src="${context}/assets/js/ace.min.js"></script>
-
+ --%>
 	<script>
 		$(document).ready(
 				function() {

@@ -5,6 +5,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import kr.co.ppt.vo.MemberVO;
+
 @Controller
 public class HomeController {
 	
@@ -47,7 +49,8 @@ public class HomeController {
 	}
 	
 	@RequestMapping(value="login.do", method=RequestMethod.POST)
-	public static void logIn(){
+	public static void logIn(MemberVO user){
+		
 		
 	}
 	

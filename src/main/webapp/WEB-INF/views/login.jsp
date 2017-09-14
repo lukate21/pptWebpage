@@ -45,7 +45,7 @@
 									<div class="widget-body">
 										<div class="widget-main">
 											<h4 class="header blue lighter bigger">
-												<i class="ace-icon fa fa-coffee green"></i>
+												<i class="ace-icon fa fa-pencil-square-o green"></i>
 												제법 쓸만한 예측 툴 PPT입니다
 											</h4>
 
@@ -184,6 +184,13 @@
 														<span class="block input-icon input-icon-right">
 															<input type="password" class="form-control" placeholder="Repeat password" />
 															<i class="ace-icon fa fa-retweet"></i>
+														</span>
+													</label>
+													
+													<label class="block clearfix">
+														<span class="block input-icon input-icon-right">
+															<input type="tel" class="form-control" placeholder="Tel" />
+															<i class="ace-icon fa fa-mobile-phone"></i>
 														</span>
 													</label>
 
