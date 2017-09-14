@@ -93,6 +93,7 @@
         <!-- Experience -->
         <div id="experience">
             <div class="row">
+            <div class="container content-lg">
                     <div class="col-sm-7">
                         <div class="section-seperator margin-b-50">
                             <div class="margin-b-50">
@@ -139,7 +140,7 @@
                         <p>Lorem ipsum dolor sit amet consectetur adipiscing elit sed tempor incdidunt ut laboret dolor magna ut consequat siad esqudiat dolor</p>
                     </div>
                 </div>
-                
+               </div> 
         </div>
         <!-- End Experience -->
 
