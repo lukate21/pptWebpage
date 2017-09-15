@@ -6,39 +6,50 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<meta name="description" content="responsive photo gallery using colorbox" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0" />
+<meta name="description"
+	content="responsive photo gallery using colorbox" />
+<meta name="viewport"
+	content="width=device-width, initial-scale=1.0, maximum-scale=1.0" />
 
 <title>PPT-제법 쓸만한 예측 툴</title>
 <link rel="stylesheet" href="${context}/assets/css/bootstrap.min.css" />
-<link rel="stylesheet" href="${context}/assets/font-awesome/4.5.0/css/font-awesome.min.css" />
-	
+<link rel="stylesheet"
+	href="${context}/assets/font-awesome/4.5.0/css/font-awesome.min.css" />
+
 <!-- GLOBAL MANDATORY STYLES -->
-<link href="http://fonts.googleapis.com/css?family=Hind:300,400,500,600,700" rel="stylesheet" type="text/css">
-<link href="${context}/assets/acecv/vendor/simple-line-icons/css/simple-line-icons.css" rel="stylesheet" type="text/css"/>
-<link href="${context}/assets/acecv/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css"/>
+<link
+	href="http://fonts.googleapis.com/css?family=Hind:300,400,500,600,700"
+	rel="stylesheet" type="text/css">
+<link
+	href="${context}/assets/acecv/vendor/simple-line-icons/css/simple-line-icons.css"
+	rel="stylesheet" type="text/css" />
+<link
+	href="${context}/assets/acecv/vendor/bootstrap/css/bootstrap.min.css"
+	rel="stylesheet" type="text/css" />
 
 <!-- PAGE LEVEL PLUGIN STYLES -->
 <link href="${context}/assets/acecv/css/animate.css" rel="stylesheet">
-<link href="${context}/assets/acecv/vendor/swiper/css/swiper.min.css" rel="stylesheet" type="text/css"/>
+<link href="${context}/assets/acecv/vendor/swiper/css/swiper.min.css"
+	rel="stylesheet" type="text/css" />
 
 <!-- THEME STYLES -->
-<link href="${context}/assets/acecv/css/layout.min.css" rel="stylesheet" type="text/css"/>
+<link href="${context}/assets/acecv/css/layout.min.css" rel="stylesheet"
+	type="text/css" />
 
-<link rel="stylesheet" href="${context}/assets/owlcarousel/assets/owl.carousel.min.css" />
-<link rel="stylesheet" href="${context}/assets/owlcarousel/assets/owl.theme.default.min.css" />
+<link rel="stylesheet"
+	href="${context}/assets/owlcarousel/assets/owl.carousel.min.css" />
+<link rel="stylesheet"
+	href="${context}/assets/owlcarousel/assets/owl.theme.default.min.css" />
 <style>
-
 .axis--x path {
-  display: none;
+	display: none;
 }
 
 .line {
-  fill: none;
-  stroke: steelblue;
-  stroke-width: 1.5px;
+	fill: none;
+	stroke: steelblue;
+	stroke-width: 1.5px;
 }
-
 </style>
 </head>
 <body id="body" data-spy="scroll" data-target=".header">
@@ -56,8 +67,8 @@
 
 					<!-- Logo -->
 					<div class="logo">
-						<a class="logo-wrap" href="hello.do"> 
-							<img class="logo-img" src="${context}/assets/acecv/img/logo.png" alt="Asentus Logo">
+						<a class="logo-wrap" href="hello.do"> <img class="logo-img"
+							src="${context}/assets/acecv/img/logo.png" alt="Asentus Logo">
 						</a>
 					</div>
 					<!-- End Logo -->
@@ -67,21 +78,16 @@
 				<div class="collapse navbar-collapse nav-collapse">
 					<div class="menu-container">
 						<ul class="nav navbar-nav navbar-nav-right">
-							<li class="js_nav-item nav-item">
-								<a class="nav-item-child nav-item-hover" href="hello.do">HOME</a>
-							</li>
-							<li class="js_nav-item nav-item">
-								<a	class="nav-item-child nav-item-hover" href="#">기업검색</a>
-							</li>
-							<li class="js_nav-item nav-item">
-								<a	class="nav-item-child nav-item-hover" href="#">사용자포트폴리오</a>
-							</li>
-							<li class="js_nav-item nav-item">
-								<a	class="nav-item-child nav-item-hover" href="#">증권거래소</a>
-							</li>
-							<li class="js_nav-item nav-item">
-								<a	class="nav-item-child nav-item-hover" href="login.do">로그인</a>
-							</li>
+							<li class="js_nav-item nav-item"><a
+								class="nav-item-child nav-item-hover" href="hello.do">HOME</a></li>
+							<li class="js_nav-item nav-item"><a
+								class="nav-item-child nav-item-hover" href="#">기업검색</a></li>
+							<li class="js_nav-item nav-item"><a
+								class="nav-item-child nav-item-hover" href="#">사용자포트폴리오</a></li>
+							<li class="js_nav-item nav-item"><a
+								class="nav-item-child nav-item-hover" href="#">증권거래소</a></li>
+							<li class="js_nav-item nav-item"><a
+								class="nav-item-child nav-item-hover" href="login.do">로그인</a></li>
 						</ul>
 					</div>
 				</div>
@@ -92,7 +98,7 @@
 	</header>
 
 	<!--========== PAGE LAYOUT ==========-->
-    <!-- About -->
+	<!-- About -->
 	<div id="about">
 		<div class="row">
 			<div class="container content-sm">
@@ -121,9 +127,9 @@
 									occaecat cupidatat non proident, sunt in culpa qui officia
 									deserunt mollit anim id est laborum.</p>
 							</div>
-							<a href="#"	class="btn-theme btn-theme-md btn-default-bg text-uppercase">
-								Download my CV
-							</a>
+							<a href="#"
+								class="btn-theme btn-theme-md btn-default-bg text-uppercase">
+								Download my CV </a>
 						</div>
 					</div>
 
@@ -134,7 +140,8 @@
 							Adobe Illustrator <span class="color-heading pull-right">87%</span>
 						</h5>
 						<div class="progress">
-							<div class="progress-bar bg-color-base" role="progressbar" data-width="87"></div>
+							<div class="progress-bar bg-color-base" role="progressbar"
+								data-width="87"></div>
 						</div>
 					</div>
 					<div class="progress-box">
@@ -142,7 +149,8 @@
 							Adobe Photoshop <span class="color-heading pull-right">96%</span>
 						</h5>
 						<div class="progress">
-							<div class="progress-bar bg-color-base" role="progressbar" data-width="96"></div>
+							<div class="progress-bar bg-color-base" role="progressbar"
+								data-width="96"></div>
 						</div>
 					</div>
 					<div class="progress-box">
@@ -150,7 +158,8 @@
 							Graphic Design <span class="color-heading pull-right">77%</span>
 						</h5>
 						<div class="progress">
-							<div class="progress-bar bg-color-base" role="progressbar" data-width="77"></div>
+							<div class="progress-bar bg-color-base" role="progressbar"
+								data-width="77"></div>
 						</div>
 					</div>
 					<!-- End Progress Box -->
@@ -159,17 +168,15 @@
 					<div>
 						<div class="tabbable">
 							<ul class="nav nav-tabs nav-justified" id="myTab">
-								<li class="active">
-									<a data-toggle="tab" href="#kospi" aria-expanded="true">
+								<li class="active"><a data-toggle="tab" href="#kospi"
+									aria-expanded="true">
 										<h3>KOSPI</h3>
-									</a>
-								</li>
+								</a></li>
 
-								<li class="">
-									<a data-toggle="tab" href="#kosdaq" aria-expanded="true">
+								<li class=""><a data-toggle="tab" href="#kosdaq"
+									aria-expanded="true">
 										<h3>KOSDAQ</h3>
-									</a>
-								</li>
+								</a></li>
 							</ul>
 
 							<div class="tab-content">
@@ -186,16 +193,15 @@
 					<br />
 
 					<h4>
-						<a href="#">즐겨찾기 인기 종목</a> 
-						<span class="text-uppercase margin-l-20">favorite</span>
+						<a href="#">즐겨찾기 인기 종목</a> <span
+							class="text-uppercase margin-l-20">favorite</span>
 					</h4>
 					<p>Lorem ipsum dolor sit amet consectetur adipiscing elit sed
 						tempor incdidunt ut laboret dolor magna ut consequat siad esqudiat
 						dolor</p>
 					<br />
 					<h4>
-						<a href="#">추천종목</a> 
-						<span class="text-uppercase margin-l-20">best</span>
+						<a href="#">추천종목</a> <span class="text-uppercase margin-l-20">best</span>
 					</h4>
 					<p>Lorem ipsum dolor sit amet consectetur adipiscing elit sed
 						tempor incdidunt ut laboret dolor magna ut consequat siad esqudiat
@@ -207,21 +213,25 @@
 	<!-- End Experience -->
 
 	<!-- End Contact -->
-        <!--========== END PAGE LAYOUT ==========-->
+	<!--========== END PAGE LAYOUT ==========-->
 	<!--========== FOOTER ==========-->
-        <footer class="footer">
-            <div class="content container">
-                <div class="row">
-                    <div class="col-xs-6">
-                        <img class="footer-logo" src="${context}/assets/acecv/img/logo.png" alt="Acecv Logo">
-                    </div>
-                    <div class="col-xs-6 text-right sm-text-left">
-                        <p class="margin-b-0"><a class="fweight-700" href="login.do">Acecv</a> Theme Powered by: <a class="fweight-700" href="http://www.keenthemes.com/">KeenThemes.com</a></p>
-                    </div>
-                </div>
-                <!--// end row -->
-            </div>
-        </footer>
+	<footer class="footer">
+		<div class="content container">
+			<div class="row">
+				<div class="col-xs-6">
+					<img class="footer-logo" src="${context}/assets/acecv/img/logo.png"
+						alt="Acecv Logo">
+				</div>
+				<div class="col-xs-6 text-right sm-text-left">
+					<p class="margin-b-0">
+						<a class="fweight-700" href="login.do">Acecv</a> Theme Powered by:
+						<a class="fweight-700" href="http://www.keenthemes.com/">KeenThemes.com</a>
+					</p>
+				</div>
+			</div>
+			<!--// end row -->
+		</div>
+	</footer>
 
 	<div class="bootbox modal fade bootbox-prompt in" id="myModal"
 		tabindex="-1" role="dialog" style="display: none;">
@@ -237,19 +247,24 @@
 						<!-- Slides Container -->
 						<div class="owl-carousel owl-theme">
 							<div class="item">
-								<img width="565" height="450" alt="565x450"	src="${context}/assets/images/gallery/image-1.jpg" />
+								<img width="565" height="450" alt="565x450"
+									src="${context}/assets/images/gallery/image-1.jpg" />
 							</div>
 							<div class="item">
-								<img width="565" height="450" alt="565x450"	src="${context}/assets/images/gallery/image-2.jpg" />
+								<img width="565" height="450" alt="565x450"
+									src="${context}/assets/images/gallery/image-2.jpg" />
 							</div>
 							<div class="item">
-								<img width="565" height="450" alt="565x450"	src="${context}/assets/images/gallery/image-3.jpg" />
+								<img width="565" height="450" alt="565x450"
+									src="${context}/assets/images/gallery/image-3.jpg" />
 							</div>
 							<div class="item">
-								<img width="565" height="450" alt="565x450"	src="${context}/assets/images/gallery/image-4.jpg" />
+								<img width="565" height="450" alt="565x450"
+									src="${context}/assets/images/gallery/image-4.jpg" />
 							</div>
 							<div class="item">
-								<img width="565" height="450" alt="565x450"	src="${context}/assets/images/gallery/image-5.jpg" />
+								<img width="565" height="450" alt="565x450"
+									src="${context}/assets/images/gallery/image-5.jpg" />
 							</div>
 						</div>
 					</div>
@@ -276,131 +291,207 @@
 	<script src="${context}/assets/js/bootstrap.min.js"></script>
 	<script src="${context}/assets/js/bootbox.js"></script>
 	<script src="${context}/assets/owlcarousel/owl.carousel.js"></script>
-	
-	 <!-- CORE PLUGINS -->
-    <script src="${context}/assets/acecv/vendor/jquery-migrate.min.js" type="text/javascript"></script>
+
+	<!-- CORE PLUGINS -->
+	<script src="${context}/assets/acecv/vendor/jquery-migrate.min.js"
+		type="text/javascript"></script>
 	<!-- PAGE LEVEL PLUGINS -->
-     <script src="${context}/assets/acecv/vendor/jquery.easing.js" type="text/javascript"></script>
-     <script src="${context}/assets/acecv/vendor/jquery.back-to-top.js" type="text/javascript"></script>
-     <script src="${context}/assets/acecv/vendor/jquery.smooth-scroll.js" type="text/javascript"></script>
-     <script src="${context}/assets/acecv/vendor/jquery.wow.min.js" type="text/javascript"></script>
-     <script src="${context}/assets/acecv/vendor/jquery.parallax.min.js" type="text/javascript"></script>
-     <script src="${context}/assets/acecv/vendor/jquery.appear.js" type="text/javascript"></script>
-     <script src="${context}/assets/acecv/vendor/swiper/js/swiper.jquery.min.js" type="text/javascript"></script>
-	 <!-- PAGE LEVEL SCRIPTS -->
-     <script src="${context}/assets/acecv/js/layout.js" type="text/javascript"></script>
-     <script src="${context}/assets/acecv/js/components/progress-bar.min.js" type="text/javascript"></script>
-     <script src="${context}/assets/acecv/js/components/swiper.min.js" type="text/javascript"></script>
-     <script src="${context}/assets/acecv/js/components/wow.min.js" type="text/javascript"></script>
+	<script src="${context}/assets/acecv/vendor/jquery.easing.js"
+		type="text/javascript"></script>
+	<script src="${context}/assets/acecv/vendor/jquery.back-to-top.js"
+		type="text/javascript"></script>
+	<script src="${context}/assets/acecv/vendor/jquery.smooth-scroll.js"
+		type="text/javascript"></script>
+	<script src="${context}/assets/acecv/vendor/jquery.wow.min.js"
+		type="text/javascript"></script>
+	<script src="${context}/assets/acecv/vendor/jquery.parallax.min.js"
+		type="text/javascript"></script>
+	<script src="${context}/assets/acecv/vendor/jquery.appear.js"
+		type="text/javascript"></script>
+	<script
+		src="${context}/assets/acecv/vendor/swiper/js/swiper.jquery.min.js"
+		type="text/javascript"></script>
+	<!-- PAGE LEVEL SCRIPTS -->
+	<script src="${context}/assets/acecv/js/layout.js"
+		type="text/javascript"></script>
+	<script src="${context}/assets/acecv/js/components/progress-bar.min.js"
+		type="text/javascript"></script>
+	<script src="${context}/assets/acecv/js/components/swiper.min.js"
+		type="text/javascript"></script>
+	<script src="${context}/assets/acecv/js/components/wow.min.js"
+		type="text/javascript"></script>
 	<!-- ace scripts -->
 	<%-- <script src="${context}/assets/js/ace-elements.min.js"></script>
 	<script src="${context}/assets/js/ace.min.js"></script>
  --%>
 	<script>
-		$(document).ready(
-				function() {
-					$('#myModal').modal();
-					$('#btnOK').click(function() {
-						goLogin();
-					});
-					$('#btnCancel').click(function() {
-						$('#myModal').modal('hide')
-					});
-					$('.owl-carousel').owlCarousel({
-		                margin: 10,
-						loop: true,
-		                dots : true,
-		                responsiveClass : true,
-		                responsive:{
-		                	0:{
-		                		items:1,
-		                		nav:true,
-		                		dots:true
-		                	}
-		                }
-		            });
-				});
-		function goLogin(){
+		$(document).ready(function() {
+			$('#myModal').modal();
+			$('#btnOK').click(function() {
+				goLogin();
+			});
+			$('#btnCancel').click(function() {
+				$('#myModal').modal('hide')
+			});
+			$('.owl-carousel').owlCarousel({
+				margin : 10,
+				loop : true,
+				dots : true,
+				responsiveClass : true,
+				responsive : {
+					0 : {
+						items : 1,
+						nav : true,
+						dots : true
+					}
+				}
+			});
+			lineMultiChart("data.tsv");
+			lineChart("data2.tsv");
+		});
+		
+		function goLogin() {
 			location.href = "login.do"
 		}
-		
-	var svg = d3.select(".svg1"),
-	    margin = {top: 20, right: 80, bottom: 30, left: 50},
-	    width = svg.attr("width") - margin.left - margin.right,
-	    height = svg.attr("height") - margin.top - margin.bottom,
-	    g = svg.append("g").attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
-	var parseTime = d3.timeParse("%Y%m%d");
+		lineMultiChart = function(file) {
+			var svg = d3.select(".svg1"), margin = { top : 20, right : 80, bottom : 30,	left : 50 },
+				width = svg.attr("width") - margin.left - margin.right, 
+				height = svg.attr("height")	- margin.top - margin.bottom, 
+				g = svg.append("g").attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
-	var x = d3.scaleTime().range([0, width]),
-	    y = d3.scaleLinear().range([height, 0]),
-	    z = d3.scaleOrdinal(d3.schemeCategory10);
+			var parseTime = d3.timeParse("%Y%m%d");
 
-	var line = d3.line()
-	    .curve(d3.curveBasis)
-	    .x(function(d) { return x(d.date); })
-	    .y(function(d) { return y(d.temperature); });
+			var x = d3.scaleTime().range([ 0, width ]), 
+				y = d3.scaleLinear().range([ height, 0 ]), 
+				z = d3.scaleOrdinal(d3.schemeCategory10);
 
-	d3.tsv("data.tsv", type, function(error, data) {
-	  if (error) throw error;
+			var line = d3.line().curve(d3.curveBasis)
+				.x(function(d) { return x(d.date); })
+				.y(function(d) { return y(d.temperature); });
 
-	  var cities = data.columns.slice(1).map(function(id) {
-	    return {
-	      id: id,
-	      values: data.map(function(d) {
-	        return {date: d.date, temperature: d[id]};
-	      })
-	    };
-	  });
-	  
-	  x.domain(d3.extent(data, function(d) { return d.date; }));
+			d3.tsv(file, type, function(error, data) {
+				if (error)
+					throw error;
 
-	  y.domain([
-	    d3.min(cities, function(c) { return d3.min(c.values, function(d) { return d.temperature; }); }),
-	    d3.max(cities, function(c) { return d3.max(c.values, function(d) { return d.temperature; }); })
-	  ]);
+				var cities = data.columns.slice(1).map(function(id) {
+					return {
+						id : id,
+						values : data.map(function(d) {
+							return {
+								date : d.date,
+								temperature : d[id]
+							};
+						})
+					};
+				});
 
-	  z.domain(cities.map(function(c) { return c.id; }));
+				x.domain(d3.extent(data, function(d) { return d.date; }));
 
-	  g.append("g")
-	      .attr("class", "axis axis--x")
-	      .attr("transform", "translate(0," + height + ")")
-	      .call(d3.axisBottom(x));
+				y.domain([ d3.min(cities, function(c) {
+					return d3.min(c.values, function(d) {
+						return d.temperature;
+					});
+				}), d3.max(cities, function(c) {
+					return d3.max(c.values, function(d) {
+						return d.temperature;
+					});
+				}) ]);
 
-	  g.append("g")
-	      .attr("class", "axis axis--y")
-	      .call(d3.axisLeft(y))
-	    .append("text")
-	      .attr("transform", "rotate(-90)")
-	      .attr("y", 6)
-	      .attr("dy", "0.71em")
-	      .attr("fill", "#000")
-	      .text("Temperature, ºF");
+				z.domain(cities.map(function(c) { return c.id; }));
 
-	  var city = g.selectAll(".city")
-	    .data(cities)
-	    .enter().append("g")
-	      .attr("class", "city");
+				g.append("g").attr("class", "axis axis--x")
+				.attr("transform", "translate(0," + height + ")").call(d3.axisBottom(x));
 
-	  city.append("path")
-	      .attr("class", "line")
-	      .attr("d", function(d) { return line(d.values); })
-	      .style("stroke", function(d) { return z(d.id); });
-	
-	  city.append("text")
-	      .datum(function(d) { return {id: d.id, value: d.values[d.values.length - 1]}; })
-	      .attr("transform", function(d) {return "translate(" + x(d.value.date) + "," + y(d.value.temperature) + ")"; })
-	      .attr("x", 3)
-	      .attr("dy", "0.35em")
-	      .style("font", "10px sans-serif")
-	      .text(function(d) { return d.id; });
-	});
+				g.append("g").attr("class", "axis axis--y")
+						.call(d3.axisLeft(y)).append("text")
+						.attr("transform", "rotate(-90)").attr("y", 6)
+						.attr("dy", "0.71em").attr("fill", "#000").text("Temperature, ºF");
 
-	function type(d, _, columns) {
-	  d.date = parseTime(d.date);
-	  for (var i = 1, n = columns.length, c; i < n; ++i) d[c = columns[i]] = +d[c];
-	  return d;
-	}
+				var city = g.selectAll(".city").data(cities).enter()
+						.append("g").attr("class", "city");
+
+				city.append("path").attr("class", "line")
+				.attr("d", function(d) {
+							return line(d.values);
+						}).style("stroke", function(d) {
+					return z(d.id);
+				});
+
+				city.append("text").datum(function(d) {
+					return {
+						id : d.id,
+						value : d.values[d.values.length - 1]
+					};
+				}).attr("transform", function(d) { 
+					return "translate(" + x(d.value.date) + ","	+ y(d.value.temperature) + ")";	})
+					.attr("x", 3).attr("dy", "0.35em").style("font", "10px sans-serif")
+					.text(function(d) {
+						return d.id;
+					});
+				});
+
+			function type(d, _, columns) {
+				d.date = parseTime(d.date);
+				for (var i = 1, n = columns.length, c; i < n; ++i)
+					d[c = columns[i]] = +d[c];
+				return d;
+			}
+		}
+
+		lineChart = function(file) {
+			
+			var svg = d3.select(".svg2"), 
+				margin = { top : 20, right : 20, bottom : 30, left : 50	}, 
+				width = +svg.attr("width") - margin.left - margin.right, 
+				height = +svg.attr("height") - margin.top - margin.bottom, 
+				g = svg.append("g").attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+
+			var parseTime = d3.timeParse("%d-%b-%y");
+
+			var x = d3.scaleTime().rangeRound([ 0, width ]);
+
+			var y = d3.scaleLinear().rangeRound([ height, 0 ]);
+
+			var line = d3.line().x(function(d) { return x(d.date); })
+								.y(function(d) { return y(d.close);	});
+
+			d3.tsv(file, function(d) {
+				d.date = parseTime(d.date);
+				d.close = +d.close;
+				return d;
+			}, function(error, data) {
+				if (error) throw error;
+
+				x.domain(d3.extent(data, function(d) { return d.date; }));
+				y.domain(d3.extent(data, function(d) { return d.close; }));
+
+				g.append("g").attr("transform", "translate(0," + height + ")")
+						.call(d3.axisBottom(x)).select(".domain").remove();
+
+				g.append("g").call(d3.axisLeft(y)).append("text").attr("fill", "#000")
+						.attr("transform", "rotate(-90)").attr("y", 6).attr("dy", "0.71em")
+						.attr("text-anchor", "end").text("Price ($)");
+
+				g.append("path").datum(data).attr("fill", "none")
+						.attr("stroke", "steelblue").attr("stroke-linejoin", "round")
+						.attr("stroke-linecap", "round").attr("stroke-width", 1.5).attr("d", line);
+			});
+			
+			$.ajax({
+				url:"",
+				method:"get",
+				data:file,
+				success: function(data){
+					
+				},
+				error: function(error){
+					throw error;
+				}
+				
+				
+			});
+		}
 	</script>
 </body>
 </html>
