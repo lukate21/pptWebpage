@@ -13,8 +13,7 @@
 
 <title>PPT-제법 쓸만한 예측 툴</title>
 <link rel="stylesheet" href="${context}/assets/css/bootstrap.min.css" />
-<link rel="stylesheet"
-	href="${context}/assets/font-awesome/4.5.0/css/font-awesome.min.css" />
+<link rel="stylesheet" href="${context}/assets/font-awesome/4.5.0/css/font-awesome.min.css" />
 
 <!-- GLOBAL MANDATORY STYLES -->
 <link
@@ -193,8 +192,8 @@
 					<br />
 
 					<h4>
-						<a href="#">즐겨찾기 인기 종목</a> <span
-							class="text-uppercase margin-l-20">favorite</span>
+						<a href="#">즐겨찾기 인기 종목</a> 
+						<span class="text-uppercase margin-l-20">favorite</span>
 					</h4>
 					<p>Lorem ipsum dolor sit amet consectetur adipiscing elit sed
 						tempor incdidunt ut laboret dolor magna ut consequat siad esqudiat
@@ -312,21 +311,13 @@
 		src="${context}/assets/acecv/vendor/swiper/js/swiper.jquery.min.js"
 		type="text/javascript"></script>
 	<!-- PAGE LEVEL SCRIPTS -->
-	<script src="${context}/assets/acecv/js/layout.js"
-		type="text/javascript"></script>
-	<script src="${context}/assets/acecv/js/components/progress-bar.min.js"
-		type="text/javascript"></script>
-	<script src="${context}/assets/acecv/js/components/swiper.min.js"
-		type="text/javascript"></script>
-	<script src="${context}/assets/acecv/js/components/wow.min.js"
-		type="text/javascript"></script>
-	<!-- ace scripts -->
-	<%-- <script src="${context}/assets/js/ace-elements.min.js"></script>
-	<script src="${context}/assets/js/ace.min.js"></script>
- --%>
+	<%-- <script src="${context}/assets/acecv/js/layout.js" type="text/javascript"></script> --%>
+	<script src="${context}/assets/acecv/js/components/progress-bar.min.js"	type="text/javascript"></script>
+	<script src="${context}/assets/acecv/js/components/swiper.min.js" type="text/javascript"></script>
+	<script src="${context}/assets/acecv/js/components/wow.min.js" type="text/javascript"></script>
 	<script>
 		$(document).ready(function() {
-			$('#myModal').modal();
+			//$('#myModal').modal();
 			$('#btnOK').click(function() {
 				goLogin();
 			});
@@ -476,20 +467,6 @@
 				g.append("path").datum(data).attr("fill", "none")
 						.attr("stroke", "steelblue").attr("stroke-linejoin", "round")
 						.attr("stroke-linecap", "round").attr("stroke-width", 1.5).attr("d", line);
-			});
-			
-			$.ajax({
-				url:"",
-				method:"get",
-				data:file,
-				success: function(data){
-					
-				},
-				error: function(error){
-					throw error;
-				}
-				
-				
 			});
 		}
 	</script>

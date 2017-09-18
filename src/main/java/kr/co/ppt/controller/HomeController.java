@@ -83,4 +83,10 @@ public class HomeController {
 	public static void getRecommend(){
 		
 	}
+	
+	@ResponseBody
+	@RequestMapping("data.do")
+	public static String getData(){
+		return "";
+	}
 }

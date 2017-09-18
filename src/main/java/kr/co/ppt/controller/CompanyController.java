@@ -9,8 +9,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 public class CompanyController {
 
 	@RequestMapping("searchCompany.do")
-	public static void searchCompany(){
-		
+	public static String searchCompany(){
+		return "searchCompany";
 	}
 	
 	@ResponseBody
