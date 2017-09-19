@@ -7,17 +7,39 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 
-<!-- bootstrap & fontawesome -->
-		<link rel="stylesheet" href="${context}/assets/css/bootstrap.min.css" />
-		<link rel="stylesheet" href="${context}/assets/font-awesome/4.5.0/css/font-awesome.min.css" />
+<link rel="stylesheet" href="${context}/assets/acecv/vendor/bootstrap/css/bootstrap.css" />
+<link rel="stylesheet" href="${context}/assets/font-awesome/4.5.0/css/font-awesome.min.css" />
 
-		<!-- text fonts -->
-		<link rel="stylesheet" href="${context}/assets/css/fonts.googleapis.com.css" />
+<!-- GLOBAL MANDATORY STYLES -->
+<link href="http://fonts.googleapis.com/css?family=Hind:300,400,500,600,700"
+	rel="stylesheet" type="text/css">
+<%-- <link href="${context}/assets/acecv/vendor/simple-line-icons/css/simple-line-icons.css"
+	rel="stylesheet" type="text/css" /> --%>
 
-		<!-- ace styles -->
-		<link rel="stylesheet" href="${context}/assets/css/ace.min.css" />
+<!-- PAGE LEVEL PLUGIN STYLES -->
+<%-- <link href="${context}/assets/acecv/css/animate.css" rel="stylesheet"> --%>
+<link href="${context}/assets/acecv/vendor/swiper/css/swiper.min.css" rel="stylesheet" type="text/css" />
 
-		<link rel="stylesheet" href="${context}/assets/css/ace-rtl.min.css" />
+<!-- THEME STYLES -->
+<link href="${context}/assets/acecv/css/layout.min.css" rel="stylesheet" type="text/css" />
+
+<!--  Image Slider -->
+<link rel="stylesheet" href="${context}/assets/owlcarousel/assets/owl.carousel.min.css" />
+<link rel="stylesheet" href="${context}/assets/owlcarousel/assets/owl.theme.default.min.css" />
+
+<!-- Favicon -->
+<link rel="shortcut icon" href="${context}/favicon.ico"/>
+<style>
+.axis--x path {
+	display: none;
+}
+
+.line {
+	fill: none;
+	stroke: steelblue;
+	stroke-width: 1.5px;
+}
+</style>
 <title>PPT-제법 쓸만한 예측 툴</title>
 </head>
 <body class="login-layout light-login">
@@ -233,26 +255,30 @@
 			</div><!-- /.main-content -->
 		</div><!-- /.main-container -->
 
-		<!-- basic scripts -->
+		<!-- javascript file -->
+<script src="https://d3js.org/d3.v4.min.js"></script>
+<%-- <script src="${context}/assets/js/bootbox.js"></script> --%>
 
-		<!--[if !IE]> -->
-		<script src="assets/js/jquery-2.1.4.min.js"></script>
-		<!-- <![endif]-->
+<!-- CORE PLUGINS -->
+<!-- (Load javascripts at bottom, this will reduce page load time) -->
+<script src="${context}/assets/js/jquery-2.1.4.min.js"></script>
+<script src="${context}/assets/js/bootstrap.min.js"></script>
+<script src="${context}/assets/acecv/vendor/jquery-migrate.min.js" type="text/javascript"></script>
 
-		<script type="text/javascript">
-			if('ontouchstart' in document.documentElement) document.write("<script src='assets/js/jquery.mobile.custom.min.js'>"+"<"+"/script>");
-		</script>
+<!-- PAGE LEVEL PLUGINS -->
+<%-- <script src="${context}/assets/acecv/vendor/jquery.easing.js" type="text/javascript"></script>
+<script src="${context}/assets/acecv/vendor/jquery.back-to-top.js" type="text/javascript"></script>
+<script src="${context}/assets/acecv/vendor/jquery.smooth-scroll.js" type="text/javascript"></script>
+<script src="${context}/assets/acecv/vendor/jquery.parallax.min.js"	type="text/javascript"></script> --%>
+<script src="${context}/assets/acecv/vendor/jquery.appear.js" type="text/javascript"></script>
+<script src="${context}/assets/acecv/vendor/jquery.wow.min.js" type="text/javascript"></script>
+<script	src="${context}/assets/acecv/vendor/swiper/js/swiper.jquery.min.js"	type="text/javascript"></script>
 
-		<!-- inline scripts related to this page -->
-		<script type="text/javascript">
-			jQuery(function($) {
-			 $(document).on('click', '.toolbar a[data-target]', function(e) {
-				e.preventDefault();
-				var target = $(this).data('target');
-				$('.widget-box.visible').removeClass('visible');//hide others
-				$(target).addClass('visible');//show target
-			 });
-			});
-		</script>
+<!-- PAGE LEVEL SCRIPTS -->
+<%-- <script src="${context}/assets/acecv/js/layout.js" type="text/javascript"></script> --%>
+<script src="${context}/assets/acecv/js/components/progress-bar.min.js"	type="text/javascript"></script>
+<script src="${context}/assets/acecv/js/components/wow.min.js" type="text/javascript"></script>
+<script src="${context}/assets/acecv/js/components/swiper.min.js" type="text/javascript"></script>
+
 	</body>
 </html>
