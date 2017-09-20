@@ -247,8 +247,10 @@ fieldset[disabled] .btn-theme {
 }
 
 .btn-default-bg {
-  color: #515769;
-  background: #f3f4f5;
+  width: 450px;
+  height: 60px;
+  color: #fff;
+  background: #515769;
   border-color: transparent;
   border-width: 0;
 }

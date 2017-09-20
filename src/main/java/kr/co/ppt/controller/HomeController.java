@@ -1,14 +1,19 @@
 package kr.co.ppt.controller;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import kr.co.ppt.service.MemberService;
 import kr.co.ppt.vo.MemberVO;
 
 @Controller
 public class HomeController {
+	
+	@Autowired
+	MemberService memberService;
 	
 	/**
 	 * 메인 홈 화면
@@ -22,12 +27,12 @@ public class HomeController {
 	 * 회원가입 화면
 	 */
 	@RequestMapping(value="signin.do", method=RequestMethod.GET )
-	public static String signInForm(){
+	public String signInForm(){
 		return "";
 	}
 	
 	@RequestMapping(value="signin.do", method=RequestMethod.POST )
-	public static void signIn(){
+	public void signIn(){
 		
 	}
 	
@@ -36,7 +41,7 @@ public class HomeController {
 	 */
 	@ResponseBody
 	@RequestMapping(value="checkPassword.json", method=RequestMethod.POST)
-	public static void checkPassword(){
+	public void checkPassword(){
 		
 	}
 
@@ -44,43 +49,43 @@ public class HomeController {
 	 * 로그인 화면
 	 */
 	@RequestMapping(value="login.do", method=RequestMethod.GET)
-	public static String logInForm(){
+	public String logInForm(){
 		return "login";
 	}
 	
 	@RequestMapping(value="login.do", method=RequestMethod.POST)
-	public static void logIn(MemberVO user){
-		
-		
+	public String logIn(MemberVO user){
+		memberService.login(user);
+		return "mainPage";
 	}
 	
 	@ResponseBody
 	@RequestMapping("newsHeadline.json")
-	public static void getNewsHeadline(){
+	public void getNewsHeadline(){
 
 	}
 	
 	@ResponseBody
 	@RequestMapping("newsCategoty.json")
-	public static void getNewsCategory(){
+	public void getNewsCategory(){
 		
 	}
 	
 	@ResponseBody
 	@RequestMapping("stock.json")
-	public static void getStock(){
+	public void getStock(){
 		
 	}
 	
 	@ResponseBody
 	@RequestMapping("favorite.json")
-	public static void getFavorite(){
+	public void getFavorite(){
 		
 	}
 	
 	@ResponseBody
 	@RequestMapping("recommend.json")
-	public static void getRecommend(){
+	public void getRecommend(){
 		
 	}
 }

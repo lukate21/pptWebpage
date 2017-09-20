@@ -1,10 +1,9 @@
 package kr.co.ppt.dao;
 
-import org.springframework.stereotype.Repository;
 
 import kr.co.ppt.vo.MemberVO;
 
-@Repository
+
 public interface MemberDAO {
 
 	MemberVO logIn(MemberVO user);

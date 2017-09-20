@@ -106,40 +106,53 @@
 							
 						</div>
 					</div>
-
-					<h2>RT NEWS IN CATEGORY</h2>
+					<div class="row">
+						<div class="col-sm-10"><h2>RT NEWS IN CATEGORY</h2></div>
+						<div class="col-sm-2">
+							<i id="btnPlay" class="fa fa-play-circle-o fa-2x" style="cursor:pointer; margin-top:7px" title="start"></i>
+							<i id="btnStop" class="fa fa-pause-circle-o fa-2x" style="cursor:pointer; margin-top:7px" title="pause"></i>
+						</div>
+					</div>
+						
 					<!-- Progress Box -->
 					<div>
 						<div class="tabbable">
 							<ul class="nav nav-tabs nav-justified" id="myTab2">
-								<li class="active"><a data-toggle="tab" href="#society"
-									aria-expanded="true">
+								<li class="active">
+									<a data-toggle="tab" href="#society" aria-expanded="true">
 										<h4>사회</h4>
-								</a></li>
-								<li class=""><a data-toggle="tab" href="#politics"
-									aria-expanded="true">
+									</a>
+								</li>
+								<li class="">
+									<a data-toggle="tab" href="#politics" aria-expanded="true">
 										<h4>정치</h4>
-								</a></li>
-								<li class=""><a data-toggle="tab" href="#economic"
-									aria-expanded="true">
+									</a>
+								</li>
+								<li class="">
+									<a data-toggle="tab" href="#economic" aria-expanded="true">
 										<h4>경제</h4>
-								</a></li>
-								<li class=""><a data-toggle="tab" href="#foreign"
-									aria-expanded="true">
+									</a>
+								</li>
+								<li class="">
+									<a data-toggle="tab" href="#foreign" aria-expanded="true">
 										<h4>국제</h4>
-								</a></li>
-								<li class=""><a data-toggle="tab" href="#culture"
-									aria-expanded="true">
+									</a>
+								</li>
+								<li class="">
+									<a data-toggle="tab" href="#culture" aria-expanded="true">
 										<h4>문화</h4>
-								</a></li>
-								<li class=""><a data-toggle="tab" href="#entertain"
-									aria-expanded="true">
+									</a>
+								</li>
+								<li class="">
+									<a data-toggle="tab" href="#entertain" aria-expanded="true">
 										<h4>연예</h4>
-								</a></li>
-								<li class=""><a data-toggle="tab" href="#digital"
-									aria-expanded="true">
-										<h4>기술</h4>
-								</a></li>
+									</a>
+								</li>
+								<li class="">
+									<a data-toggle="tab" href="#digital" aria-expanded="true">
+										<h4>IT</h4>
+									</a>
+								</li>
 							</ul>
 							<div class="tab-content"><br/>
 								<div id="society" class="tab-pane fade active in">
@@ -232,7 +245,7 @@
 				</div>
 				<div class="col-xs-6 text-right sm-text-left">
 					<p class="margin-b-0">
-						<a class="fweight-700" href="login.do">Acecv</a> Theme Powered by:
+						<a class="fweight-700" href="hello.do">Acecv</a> Theme Powered by:
 						<a class="fweight-700" href="http://www.keenthemes.com/">KeenThemes.com</a>
 					</p>
 				</div>
@@ -278,8 +291,8 @@
 					</div>
 					<div class="bootbox-body">
 						<form class="bootbox-form">
-							<input type="checkbox" class="ace" value="noSee" /> <span
-								class="lbl"> 다시 보지 않음</span>
+							<input type="checkbox" class="ace" value="noSee" /> 
+							<span class="lbl">다시 보지 않음</span>
 						</form>
 					</div>
 				</div>
@@ -344,7 +357,9 @@
 		});
 		lineMultiChart("data.tsv");
 		lineChart("data2.tsv");
+		setInterval(getNews("main",8),1000*60);
 		
+		// news받아오기
 		getNews("main",8);
 		getNews("society",5);
 		getNews("politics",5);
@@ -354,25 +369,32 @@
 		getNews("entertain",5);
 		getNews("digital",5);
 		
-		navtabSlide();
+		//news탭 움직이기
+		var slideTab;
+		 slideTab = navtabSlide();
+		$('#btnPlay').click(function(){
+			console.log("start");
+			slideTab = navtabSlide();
+		});
+		$('#btnStop').click(function(){
+			clearInterval(slideTab);
+			console.log("stop");
+		});
 	});
 	
 	navtabSlide = function() {
 		var tab = ["#society","#politics","#economic","#foreign","#culture","#entertain","#digital"];
-		var i = 1;
-		setInterval(function(){
+		var i = 0;
+		interval = setInterval(function(){
 			$('.nav-tabs a[href='+tab[i]+']').tab('show');
 			i++;
 			if(i > 6) i = 0;
 		},10000);
 		
+		return interval;
+		
 	}
 	
-	sleep = function(ms) {
-		ts1 = new Date().getTime() + ms;
-		do ts2 = new Date().getTime();
-		while (ts2<ts1);
-	}
 	getNews = function(code, num) {
 		var param = "newsCode="+code+"&num="+num;
 		
@@ -383,6 +405,7 @@
 			dataType : "jsonp",
 			success : function(data){
 					if(code === "main"){
+						$("#headline").empty();
 						for(var i = 0;i<data.length;i++)
 							setHeadline(data[i]);
 					} else if(code ==="society"){
