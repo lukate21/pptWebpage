@@ -81,23 +81,25 @@
 					</div>
 			</div>
 		</div>
-		<div class="row">
-			<div align="center" class="section-seperator margin-b-50">
-				<form id="loginForm" action="login.do" method="post">
-					<input type="text" style="width:450px; height:50px" placeholder="&nbsp;&nbsp;아이디" autofocus><br/><br/>
-					<input type="password" pattern="^[A-Za-z]*|[0-9]$" style="width:450px; height:50px" placeholder="&nbsp;&nbsp;패스워드" ><br/>
+		<div class="row margin-b-5">
+			<div class ="col-sm-4 col-sm-offset-4">
+				<form name="loginForm" action="login.do" method="post" onSubmit="return checkForm()">
+					<input type="email" style="width:100%; height:50px" placeholder="&nbsp;&nbsp;아이디" autofocus name="email"><br/><br/>
+					<input type="password" style="width:100%; height:50px" placeholder="&nbsp;&nbsp;패스워드" name="password"><br/><br/>
+					<div id="loginFail"></div>
+					<input type="checkbox" name="remember" value="remember">&nbsp;로그인유지<br/><br/>
+					<input type="submit" value="로그인" id="btnLogin" class="btn-theme btn-theme-md btn-default-bg text-uppercase" style="font-size:20px; width:100%">
 				</form>
-				<br/><br/>
-				<button id="btnLogin" class="btn-theme btn-theme-md btn-default-bg text-uppercase" style="font-size:20px">로그인</button>
-			</div>
 			<hr/>
+			</div>
+			
 		</div>
 		<div class="row">
 			<div align="center" >
 				<div class="col-sm-12" align="center">
-						<a href="#">아이디를 잊으셨나요?</a>/
-						<a href="#">비밀번호를 잊으셨나요?</a>/
-						<a href="#">회원가입</a>
+						<a href="#">아이디를 잊으셨나요?</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;
+						<a href="#">비밀번호를 잊으셨나요?</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;
+						<a href="join.do">회원가입</a>
 				</div>
 			</div>
 		</div>
@@ -123,8 +125,6 @@
 	</footer>
 
 	<!-- javascript file -->
-<script src="https://d3js.org/d3.v4.min.js"></script>
-	<%-- <script src="${context}/assets/js/bootbox.js"></script> --%>
 
 	<!-- CORE PLUGINS -->
 	<!-- (Load javascripts at bottom, this will reduce page load time) -->
@@ -133,7 +133,7 @@
 <script src="${context}/assets/acecv/vendor/jquery-migrate.min.js" type="text/javascript"></script>
 
 	<!-- PAGE LEVEL PLUGINS -->
-<script src="${context}/assets/acecv/vendor/jquery.parallax.min.js"	type="text/javascript"></script> --%>
+<script src="${context}/assets/acecv/vendor/jquery.parallax.min.js"	type="text/javascript"></script>
 <script src="${context}/assets/acecv/vendor/jquery.appear.js"
 	type="text/javascript"></script>
 <script src="${context}/assets/acecv/vendor/jquery.wow.min.js"
@@ -143,9 +143,6 @@
 	type="text/javascript"></script>
 
 <!-- PAGE LEVEL SCRIPTS -->
-<%-- <script src="${context}/assets/acecv/js/layout.js" type="text/javascript"></script> --%>
-<script src="${context}/assets/acecv/js/components/progress-bar.min.js"
-	type="text/javascript"></script>
 <script src="${context}/assets/acecv/js/components/wow.min.js"
 	type="text/javascript"></script>
 <script src="${context}/assets/acecv/js/components/swiper.min.js"
@@ -153,9 +150,42 @@
 <script>
 	$('document').ready(function(){
 		$('#btnLogin').click(function(){
-			$('#loginForm').
+			$('#loginForm').submit();
 		})
+
 	});
+	
+	function isNull(obj, msg){
+		if(obj.value == ""){
+			$('#loginFail').text(msg).css({
+				'color' : 'red'
+			});
+			obj.focus();
+			return true;
+		}
+		return false;
+	}
+	
+	function checkForm() {
+		var form = document.loginForm;
+		var email = form.email;
+		var password = form.password;
+		
+		if(isNull(form.email,"아이디를 입력하시오.")){
+			return false;
+		}
+		if(isNull(form.password, '패스워드를 입력하세요')){
+			return false;
+		}
+		if(!/^[a-zA-Z0-9]{4,15}$/.test(form.password.value)){
+			$('#loginFail').text('암호는 숫자와 영문자 조합으로 4~15자리를 사용해야 합니다.').css({
+				'color' : 'red'
+			});
+			return false;
+			///^(?=.*[a-zA-Z])((?=.*\d)|(?=.*\W)).{6,20}$/ : 영어, 숫자, 최소 한개 특수문자
+		}
+		return true;
+	}
 </script>
 </body>
 </html>

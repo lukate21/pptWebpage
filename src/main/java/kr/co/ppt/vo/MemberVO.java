@@ -81,7 +81,7 @@ public class MemberVO {
 	@Override
 	public String toString() {
 		StringBuilder builder = new StringBuilder();
-		builder.append("MemberDAO [no=").append(no).append(", id=").append(id).append("@").append(domain).append(", password=")
+		builder.append("MemberVO [no=").append(no).append(", id=").append(id).append("@").append(domain).append(", password=")
 				.append(password).append(", name=").append(name).append(", tel=").append(tel).append(", regDate=")
 				.append(regDate).append("]");
 		return builder.toString();

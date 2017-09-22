@@ -70,16 +70,33 @@
 				<div class="collapse navbar-collapse nav-collapse">
 					<div class="menu-container">
 						<ul class="nav navbar-nav navbar-nav-right">
-							<li class="js_nav-item nav-item"><a
-								class="nav-item-child nav-item-hover" href="hello.do">HOME</a></li>
-							<li class="js_nav-item nav-item"><a
-								class="nav-item-child nav-item-hover" href="#">기업검색</a></li>
-							<li class="js_nav-item nav-item"><a
-								class="nav-item-child nav-item-hover" href="#">사용자포트폴리오</a></li>
-							<li class="js_nav-item nav-item"><a
-								class="nav-item-child nav-item-hover" href="#">증권거래소</a></li>
-							<li class="js_nav-item nav-item"><a
-								class="nav-item-child nav-item-hover" href="login.do">로그인</a></li>
+							<li class="js_nav-item nav-item">
+								<a class="nav-item-child nav-item-hover" href="hello.do">HOME</a>
+							</li>
+							<li class="js_nav-item nav-item">
+								<a class="nav-item-child nav-item-hover" href="#">기업검색</a>
+							</li>
+							<li class="js_nav-item nav-item">
+								<a class="nav-item-child nav-item-hover" href="#">사용자포트폴리오</a>
+							</li>
+							<li class="js_nav-item nav-item">
+								<a class="nav-item-child nav-item-hover" href="#">증권거래소</a>
+							</li>
+							<c:choose>
+							<c:when test="${ empty sessionScope.loginUser}">
+								<li class="js_nav-item nav-item">
+									<a class="nav-item-child nav-item-hover" href="login.do">로그인</a>
+								</li>
+							</c:when>
+							<c:otherwise>
+								<li class="js_nav-item nav-item">
+									<a class="nav-item-child nav-item-hover" href="myPage.do">마이페이지</a>
+								</li>
+								<li class="js_nav-item nav-item">
+									<a class="nav-item-child nav-item-hover" href="logout.do">로그아웃</a>
+								</li>
+							</c:otherwise>
+							</c:choose>
 						</ul>
 					</div>
 				</div>
@@ -109,7 +126,7 @@
 					<div class="row">
 						<div class="col-sm-10"><h2>RT NEWS IN CATEGORY</h2></div>
 						<div class="col-sm-2">
-							<i id="btnPlay" class="fa fa-play-circle-o fa-2x" style="cursor:pointer; margin-top:7px" title="start"></i>
+							<i id="btnPlay" class="fa fa-play-circle-o fa-2x" style="cursor:pointer; margin-top:7px" title="start" onclick="rotation"></i>
 							<i id="btnStop" class="fa fa-pause-circle-o fa-2x" style="cursor:pointer; margin-top:7px" title="pause"></i>
 						</div>
 					</div>

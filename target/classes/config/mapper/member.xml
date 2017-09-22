@@ -3,16 +3,28 @@
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
   
-<mapper namespace="MemberDAO">
+<mapper namespace="memDAO">
 	
-	<insert id="join" parameterType="member">
-		insert into users(no, id, domain, password, name, tel, reg_date) 
-		values(users_seq.nextval, #{id}, #{domain}, #{password}, #{name}, #{tel}, sysdate)
+	<insert id="join" parameterType="memberVO" >
+		insert into users(no, id, domain, password, name, tel) 
+		values(users_seq.nextval, #{id}, #{domain}, #{password}, #{name}, #{tel})
 	</insert>
 	
-	<select id="login" parameterType="member" resultType="member">
+	<select id="login" parameterType="memberVO" resultType="memberVO">
 		select id, domain, password
-		form users
+		from users
 		where id=#{id} and domain=#{domain} and password=#{password}
+	</select>
+	
+	<select id="idCheck" parameterType="memberVO" resultType="memberVO">
+		select id, domain
+		from users
+		where id=#{id} and domain=#{domain}
+	</select>
+	
+	<select id="passwordCheck" parameterType="String" resultType="String">
+		select password
+		from users
+		where password=#{password}
 	</select>
 </mapper>

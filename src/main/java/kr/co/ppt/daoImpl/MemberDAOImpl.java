@@ -14,11 +14,10 @@ public class MemberDAOImpl implements MemberDAO {
 	SqlSessionTemplate sqlSession;
 	
 	@Override
-	public MemberVO logIn(MemberVO user) {
+	public MemberVO login(MemberVO member) {
 		MemberVO memberVO = null;
 		try{
-			memberVO = sqlSession.selectOne("memberDAO.login",user);
-			System.out.println(memberVO);
+			memberVO = sqlSession.selectOne("memDAO.login",member);
 		} catch(Exception e){
 			System.out.println(e.getMessage());
 		}
@@ -26,17 +25,18 @@ public class MemberDAOImpl implements MemberDAO {
 	}
 
 	@Override
-	public int insertUser(MemberVO user) {
+	public int insertUser(MemberVO member) {
+		int result = sqlSession.insert("memDAO.join", member);
+		return result;
+	}
+
+	@Override
+	public int deleteUser(MemberVO member) {
 		return 0;
 	}
 
 	@Override
-	public int deleteUser(MemberVO user) {
-		return 0;
-	}
-
-	@Override
-	public int modifyUser(MemberVO user) {
+	public int modifyUser(MemberVO member) {
 		return 0;
 	}
 
@@ -44,5 +44,21 @@ public class MemberDAOImpl implements MemberDAO {
 	public int selectUser() {
 		return 0;
 	}
+
+	@Override
+	public MemberVO idCheck(MemberVO member) {
+		MemberVO memberVO = sqlSession.selectOne("memDAO.idCheck", member);
+		return memberVO;
+	}
+
+	@Override
+	public String passwordCheck(String password) {
+		String pCheck = sqlSession.selectOne("memDAO.passwordCheck", password);
+		return pCheck;
+	}
+	
+	
+	
+	
 	
 }

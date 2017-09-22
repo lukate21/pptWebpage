@@ -1,5 +1,11 @@
 package kr.co.ppt.controller;
 
+
+import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -7,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import kr.co.ppt.service.MemberService;
+import kr.co.ppt.util.SHA_ENC;
 import kr.co.ppt.vo.MemberVO;
 
 @Controller
@@ -26,14 +33,41 @@ public class HomeController {
 	/**
 	 * 회원가입 화면
 	 */
-	@RequestMapping(value="signin.do", method=RequestMethod.GET )
-	public String signInForm(){
+	@RequestMapping(value="join.do", method=RequestMethod.GET )
+	public String joinForm(){
 		return "";
 	}
 	
-	@RequestMapping(value="signin.do", method=RequestMethod.POST )
-	public void signIn(){
+	@RequestMapping(value="join.do", method=RequestMethod.POST )
+	public String join(String email, String password, String name, String tel){
 		
+		MemberVO member = makeBasicInfo(email, password);
+		member.setName(name);
+		member.setTel(tel);
+		
+		int result = memberService.join(member);
+		
+		System.out.println("result val : " + result);
+		
+		if(result == 1)
+			return "mainPage";
+		else
+			return "";
+	}
+	
+	@ResponseBody
+	@RequestMapping(value="idCheck.json", method=RequestMethod.POST)
+	public int idCheck(String email){
+		
+		String id = email.split("@")[0];
+		String domain = email.split("@")[1];
+		
+		MemberVO member = new MemberVO();
+		member.setId(id);
+		member.setDomain(domain);
+		
+		int result = memberService.idCheck(member);
+		return result;
 	}
 	
 	/**
@@ -41,34 +75,58 @@ public class HomeController {
 	 */
 	@ResponseBody
 	@RequestMapping(value="checkPassword.json", method=RequestMethod.POST)
-	public void checkPassword(){
-		
+	public int checkPassword(String password){
+		int result = memberService.passwordCheck(SHA_ENC.SHA256_Encrypt(password));
+		return result;
 	}
 
 	/**
 	 * 로그인 화면
 	 */
 	@RequestMapping(value="login.do", method=RequestMethod.GET)
-	public String logInForm(){
+	public String loginForm(){
 		return "login";
 	}
 	
 	@RequestMapping(value="login.do", method=RequestMethod.POST)
-	public String logIn(MemberVO user){
-		memberService.login(user);
-		return "mainPage";
-	}
-	
-	@ResponseBody
-	@RequestMapping("newsHeadline.json")
-	public void getNewsHeadline(){
-
-	}
-	
-	@ResponseBody
-	@RequestMapping("newsCategoty.json")
-	public void getNewsCategory(){
+	public String login(String email,String password, String remember, 
+			HttpSession session, HttpServletRequest request, HttpServletResponse response){
 		
+		MemberVO member = makeBasicInfo(email, password);
+
+		MemberVO loginUser = memberService.login(member);
+		if(loginUser != null){
+			Cookie cookie = new Cookie("user_remember", remember);
+			response.addCookie(cookie);
+			
+			session.setAttribute("loginUser", loginUser);
+			String msg = "로그인에 성공했습니다.";
+			String ref = "hello.do";
+			
+			request.setAttribute("msg", msg);
+			request.setAttribute("ref", ref);
+		} else {
+			String msg = "아이디 또는 비밀번호가 잘못되었습니다.";
+			String ref = "login.do";
+			
+			request.setAttribute("msg", msg);
+			request.setAttribute("ref", ref);
+		}
+		
+		return "messageAlert";
+	}
+	
+	@RequestMapping("logout.do")
+	public String logout(HttpSession session, HttpServletRequest request){
+		session.invalidate();
+		
+		String msg = "로그아웃 되었습니다.";
+		String ref = "hello.do";
+		
+		request.setAttribute("msg", msg);
+		request.setAttribute("ref", ref);
+		
+		return "messageAlert";
 	}
 	
 	@ResponseBody
@@ -87,5 +145,58 @@ public class HomeController {
 	@RequestMapping("recommend.json")
 	public void getRecommend(){
 		
+	}
+	
+	/**
+	 * mobileLogin
+	 * @param email
+	 * @param password
+	 * @return result 1 | 0
+	 */
+	@ResponseBody
+	@RequestMapping(value="loginM.do", method=RequestMethod.POST)
+	public int mobileLogin(String email, String password){
+		
+		int result = 0;
+		
+		MemberVO member = makeBasicInfo(email, password);
+		
+		MemberVO loginUser = memberService.login(member);
+		if(loginUser != null)
+			result = 1;
+		else 
+			result = 0;
+		
+		return result;
+	}
+	
+	/**
+	 * mobileJoin
+	 * @param email
+	 * @param password
+	 * @param name
+	 * @param tel
+	 * @return result 1 | 0
+	 */
+	@ResponseBody
+	@RequestMapping(value="joinM.do", method=RequestMethod.POST)
+	public int mobileJoin(String email, String password, String name, String tel){
+		
+		MemberVO member = makeBasicInfo(email, password);
+		member.setName(name);
+		member.setTel(tel);
+		
+		int result = memberService.join(member);
+		
+		return result;
+	}
+	
+	private MemberVO makeBasicInfo(String email, String password){
+		MemberVO member = new MemberVO();
+		member.setId(email.split("@")[0]);
+		member.setDomain(email.split("@")[1]);
+		member.setPassword(SHA_ENC.SHA256_Encrypt(password));
+		
+		return member;
 	}
 }
