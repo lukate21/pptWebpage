@@ -314,10 +314,18 @@
 					</div>
 				</div>
 				<div class="modal-footer">
-					<button data-bb-handler="cancel" id="btnCancel" type="button"
-						class="btn btn-default">회원가입</button>
-					<button data-bb-handler="confirm" id="btnOK" type="button"
-						class="btn btn-primary">로그인하기</button>
+					<c:choose>
+						<c:when test="${ empty sessionScope.loginUser}">
+						<button data-bb-handler="cancel" id="btnCancel" type="button"
+							class="btn btn-default">회원가입</button>
+							<button data-bb-handler="confirm" id="btnOK" type="button"
+								class="btn btn-primary">로그인하기</button>
+						</c:when>
+						<c:otherwise>
+							<button data-bb-handler="confirm" id="btnOK" type="button"
+								class="btn btn-primary">로그아웃</button>
+						</c:otherwise>
+					</c:choose>
 				</div>
 			</div>
 		</div>
@@ -352,7 +360,7 @@
 <script src="${context}/assets/owlcarousel/owl.carousel.js"></script>
 <script>
 	$(document).ready(function() {
-		//$('#myModal').modal();
+		$('#myModal').modal();
 		$('#btnOK').click(function() {
 			goLogin();
 		});
