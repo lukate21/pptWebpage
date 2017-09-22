@@ -84,7 +84,8 @@ public class HomeController {
 	 * 로그인 화면
 	 */
 	@RequestMapping(value="login.do", method=RequestMethod.GET)
-	public String loginForm(){
+	public String loginForm(HttpServletRequest req){
+
 		return "login";
 	}
 	
@@ -93,11 +94,16 @@ public class HomeController {
 			HttpSession session, HttpServletRequest request, HttpServletResponse response){
 		
 		MemberVO member = makeBasicInfo(email, password);
+		System.out.println("remember: "+remember);
 
 		MemberVO loginUser = memberService.login(member);
 		if(loginUser != null){
-			Cookie cookie = new Cookie("user_remember", remember);
-			response.addCookie(cookie);
+			if(remember != null && remember.equals("stay")){
+				Cookie cookie = new Cookie("user_remember", remember);
+				cookie.setPath("/");
+				cookie.setMaxAge(60*60*24*7); // 단위는 (초)임으로 7일정도로 유효시간을 설정해 준다.
+				response.addCookie(cookie);
+			}
 			
 			session.setAttribute("loginUser", loginUser);
 			String msg = "로그인에 성공했습니다.";
