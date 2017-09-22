@@ -155,19 +155,23 @@ public class HomeController {
 	 */
 	@ResponseBody
 	@RequestMapping(value="loginM.do", method=RequestMethod.POST)
-	public int mobileLogin(String email, String password){
+	public String mobileLogin(String email, String password){
 		
 		int result = 0;
-		
+		String memberData = "";
 		MemberVO member = makeBasicInfo(email, password);
 		
 		MemberVO loginUser = memberService.login(member);
+
 		if(loginUser != null)
 			result = 1;
 		else 
 			result = 0;
 		
-		return result;
+		memberData = "{ \"result\" : \""+result+"\", \"id\" : \""+ loginUser.getId()+"\", \"domain\" : \""+ loginUser.getDomain()
+		+"\", \"name\" : \""+loginUser.getName()+"\", \"tel\" : \""+loginUser.getTel()+"\"}";
+		
+		return memberData;
 	}
 	
 	/**
