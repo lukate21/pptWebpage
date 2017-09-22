@@ -84,10 +84,10 @@
 		<div class="row margin-b-5">
 			<div class ="col-sm-4 col-sm-offset-4">
 				<form name="loginForm" action="login.do" method="post" onSubmit="return checkForm()">
-					<input type="email" style="width:100%; height:50px" placeholder="&nbsp;&nbsp;아이디" autofocus name="email"><br/><br/>
-					<input type="password" style="width:100%; height:50px" placeholder="&nbsp;&nbsp;패스워드" name="password"><br/><br/>
+					<input type="email" style="width:100%; height:50px" placeholder="&nbsp;&nbsp;아이디" autofocus name="email" value="${cookie.savedId.value }"><br/><br/>
+					<input type="password" style="width:100%; height:50px" placeholder="&nbsp;&nbsp;패스워드" name="password"  value="${cookie.savedPassword.value }"><br/><br/>
 					<div id="loginFail"></div>
-					<input type="checkbox" name="remember" value="stay">&nbsp;로그인유지<br/><br/>
+					<input type="checkbox" name="remember" ${cookie.savedCheck.value }>&nbsp;로그인 상태 유지<br/><br/>
 					<input type="submit" value="로그인" id="btnLogin" class="btn-theme btn-theme-md btn-default-bg text-uppercase" style="font-size:20px; width:100%">
 				</form>
 			<hr/>
@@ -97,6 +97,7 @@
 		<div class="row">
 			<div align="center" >
 				<div class="col-sm-12" align="center">
+						${cookie.user_remember.value}
 						<a href="#">아이디를 잊으셨나요?</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;
 						<a href="#">비밀번호를 잊으셨나요?</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;
 						<a href="join.do">회원가입</a>

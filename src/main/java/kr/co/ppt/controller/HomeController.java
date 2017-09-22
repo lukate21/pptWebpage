@@ -90,19 +90,39 @@ public class HomeController {
 	}
 	
 	@RequestMapping(value="login.do", method=RequestMethod.POST)
-	public String login(String email,String password, String remember, 
+	public String login(String email,String password, 
 			HttpSession session, HttpServletRequest request, HttpServletResponse response){
 		
 		MemberVO member = makeBasicInfo(email, password);
+		String remember = request.getParameter("remember");
 		System.out.println("remember: "+remember);
 
 		MemberVO loginUser = memberService.login(member);
 		if(loginUser != null){
-			if(remember != null && remember.equals("stay")){
-				Cookie cookie = new Cookie("user_remember", remember);
-				cookie.setPath("/");
-				cookie.setMaxAge(60*60*24*7); // 단위는 (초)임으로 7일정도로 유효시간을 설정해 준다.
-				response.addCookie(cookie);
+			if(remember != null){
+				Cookie savedId = new Cookie("savedId", member.getId()+"@"+member.getDomain());
+				Cookie savedPassword = new Cookie("savedPassword", password);
+				Cookie savedCheck = new Cookie("savedCheck", "checked");
+				
+				savedId.setMaxAge(60*60*24*15); // 단위는 (초)임으로 15일정도로 유효시간을 설정해 준다.
+				savedPassword.setMaxAge(60*60*24*15); // 단위는 (초)임으로 15일정도로 유효시간을 설정해 준다.
+				savedCheck.setMaxAge(60*60*24*15);
+
+				response.addCookie(savedId);
+				response.addCookie(savedPassword);
+				response.addCookie(savedCheck);
+				System.out.println("쿠키에 저장된 정보");
+				System.out.println("savedId key : "+ savedId.getName() +", value : " + savedId.getValue());
+				System.out.println("savedPassword key : "+ savedPassword.getName() +", value : " + savedPassword.getValue());
+			} else {
+				System.out.println("==유저정보삭제==");
+				Cookie[] cookies = request.getCookies();
+				for (Cookie cookie : cookies) {
+					if (cookie.getName().equals("savedId") || cookie.getName().equals("savedPassword") || cookie.getName().equals("savedCheck")){
+						cookie.setMaxAge(0);
+						response.addCookie(cookie);
+					}
+				}
 			}
 			
 			session.setAttribute("loginUser", loginUser);
@@ -169,15 +189,15 @@ public class HomeController {
 		
 		MemberVO loginUser = memberService.login(member);
 
-		if(loginUser != null)
+		if(loginUser != null) {
 			result = 1;
+			memberData = "{ \"result\" : \""+result+"\", \"id\" : \""+ loginUser.getId()+"\", \"domain\" : \""+ loginUser.getDomain()
+			+"\", \"name\" : \""+loginUser.getName()+"\", \"tel\" : \""+loginUser.getTel()+"\"}";
+			
+			return memberData;
+		}
 		else 
-			result = 0;
-		
-		memberData = "{ \"result\" : \""+result+"\", \"id\" : \""+ loginUser.getId()+"\", \"domain\" : \""+ loginUser.getDomain()
-		+"\", \"name\" : \""+loginUser.getName()+"\", \"tel\" : \""+loginUser.getTel()+"\"}";
-		
-		return memberData;
+			return "{\"result\" : \""+result+"\"}"; 
 	}
 	
 	/**

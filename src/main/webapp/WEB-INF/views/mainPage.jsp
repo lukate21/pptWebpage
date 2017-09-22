@@ -316,13 +316,13 @@
 				<div class="modal-footer">
 					<c:choose>
 						<c:when test="${ empty sessionScope.loginUser}">
-						<button data-bb-handler="cancel" id="btnCancel" type="button"
-							class="btn btn-default">회원가입</button>
-							<button data-bb-handler="confirm" id="btnOK" type="button"
+							<button data-bb-handler="cancel" id="btnJoin" type="button"
+								class="btn btn-default">회원가입</button>
+							<button data-bb-handler="confirm" id="btnLogin" type="button"
 								class="btn btn-primary">로그인하기</button>
 						</c:when>
 						<c:otherwise>
-							<button data-bb-handler="confirm" id="btnOK" type="button"
+							<button data-bb-handler="confirm" id="btnLogout" type="button"
 								class="btn btn-primary">로그아웃</button>
 						</c:otherwise>
 					</c:choose>
@@ -361,11 +361,14 @@
 <script>
 	$(document).ready(function() {
 		$('#myModal').modal();
-		$('#btnOK').click(function() {
+		$('#btnLogin').click(function() {
 			goLogin();
 		});
-		$('#btnCancel').click(function() {
+		$('#btnJoin').click(function() {
 			$('#myModal').modal('hide')
+		});
+		$('#btnLogout').click(function() {
+			geLogout();
 		});
 		$('.owl-carousel').owlCarousel({
 			margin : 10,
@@ -490,6 +493,10 @@
 		
 	function goLogin() {
 		location.href = "login.do"
+	}
+	
+	function goLogout() {
+		location.href = "logout.do"
 	}
 
 	lineMultiChart = function(file) {
