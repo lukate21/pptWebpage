@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper
+	PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="company">
+	<insert id="insertComList" parameterType="java.util.Map">
+		insert into company(NO, NAME, CODE, stock_type) 
+		values(COMPANY_SEQ.nextVal, #{name}, #{code}, #{stockType})
+	</insert>
+
+	<select id="selectComList" resultType="companyVO">
+		select no, name, code, stock_type as stockType
+		from company
+		order by no
+	</select>
+	
+	<select id="selectCom" parameterType="companyVO" resultType="companyVO">
+		select no, name, code, stock_type as stockType
+		from company
+		<where>
+			<if test="name != null">
+				name = #{name} 
+			</if>
+			<if test="code != null">
+				and code = #{code} 
+			</if>
+		</where>
+	</select>
+	
+	<select id="selectStockList" parameterType="String" resultType="stockVO">
+		select stock.no, com_no as comNo, open_date as openDate, open_price as open, close_price as close, high_price as high, low_price as low, volume, fluc_state as flucState, raise, rate
+		from stock, (select no from company where name=#{comName}) company
+		where stock.com_no = company.no
+	</select>
+	
+	<select id="selectRTA" parameterType="String" resultType="rtaVO">
+		select RT_ANALISYS.no, company.name as comName, ana_code as anaCode, news_code as newsCode, today_fluc as todayFluc, tomorrow_fluc as tomorrowFluc, reg_date as regDate
+		from RT_ANALISYS, company
+		where RT_ANALISYS.com_no = company.no and company.name = #{name}
+	</select>
+</mapper>

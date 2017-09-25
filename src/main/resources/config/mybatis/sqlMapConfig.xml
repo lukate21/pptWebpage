@@ -5,5 +5,8 @@
 <configuration>
 	<typeAliases>
 		<typeAlias alias="memberVO" type="kr.co.ppt.vo.MemberVO" />
+		<typeAlias alias="companyVO" type="kr.co.ppt.vo.CompanyVO" />
+		<typeAlias alias="stockVO" type="kr.co.ppt.vo.StockVO" />
+		<typeAlias alias="rtaVO" type="kr.co.ppt.vo.RTAVO" />
 	</typeAliases>
 </configuration>
