@@ -238,7 +238,7 @@
 		}else{
 			comName = $('input.typeahead')[1].value;
 		}
-		var tag = '<iframe src="${context}/company/chart.do?name='+comName+'" width="100%" height="630px" frameBorder="0"></iframe>'
+		var tag = '<iframe src="${context}/company/chart.do?name='+comName+'" width="100%" height="700px" frameBorder="0"></iframe>'
 		$('#chart').html(tag);
 		$.ajax({
 			url : "${context}/crawler/comNews.json?name="+comName,

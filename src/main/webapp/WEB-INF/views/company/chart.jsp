@@ -239,7 +239,7 @@
 					stockLegend1.markerType = "none";
 					stockPanel1.stockLegend = stockLegend1;
 		
-		
+					/* 
 					// second stock panel
 					var stockPanel2 = new AmCharts.StockPanel();
 					stockPanel2.title = "Volume";
@@ -259,6 +259,8 @@
 		
 					// set panels to the chart
 					chart.panels = [stockPanel1, stockPanel2];
+					 */
+					chart.panels = [stockPanel1];
 		
 		
 					// OTHER SETTINGS ////////////////////////////////////
