@@ -66,11 +66,16 @@ public class CompanyController {
 			timeFrame = "1_DAY";//디폴트 하루
 		}
 		if(companyVO.getCode() != null){
-			comCode = companyVO.getCode().split("\\.")[0] + ":ks";
-			System.out.println(comCode);
+			if(companyVO.getCode().toUpperCase().equals("KOSPI"))
+				comCode = "KOSPI:IND";  
+			else if(companyVO.getCode().toUpperCase().equals("KOSPI2"))
+				comCode = "KOSPI2:IND";
+			else if(companyVO.getCode().toUpperCase().equals("KOSDAQ"))
+				comCode = "KOSDAQ:IND";
+			else
+				comCode = companyVO.getCode().split("\\.")[0] + ":ks";
 		}else if(companyVO.getName() != null && companyVO.getCode() == null){
 			comCode = cService.selectCom(companyVO).getCode().split("\\.")[0] + ":ks";
-			System.out.println(comCode);
 		}
 		try {
 			URL url = new URL("https://www.bloomberg.com/markets/api/bulk-time-series/price/"+comCode+"?timeFrame="+timeFrame);
