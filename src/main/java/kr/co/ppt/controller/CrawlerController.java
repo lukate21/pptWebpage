@@ -36,4 +36,12 @@ public class CrawlerController {
 			return cService.recentNews(newsCode, Integer.parseInt(num)).toJSONString();
 		}
 	}
+	
+	@RequestMapping("comNews.json")
+	@ResponseBody
+	public String comNews(String name,String num) {
+		if(num==null)
+			num="5";//default 5;
+		return cService.comNews(name,Integer.parseInt(num)).toJSONString();
+	}
 }
