@@ -14,7 +14,9 @@ import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import kr.co.ppt.serviceImpl.CompanyServiceImpl;
@@ -25,6 +27,27 @@ import kr.co.ppt.vo.CompanyVO;
 public class CompanyController {
 	@Autowired
 	CompanyServiceImpl cService;
+	
+	@RequestMapping(value="/search.do",method=RequestMethod.GET)
+	public String search(Model model){
+		model.addAttribute("name", "KOSPI2");
+		model.addAttribute("comList", cService.selectComList());
+		return "company/search";
+	}
+	
+	@RequestMapping(value="/search.do",method=RequestMethod.POST)
+	public String search(Model model, String name){
+		model.addAttribute("name", name);
+		return "company/search";
+	}
+	
+	@RequestMapping("/chart.do")
+	public String chart(Model model, String name){
+		model.addAttribute("name", name);
+		model.addAttribute("RTA", cService.selectRTA(name, null));
+		return "company/chart";
+	}
+	
 	
 	@RequestMapping("/selectCompanyList.json")
 	@ResponseBody
@@ -66,16 +89,16 @@ public class CompanyController {
 			timeFrame = "1_DAY";//디폴트 하루
 		}
 		if(companyVO.getCode() != null){
-			if(companyVO.getCode().toUpperCase().equals("KOSPI"))
+			comCode = companyVO.getCode().split("\\.")[0] + ":ks";
+		}else if(companyVO.getName() != null && companyVO.getCode() == null){
+			if(companyVO.getName().toUpperCase().equals("KOSPI"))
 				comCode = "KOSPI:IND";  
-			else if(companyVO.getCode().toUpperCase().equals("KOSPI2"))
+			else if(companyVO.getName().toUpperCase().equals("KOSPI2"))
 				comCode = "KOSPI2:IND";
-			else if(companyVO.getCode().toUpperCase().equals("KOSDAQ"))
+			else if(companyVO.getName().toUpperCase().equals("KOSDAQ"))
 				comCode = "KOSDAQ:IND";
 			else
-				comCode = companyVO.getCode().split("\\.")[0] + ":ks";
-		}else if(companyVO.getName() != null && companyVO.getCode() == null){
-			comCode = cService.selectCom(companyVO).getCode().split("\\.")[0] + ":ks";
+				comCode = cService.selectCom(companyVO).getCode().split("\\.")[0] + ":ks";
 		}
 		try {
 			URL url = new URL("https://www.bloomberg.com/markets/api/bulk-time-series/price/"+comCode+"?timeFrame="+timeFrame);
