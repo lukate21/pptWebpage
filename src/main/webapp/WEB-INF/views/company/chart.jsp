@@ -5,27 +5,23 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<!-- Main import -->
+<meta name="description" content="overview &amp; stats" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0" />
 <!-- bootstrap & fontawesome -->
-<link rel="stylesheet" href="${context }/assets/css/bootstrap.min.css" />
-<link rel="stylesheet" href="${context }/assets/font-awesome/4.5.0/css/font-awesome.min.css" />
-<!-- page specific plugin styles -->
+<link rel="stylesheet" href="${context}/resources/assets/css/bootstrap.min.css" />
+<link rel="stylesheet" href="${context}/resources/assets/font-awesome/4.5.0/css/font-awesome.min.css" />
 <!-- text fonts -->
-<link rel="stylesheet" href="${context }/assets/css/fonts.googleapis.com.css" />
+<link rel="stylesheet" href="${context}/resources/assets/css/fonts.googleapis.com.css" />
 <!-- ace styles -->
-<link rel="stylesheet" href="${context }/assets/css/ace.min.css" class="ace-main-stylesheet" id="main-ace-style" />
-<!--[if lte IE 9]>
-	<link rel="stylesheet" href="assets/css/ace-part2.min.css" class="ace-main-stylesheet" />
-<![endif]-->
-<link rel="stylesheet" href="${context }/assets/css/ace-skins.min.css" />
-<link rel="stylesheet" href="${context }/assets/css/ace-rtl.min.css" />
-
-<!--[if lte IE 9]>
-<link rel="stylesheet" href="assets/css/ace-ie.min.css" />
-<![endif]-->
-<!-- inline styles related to this page -->
-<script src="${context}/assets/js/jquery-2.1.4.min.js"></script>
+<link rel="stylesheet" href="${context}/resources/assets/css/ace.min.css" class="ace-main-stylesheet" id="main-ace-style" />
+<link rel="stylesheet" href="${context}/resources/assets/css/ace-skins.min.css" />
+<link rel="stylesheet" href="${context}/resources/assets/css/ace-rtl.min.css" />
 <!-- ace settings handler -->
-<script src="${context }/assets/js/ace-extra.min.js"></script>
+<script src="${context}/resources/assets/js/ace-extra.min.js"></script>
+<!------------------------------------------------------------------------------------------------------------------------->
+<!-- inline styles related to this page -->
+<script src="${context}/resources/assets/js/jquery-2.1.4.min.js"></script>
 <!-- chart -->
 <script src="${context}/resources/amstockchart_3.21.6.free/amcharts/amcharts.js" type="text/javascript"></script>
 <script src="${context}/resources/amstockchart_3.21.6.free/amcharts/serial.js" type="text/javascript"></script>
@@ -729,11 +725,11 @@
 		if('ontouchstart' in document.documentElement) document.write("<script src='assets/js/jquery.mobile.custom.min.js'>"+"<"+"/script>");
 	</script>
 	 -->
-	<script src="${context }/assets/js/bootstrap.min.js"></script>
+	<script src="${context}/resources/assets/js/bootstrap.min.js"></script>
 
 	<!-- ace scripts -->
-	<script src="${context }/assets/js/ace-elements.min.js"></script>
-	<script src="${context }/assets/js/ace.min.js"></script>
+	<script src="${context}/resources/assets/js/ace-elements.min.js"></script>
+	<script src="${context}/resources/assets/js/ace.min.js"></script>
 	
 	<!-- Modal -->
 	<div class="modal fade">

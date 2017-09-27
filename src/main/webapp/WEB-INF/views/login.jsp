@@ -9,26 +9,28 @@
 <title>PPT-제법 쓸만한 예측 툴</title>
 
 <!-- Main import -->
-<!-- Zerif -->
-<link rel="stylesheet" href="${pageContext.request.contextPath }/resources/zerif/css/bootstrap.min.css">
-<%-- <link rel="stylesheet" href="${pageContext.request.contextPath }/resources/zerif/css/owl.theme.css">
-<link rel="stylesheet" href="${pageContext.request.contextPath }/resources/zerif/css/owl.carousel.css"> --%>
-<link rel="stylesheet" href="${pageContext.request.contextPath }/resources/zerif/css/jquery.vegas.min.css">
-<link rel="stylesheet" href="${pageContext.request.contextPath }/resources/zerif/css/animate.min.css">
-<link href="${pageContext.request.contextPath }/resources/zerif/css/style.css" rel="stylesheet">
-<link href="${pageContext.request.contextPath }/resources/zerif/css/response.css" rel="stylesheet">
-<link href="${pageContext.request.contextPath }/resources/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
-<script src="${context}/assets/js/jquery-2.1.4.min.js"></script>
+<meta name="description" content="overview &amp; stats" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0" />
+<!-- bootstrap & fontawesome -->
+<link rel="stylesheet" href="${context}/resources/assets/css/bootstrap.min.css" />
+<link rel="stylesheet" href="${context}/resources/assets/font-awesome/4.5.0/css/font-awesome.min.css" />
 <!-- text fonts -->
-<link rel="stylesheet" href="${context}/assets/css/fonts.googleapis.com.css" />
+<link rel="stylesheet" href="${context}/resources/assets/css/fonts.googleapis.com.css" />
 <!-- ace styles -->
-<link rel="stylesheet" href="${context}/assets/css/ace.min.css" class="ace-main-stylesheet" id="main-ace-style" />
-<!------------------------------------------------------------------------------------------------------------------------------------>
+<link rel="stylesheet" href="${context}/resources/assets/css/ace.min.css" class="ace-main-stylesheet" id="main-ace-style" />
+<link rel="stylesheet" href="${context}/resources/assets/css/ace-skins.min.css" />
+<link rel="stylesheet" href="${context}/resources/assets/css/ace-rtl.min.css" />
+<!-- ace settings handler -->
+<script src="${context}/resources/assets/js/ace-extra.min.js"></script>
+<script src="${context}/resources/assets/js/jquery-2.1.4.min.js"></script>
+<!------------------------------------------------------------------------------------------------------------------------->
 </head>
-<body id="body">
+<body class="no-skin">
 	<jsp:include page="include/top-menu.jsp"></jsp:include>
+	<jsp:include page="include/side-menu.jsp"></jsp:include>
 	<br/><br/><br/>
-	<div class="works">
+	<div class="main-content">
+		<div class="main-content-inner">
 		<div class="row">
 			<div class="col-sm-12">
 					<div align="center">
@@ -59,7 +61,8 @@
 			</div>
 		</div>
 	</div>
-
+</div>
+</div>
 	<!--========== FOOTER ==========-->
 	<footer>
 		<jsp:include page="include/bottom.jsp"></jsp:include>
