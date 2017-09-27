@@ -6,9 +6,6 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 
-<script src="${context}/resources/amstockchart_3.21.6.free/amcharts/amcharts.js" type="text/javascript"></script>
-<script src="${context}/resources/amstockchart_3.21.6.free/amcharts/serial.js" type="text/javascript"></script>
-<script src="${context}/resources/amstockchart_3.21.6.free/amcharts/amstock.js" type="text/javascript"></script>
 <!-- bootstrap & fontawesome -->
 <link rel="stylesheet" href="${context }/assets/css/bootstrap.min.css" />
 <link rel="stylesheet" href="${context }/assets/font-awesome/4.5.0/css/font-awesome.min.css" />
@@ -27,13 +24,20 @@
 <link rel="stylesheet" href="assets/css/ace-ie.min.css" />
 <![endif]-->
 <!-- inline styles related to this page -->
-
+<script src="${context}/assets/js/jquery-2.1.4.min.js"></script>
 <!-- ace settings handler -->
 <script src="${context }/assets/js/ace-extra.min.js"></script>
 <!-- chart -->
+<script src="${context}/resources/amstockchart_3.21.6.free/amcharts/amcharts.js" type="text/javascript"></script>
+<script src="${context}/resources/amstockchart_3.21.6.free/amcharts/serial.js" type="text/javascript"></script>
+<script src="${context}/resources/amstockchart_3.21.6.free/amcharts/amstock.js" type="text/javascript"></script>
 <link rel="stylesheet" href="${context }/resources/amcharts_3.21.6.free/images/style.css" type="text/css">
 <script src="${context }/resources/amcharts_3.21.6.free/amcharts/amcharts.js" type="text/javascript"></script>
 <script src="${context }/resources/amcharts_3.21.6.free/amcharts/serial.js" type="text/javascript"></script>
+<!-- wordCloud -->
+<script src="${pageContext.request.contextPath }/resources/d3.min.js"></script>
+<script src="${pageContext.request.contextPath }/resources/d3.layout.cloud.js"></script>
+<script type="text/javascript" src="${pageContext.request.contextPath }/resources/word-cloud.js"></script>
 </head>
 <body style="margin:auto">
 	<div class="page-content">
@@ -47,38 +51,17 @@
 				<div class="pull-left width-50">
 					<div class="ace-settings-item" style="cursor: pointer;">
 						<span class="badge badge-success" onclick="drawChart('1_DAY')">1일</span>
-					</div>
-					<div class="ace-settings-item" style="cursor: pointer;">
 						<span class="badge badge-success" onclick="drawChart2('1_MONTH')">1개월</span>
-					</div>
-					<div class="ace-settings-item" style="cursor: pointer;">
 						<span class="badge badge-success" onclick="drawChart2('1_YEAR')">1년</span>
 					</div>
 					<div class="ace-settings-item" style="cursor: pointer;">
-						<span class="badge badge-success" onclick="respons('newsCode')">뉴스 카테고리별 예측 확률</span>
+						<span class="badge badge-info" onclick="respons('newsCode')">뉴스 카테고리별 예측 확률</span>
 					</div>
 					<div class="ace-settings-item" style="cursor: pointer;">
-						<span class="badge badge-success" onclick="respons('anaCode')">분석 방법별 예측 확률</span>
+						<span class="badge badge-warning" onclick="respons('anaCode')">분석 방법별 예측 확률</span>
 					</div>
-
-					<div class="ace-settings-item">
-						<input type="button" class="ace ace-checkbox-2 ace-save-state"
-							id="ace-settings-breadcrumbs" autocomplete="off" /> <label
-							class="lbl" for="ace-settings-breadcrumbs"> Fixed
-							Breadcrumbs</label>
-					</div>
-
-					<div class="ace-settings-item">
-						<input type="checkbox" class="ace ace-checkbox-2"
-							id="ace-settings-rtl" autocomplete="off" /> <label class="lbl"
-							for="ace-settings-rtl"> Right To Left (rtl)</label>
-					</div>
-
-					<div class="ace-settings-item">
-						<input type="checkbox" class="ace ace-checkbox-2 ace-save-state"
-							id="ace-settings-add-container" autocomplete="off" /> <label
-							class="lbl" for="ace-settings-add-container"> Inside <b>.container</b>
-						</label>
+					<div class="ace-settings-item" style="cursor: pointer;">
+						<span class="badge badge-danger" onclick="wordCloud()">단어 사전</span>
 					</div>
 				</div>
 				<!-- /.pull-left -->
@@ -114,14 +97,32 @@
 				<span id="now"></span>
 				<span id="raise"></span>
 				<span id="rate"></span>
+				예측 : <span id="predict"></span>
 			</div>
 		</div>
 	
-		<div id="chartdiv" class="col-sm-12" style="height:600px;"></div>
+		<div id="chartdiv" class="col-sm-12" style="height:500px;"></div>
 	</div>
-	<script src="${context}/assets/js/jquery-2.1.4.min.js"></script>
+	
 	<script>
 	drawChart('1_DAY');
+	var RTA = ${RTA};
+	var pCnt = 0;
+	var mCnt = 0;
+	for(var i in RTA){
+		if(RTA[i].todayFluc == "p")
+			pCnt++;
+		else if(RTA[i].todayFluc == "m")
+			mCnt++;
+	}
+	var predicValue;
+	if(pCnt>mCnt){
+		$('#predict').text('+'+(pCnt/(pCnt+mCnt)*100).toFixed(0)+'%');
+	}else if(pCnt<mCnt){
+		$('#predict').text('-'+(mCnt/(pCnt+mCnt)*100).toFixed(0)+'%');
+	}else{
+		$('#predict').text('-');
+	}
 	function drawChart(timeFrame){
 		$.ajax({
 			url : '${context}/company/rtStock.json?name=${name}&timeFrame='+timeFrame,
@@ -129,29 +130,6 @@
 				var obj = JSON.parse(data)[0];
 				var chartData = obj.price;
 				console.log(chartData);
-				var RTA = ${RTA};
-				var pCnt = 0;
-				var mCnt = 0;
-				/* for(var i in RTA){
-					if(RTA[i].todayFluc == "p")
-						pCnt++;
-					else if(RTA[i].todayFluc == "m")
-						mCnt++;
-				}
-				var predicValue;
-				if(pCnt>mCnt){
-					predicValue = chartData[0].value*1.03;
-				}else if(pCnt<mCnt){
-					predicValue = chartData[0].value*0.97;
-				}else{
-					predicValue = chartData[0].value;
-				}
-				if(!chartData[(chartData.length-1)].dateTime.includes('T06:30:00Z')){
-					chartData.push({
-						dateTime :chartData[0].dateTime.split("T")[0] + "T06:30:00Z",
-						value : predicValue
-					});
-				} */
 				var start = chartData[0].value;
 				var now = chartData[chartData.length-1].value;
 				$('#now').text(now);
@@ -444,11 +422,8 @@
 	}
 	function respons(option){
 		var chart;
-		var RTA = ${RTA};
 		//카테고리별 오늘 상승/하락/동결 - 카테고리별 내일 상승/하락/동결
 		var map = new Map();
-		var pCnt = 0;
-		var mCnt = 0;
 		var chartData = [];
 		if(option == 'newsCode'){
 			for(var i in RTA){
@@ -736,7 +711,19 @@
             $('a').remove();
 		}
     }
+	function wordCloud(){
+		$.ajax({
+			url : 'http://localhost:8080/PPTAnalysisServer/dictionary/mongo/selectOpiDic.do?comName=${name}&opinion=pos&newsCode=economic',
+			success : function(data){
+				var tags = JSON.parse(data);
+				wordCloudUpdate(tags);
+				console.log(tags);
+				$('div.modal').modal();
+			}
+		});
+	}
 	</script>
+	
 	
 	<!-- 
 	<script type="text/javascript">
@@ -748,7 +735,28 @@
 	<!-- ace scripts -->
 	<script src="${context }/assets/js/ace-elements.min.js"></script>
 	<script src="${context }/assets/js/ace.min.js"></script>
-
+	
+	<!-- Modal -->
+	<div class="modal fade">
+	  <div class="modal-dialog">
+	    <div class="modal-content">
+	    	<div class="modal-header">
+				<!-- 닫기(x) 버튼 -->
+				<button type="button" class="close" data-dismiss="modal">x</button>
+				<!-- header title -->
+				<h4 class="modal-title">Login Dialog</h4>
+			</div>
+			<!-- body -->
+			<div class="modal-body">
+				<div id="vis" style="width: 100%"></div>
+			</div>
+			<!-- Footer -->
+			<div class="modal-footer">
+				<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+			</div>
+	    </div>
+	  </div>
+	</div>
 </body>
 </html>
 

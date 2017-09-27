@@ -28,6 +28,12 @@ public class CompanyController {
 	@Autowired
 	CompanyServiceImpl cService;
 	
+	@RequestMapping("/wordcloud.do")
+	public String wordCloud(Model model,String name){
+		model.addAttribute("name", name);
+		return "my/wordcloud";
+	}
+	
 	@RequestMapping(value="/search.do",method=RequestMethod.GET)
 	public String search(Model model){
 		model.addAttribute("name", "KOSPI2");
@@ -62,12 +68,6 @@ public class CompanyController {
 			result.add(jsonObj);			
 		}
 		return result.toJSONString();
-	}
-	
-	@ResponseBody
-	@RequestMapping("news.json")
-	public void getComNews(){
-		
 	}
 	
 	@ResponseBody

@@ -1,12 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
-
 <!DOCTYPE html>
-<!--
-To change this license header, choose License Headers in Project Properties.
-To change this template file, choose Tools | Templates
-and open the template in the editor.
--->
 <html>
 <head>
 <title>TODO supply a title</title>
@@ -17,22 +11,22 @@ and open the template in the editor.
 <script src="${pageContext.request.contextPath }/assets/js/jquery-2.1.4.min.js"></script>
 </head>
 <body>
-	<div id="vis"></div>
-	
+		<div id="vis" style="width: 100%"></div>
 	<script>
 	$.ajax({
-		url : 'http://localhost:8080/PPTAnalysisServer/dictionary/mongo/selectOpiDic.do?comName=AK홀딩스&opinion=pos&newsCode=economic',
+		url : 'http://localhost:8080/PPTAnalysisServer/dictionary/mongo/selectOpiDic.do?comName=${name}&opinion=pos&newsCode=economic',
 		success : function(data){
 			var tags = JSON.parse(data);
-			update(tags);
+			wordCloudUpdate(tags);
 			console.log(tags);
 			window.onresize = function(event) {
-				update(tags);
+				wordCloudUpdate(tags);
 			}
 		}
 	});
 	</script>
-	<%-- <script src="${pageContext.request.contextPath }/resources/cloud.min.js"></script> --%>
-	<script type="text/javascript" src="${pageContext.request.contextPath }/resources/word-cloud.js"></script>
+		<%-- <script src="${pageContext.request.contextPath }/resources/cloud.min.js"></script> --%>
+		<script type="text/javascript"
+			src="${pageContext.request.contextPath }/resources/word-cloud.js"></script>
 </body>
 </html>

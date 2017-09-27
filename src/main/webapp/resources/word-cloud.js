@@ -59,7 +59,7 @@ function draw(data, bounds) {
 			"translate(" + [ w >> 1, h >> 1 ] + ")scale(" + scale + ")");
 }
 
-function update(tags) {
+function wordCloudUpdate(tags) {
 	layout.font('impact').spiral('archimedean');
 	fontSize = d3.scale['sqrt']().range([ 10, 100 ]);
 	if (tags.length) {
