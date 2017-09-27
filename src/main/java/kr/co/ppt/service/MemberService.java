@@ -9,4 +9,5 @@ public interface MemberService {
 	public int join(MemberVO member);
 	public int idCheck(MemberVO member);
 	public int passwordCheck(String password);
+	public MemberVO getUserInfo(MemberVO member);
 }

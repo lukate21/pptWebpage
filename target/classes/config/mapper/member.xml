@@ -11,7 +11,7 @@
 	</insert>
 	
 	<select id="login" parameterType="memberVO" resultType="memberVO">
-		select id, domain, password
+		select id, domain, password, name, tel
 		from users
 		where id=#{id} and domain=#{domain} and password=#{password}
 	</select>
@@ -26,5 +26,11 @@
 		select password
 		from users
 		where password=#{password}
+	</select>
+	
+	<select id="getUserInfo" parameterType="memberVO" resultType="memberVO">
+		select id, domain, password
+		from users
+		where id=#{id} and domain=#{domain} and password=#{password}
 	</select>
 </mapper>

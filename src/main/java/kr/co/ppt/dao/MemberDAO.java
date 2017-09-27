@@ -24,4 +24,6 @@ public interface MemberDAO {
 	
 	// password확인
 	String passwordCheck(String password);
+	
+	MemberVO getUserInfo(MemberVO member);
 }
