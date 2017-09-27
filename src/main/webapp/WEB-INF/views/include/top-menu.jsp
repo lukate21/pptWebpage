@@ -45,7 +45,7 @@
 									${sessionScope.loginUser.id }
 								</a>
 								<ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu1">
-									<li role="presentation"><a role="menuitem" tabindex="-1" href="${context}/myPage.do">마이페이지</a></li>
+									<li role="presentation"><a role="menuitem" tabindex="-1" href="${context}/myPage.do">정보수정</a></li>
 									<li role="presentation"><a role="menuitem" tabindex="-1" href="${context}/logout.do">로그아웃</a></li>
 								</ul>
 							</li>

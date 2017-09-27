@@ -56,5 +56,12 @@ public class MemberDAOImpl implements MemberDAO {
 		String pCheck = sqlSession.selectOne("memDAO.passwordCheck", password);
 		return pCheck;
 	}
+
+	@Override
+	public MemberVO getUserInfo(MemberVO member) {
+		MemberVO memberVO = sqlSession.selectOne("memDAO.getUserInfo", member);
+		return memberVO;
+	}
+
 	
 }

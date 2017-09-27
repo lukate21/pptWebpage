@@ -161,9 +161,23 @@ public class HomeController {
 	}
 	
 	@RequestMapping(value="myPage.do", method=RequestMethod.POST)
-	public String modifyPage(String id, String domain, String password) {
+	public String modifyPage(String id, String domain, String password, HttpServletRequest request) {
+		String email = id+"@"+domain;
+		System.out.println(email);
+		MemberVO member = makeBasicInfo(email, password);
+		System.out.println(member);
 		
-		return "myPage";	
+		MemberVO loginUser = memberService.getUserInfo(member);
+		if(loginUser != null)
+			return "myPage";
+		else {
+			String msg = "일치하는 정보가 없습니다.";
+			String ref = "myPage.do";
+			request.setAttribute("msg", msg);
+			request.setAttribute("ref", ref);
+			
+			return "messageAlert";
+		}
 	}
 	@ResponseBody
 	@RequestMapping("stock.json")
