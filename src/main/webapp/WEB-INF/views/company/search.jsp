@@ -9,6 +9,7 @@
 
 <title>PPT-제법 쓸만한 예측 툴</title>
 
+<!-- Main import -->
 <!-- Zerif -->
 <link rel="stylesheet" href="${pageContext.request.contextPath }/resources/zerif/css/bootstrap.min.css">
 <link rel="stylesheet" href="${pageContext.request.contextPath }/resources/zerif/css/owl.theme.css">
@@ -23,6 +24,7 @@
 <link rel="stylesheet" href="${context}/assets/css/fonts.googleapis.com.css" />
 <!-- ace styles -->
 <link rel="stylesheet" href="${context}/assets/css/ace.min.css" class="ace-main-stylesheet" id="main-ace-style" />
+<!------------------------------------------------------------------------------------------------------------------------------------>
 
 <!-- page specific plugin styles -->
 <link rel="stylesheet" href="${context}/assets/css/bootstrap-duallistbox.min.css" />
@@ -33,60 +35,6 @@
 <script src="${context}/assets/js/ace-extra.min.js"></script>
 </head>
 <body>
-	<div class="preloader" style="display: none;">
-	  <div class="status" style="display: none;">&nbsp;</div>
-	</div>
-	<header class="header navbar-fixed-top">
-		<!-- Navbar -->
-		<div id="main-nav" class="navbar navbar-inverse bs-docs-nav" role="banner">
-			<div class="container">
-				<nav class="navbar-collapse collapse" role="navigation" id="bs-navbar-collapse">
-					<!-- Brand and toggle get grouped for better mobile display -->
-						<!-- Logo -->
-							<a class="logo-wrap" href="${context }/hello.do"> <img class="logo-img"
-								src="${context}/assets/acecv/img/logo.png" alt="Asentus Logo">
-							</a>
-						<!-- End Logo -->
-	
-					<!-- Collect the nav links, forms, and other content for toggling -->
-							<ul class="nav navbar-nav navbar-right responsive-nav main-nav-list">
-								<li class="js_nav-item nav-item">
-									<a class="nav-item-child nav-item-hover" href="${context }/hello.do">HOME</a>
-								</li>
-								<li class="js_nav-item nav-item">
-									<a class="nav-item-child nav-item-hover" href="#">기업검색</a>
-								</li>
-								<li class="js_nav-item nav-item">
-									<a class="nav-item-child nav-item-hover" href="#">사용자포트폴리오</a>
-								</li>
-								<li class="js_nav-item nav-item">
-									<a class="nav-item-child nav-item-hover" href="#">증권거래소</a>
-								</li>
-								<c:choose>
-								<c:when test="${ empty sessionScope.loginUser}">
-									<li class="js_nav-item nav-item">
-										<a class="nav-item-child nav-item-hover" href="login.do">로그인</a>
-									</li>
-								</c:when>
-								<c:otherwise>
-									<li class="js_nav-item nav-item">
-										<a class="nav-item-child nav-item-hover" href="myPage.do">마이페이지</a>
-									</li>
-									<li class="js_nav-item nav-item">
-										<a class="nav-item-child nav-item-hover" href="logout.do">로그아웃</a>
-									</li>
-								</c:otherwise>
-								</c:choose>
-							</ul>
-				<!-- End Navbar Collapse -->
-			</nav>
-		</div>
-		<!-- Navbar -->
-		</div>
-	</header>
-
-	<!--========== PAGE LAYOUT ==========-->
-
 	<!-- Experience -->
 	<div class="content-lg">
 		<div class="main-container ace-save-state">
@@ -127,32 +75,6 @@
 <!-- javascript file -->
 <script src="https://d3js.org/d3.v4.min.js"></script>
 <%-- <script src="${context}/assets/js/bootbox.js"></script> --%>
-
-<!-- CORE PLUGINS -->
-<!-- (Load javascripts at bottom, this will reduce page load time) -->
-
-<script src="${context}/assets/js/bootstrap.min.js"></script>
-<script src="${context}/assets/acecv/vendor/jquery-migrate.min.js" type="text/javascript"></script>
-
-<!-- PAGE LEVEL PLUGINS -->
-<%-- <script src="${context}/assets/acecv/vendor/jquery.easing.js" type="text/javascript"></script>
-<script src="${context}/assets/acecv/vendor/jquery.back-to-top.js" type="text/javascript"></script>
-<script src="${context}/assets/acecv/vendor/jquery.smooth-scroll.js" type="text/javascript"></script>
-<script src="${context}/assets/acecv/vendor/jquery.parallax.min.js"	type="text/javascript"></script> --%>
-<script src="${context}/assets/acecv/vendor/jquery.appear.js" type="text/javascript"></script>
-<script src="${context}/assets/acecv/vendor/jquery.wow.min.js" type="text/javascript"></script>
-<script	src="${context}/assets/acecv/vendor/swiper/js/swiper.jquery.min.js"	type="text/javascript"></script>
-
-<!-- PAGE LEVEL SCRIPTS -->
-<%-- <script src="${context}/assets/acecv/js/layout.js" type="text/javascript"></script> --%>
-<script src="${context}/assets/acecv/js/components/progress-bar.min.js"	type="text/javascript"></script>
-<script src="${context}/assets/acecv/js/components/wow.min.js" type="text/javascript"></script>
-<script src="${context}/assets/acecv/js/components/swiper.min.js" type="text/javascript"></script>
-
-<!-- Image Slider -->
-<script src="${context}/assets/owlcarousel/owl.carousel.js"></script>
-
-<script src="${context}/assets/js/bootstrap.min.js"></script>
 
 <!-- page specific plugin scripts -->
 <script src="${context}/assets/js/jquery.bootstrap-duallistbox.min.js"></script>
@@ -284,13 +206,5 @@
 			
 		});
 	</script>
-	<script src="${pageContext.request.contextPath }/resources/zerif/js/bootstrap.min.js"></script>
-<script src="${pageContext.request.contextPath }/resources/zerif/js/wow.min.js"></script>
-<script src="${pageContext.request.contextPath }/resources/zerif/js/jquery.nav.js"></script>
-<script src="${pageContext.request.contextPath }/resources/zerif/js/jquery.knob.js"></script>
-<script src="${pageContext.request.contextPath }/resources/zerif/js/owl.carousel.min.js"></script>
-<%-- <script src="${pageContext.request.contextPath }/resources/js/menu/smoothscroll.js"></script> --%>
-<script src="${pageContext.request.contextPath }/resources/zerif/js/jquery.vegas.min.js"></script>
-<script src="${pageContext.request.contextPath }/resources/zerif/js/zerif.js"></script>
 </body>
 </html>
