@@ -15,12 +15,12 @@ html {
 
 body {
 	font-family: 'Lato', sans-serif !important;
-	font-size: 14px;
+	font-size: 30px;
 	color: #808080;
 	font-weight: normal;
 	overflow-x: hidden !important;
 	line-height: 25px;
-	text-align: center;
+	text-align: left;
 }
 
 /* Internet Explorer 10 in Windows 8 and Windows Phone 8 Bug fix */
@@ -57,15 +57,15 @@ li {
 }
 /* Selection colours (easy to forget) */
 ::-moz-selection {
-	background: #FC6D6D;
+	background: #65CAE2;
 	color: #FFF;
 }
 ::selection {
-	background: #FC6D6D;
+	background: #65CAE2;
 	color: #FFF;
 }
 ::-moz-selection {
-	background: #FC6D6D;
+	background: #65CAE2;
 	color: #FFF;
 }
 
@@ -304,7 +304,7 @@ h6 {
 /*---------------------------------------
  **   FORM                           -----
 -----------------------------------------*/
-
+/* 
 .input-box {
 	border: 0;
 	width: 274px;
@@ -340,7 +340,7 @@ input:focus {
         border:none !important;
   -webkit-box-shadow:none !important;
           box-shadow:none !important;
-        }
+        } */
 
 /*---------------------------------------
  **   SECTION HEADERS                -----

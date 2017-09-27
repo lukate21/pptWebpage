@@ -155,6 +155,16 @@ public class HomeController {
 		return "messageAlert";
 	}
 	
+	@RequestMapping(value="myPage.do", method=RequestMethod.GET)
+	public String myPage() {
+		return "myPageCheck";
+	}
+	
+	@RequestMapping(value="myPage.do", method=RequestMethod.POST)
+	public String modifyPage(String id, String domain, String password) {
+		
+		return "myPage";	
+	}
 	@ResponseBody
 	@RequestMapping("stock.json")
 	public void getStock(){

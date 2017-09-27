@@ -6,32 +6,29 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<meta name="description" content="responsive photo gallery using colorbox" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0" />
 
 <title>PPT-제법 쓸만한 예측 툴</title>
-<link rel="stylesheet" href="${context}/assets/acecv/vendor/bootstrap/css/bootstrap.css" />
-<link rel="stylesheet" href="${context}/assets/font-awesome/4.5.0/css/font-awesome.min.css" />
 
-<!-- GLOBAL MANDATORY STYLES -->
-<link href="http://fonts.googleapis.com/css?family=Hind:300,400,500,600,700"
-	rel="stylesheet" type="text/css">
-<%-- <link href="${context}/assets/acecv/vendor/simple-line-icons/css/simple-line-icons.css"
-	rel="stylesheet" type="text/css" /> --%>
+<!-- Main import -->
+<!-- Zerif -->
+<link rel="stylesheet" href="${context}/resources/zerif/css/bootstrap.min.css">
+<link rel="stylesheet" href="${context}/resources/zerif/css/jquery.vegas.min.css">
+<link rel="stylesheet" href="${context}/resources/zerif/css/animate.min.css">
+<link rel="stylesheet" href="${context}/resources/zerif/css/style.css">
+<link rel="stylesheet" href="${context}/resources/zerif/css/response.css">
+<%-- <link rel="stylesheet" href="${context}/resources/zerif/css/owl.theme.css">
+<link rel="stylesheet" href="${context}/resources/zerif/css/owl.carousel.css"> --%>
 
-<!-- PAGE LEVEL PLUGIN STYLES -->
-<%-- <link href="${context}/assets/acecv/css/animate.css" rel="stylesheet"> --%>
-<link href="${context}/assets/acecv/vendor/swiper/css/swiper.min.css" rel="stylesheet" type="text/css" />
-
-<!-- THEME STYLES -->
-<link href="${context}/assets/acecv/css/layout.min.css" rel="stylesheet" type="text/css" />
-
-<!--  Image Slider -->
-<link rel="stylesheet" href="${context}/assets/owlcarousel/assets/owl.carousel.min.css" />
-<link rel="stylesheet" href="${context}/assets/owlcarousel/assets/owl.theme.default.min.css" />
-
-<!-- Favicon -->
-<link rel="shortcut icon" href="${context}/favicon.ico"/>
+<link href="${context}/resources/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+<script src="${context}/assets/js/jquery-2.1.4.min.js"></script>
+<!-- text fonts -->
+<link rel="stylesheet" href="${context}/assets/css/fonts.googleapis.com.css" />
+<!-- ace styles -->
+<link rel="stylesheet" href="${context}/assets/css/ace.min.css" class="ace-main-stylesheet" id="main-ace-style" />
+<!--  owl.carousel -->
+<link rel="stylesheet" href="${context}/assets/owlcarousel/assets/owl.carousel.css">
+<link rel="stylesheet" href="${context}/assets/owlcarousel/assets/owl.theme.default.css">
+<!------------------------------------------------------------------------------------------------------------------------->
 <style>
 .axis--x path {
 	display: none;
@@ -44,13 +41,13 @@
 }
 </style>
 </head>
-<body id="body" data-spy="scroll" data-target=".header">
+<body>
 	<jsp:include page="include/top-menu.jsp"></jsp:include>
 
 	<!--========== PAGE LAYOUT ==========-->
 
 	<!-- Experience -->
-	<div id="experience">
+	<section class="works">
 		<div class="row">
 			<div class="container content-lg">
 				<div class="col-sm-7">
@@ -190,12 +187,14 @@
 				</div>
 			</div>
 		</div>
-	</div>
+	</section>
 	<!--========== END PAGE LAYOUT ==========-->
 
 	<!--========== FOOTER ==========-->
-	<footer class="footer">
-		<jsp:include page="include/bottom.jsp"></jsp:include>
+	<footer>
+		<div class="container" style="margin-top:100px; width:80%">
+			<jsp:include page="include/bottom.jsp"></jsp:include>
+		</div>
 	</footer>
 
 	<div class="bootbox modal fade bootbox-prompt in" id="myModal"
@@ -236,7 +235,7 @@
 					<div class="bootbox-body">
 						<form class="bootbox-form">
 							<input type="checkbox" class="ace" value="noSee" /> 
-							<span class="lbl">다시 보지 않음</span>
+							<span class="lbl"> 다시 보지 않음</span>
 						</form>
 					</div>
 				</div>
@@ -244,13 +243,13 @@
 					<c:choose>
 						<c:when test="${ empty sessionScope.loginUser}">
 							<button data-bb-handler="cancel" id="btnJoin" type="button"
-								class="btn btn-default">회원가입</button>
+								class="buttons button">회원가입</button>
 							<button data-bb-handler="confirm" id="btnLogin" type="button"
-								class="btn btn-primary">로그인하기</button>
+								class="buttons button blue-btn">로그인&nbsp;</button>
 						</c:when>
 						<c:otherwise>
 							<button data-bb-handler="confirm" id="btnLogout" type="button"
-								class="btn btn-primary">로그아웃</button>
+								class="buttons button blue-btn">로그아웃</button>
 						</c:otherwise>
 					</c:choose>
 				</div>
@@ -260,31 +259,6 @@
 
 <!-- javascript file -->
 <script src="https://d3js.org/d3.v4.min.js"></script>
-<%-- <script src="${context}/assets/js/bootbox.js"></script> --%>
-
-<!-- CORE PLUGINS -->
-<!-- (Load javascripts at bottom, this will reduce page load time) -->
-<script src="${context}/assets/js/jquery-2.1.4.min.js"></script>
-<script src="${context}/assets/js/bootstrap.min.js"></script>
-<script src="${context}/assets/acecv/vendor/jquery-migrate.min.js" type="text/javascript"></script>
-
-<!-- PAGE LEVEL PLUGINS -->
-<%-- <script src="${context}/assets/acecv/vendor/jquery.easing.js" type="text/javascript"></script>
-<script src="${context}/assets/acecv/vendor/jquery.back-to-top.js" type="text/javascript"></script>
-<script src="${context}/assets/acecv/vendor/jquery.smooth-scroll.js" type="text/javascript"></script>
-<script src="${context}/assets/acecv/vendor/jquery.parallax.min.js"	type="text/javascript"></script> --%>
-<script src="${context}/assets/acecv/vendor/jquery.appear.js" type="text/javascript"></script>
-<script src="${context}/assets/acecv/vendor/jquery.wow.min.js" type="text/javascript"></script>
-<script	src="${context}/assets/acecv/vendor/swiper/js/swiper.jquery.min.js"	type="text/javascript"></script>
-
-<!-- PAGE LEVEL SCRIPTS -->
-<%-- <script src="${context}/assets/acecv/js/layout.js" type="text/javascript"></script> --%>
-<script src="${context}/assets/acecv/js/components/progress-bar.min.js"	type="text/javascript"></script>
-<script src="${context}/assets/acecv/js/components/wow.min.js" type="text/javascript"></script>
-<script src="${context}/assets/acecv/js/components/swiper.min.js" type="text/javascript"></script>
-
-<!-- Image Slider -->
-<script src="${context}/assets/owlcarousel/owl.carousel.js"></script>
 <script>
 	$(document).ready(function() {
 		$('#myModal').modal();
@@ -295,7 +269,7 @@
 			$('#myModal').modal('hide')
 		});
 		$('#btnLogout').click(function() {
-			geLogout();
+			goLogout();
 		});
 		$('.owl-carousel').owlCarousel({
 			margin : 10,
@@ -393,28 +367,28 @@
 		});
 	}
 	setHeadline = function(data) {
-		$('#headline').append("<p><a href="+data.link+">"+data.title+"</a><br/></p>");
+		$('#headline').append("<p><h4><a href="+data.link+">"+data.title+"</a><br/></h4></p>");
 	}
 	setSociety = function(data) {
-		$('#societyNews').append("<p><a href="+data.link+">"+data.title+"</a><br/></p>");
+		$('#societyNews').append("<p><h3><a href="+data.link+">"+data.title+"</a><br/></h3></p>");
 	}
 	setPolitics = function(data) {
-		$('#politicsNews').append("<p><a href="+data.link+">"+data.title+"</a><br/></p>");
+		$('#politicsNews').append("<p><h3><a href="+data.link+">"+data.title+"</a><br/></h3></p>");
 	}
 	setEconomic = function(data) {
-		$('#economicNews').append("<p><a href="+data.link+">"+data.title+"</a><br/></p>");
+		$('#economicNews').append("<p><h3><a href="+data.link+">"+data.title+"</a><br/></h3></p>");
 	}
 	setForeign = function(data) {
-		$('#foreignNews').append("<p><a href="+data.link+">"+data.title+"</a><br/></p>");
+		$('#foreignNews').append("<p><h3><a href="+data.link+">"+data.title+"</a><br/></h3></p>");
 	}
 	setCulture = function(data) {
-		$('#cultureNews').append("<p><a href="+data.link+">"+data.title+"</a><br/></p>");
+		$('#cultureNews').append("<p><h3><a href="+data.link+">"+data.title+"</a><br/></h3></p>");
 	}
 	setEntertain = function(data) {
-		$('#entertainNews').append("<p><a href="+data.link+">"+data.title+"</a><br/></p>");
+		$('#entertainNews').append("<p><h3><a href="+data.link+">"+data.title+"</a><br/></h3></p>");
 	}
 	setDigital = function(data) {
-		$('#digitalNews').append("<p><a href="+data.link+">"+data.title+"</a><br/></p>");
+		$('#digitalNews').append("<p><h3><a href="+data.link+">"+data.title+"</a><br/></h3></p>");
 	}
 	
 		
