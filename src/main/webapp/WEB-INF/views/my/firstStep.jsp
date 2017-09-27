@@ -10,6 +10,10 @@
 <title>PPT-제법 쓸만한 예측 툴</title>
 
 <!-- Main import -->
+<!-- text fonts -->
+<link rel="stylesheet" href="${context}/assets/css/fonts.googleapis.com.css" />
+<!-- ace styles -->
+<link rel="stylesheet" href="${context}/assets/css/ace.min.css" class="ace-main-stylesheet" id="main-ace-style" />
 <!-- Zerif -->
 <link rel="stylesheet" href="${pageContext.request.contextPath }/resources/zerif/css/bootstrap.min.css">
 <link rel="stylesheet" href="${pageContext.request.contextPath }/resources/zerif/css/owl.theme.css">
@@ -20,138 +24,68 @@
 <link href="${pageContext.request.contextPath }/resources/zerif/css/response.css" rel="stylesheet">
 <link href="${pageContext.request.contextPath }/resources/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
 <script src="${context}/assets/js/jquery-2.1.4.min.js"></script>
-<!-- text fonts -->
-<link rel="stylesheet" href="${context}/assets/css/fonts.googleapis.com.css" />
-<!-- ace styles -->
-<link rel="stylesheet" href="${context}/assets/css/ace.min.css" class="ace-main-stylesheet" id="main-ace-style" />
-<!------------------------------------------------------------------------------------------------------------------------------------>
 
-<!-- page specific plugin styles -->
+<!------------------------------------------------------------------------------------------------------------------------------------>
 <link rel="stylesheet" href="${context}/assets/css/bootstrap-duallistbox.min.css" />
 <link rel="stylesheet" href="${context}/assets/css/ace-skins.min.css" />
 <link rel="stylesheet" href="${context}/assets/css/ace-rtl.min.css" />
 <script src="${context}/assets/js/ace-extra.min.js"></script>
 </head>
 <body>
-	<jsp:include page="../include/top-menu.jsp" />
-	<!-- Experience -->
-	
-	<div class="content-lg">
-		<div class="main-container ace-save-state">
-			<div class="container">
-				<div class="main-content">
-					<div class="main-content-inner">
-						<div class="page-content">
-							<div class="col-sm-10" id="chart">
-								<iframe src="${context}/company/chart.do?name=${name}" width="100%" height="700px" frameBorder="0">
-								
-								</iframe>
-							</div>
-							<div class="col-sm-2">
-								<div class="row">
-									<div class="form-group">
-										<div class="pos-rel">
-											<input class="typeahead scrollable" type="text"placeholder="기업검색" />
-										</div>
-									</div>
-								</div>
-								<div class="row">
-									<div class="section-seperator margin-b-50">
-										<div class="margin-b-50">
-											<div class="margin-b-30">
-												<h3 id="newsTitle">${name} 뉴스</h3>
-												<div id="news"></div>
-											</div>
-										</div>
-									</div>
-								</div>
-							</div>
-						</div>
-					</div>
-				</div>
+	<div class="row projects">
+		<div id="loader">
+			<div class="loader-icon"></div>
+		</div>
+		<div class="col-md-12" id="portfolio-list">
+			<div class="row">
+				<input class="typeahead scrollable" type="text"placeholder="기업선택" />
+				<select id="newsCode">
+					<option value="politics">정치
+					<option value="economic">경제
+					<option value="digital">IT
+				</select>
+			</div>
+			<div class="row">
+				<a href="" class="more"> 
+					<button>Next Step</button>
+				</a>
 			</div>
 		</div>
 	</div>
-<!-- javascript file -->
-<!-- page specific plugin scripts -->
-<script src="${context}/assets/js/jquery.bootstrap-duallistbox.min.js"></script>
-<script src="${context}/assets/js/jquery-typeahead.js"></script>
+	
+	<!-- PROJECT DETAILS WILL BE LOADED HERE -->
+	<div id="loaded-content"></div>
 
-<!-- ace scripts -->
-<script src="${context}/assets/js/ace-elements.min.js"></script>
-<script src="${context}/assets/js/ace.min.js"></script>
+	<a id="back-button" class="red-btn" href="#"><i
+		class="icon-fontawesome-webfont-27"></i> Go Back</a>
 <script>
-	$(document).ready(function() {
-		$('#myModal').modal();
-		$('#btnLogin').click(function() {
-			goLogin();
-		});
-		$('#btnJoin').click(function() {
-			$('#myModal').modal('hide')
-		});
-		$('#btnLogout').click(function() {
-			geLogout();
-		});
-		$('.owl-carousel').owlCarousel({
-			margin : 10,
-			loop : true,
-			dots : true,
-			responsiveClass : true,
-			responsive : {
-				0 : {
-					items : 1,
-					nav : true,
-					dots : true
-				}
-			}
-		});
-	
-		
-	function goLogin() {
-		location.href = "login.do"
-	}
-	
-	function goLogout() {
-		location.href = "logout.do"
-	}
+	var comName;
+	var newsCode = $('#newsCode').val();
 	$(document).on("click",".tt-suggestion.tt-selectable",function(){
 		change();
 	});
 	$("input.typeahead").keydown(function (key) {
-        if(key.keyCode == 13){//키가 13이면 실행 (엔터는 13)
-        	change();
-        }
-    });
+	    if(key.keyCode == 13){//키가 13이면 실행 (엔터는 13)
+	    	change();
+	    }
+	});
 	function change(){
-		var comName;
 		if($('input.typeahead')[1].value != $('input.typeahead')[0].value && $('input.typeahead')[0].value != ''){
 			comName = $('input.typeahead')[0].value;
 		}else{
 			comName = $('input.typeahead')[1].value;
 		}
-		var tag = '<iframe src="${context}/company/chart.do?name='+comName+'" width="100%" height="700px" frameBorder="0"></iframe>'
-		$('#chart').html(tag);
-		$.ajax({
-			url : "${context}/crawler/comNews.json?name="+comName,
-			success : function(data){
-				var obj = []
-				obj = JSON.parse(data);
-				console.log(obj);
-				$('#news').empty();
-				$('#newsTitle').html(comName+' 뉴스');
-				for(var i = 0;i<obj.length;i++){
-					$('#news').append('<p><a href="'+obj[i].link+'">'+obj[i].title+"</a><br/></p>");
-				}
-			},
-			error : function(e){
-				console.log("error : "+ e);
-			}
-		});
+		console.log($('.more'));
+		$('.more').attr('href','${context }/my/analysis/second.do?name='+comName+'&newsCode='+newsCode);
 	}
-});
+	$('#newsCode').change(function(){
+		newsCode = this.value;
+		$('.more').attr('href','${context }/my/analysis/second.do?name='+comName+'&newsCode='+newsCode);
+		console.log($('.more'));
+	});
+	
 </script>
-	<!-- inline scripts related to this page -->
-	<script type="text/javascript">
+<script>
 		jQuery(function($) {
 			var demo1 = $('select[name="duallistbox_demo1[]"]').bootstrapDualListbox(
 							{
@@ -200,6 +134,20 @@
 			
 		});
 	</script>
-	<jsp:include page="../include/bottom.jsp" />
+	<!-- page specific plugin scripts -->
+<script src="${context}/assets/js/jquery.bootstrap-duallistbox.min.js"></script>
+<script src="${context}/assets/js/jquery-typeahead.js"></script>
+
+<!-- ace scripts -->
+<script src="${context}/assets/js/ace-elements.min.js"></script>
+<script src="${context}/assets/js/ace.min.js"></script>
+<script src="${pageContext.request.contextPath }/resources/zerif/js/bootstrap.min.js"></script>
+<script src="${pageContext.request.contextPath }/resources/zerif/js/wow.min.js"></script>
+<script src="${pageContext.request.contextPath }/resources/zerif/js/jquery.nav.js"></script>
+<script src="${pageContext.request.contextPath }/resources/zerif/js/jquery.knob.js"></script>
+<script src="${pageContext.request.contextPath }/resources/zerif/js/owl.carousel.min.js"></script>
+<%-- <script src="${pageContext.request.contextPath }/resources/js/menu/smoothscroll.js"></script> --%>
+<script src="${pageContext.request.contextPath }/resources/zerif/js/jquery.vegas.min.js"></script>
+<script src="${pageContext.request.contextPath }/resources/zerif/js/zerif.js"></script>
 </body>
 </html>

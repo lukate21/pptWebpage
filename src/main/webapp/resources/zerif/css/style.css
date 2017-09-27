@@ -348,11 +348,11 @@ input:focus {
 
 /*** SECTION HEADERS ***/
 .focus,.works,.about-us,.features,.packages,.products,.testimonial,.contact-us {
-	padding-top: 100px;
+	padding-top: 50px;
 }
 .section-header {
 	text-align: center;
-	padding-bottom: 75px;
+	padding-bottom: 25px;
 }
 .section-header h2 {
 	padding-bottom: 10px;
@@ -628,8 +628,8 @@ input:focus {
 	float: left;
 	overflow: hidden;
 	width: 25%; /* Fallback */
-width: -webkit-calc(100% / 4);
-	width: calc(100% / 4);
+width: -webkit-calc(100% / 1);
+	width: calc(100% / 1);
 	-webkit-transition: 0.4s all linear;
 	        transition: 0.4s all linear;
 }
@@ -707,8 +707,8 @@ width: -webkit-calc(100% / 4);
 @media screen and (max-width: 1190px) {
 	.cbp-rfgrid li {
 	width: 25%; /* Fallback */
-width: -webkit-calc(100% / 4);
-	width: calc(100% / 4);
+width: -webkit-calc(100% / 1);
+	width: calc(100% / 1);
 }
 }
 @media screen and (max-width: 1024px) {

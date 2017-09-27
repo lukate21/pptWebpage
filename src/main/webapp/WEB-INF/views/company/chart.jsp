@@ -5,7 +5,6 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-
 <!-- bootstrap & fontawesome -->
 <link rel="stylesheet" href="${context }/assets/css/bootstrap.min.css" />
 <link rel="stylesheet" href="${context }/assets/font-awesome/4.5.0/css/font-awesome.min.css" />
