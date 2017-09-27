@@ -45,66 +45,7 @@
 </style>
 </head>
 <body id="body" data-spy="scroll" data-target=".header">
-	<header class="header navbar-fixed-top">
-		<!-- Navbar -->
-		<nav class="navbar" role="navigation">
-			<div class="container">
-				<!-- Brand and toggle get grouped for better mobile display -->
-				<div class="menu-container js_nav-item">
-					<button type="button" class="navbar-toggle" data-toggle="collapse"
-						data-target=".nav-collapse">
-						<span class="sr-only">Toggle navigation</span> <span
-							class="toggle-icon"></span>
-					</button>
-
-					<!-- Logo -->
-					<div class="logo">
-						<a class="logo-wrap" href="hello.do"> <img class="logo-img"
-							src="${context}/assets/acecv/img/logo.png" alt="Asentus Logo">
-						</a>
-					</div>
-					<!-- End Logo -->
-				</div>
-
-				<!-- Collect the nav links, forms, and other content for toggling -->
-				<div class="collapse navbar-collapse nav-collapse">
-					<div class="menu-container">
-						<ul class="nav navbar-nav navbar-nav-right">
-							<li class="js_nav-item nav-item">
-								<a class="nav-item-child nav-item-hover" href="hello.do">HOME</a>
-							</li>
-							<li class="js_nav-item nav-item">
-								<a class="nav-item-child nav-item-hover" href="#">기업검색</a>
-							</li>
-							<li class="js_nav-item nav-item">
-								<a class="nav-item-child nav-item-hover" href="#">사용자포트폴리오</a>
-							</li>
-							<li class="js_nav-item nav-item">
-								<a class="nav-item-child nav-item-hover" href="#">증권거래소</a>
-							</li>
-							<c:choose>
-							<c:when test="${ empty sessionScope.loginUser}">
-								<li class="js_nav-item nav-item">
-									<a class="nav-item-child nav-item-hover" href="login.do">로그인</a>
-								</li>
-							</c:when>
-							<c:otherwise>
-								<li class="js_nav-item nav-item">
-									<a class="nav-item-child nav-item-hover" href="myPage.do">마이페이지</a>
-								</li>
-								<li class="js_nav-item nav-item">
-									<a class="nav-item-child nav-item-hover" href="logout.do">로그아웃</a>
-								</li>
-							</c:otherwise>
-							</c:choose>
-						</ul>
-					</div>
-				</div>
-				<!-- End Navbar Collapse -->
-			</div>
-		</nav>
-		<!-- Navbar -->
-	</header>
+	<jsp:include page="include/top-menu.jsp"></jsp:include>
 
 	<!--========== PAGE LAYOUT ==========-->
 
@@ -254,21 +195,7 @@
 
 	<!--========== FOOTER ==========-->
 	<footer class="footer">
-		<div class="content container">
-			<div class="row">
-				<div class="col-xs-6">
-					<img class="footer-logo" src="${context}/assets/acecv/img/logo.png"
-						alt="Acecv Logo">
-				</div>
-				<div class="col-xs-6 text-right sm-text-left">
-					<p class="margin-b-0">
-						<a class="fweight-700" href="hello.do">Acecv</a> Theme Powered by:
-						<a class="fweight-700" href="http://www.keenthemes.com/">KeenThemes.com</a>
-					</p>
-				</div>
-			</div>
-			<!--// end row -->
-		</div>
+		<jsp:include page="include/bottom.jsp"></jsp:include>
 	</footer>
 
 	<div class="bootbox modal fade bootbox-prompt in" id="myModal"
