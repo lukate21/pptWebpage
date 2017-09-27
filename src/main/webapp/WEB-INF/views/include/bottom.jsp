@@ -17,12 +17,10 @@
 	</div>
 	<!--// end row -->
 </div>
-<script src="${context}/resources/zerif/js/bootstrap.min.js"></script>
-<script src="${context}/resources/zerif/js/wow.min.js"></script>
-<script src="${context}/resources/zerif/js/jquery.nav.js"></script>
-<script src="${context}/resources/zerif/js/jquery.knob.js"></script>
-<script src="${context}/assets/owlcarousel/owl.carousel.js"></script>
-<%-- <script src="${context}/resources/zerif/js/owl.carousel.min.js"></script> --%>
-<%-- <script src="${pageContext.request.contextPath }/resources/js/menu/smoothscroll.js"></script> --%>
-<script src="${context}/resources/zerif/js/jquery.vegas.min.js"></script>
-<script src="${context}/resources/zerif/js/zerif.js"></script>
+		<script src="${context}/resources/assets/js/bootstrap.min.js"></script>
+		<!-- page specific plugin scripts -->
+		<!-- ace scripts -->
+		<script src="${context}/resources/assets/js/ace-elements.min.js"></script>
+		<script src="${context}/resources/assets/js/ace.min.js"></script>
+
+		<!-- inline scripts related to this page -->

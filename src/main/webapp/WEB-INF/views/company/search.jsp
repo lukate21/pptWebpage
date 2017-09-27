@@ -8,34 +8,29 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 
 <title>PPT-제법 쓸만한 예측 툴</title>
-
 <!-- Main import -->
-<!-- Zerif -->
-<link rel="stylesheet" href="${pageContext.request.contextPath }/resources/zerif/css/bootstrap.min.css">
-<link rel="stylesheet" href="${pageContext.request.contextPath }/resources/zerif/css/owl.theme.css">
-<link rel="stylesheet" href="${pageContext.request.contextPath }/resources/zerif/css/owl.carousel.css">
-<link rel="stylesheet" href="${pageContext.request.contextPath }/resources/zerif/css/jquery.vegas.min.css">
-<link rel="stylesheet" href="${pageContext.request.contextPath }/resources/zerif/css/animate.min.css">
-<link href="${pageContext.request.contextPath }/resources/zerif/css/style.css" rel="stylesheet">
-<link href="${pageContext.request.contextPath }/resources/zerif/css/response.css" rel="stylesheet">
-<link href="${pageContext.request.contextPath }/resources/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
-<script src="${context}/assets/js/jquery-2.1.4.min.js"></script>
+<meta name="description" content="overview &amp; stats" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0" />
+<!-- bootstrap & fontawesome -->
+<link rel="stylesheet" href="${context}/resources/assets/css/bootstrap.min.css" />
+<link rel="stylesheet" href="${context}/resources/assets/font-awesome/4.5.0/css/font-awesome.min.css" />
 <!-- text fonts -->
-<link rel="stylesheet" href="${context}/assets/css/fonts.googleapis.com.css" />
+<link rel="stylesheet" href="${context}/resources/assets/css/fonts.googleapis.com.css" />
 <!-- ace styles -->
-<link rel="stylesheet" href="${context}/assets/css/ace.min.css" class="ace-main-stylesheet" id="main-ace-style" />
-<!------------------------------------------------------------------------------------------------------------------------------------>
+<link rel="stylesheet" href="${context}/resources/assets/css/ace.min.css" class="ace-main-stylesheet" id="main-ace-style" />
+<link rel="stylesheet" href="${context}/resources/assets/css/ace-skins.min.css" />
+<link rel="stylesheet" href="${context}/resources/assets/css/ace-rtl.min.css" />
+<!-- ace settings handler -->
+<script src="${context}/resources/assets/js/ace-extra.min.js"></script>
+<script src="${context}/resources/assets/js/jquery-2.1.4.min.js"></script>
+<!------------------------------------------------------------------------------------------------------------------------->
 
 <!-- page specific plugin styles -->
-<link rel="stylesheet" href="${context}/assets/css/bootstrap-duallistbox.min.css" />
-<link rel="stylesheet" href="${context}/assets/css/ace-skins.min.css" />
-<link rel="stylesheet" href="${context}/assets/css/ace-rtl.min.css" />
-<script src="${context}/assets/js/ace-extra.min.js"></script>
+<link rel="stylesheet" href="${context}/resources/assets/css/bootstrap-duallistbox.min.css" />
 </head>
-<body>
-	<jsp:include page="../include/top-menu.jsp" />
-	<!-- Experience -->
-	
+<body class="no-skin">
+	<jsp:include page="../include/top-menu.jsp"></jsp:include>
+	<jsp:include page="../include/side-menu.jsp"></jsp:include>
 	<div class="content-lg">
 		<div class="main-container ace-save-state">
 			<div class="container">
@@ -72,48 +67,15 @@
 			</div>
 		</div>
 	</div>
-<!-- javascript file -->
+</div>
+	<footer>
+			<jsp:include page="../include/bottom.jsp"></jsp:include>
+	</footer>
+	<!-- javascript file -->
 <!-- page specific plugin scripts -->
-<script src="${context}/assets/js/jquery.bootstrap-duallistbox.min.js"></script>
-<script src="${context}/assets/js/jquery-typeahead.js"></script>
-
-<!-- ace scripts -->
-<script src="${context}/assets/js/ace-elements.min.js"></script>
-<script src="${context}/assets/js/ace.min.js"></script>
+<script src="${context}/resources/assets/js/jquery.bootstrap-duallistbox.min.js"></script>
+<script src="${context}/resources/assets/js/jquery-typeahead.js"></script>
 <script>
-	$(document).ready(function() {
-		$('#myModal').modal();
-		$('#btnLogin').click(function() {
-			goLogin();
-		});
-		$('#btnJoin').click(function() {
-			$('#myModal').modal('hide')
-		});
-		$('#btnLogout').click(function() {
-			geLogout();
-		});
-		$('.owl-carousel').owlCarousel({
-			margin : 10,
-			loop : true,
-			dots : true,
-			responsiveClass : true,
-			responsive : {
-				0 : {
-					items : 1,
-					nav : true,
-					dots : true
-				}
-			}
-		});
-	
-		
-	function goLogin() {
-		location.href = "login.do"
-	}
-	
-	function goLogout() {
-		location.href = "logout.do"
-	}
 	$(document).on("click",".tt-suggestion.tt-selectable",function(){
 		change();
 	});
@@ -148,58 +110,53 @@
 			}
 		});
 	}
-});
-</script>
-	<!-- inline scripts related to this page -->
-	<script type="text/javascript">
-		jQuery(function($) {
-			var demo1 = $('select[name="duallistbox_demo1[]"]').bootstrapDualListbox(
-							{
-								infoTextFiltered : '<span class="label label-purple label-lg">Filtered</span>'
-							});
-			var container1 = demo1.bootstrapDualListbox('getContainer');
-			container1.find('.btn').addClass('btn-white btn-info btn-bold');
-			var comList = [];
-			<c:forEach items="${comList}" var="companyVO">
-				comList.push("${companyVO.name}");
-			</c:forEach>
-			//typeahead.js
-			//example taken from plugin's page at: https://twitter.github.io/typeahead.js/examples/
-			var substringMatcher = function(strs) {
-				return function findMatches(q, cb) {
-					var matches, substringRegex;
-					
-					// an array that will be populated with substring matches
-					matches = [];
+	jQuery(function($) {
+		var demo1 = $('select[name="duallistbox_demo1[]"]').bootstrapDualListbox(
+						{
+							infoTextFiltered : '<span class="label label-purple label-lg">Filtered</span>'
+						});
+		var container1 = demo1.bootstrapDualListbox('getContainer');
+		container1.find('.btn').addClass('btn-white btn-info btn-bold');
+		var comList = [];
+		<c:forEach items="${comList}" var="companyVO">
+			comList.push("${companyVO.name}");
+		</c:forEach>
+		//typeahead.js
+		//example taken from plugin's page at: https://twitter.github.io/typeahead.js/examples/
+		var substringMatcher = function(strs) {
+			return function findMatches(q, cb) {
+				var matches, substringRegex;
+				
+				// an array that will be populated with substring matches
+				matches = [];
 
-					// regex used to determine if a string contains the substring `q`
-					substrRegex = new RegExp(q, 'i');
+				// regex used to determine if a string contains the substring `q`
+				substrRegex = new RegExp(q, 'i');
 
-					$.each(strs, function(i, str) {
-						if (substrRegex.test(str)) {
-							matches.push({
-								value : str
-							});
-						}
-					}); 
-					cb(matches);
-				}
+				$.each(strs, function(i, str) {
+					if (substrRegex.test(str)) {
+						matches.push({
+							value : str
+						});
+					}
+				}); 
+				cb(matches);
 			}
-			$('input.typeahead').typeahead({
-				hint : true,
-				highlight : true,
-				minLength : 0
-			}, {
-				name : 'company',
-				displayKey : 'value',
-				source : substringMatcher(comList),
-				limit : 10
-			});
-
-			///////////////
-			
+		}
+		$('input.typeahead').typeahead({
+			hint : true,
+			highlight : true,
+			minLength : 0
+		}, {
+			name : 'company',
+			displayKey : 'value',
+			source : substringMatcher(comList),
+			limit : 10
 		});
-	</script>
-	<jsp:include page="../include/bottom.jsp" />
+
+		///////////////
+		
+	});
+</script>
 </body>
 </html>
