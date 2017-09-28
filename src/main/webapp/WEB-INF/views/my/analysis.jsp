@@ -41,22 +41,12 @@
 	
 			<div class="page-content">
 				<div class="col-sm-12">
-						<div class="page-header">
-							<h1>
-								나만의 분석 만들기
-								<!-- <small>
-									<i class="ace-icon fa fa-angle-double-right"></i>
-									and Validation
-								</small> -->
-							</h1>
-						</div><!-- /.page-header -->
-
 						<div class="row">
 							<div class="col-xs-12">
 								<!-- PAGE CONTENT BEGINS -->
 								<div class="widget-box">
 									<div class="widget-header widget-header-blue widget-header-flat">
-										<h4 class="widget-title lighter">Create new custom analysis</h4>
+										<h4 class="widget-title lighter">나만의 분석 만들기</h4>
 									</div>
 
 									<div class="widget-body">

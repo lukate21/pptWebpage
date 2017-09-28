@@ -33,4 +33,16 @@
 		from users
 		where id=#{id} and domain=#{domain} and password=#{password}
 	</select>
+	
+	<update id="update" parameterType="memberVO">
+		update users
+		set password=#{password}
+		where id=#{id} and domain=#{domain} 
+	</update>
+
+	<update id="updateTel" parameterType="memberVO">
+		update users
+		set tel=#{tel}
+		where id=#{id} and domain=#{domain} 
+	</update>
 </mapper>

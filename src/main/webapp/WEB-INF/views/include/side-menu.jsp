@@ -55,24 +55,35 @@
 						</li>
 						<c:choose>
 							<c:when test="${ empty sessionScope.loginUser}">
-								<li class=""><a
-									class="" href="${context}/login.do">로그인</a>
+								<li class="">
+									<a class="" href="${context}/login.do">로그인</a>
 								</li>
 							</c:when>
 							<c:otherwise>
 								<li class="js_nav-item nav-item">
-									<a class="nav-item-child nav-item-hover dropdown-toggle" id="dropdownMenu1" data-toggle="dropdown" aria-expanded="true"
-										style="cursor: pointer" href="#">
-										${sessionScope.loginUser.id }
+									<a class="dropdown-toggle" href="">
+										<span>${sessionScope.loginUser.id }</span>
+										<b class="arrow fa fa-angle-down"></b>
 									</a>
-									<ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu1">
-										<li role="presentation"><a role="menuitem" tabindex="-1" href="${context}/myPage.do">마이페이지</a></li>
-										<li role="presentation"><a role="menuitem" tabindex="-1" href="${context}/logout.do">로그아웃</a></li>
+									<ul class="submenu" >
+										<li class="">
+											<a href="${context}/myPage.do">
+												<i class="menu-icon fa fa-caret-right"></i>
+												마이페이지
+											</a>
+											<b class="arrow"></b>
+										</li>
+										<li class="">
+											<a href="${context}/logout.do">
+												<i class="menu-icon fa fa-caret-right"></i>
+												로그아웃
+											</a>
+											<b class="arrow"></b>
+										</li>
 									</ul>
 								</li>
 							</c:otherwise>
 						</c:choose>
-
 					</ul>
 				</div>
 			</div>

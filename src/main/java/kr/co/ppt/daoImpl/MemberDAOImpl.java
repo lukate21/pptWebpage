@@ -37,7 +37,11 @@ public class MemberDAOImpl implements MemberDAO {
 
 	@Override
 	public int modifyUser(MemberVO member) {
-		return 0;
+		int result = sqlSession.update("memDAO.update", member);
+		if(member.getTel() != null) 
+			sqlSession.update("memDAO.updateTel",member);
+		
+		return result;
 	}
 
 	@Override

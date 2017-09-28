@@ -57,8 +57,11 @@ public class MemberServiceImpl implements MemberService {
 		MemberVO loginUser = memberDAO.getUserInfo(member);
 		return loginUser;
 	}
-	
-	
-	
 
+	@Override
+	public int modifyUser(MemberVO member) {
+		int result = memberDAO.modifyUser(member);
+		return result;
+	}
+	
 }
