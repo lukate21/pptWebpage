@@ -44,8 +44,9 @@
 					<input type="email" style="width:100%; height:50px" placeholder="&nbsp;&nbsp;아이디" autofocus name="email" value="${cookie.savedId.value}"><br/><br/>
 					<input type="password" style="width:100%; height:50px" placeholder="&nbsp;&nbsp;패스워드" name="password"  value="${cookie.savedPassword.value}"><br/><br/>
 					<div id="loginFail"></div>
-					<input type="checkbox" name="remember" ${cookie.savedCheck.value }>&nbsp;로그인 상태 유지<br/><br/>
-					<input type="submit" value="로그인" id="btnLogin" class="custom-button blue-text" style="font-size:20px; width:100%">
+					<input type="checkbox" class="ace" name="remember" ${cookie.savedCheck.value }>
+						<span class="lbl">&nbsp;로그인 상태 유지<br/><br/></span>
+					<input type="submit" value="로그인" id="btnLogin" class="btn btn-info" style="font-size:20px; width:100%">
 				</form>
 			<hr/>
 			</div>
