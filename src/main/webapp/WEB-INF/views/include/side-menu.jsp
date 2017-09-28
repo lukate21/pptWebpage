@@ -48,7 +48,7 @@
 							<a class="" href="${context }/company/search.do">기업검색</a>
 						</li>
 						<li class="">
-							<a class="" href="#">사용자포트폴리오</a>
+							<a class="" href="${context }/my/analysis.do">사용자포트폴리오</a>
 						</li>
 						<li class="">
 							<a	class="" href="#">증권거래소</a>

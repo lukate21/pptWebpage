@@ -20,8 +20,14 @@ public class PortfolioController {
 	CompanyServiceImpl cService;
 	
 	@RequestMapping("/analysis.do")
-	public String analysis(){
+	public String analysis(Model model){
+		model.addAttribute("comList", cService.selectComList());
 		return "/my/analysis";
+	}
+	
+	@RequestMapping("/analysis/start.do")
+	public String start(){
+		return "/my/start";
 	}
 	
 	@RequestMapping("/analysis/first.do")
@@ -29,6 +35,7 @@ public class PortfolioController {
 		model.addAttribute("comList", cService.selectComList());
 		return "/my/firstStep";
 	}
+	
 	@RequestMapping("/analysis/second.do")
 	public String second(Model model, String name,String newsCode){
 		try {

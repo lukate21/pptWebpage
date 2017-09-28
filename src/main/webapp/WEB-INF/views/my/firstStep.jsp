@@ -11,9 +11,9 @@
 
 <!-- Main import -->
 <!-- text fonts -->
-<link rel="stylesheet" href="${context}/assets/css/fonts.googleapis.com.css" />
+<link rel="stylesheet" href="${context}/resources/assets/css/fonts.googleapis.com.css" />
 <!-- ace styles -->
-<link rel="stylesheet" href="${context}/assets/css/ace.min.css" class="ace-main-stylesheet" id="main-ace-style" />
+<link rel="stylesheet" href="${context}/resources/assets/css/ace.min.css" class="ace-main-stylesheet" id="main-ace-style" />
 <!-- Zerif -->
 <link rel="stylesheet" href="${pageContext.request.contextPath }/resources/zerif/css/bootstrap.min.css">
 <link rel="stylesheet" href="${pageContext.request.contextPath }/resources/zerif/css/owl.theme.css">
@@ -23,13 +23,13 @@
 <link href="${pageContext.request.contextPath }/resources/zerif/css/style.css" rel="stylesheet">
 <link href="${pageContext.request.contextPath }/resources/zerif/css/response.css" rel="stylesheet">
 <link href="${pageContext.request.contextPath }/resources/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
-<script src="${context}/assets/js/jquery-2.1.4.min.js"></script>
+<script src="${context}/resources/assets/js/jquery-2.1.4.min.js"></script>
 
 <!------------------------------------------------------------------------------------------------------------------------------------>
-<link rel="stylesheet" href="${context}/assets/css/bootstrap-duallistbox.min.css" />
-<link rel="stylesheet" href="${context}/assets/css/ace-skins.min.css" />
-<link rel="stylesheet" href="${context}/assets/css/ace-rtl.min.css" />
-<script src="${context}/assets/js/ace-extra.min.js"></script>
+<link rel="stylesheet" href="${context}/resources/assets/css/bootstrap-duallistbox.min.css" />
+<link rel="stylesheet" href="${context}/resources/assets/css/ace-skins.min.css" />
+<link rel="stylesheet" href="${context}/resources/assets/css/ace-rtl.min.css" />
+<script src="${context}/resources/assets/js/ace-extra.min.js"></script>
 </head>
 <body>
 	<div class="row projects">
@@ -38,12 +38,22 @@
 		</div>
 		<div class="col-md-12" id="portfolio-list">
 			<div class="row">
-				<input class="typeahead scrollable" type="text"placeholder="기업선택" />
-				<select id="newsCode">
-					<option value="politics">정치
-					<option value="economic">경제
-					<option value="digital">IT
-				</select>
+				<div class="form-group">
+					<label class="col-sm-3 control-label no-padding-right" for="form-field-1"> 기업 선택 </label>
+					<div class="col-sm-9">
+						<input class="typeahead scrollable" type="text"placeholder="기업선택" />
+					</div>
+				</div>
+			</div>
+			<div class="row">
+				<label class="col-sm-3 control-label no-padding-right" for="form-field-1"> 뉴스 카테고리 설정 </label>
+				<div class="col-sm-9">
+					<select id="newsCode">
+						<option value="politics">정치
+						<option value="economic">경제
+						<option value="digital">IT
+					</select>
+				</div>
 			</div>
 			<div class="row">
 				<a href="" class="more"> 
@@ -57,7 +67,7 @@
 	<div id="loaded-content"></div>
 
 	<a id="back-button" class="red-btn" href="#"><i
-		class="icon-fontawesome-webfont-27"></i> Go Back</a>
+		class="icon-fontawesome-webfont-27"></i>first꺼</a>
 <script>
 	var comName;
 	var newsCode = $('#newsCode').val();
@@ -135,19 +145,19 @@
 		});
 	</script>
 	<!-- page specific plugin scripts -->
-<script src="${context}/assets/js/jquery.bootstrap-duallistbox.min.js"></script>
-<script src="${context}/assets/js/jquery-typeahead.js"></script>
-
-<!-- ace scripts -->
-<script src="${context}/assets/js/ace-elements.min.js"></script>
-<script src="${context}/assets/js/ace.min.js"></script>
-<script src="${pageContext.request.contextPath }/resources/zerif/js/bootstrap.min.js"></script>
-<script src="${pageContext.request.contextPath }/resources/zerif/js/wow.min.js"></script>
-<script src="${pageContext.request.contextPath }/resources/zerif/js/jquery.nav.js"></script>
-<script src="${pageContext.request.contextPath }/resources/zerif/js/jquery.knob.js"></script>
-<script src="${pageContext.request.contextPath }/resources/zerif/js/owl.carousel.min.js"></script>
-<%-- <script src="${pageContext.request.contextPath }/resources/js/menu/smoothscroll.js"></script> --%>
-<script src="${pageContext.request.contextPath }/resources/zerif/js/jquery.vegas.min.js"></script>
-<script src="${pageContext.request.contextPath }/resources/zerif/js/zerif.js"></script>
+	<script src="${context}/resources/assets/js/jquery.bootstrap-duallistbox.min.js"></script>
+	<script src="${context}/resources/assets/js/jquery-typeahead.js"></script>
+	
+	<!-- ace scripts -->
+	<script src="${context}/resources/assets/js/ace-elements.min.js"></script>
+	<script src="${context}/resources/assets/js/ace.min.js"></script>
+	<script src="${pageContext.request.contextPath }/resources/zerif/js/bootstrap.min.js"></script>
+	<script src="${pageContext.request.contextPath }/resources/zerif/js/wow.min.js"></script>
+	<script src="${pageContext.request.contextPath }/resources/zerif/js/jquery.nav.js"></script>
+	<script src="${pageContext.request.contextPath }/resources/zerif/js/jquery.knob.js"></script>
+	<script src="${pageContext.request.contextPath }/resources/zerif/js/owl.carousel.min.js"></script>
+	<%-- <script src="${pageContext.request.contextPath }/resources/js/menu/smoothscroll.js"></script> --%>
+	<script src="${pageContext.request.contextPath }/resources/zerif/js/jquery.vegas.min.js"></script>
+	<script src="${pageContext.request.contextPath }/resources/zerif/js/zerif.js"></script>
 </body>
 </html>

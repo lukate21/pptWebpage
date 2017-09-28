@@ -35,7 +35,7 @@ public class CompanyController {
 	
 	@RequestMapping(value="/search.do",method=RequestMethod.GET)
 	public String search(Model model){
-		model.addAttribute("name", "KOSPI2");
+		model.addAttribute("name", "하나금융지주");
 		model.addAttribute("comList", cService.selectComList());
 		return "company/search";
 	}
@@ -46,13 +46,28 @@ public class CompanyController {
 		return "company/search";
 	}
 	
-	@RequestMapping("/chart.do")
-	public String chart(Model model, String name){
+	@RequestMapping("/chart/stock.do")
+	public String stock(Model model, String name){
 		model.addAttribute("name", name);
 		model.addAttribute("RTA", cService.selectRTA(name, null));
-		return "company/chart";
+		return "company/stockChart";
 	}
 	
+	@RequestMapping("/chart/RTA.do")
+	public String RTA(Model model, String name, String option){
+		model.addAttribute("name", name);
+		model.addAttribute("option", option);
+		model.addAttribute("RTA", cService.selectRTA(name, null));
+		return "company/RTAChart";
+	}
+
+	@RequestMapping("/chart/reliability.do")
+	public String reliability(Model model, String name, String option){
+		model.addAttribute("name", name);
+		model.addAttribute("option", option);
+		model.addAttribute("RTA", cService.selectRTA(name, null));
+		return "company/reliabilityChart";
+	}
 	
 	@RequestMapping("/selectCompanyList.json")
 	@ResponseBody
@@ -100,6 +115,7 @@ public class CompanyController {
 				comCode = cService.selectCom(companyVO).getCode().split("\\.")[0] + ":ks";
 		}
 		try {
+			System.out.println(comCode);
 			URL url = new URL("https://www.bloomberg.com/markets/api/bulk-time-series/price/"+comCode+"?timeFrame="+timeFrame);
 			URLConnection bloomberg = url.openConnection();
 			bloomberg.connect();
