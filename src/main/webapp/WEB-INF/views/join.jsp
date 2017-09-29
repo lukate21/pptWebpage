@@ -39,128 +39,174 @@
 					<li><i class="ace-icon fa fa-home home-icon"></i> <a href="${context}/hello.do">Home</a></li>
 					<li class="active">회원가입</li>
 				</ul>
+				<div class="nav-search" id="nav-search">
+					<form class="form-search">
+						<span class="input-icon">
+							<input type="text" placeholder="Search ..." class="nav-search-input" id="nav-search-input" autocomplete="off" />
+							<i class="ace-icon fa fa-search nav-search-icon"></i>
+						</span>
+					</form>
+				</div><!-- /.nav-search -->
 				<!-- /.breadcrumb -->
 			</div>
 			<div class="page-content">
 				<div class="page-header">
 					<h1>
-						Form Wizard
-						<small>
-							<i class="ace-icon fa fa-angle-double-right"></i>
-							and Validation
-						</small>
+						<i class="ace-icon fa fa-leaf">&nbsp;회원가입</i>
 					</h1>
 				</div><!-- /.page-header -->
+	
 				<div class="row">
 					<div class="col-xs-12">
 						<!-- PAGE CONTENT BEGINS -->
-						
 						<div class="widget-box">
 							<div class="widget-header widget-header-blue widget-header-flat">
-								<h4 class="widget-title lighter">회원가입</h4>
-
+								<h4 class="widget-title lighter">New Item Wizard</h4>
 							</div>
-
+	
 							<div class="widget-body">
 								<div class="widget-main">
 									<div id="fuelux-wizard-container">
+										<div>
+											<ul class="steps">
+												<li data-step="1" class="active">
+													<span class="step">1</span>
+													<span class="title">정보입력</span>
+												</li>
+	
+												<li data-step="2">
+													<span class="step">2</span>
+													<span class="title">정보확인</span>
+												</li>
+	
+												<li data-step="3">
+													<span class="step">3</span>
+													<span class="title">가입완료</span>
+												</li>
+											</ul>
+										</div>
+	
+										<hr />
+	
 										<div class="step-content pos-rel">
 											<div class="step-pane active" data-step="1">
-
-												<form class="form-horizontal" id="validation-form" action="#" method="post">
+												<h3 class="lighter block green">Enter the following information</h3>
+	
+												<form class="form-horizontal" id="validation-form" method="get" action="${context}/hello.do">
 													<div class="form-group">
-														<label class="control-label col-xs-12 col-sm-3 no-padding-right" for="email">Email Address:</label>
-
+														<label class="control-label col-xs-12 col-sm-3 no-padding-right" for="email">이메일:</label>
+	
 														<div class="col-xs-12 col-sm-9">
 															<div class="clearfix">
 																<input type="email" name="email" id="email" class="col-xs-12 col-sm-6" />
 															</div>
 														</div>
 													</div>
-
+	
 													<div class="space-2"></div>
-
+	
 													<div class="form-group">
-														<label class="control-label col-xs-12 col-sm-3 no-padding-right" for="password">Password:</label>
-
+														<label class="control-label col-xs-12 col-sm-3 no-padding-right" for="password">비밀번호:</label>
+	
 														<div class="col-xs-12 col-sm-9">
 															<div class="clearfix">
 																<input type="password" name="password" id="password" class="col-xs-12 col-sm-4" />
 															</div>
 														</div>
 													</div>
-
+	
 													<div class="space-2"></div>
-
+	
 													<div class="form-group">
-														<label class="control-label col-xs-12 col-sm-3 no-padding-right" for="password2">Confirm Password:</label>
-
+														<label class="control-label col-xs-12 col-sm-3 no-padding-right" for="password2">비밀번호 재입력:</label>
+	
 														<div class="col-xs-12 col-sm-9">
 															<div class="clearfix">
 																<input type="password" name="password2" id="password2" class="col-xs-12 col-sm-4" />
 															</div>
 														</div>
 													</div>
-
+	
 													<div class="hr hr-dotted"></div>
-
+	
 													<div class="form-group">
-														<label class="control-label col-xs-12 col-sm-3 no-padding-right" for="name">Name:</label>
-
+														<label class="control-label col-xs-12 col-sm-3 no-padding-right" for="name">이름:</label>
+	
 														<div class="col-xs-12 col-sm-9">
 															<div class="clearfix">
 																<input type="text" id="name" name="name" class="col-xs-12 col-sm-5" />
 															</div>
 														</div>
 													</div>
-
+	
 													<div class="space-2"></div>
-
+	
 													<div class="form-group">
-														<label class="control-label col-xs-12 col-sm-3 no-padding-right" for="phone">Tel:</label>
-
+														<label class="control-label col-xs-12 col-sm-3 no-padding-right" for="phone">전화번호:</label>
+	
 														<div class="col-xs-12 col-sm-9">
 															<div class="input-group">
 																<span class="input-group-addon">
 																	<i class="ace-icon fa fa-phone"></i>
 																</span>
-
+	
 																<input type="tel" id="phone" name="phone" />
 															</div>
 														</div>
 													</div>
-
-													<div class="space-2"></div>
+	
+													<div class="hr hr-dotted"></div>
+	
+													<div class="space-8"></div>
+	
+													<div class="form-group">
+														<div class="col-xs-12 col-sm-4 col-sm-offset-3">
+															<label>
+																<input name="agree" id="agree" type="checkbox" class="ace" />
+																<span class="lbl"> 약관 내용에 동의합니다</span>
+															</label>
+														</div>
+													</div>
 												</form>
 											</div>
-
+	
 											<div class="step-pane" data-step="2">
 												<div class="center">
-													<h3 class="green">Congrats!</h3>
-													Your product is ready to ship! Click finish to continue!
+													<h3 class="green">입력하신 정보입니다!</h3>
+													맞으시면 다음버튼을 눌러주세요.
 												</div>
 											</div>
+	
+											<div class="step-pane" data-step="3">
+												<div class="center">
+													<h3 class="green">Congrats!</h3>
+													"PPT-제법 쓸만한 예측 툴"에 가입하신것을 축하합니다!
+												</div>
+											</div>
+	
 										</div>
 									</div>
-
+	
 									<hr />
 									<div class="wizard-actions">
-										<button class="btn btn-prev">
+										<button class="btn btn-prev" data-last="취소">
 											<i class="ace-icon fa fa-arrow-left"></i>
-											취소
+											이전
 										</button>
-
-										<button class="btn btn-success btn-next" data-last="홈으로">
-											완료
+	
+										<button class="btn btn-success btn-next" data-last="완료">
+											다음
 											<i class="ace-icon fa fa-arrow-right icon-on-right"></i>
 										</button>
 									</div>
 								</div><!-- /.widget-main -->
 							</div><!-- /.widget-body -->
 						</div>
-			</div>
-		</div>
-	</div><!-- /.main-content -->
+					</div><!-- /.col -->
+				</div><!-- /.row -->
+			</div><!-- /.page-content -->
+		</div><!-- main-content-inner -->
+	</div><!-- main-content -->
 </div>
 <!--========== FOOTER ==========-->
 	<footer>
@@ -185,14 +231,14 @@
 		}); 
 	
 	
-		var $validation = this.checked;
+		//var $validation = this.checked;
 		$('#fuelux-wizard-container')
 		.ace_wizard({
 			//step: 2 //optional argument. wizard will jump to step "2" at first
 			//buttons: '.wizard-actions:eq(0)'
 		})
 		.on('actionclicked.fu.wizard' , function(e, info){
-			if(info.step == 1 && $validation) {
+			if(info.step == 1) {
 				if(!$('#validation-form').valid()) e.preventDefault();
 			}
 		})
@@ -200,11 +246,18 @@
 		//})
 		.on('finished.fu.wizard', function(e) {
 			bootbox.dialog({
-				message: "Thank you! Your information was successfully saved!", 
+				message: "회원가입이 완료되었습니다.", 
 				buttons: {
-					"success" : {
-						"label" : "OK",
+					/* confirm : {
+						"label" : "확인",
 						"className" : "btn-sm btn-primary"
+					}, cancel : {
+						"label" : "취소",
+						"className" : "btn-sm btn-primary"
+					}, */
+					"메인으로" : function(result){
+						$('#validation-form').submit();
+						//callhome();
 					}
 				}
 			});
@@ -212,23 +265,9 @@
 			//e.preventDefault();//this will prevent clicking and selecting steps
 		});
 		
-	function callhome(){
-		location.href = "${context}/hello.do"
-	}	
 	
 		//hide or show the other form which requires validation
 		//this is for demo only, you usullay want just one form in your application
-		$('#skip-validation').removeAttr('checked').on('click', function(){
-			$validation = this.checked;
-			if(this.checked) {
-				$('#sample-form').hide();
-				$('#validation-form').removeClass('hide');
-			}
-			else {
-				$('#validation-form').addClass('hide');
-				$('#sample-form').show();
-			}
-		})
 	
 		//documentation : http://docs.jquery.com/Plugins/Validation/validate
 	
@@ -237,9 +276,10 @@
 	
 		jQuery.validator.addMethod("phone", function (value, element) {
 			return this.optional(element) || /^\(\d{3}\) \d{4}\-\d{4}( x\d{1,6})?$/.test(value);
-		}, "Enter a valid phone number.");
+		}, "올바른 전화번호를 입력해주세요.");
 	
 		$('#validation-form').validate({
+			debug : true,
 			errorElement: 'div',
 			errorClass: 'help-block',
 			focusInvalid: false,
@@ -272,17 +312,14 @@
 	
 			messages: {
 				email: {
-					required: "Please provide a valid email.",
-					email: "Please provide a valid email."
+					required: "이메일 주소를 입력해 주세요.",
+					email: "이메일 주소를 입력해 주세요."
 				},
 				password: {
-					required: "Please specify a password.",
-					minlength: "Please specify a secure password."
+					required: "비밀번호를 입력해주세요.",
+					minlength: "비밀번호를 입력해주세요."
 				},
-				state: "Please choose state",
-				subscription: "Please choose at least one option",
-				gender: "Please choose gender",
-				agree: "Please accept our policy"
+				agree: "약관 동의에 체크해주세요."
 			},
 	
 	
@@ -300,9 +337,6 @@
 					var controls = element.closest('div[class*="col-"]');
 					if(controls.find(':checkbox,:radio').length > 1) controls.append(error);
 					else error.insertAfter(element.nextAll('.lbl:eq(0)').eq(0));
-				}
-				else if(element.is('.select2')) {
-					error.insertAfter(element.siblings('[class*="select2-container"]:eq(0)'));
 				}
 				else if(element.is('.chosen-select')) {
 					error.insertAfter(element.siblings('[class*="chosen-container"]:eq(0)'));
@@ -323,6 +357,5 @@
 		});
 	})
 </script>
-
 </body>
 </html>
