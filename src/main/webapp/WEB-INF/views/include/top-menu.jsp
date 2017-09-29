@@ -13,7 +13,7 @@
 		</button>
 
 		<div class="navbar-header pull-left">
-			<a href="index.html" class="navbar-brand"> <small> <i
+			<a href="${context}/hello.do" class="navbar-brand"> <small> <i
 					class="fa fa-leaf"></i> PPT
 			</small>
 			</a>

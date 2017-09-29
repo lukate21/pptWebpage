@@ -1,11 +1,15 @@
 package kr.co.ppt.controller;
 
 
+import java.util.HashMap;
+import java.util.Map;
+
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.json.simple.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -241,17 +245,25 @@ public class HomeController {
 	public String mobileLogin(String email, String password){
 		
 		int result = 0;
-		String memberData = "";
+//		String memberData = "";
 		MemberVO member = makeBasicInfo(email, password);
 		
 		MemberVO loginUser = memberService.login(member);
 
 		if(loginUser != null) {
 			result = 1;
-			memberData = "{ \"result\" : \""+result+"\", \"id\" : \""+ loginUser.getId()+"\", \"domain\" : \""+ loginUser.getDomain()
+			Map<Object,Object> map = new HashMap<>();
+			map.put("result", result);
+			map.put("id", loginUser.getId());
+			map.put("domain", loginUser.getDomain());
+			map.put("name", loginUser.getName());
+			map.put("tel", loginUser.getTel());
+			JSONObject obj = new JSONObject(map);
+			return obj.toJSONString();
+			/*memberData = "{ \"result\" : \""+result+"\", \"id\" : \""+ loginUser.getId()+"\", \"domain\" : \""+ loginUser.getDomain()
 			+"\", \"name\" : \""+loginUser.getName()+"\", \"tel\" : \""+loginUser.getTel()+"\"}";
 			
-			return memberData;
+			return memberData;*/
 		}
 		else 
 			return "{\"result\" : \""+result+"\"}"; 

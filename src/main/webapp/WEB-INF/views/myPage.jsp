@@ -27,20 +27,31 @@
 
 <body class="no-skin">
 <jsp:include page="include/top-menu.jsp"></jsp:include>
-<jsp:include page="include/side-menu.jsp"></jsp:include>
-	<br/><br/><br/>
+	<jsp:include page="include/side-menu.jsp"></jsp:include>
 	<div class="main-content">
 		<div class="main-content-inner">
-			<div align="center">
-			<h1>${sessionScope.loginUser.name}님의 정보수정</h1>
-			<form name="modifyForm" action="modify.do" method="post" onSubmit="return checkInfo()">
-					 		<input type="hidden" name="email" value="${sessionScope.loginUser.id}@${sessionScope.loginUser.domain}"><br/><br/>
-				비밀번호  		<input type="password" placeholder="password" name="password"><br/><br/>
-				비밀번호확인  	<input type="password" placeholder="password" name="repassword"><br/><br/>
-				전화번호 		<input type="tel" placeholder="'-'생략가능" name="tel"><br/>
-							<input type="submit" value="완료">
-			</form>
-			 <div id="fail"><br/><br/></div>
+			<div class="breadcrumbs ace-save-state breadcrumbs-fixed" id="breadcrumbs">
+				<ul class="breadcrumb">
+					<li><i class="ace-icon fa fa-home home-icon"></i> <a href="${context}/hello.do">Home</a></li>
+					<li class="active">myPage</li>
+				</ul>
+				<!-- /.breadcrumb -->
+			</div>
+			
+			<div class="page-content">
+				<div class="row margin-b-5">
+					<div class ="col-sm-4 col-sm-offset-4">
+						<h1>${sessionScope.loginUser.name}님의 정보수정</h1>
+						<form name="modifyForm" action="modify.do" method="post" onSubmit="return checkInfo()">
+								 		<input type="hidden" name="email" value="${sessionScope.loginUser.id}@${sessionScope.loginUser.domain}"><br/><br/>
+							비밀번호  		<input type="password" placeholder="password" name="password"><br/><br/>
+							비밀번호확인  	<input type="password" placeholder="password" name="repassword"><br/><br/>
+							전화번호 		<input type="tel" placeholder="'-'생략가능" name="tel"><br/>
+										<input type="submit" value="완료">
+						</form>
+						 <div id="fail"><br/><br/></div>
+					 </div>
+				 </div>
 			</div>
 		</div>
 	</div>
