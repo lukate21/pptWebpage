@@ -121,62 +121,120 @@
 	<script src="${context }/resources/assets/js/select2.min.js"></script>
 	<script src="${context}/resources/assets/js/jquery.bootstrap-duallistbox.min.js"></script>
 	<script src="${context}/resources/assets/js/jquery-typeahead.js"></script>
+	<script src="${context}/resources/assets/js/bootstrap-tag.min.js"></script>
 	
 	<!-- inline scripts related to this page -->
 	<script>
-		var comName = $("input.typeahead").val();
-		$(document).on("click", ".tt-suggestion.tt-selectable", function() {
-			change();
-		});
-		$("input.typeahead").keydown(function(key) {
-			if (key.keyCode == 13) {//키가 13이면 실행 (엔터는 13)
-				change();
-			}
-		});
-		function change() {
-			if ($('input.typeahead')[1].value != $('input.typeahead')[0].value
-					&& $('input.typeahead')[0].value != '') {
-				comName = $('input.typeahead')[0].value;
-			} else {
-				comName = $('input.typeahead')[1].value;
-			}
-		}
-		$('.btn-white').click(function(){
-			$('#anaInfo').html('<p class="red-text">'+this.value+'</p>설명');
-		});
-		
+		var comName = '';
+		var newsCode = '';
+		var anaCode = '';
+		var dicValidationKey = '';
+		var equalTerms = [];
+		var garbageTerms = [];
+		//step1 to 2
 		function getDictionary(){
-			
+			dicValidationKey='';
+			$.ajax({
+				url : "${context}/dictionary/getDictionary.json",
+				data : {
+					'id' : "test",//session ID로 바꿔야함
+					'name' : comName,
+					'anaCode' : anaCode,
+					'newsCode' : newsCode
+				},
+				success : function(data){
+					dicValidationKey = data;
+					console.log(dicValidationKey);
+				},
+				error : function(e){
+					console.log("error : "+ e);
+				}
+			});
 		}
-		
-		
+		function checkValidation(e){
+			var userTerms = $('.tags span');
+			var userReqDic = [];
+			equalTerms = [];
+			garbageTerms = [];
+			for(var i=1; i<userTerms.length; i++){
+				var str = $(userTerms[i]).text().replace('×','');
+				userReqDic.push(str);
+			}
+			if(userReqDic.length == 0 ){
+				alert('단어를 입력해주세요.');
+				e.preventDefault();
+			}else if(dicValidationKey == ''){
+				alert('단어 사전을 불러오고 있습니다.');
+				e.preventDefault();
+			}else{
+				$.ajax({
+					url : "${context}/dictionary/validation.json",
+					type: 'post',
+					data : {
+						'key' : dicValidationKey,
+						'userReq' : JSON.stringify(userReqDic),
+					},
+					contentType : 'application/x-www-form-urlencoded; charset=utf-8',
+					async : false,
+					success : function(data){
+						var obj = JSON.parse(data);
+						for(var i in obj){
+							console.log(i);
+							var term = obj[i];
+							if(term.garbageTerm === undefined){
+								equalTerms.push(term.equalTerm);
+							}else{
+								garbageTerms.push(term.garbageTerm);
+							}
+						}
+						console.log(equalTerms);
+						console.log(garbageTerms);
+						drawValidationState();
+						if(data == ""){
+							e.preventDefault();
+						}
+					},
+					error : function(e){
+						console.log("error : "+ e);
+					}
+				});
+			}
+		}
 		jQuery(function($) {
 			var $validation = false;
-			
+			//Prev & Next 버튼 클릭 이벤트
 			$('#fuelux-wizard-container').ace_wizard({
-				//step: 2 //optional argument. wizard will jump to step "2" at first
-				//buttons: '.wizard-actions:eq(0)'
+			//step: 2 //optional argument. wizard will jump to step "2" at first
+			//buttons: '.wizard-actions:eq(0)'
 			}).on('actionclicked.fu.wizard', function(e, info) {
-				if(info.step == 1){
-					console.log(comName+'/'+$('#anaCode').val())
+				if (info.step == 1) {
+					if(comName == ''){
+						alert('기업을 선택해주세요.');
+						e.preventDefault();
+					}else if(anaCode == ''){
+						alert('분석 방법을 선택해주세요.');
+						e.preventDefault();
+					}else if(newsCode == ''){
+						alert('뉴스 카테고리를 선택해주세요.');
+						e.preventDefault();
+					}else{
+						getDictionary();
+					}
+				}else if(info.step == 2 && info.direction == "next"){
+					checkValidation(e);
 				}
 				if (info.step == 1 && $validation) {
-					
+
 					if (!$('#validation-form').valid())
 						e.preventDefault();
-					}
-				}).on('changed.fu.wizard', function() {
+				}
+			}).on('changed.fu.wizard', function(info) {
+				
 			})
-			var demo1 = $('select[name="duallistbox_demo1[]"]')
-					.bootstrapDualListbox(
-							{
-								infoTextFiltered : '<span class="label label-purple label-lg">Filtered</span>'
-							});
-			var container1 = demo1.bootstrapDualListbox('getContainer');
-			container1.find('.btn').addClass('btn-white btn-info btn-bold');
+			
 			var comList = [];
 			<c:forEach items="${comList}" var="companyVO">
-			comList.push("${companyVO.name}");
+				comList.push("${companyVO.name}");
 			</c:forEach>
 			//typeahead.js
 			//example taken from plugin's page at: https://twitter.github.io/typeahead.js/examples/
@@ -210,8 +268,42 @@
 				source : substringMatcher(comList),
 				limit : 20
 			});
-
 			///////////////
+			
+			
+			var tag_input = $('#form-field-tags');
+			try{
+				tag_input.tag(
+				  {
+					placeholder:tag_input.attr('placeholder'),
+					//enable typeahead by specifying the source array
+					//source: ace.vars['US_STATES'],//defined in ace.js >> ace.enable_search_ahead
+					/**
+					//or fetch data from database, fetch those that match "query"
+					source: function(query, process) {
+					  $.ajax({url: 'remote_source.php?q='+encodeURIComponent(query)})
+					  .done(function(result_items){
+						process(result_items);
+					  });
+					}
+					*/
+				  }
+				)
+		
+				//programmatically add/remove a tag
+				var $tag_obj = $('#form-field-tags').data('tag');
+				
+				var index = $tag_obj.inValues('some tag');
+				$tag_obj.remove(index);
+				$('.tags span').empty();
+				$('.inline').css('width','100%');
+				$('.tags').css('width','100%');
+			}
+			catch(e) {
+				//display a textarea for old IE, because it doesn't support this plugin or another one I tried!
+				tag_input.after('<textarea id="'+tag_input.attr('id')+'" name="'+tag_input.attr('name')+'" rows="3">'+tag_input.val()+'</textarea>').remove();
+				//autosize($('#form-field-tags'));
+			}
 
 		});
 	</script>
