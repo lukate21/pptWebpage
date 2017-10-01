@@ -106,8 +106,9 @@ public class DictionaryController {
 			return "";
 		}else{
 			//return value
-			Set<String> equalTerm = new HashSet<>();
-			Set<String> garbageTerm = new HashSet<>();
+			JSONArray usefulTermArr = new JSONArray();
+			JSONArray uselessTermArr = new JSONArray();
+
 			//request value
 			Set<String> userTermSet = new HashSet<>();
 			userReq = userReq.substring(1, userReq.length()-1).replaceAll("\"", "");
@@ -121,10 +122,18 @@ public class DictionaryController {
 				Iterator<String> userTermIter = userTermSet.iterator();
 				while(userTermIter.hasNext()){
 					String userTerm = userTermIter.next();
-					if(tfidfDic.containsKey(userTerm))
-						equalTerm.add(userTerm);
-					else{
-						garbageTerm.add(userTerm);
+					if(tfidfDic.containsKey(userTerm)){
+						JSONObject termObject = new JSONObject();
+						termObject.put("key", userTerm);
+						termObject.put("value", tfidfDic.get(userTerm));
+						termObject.put("opinion", "neu");
+						usefulTermArr.add(termObject);
+					}else{
+						JSONObject termObject = new JSONObject();
+						termObject.put("key", userTerm);
+						termObject.put("value", 1);
+						termObject.put("opinion", "none");
+						uselessTermArr.add(termObject);
 					}
 				}
 			}else if(checkArr.size() == 2){//OPI_DIC
@@ -133,45 +142,64 @@ public class DictionaryController {
 				Iterator<String> userTermIter = userTermSet.iterator();
 				while(userTermIter.hasNext()){
 					String userTerm = userTermIter.next();
-					if(posDic.containsKey(userTerm))
-						equalTerm.add(userTerm);
-					else if(negDic.containsKey(userTerm))
-						equalTerm.add(userTerm);
-					else{
-						garbageTerm.add(userTerm);
+					if(posDic.containsKey(userTerm)){
+						JSONObject termObject = new JSONObject();
+						termObject.put("key", userTerm);
+						termObject.put("value", Double.parseDouble((String)posDic.get(userTerm)));
+						termObject.put("opinion", "inc");
+						usefulTermArr.add(termObject);
+					}else if(negDic.containsKey(userTerm)){
+						JSONObject termObject = new JSONObject();
+						termObject.put("key", userTerm);
+						termObject.put("value", Double.parseDouble((String)posDic.get(userTerm)));
+						termObject.put("opinion", "dec");
+						usefulTermArr.add(termObject);
+					}else{
+						JSONObject termObject = new JSONObject();
+						termObject.put("key", userTerm);
+						termObject.put("value", 1);
+						termObject.put("opinion", "none");
+						uselessTermArr.add(termObject);
 					}
 				}
 			}else{//PRO_DIC
-				Set<String> proDic = new HashSet<>();
 				for(int i=0; i<checkArr.size(); i++){
 					JSONObject prevDic = (JSONObject)checkArr.get(i);
-					proDic.add((String)prevDic.get("word"));
+					String term = (String)prevDic.get("word");
+					if(userTermSet.contains(term)){
+						String opinion = "";
+						double incValue = Double.parseDouble((String)prevDic.get("inc"));
+						double decValue = Double.parseDouble((String)prevDic.get("dec"));
+						double equValue = Double.parseDouble((String)prevDic.get("equ"));
+						double value = Double.max(Double.max(incValue, decValue), equValue);
+						if(value == incValue)
+							opinion = "inc";
+						else if(value == decValue)
+							opinion = "dec";
+						else
+							opinion = "equ";
+						JSONObject termObject = new JSONObject();
+						termObject.put("key", term);
+						termObject.put("value", value);
+						termObject.put("opinion", opinion);
+						usefulTermArr.add(termObject);
+						userTermSet.remove(term);
+					}
 				}
 				Iterator<String> userTermIter = userTermSet.iterator();
 				while(userTermIter.hasNext()){
 					String userTerm = userTermIter.next();
-					if(proDic.contains(userTerm))
-						equalTerm.add(userTerm);
-					else{
-						garbageTerm.add(userTerm);
-					}
+					JSONObject termObject = new JSONObject();
+					termObject.put("key", userTerm);
+					termObject.put("value", 1);
+					termObject.put("opinion", "none");
+					uselessTermArr.add(termObject);
 				}
 			}
-			JSONArray resultArr = new JSONArray();
-			Iterator equalTermIter = equalTerm.iterator();
-			while(equalTermIter.hasNext()){
-				JSONObject resultObj = new JSONObject();
-				resultObj.put("equalTerm", equalTermIter.next());
-				resultArr.add(resultObj);
-			}
-			Iterator garbageTermIter = garbageTerm.iterator();
-			while(garbageTermIter.hasNext()){
-				JSONObject resultObj = new JSONObject();
-				resultObj.put("garbageTerm", garbageTermIter.next());
-				resultArr.add(resultObj);
-			}
-			
-			return resultArr.toJSONString();
+			JSONObject resultObj = new JSONObject(); // [{usefulTerms : [{key:term,value:num}]}, {uselessTerms:[{key:term,value:num}]}
+			resultObj.put("usefulTerms",usefulTermArr);
+			resultObj.put("uselessTerms",uselessTermArr);
+			return resultObj.toJSONString();
 		}
 	}
 }

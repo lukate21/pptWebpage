@@ -11,7 +11,7 @@
 <script src="${pageContext.request.contextPath }/assets/js/jquery-2.1.4.min.js"></script>
 </head>
 <body>
-		<div id="vis" style="width: 100%"></div>
+	<div id="vis" style="width: 100%"></div>
 	<script>
 	$.ajax({
 		url : 'http://localhost:8080/PPTAnalysisServer/dictionary/mongo/selectOpiDic.do?comName=${name}&opinion=pos&newsCode=economic',

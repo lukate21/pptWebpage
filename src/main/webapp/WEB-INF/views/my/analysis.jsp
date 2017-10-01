@@ -23,7 +23,90 @@
 <!-- ace settings handler -->
 <script src="${context}/resources/assets/js/ace-extra.min.js"></script>
 <script src="${context}/resources/assets/js/jquery-2.1.4.min.js"></script>
+<script src="${context}/resources/d3.min.js"></script>
+<script src="${context}/resources/d3.layout.cloud.js"></script>
+<script src="${context}/resources/word-cloud.js"></script>
+<script src="${context}/resources/liquidFillGauge.js"></script>
 <!------------------------------------------------------------------------------------------------------------------------->
+<script>
+//step1 to 2
+//step1 member variable
+var comName = '';
+var newsCode = '';
+var anaCode = '';
+function getDictionary(){
+	dicValidationKey='';
+	$.ajax({
+		url : "${context}/dictionary/getDictionary.json",
+		data : {
+			'id' : "test",//session ID로 바꿔야함
+			'name' : comName,
+			'anaCode' : anaCode,
+			'newsCode' : newsCode
+		},
+		success : function(data){
+			dicValidationKey = data;
+			console.log(dicValidationKey);
+		},
+		error : function(e){
+			console.log("error : "+ e);
+		}
+	});
+}
+
+//step2 to 3
+//step2 member variable
+var dicValidationKey = '';
+var usefulTerms = [];
+var uselessTerms = [];
+function checkValidation(e){
+	var userTerms = $('.tags span');
+	var userReqDic = [];
+	equalTerms = [];
+	garbageTerms = [];
+	for(var i=0; i<userTerms.length; i++){
+		var str = $(userTerms[i]).text().replace('×','');
+		userReqDic.push(str);
+	}
+	if(userReqDic.length == 0 ){
+		alert('단어를 입력해주세요.');
+		e.preventDefault();
+	}else if(dicValidationKey == ''){
+		alert('단어 사전을 불러오고 있습니다.');
+		e.preventDefault();
+	}else{
+		$.ajax({
+			url : "${context}/dictionary/validation.json",
+			type: 'post',
+			data : {
+				'key' : dicValidationKey,
+				'userReq' : JSON.stringify(userReqDic),
+			},
+			contentType : 'application/x-www-form-urlencoded; charset=utf-8',
+			async : false,
+			success : function(data){
+				var obj = JSON.parse(data);
+				usefulTerms = obj.usefulTerms;
+				usefulTerms = usefulTerms.sort(function(a,b){return a.value-b.value});
+				uselessTerms = obj.uselessTerms;
+				uselessTerms = uselessTerms.sort(function(a,b){return a.value-b.value});
+				drawValidationState();
+			},
+			error : function(error){
+				console.log("error : "+ e);
+				e.preventDefault();
+			}
+		});
+	}
+}
+
+//step3 to 4
+//step3 member variable
+</script>
+<style>
+	.liquidFillGaugeText { font-family: Helvetica; font-weight: bold; }
+</style>
+
 </head>
 <body class="no-skin">
 	<jsp:include page="../include/top-menu.jsp"></jsp:include>
@@ -46,7 +129,21 @@
 								<!-- PAGE CONTENT BEGINS -->
 								<div class="widget-box">
 									<div class="widget-header widget-header-blue widget-header-flat">
-										<h4 class="widget-title lighter">나만의 분석 만들기</h4>
+										<h4 class="widget-title lighter">나만의 분석 만들기
+											<small>
+												<span id="comNameSpan">
+												</span>
+												<span id="anaCodeSpan">
+												</span>
+												<span id="newsCodeSpan">
+												</span>
+												<span id="termCntSpan">
+												</span>
+												<span id="usefulTermSpan">
+												</span>
+												
+											</small>
+										</h4>
 									</div>
 
 									<div class="widget-body">
@@ -114,92 +211,18 @@
 	</footer>
 	<script src="${context }/resources/assets/js/wizard.min.js"></script>
 	<script src="${context }/resources/assets/js/jquery.validate.min.js"></script>
-	<script
-		src="${context }/resources/assets/js/jquery-additional-methods.min.js"></script>
+	<script src="${context }/resources/assets/js/jquery-additional-methods.min.js"></script>
 	<script src="${context }/resources/assets/js/bootbox.js"></script>
 	<script src="${context }/resources/assets/js/jquery.maskedinput.min.js"></script>
 	<script src="${context }/resources/assets/js/select2.min.js"></script>
 	<script src="${context}/resources/assets/js/jquery.bootstrap-duallistbox.min.js"></script>
 	<script src="${context}/resources/assets/js/jquery-typeahead.js"></script>
 	<script src="${context}/resources/assets/js/bootstrap-tag.min.js"></script>
+	<%-- <script src="${pageContext.request.contextPath }/resources/cloud.min.js"></script> --%>
 	
 	<!-- inline scripts related to this page -->
+	
 	<script>
-		var comName = '';
-		var newsCode = '';
-		var anaCode = '';
-		var dicValidationKey = '';
-		var equalTerms = [];
-		var garbageTerms = [];
-		//step1 to 2
-		function getDictionary(){
-			dicValidationKey='';
-			$.ajax({
-				url : "${context}/dictionary/getDictionary.json",
-				data : {
-					'id' : "test",//session ID로 바꿔야함
-					'name' : comName,
-					'anaCode' : anaCode,
-					'newsCode' : newsCode
-				},
-				success : function(data){
-					dicValidationKey = data;
-					console.log(dicValidationKey);
-				},
-				error : function(e){
-					console.log("error : "+ e);
-				}
-			});
-		}
-		function checkValidation(e){
-			var userTerms = $('.tags span');
-			var userReqDic = [];
-			equalTerms = [];
-			garbageTerms = [];
-			for(var i=1; i<userTerms.length; i++){
-				var str = $(userTerms[i]).text().replace('×','');
-				userReqDic.push(str);
-			}
-			if(userReqDic.length == 0 ){
-				alert('단어를 입력해주세요.');
-				e.preventDefault();
-			}else if(dicValidationKey == ''){
-				alert('단어 사전을 불러오고 있습니다.');
-				e.preventDefault();
-			}else{
-				$.ajax({
-					url : "${context}/dictionary/validation.json",
-					type: 'post',
-					data : {
-						'key' : dicValidationKey,
-						'userReq' : JSON.stringify(userReqDic),
-					},
-					contentType : 'application/x-www-form-urlencoded; charset=utf-8',
-					async : false,
-					success : function(data){
-						var obj = JSON.parse(data);
-						for(var i in obj){
-							console.log(i);
-							var term = obj[i];
-							if(term.garbageTerm === undefined){
-								equalTerms.push(term.equalTerm);
-							}else{
-								garbageTerms.push(term.garbageTerm);
-							}
-						}
-						console.log(equalTerms);
-						console.log(garbageTerms);
-						drawValidationState();
-						if(data == ""){
-							e.preventDefault();
-						}
-					},
-					error : function(e){
-						console.log("error : "+ e);
-					}
-				});
-			}
-		}
 		jQuery(function($) {
 			var $validation = false;
 			//Prev & Next 버튼 클릭 이벤트
@@ -297,13 +320,18 @@
 				$tag_obj.remove(index);
 				$('.tags span').empty();
 				$('.inline').css('width','100%');
-				$('.tags').css('width','100%');
+				$('.tags').css({
+					'width':'100%',
+					'height':'450px',
+					'overflow':'auto'
+				});
 			}
 			catch(e) {
 				//display a textarea for old IE, because it doesn't support this plugin or another one I tried!
 				tag_input.after('<textarea id="'+tag_input.attr('id')+'" name="'+tag_input.attr('name')+'" rows="3">'+tag_input.val()+'</textarea>').remove();
 				//autosize($('#form-field-tags'));
 			}
+			
 
 		});
 	</script>

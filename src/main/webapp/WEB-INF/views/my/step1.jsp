@@ -80,6 +80,7 @@
 			comName = $('input.typeahead')[1].value;
 		}
 		console.log(comName);
+		$('#comNameSpan').html('<i class="ace-icon fa fa-angle-double-right"></i>'+comName);
 	}
 	$('.anaCode').click(function(){
 		anaCode = this.value;
@@ -91,7 +92,7 @@
 		} 
 		var attr = $(this).attr('class') + ' active';
 		$(this).attr('class',attr);
-		
+		$('#anaCodeSpan').html('<i class="ace-icon fa fa-angle-double-right"></i>'+this.innerText);
 		//$('#anaInfo').html('<p class="red-text">'+this.value+'</p>설명');
 	});
 	$('.newsCode').click(function(){
@@ -104,6 +105,7 @@
 		} 
 		var attr = $(this).attr('class') + ' active';
 		$(this).attr('class',attr);
+		$('#newsCodeSpan').html('<i class="ace-icon fa fa-angle-double-right"></i>'+this.innerText);
 		//$('#anaInfo').html('<p class="red-text">'+this.value+'</p>설명');
 	});
 </script>
