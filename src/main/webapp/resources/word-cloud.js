@@ -59,11 +59,13 @@ function draw(data, bounds) {
 		if(d.opinion == "inc")
 			return "rgb(255, 0, 0)";
 		else if(d.opinion == "dec")
-			return  "rgb(0, 0, 225)";
+			return  "rgb(0, 0, 255)";
+		else if(d.opinion == "equ")
+			return "rgb(0, 255, 0)";
 		else if(d.opinion == "neu")
-			return "rgb(0, 225, 0)";
+			return "rgb(255, 165, 0)";
 		else
-			return "rgb(225, 225, 225)";
+			return "rgb(128, 128, 128)";
 	}).text(function(d) {
 		return d.text;
 	});
@@ -94,7 +96,7 @@ function drawCloud(tags, divId) {
 	layout.font('impact').spiral('archimedean');
 	fontSize = d3.scale['sqrt']().range([ 10, 50 ]);
 	if (tags.length) {
-		fontSize.domain([ +tags[tags.length - 1].value || 1, +tags[0].value ]);
+		fontSize.domain([ +tags[0].value || 1, +tags[tags.length - 1].value ]);
 	}
 	layout.stop().words(tags).start();
 }

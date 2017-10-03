@@ -184,7 +184,7 @@
 			name : 'company',
 			displayKey : 'value',
 			source : substringMatcher(comList),
-			limit : 10
+			limit : 20
 		});
 
 		///////////////

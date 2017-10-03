@@ -21,6 +21,8 @@
 <link rel="stylesheet" href="${context}/resources/assets/css/ace-skins.min.css" />
 <link rel="stylesheet" href="${context}/resources/assets/css/ace-rtl.min.css" />
 <!-- ace settings handler -->
+<link rel="stylesheet" href="${context}/resources/assets/css/jquery-ui.min.css" />
+
 <script src="${context}/resources/assets/js/ace-extra.min.js"></script>
 <script src="${context}/resources/assets/js/jquery-2.1.4.min.js"></script>
 <script src="${context}/resources/d3.min.js"></script>
@@ -34,8 +36,13 @@
 var comName = '';
 var newsCode = '';
 var anaCode = '';
+var prevDic = [];
+var prevDicSize = 0;
 function getDictionary(){
+	//초기화
 	dicValidationKey='';
+	prevDic=[];
+	prevDicSize=0;
 	$.ajax({
 		url : "${context}/dictionary/getDictionary.json",
 		data : {
@@ -45,13 +52,18 @@ function getDictionary(){
 			'newsCode' : newsCode
 		},
 		success : function(data){
-			dicValidationKey = data;
+			var obj = JSON.parse(data);
+			console.log(obj);
+			dicValidationKey = obj.id;
+			prevDic = obj.prevDic;
+			prevDicSize = obj.size;
 			console.log(dicValidationKey);
 		},
 		error : function(e){
 			console.log("error : "+ e);
 		}
 	});
+	$('#inputDic').empty();
 }
 
 //step2 to 3
@@ -80,31 +92,67 @@ function checkValidation(e){
 			type: 'post',
 			data : {
 				'key' : dicValidationKey,
-				'userReq' : JSON.stringify(userReqDic),
+				'userReq' : JSON.stringify(userReqDic)
 			},
 			contentType : 'application/x-www-form-urlencoded; charset=utf-8',
 			async : false,
 			success : function(data){
 				var obj = JSON.parse(data);
 				usefulTerms = obj.usefulTerms;
-				usefulTerms = usefulTerms.sort(function(a,b){return a.value-b.value});
+				usefulTerms = usefulTerms.sort(function(a,b){return b.value-a.value});
 				uselessTerms = obj.uselessTerms;
-				uselessTerms = uselessTerms.sort(function(a,b){return a.value-b.value});
+				uselessTerms = uselessTerms.sort(function(a,b){return b.value-a.value});
 				drawValidationState();
 			},
 			error : function(error){
-				console.log("error : "+ e);
+				console.log("error : "+ error);
 				e.preventDefault();
 			}
 		});
 	}
 }
-
+var dicName = '';
+var userDic = [];
+var successful = false;
 //step3 to 4
 //step3 member variable
+function insertUserDic(){
+	$.ajax({
+		url : "${context}/dictionary/mongo/insertUserDic.json",
+		type: 'post',
+		data : {
+			'userNo' : 1,//userNo로 변경
+			'comName' : comName,
+			'newsCode' : newsCode,
+			'anaCode' : anaCode,
+			'dicName' : dicName,
+			'userDic' : JSON.stringify(userDic)
+		},
+		contentType : 'application/x-www-form-urlencoded; charset=utf-8',
+		async : false,
+		success : function(data){
+			var obj = JSON.parse(data);
+			console.log(obj);
+		},
+		error : function(error){
+			console.log("error : "+ error);
+		}
+	});
+}
+
 </script>
 <style>
-	.liquidFillGaugeText { font-family: Helvetica; font-weight: bold; }
+.liquidFillGaugeText {
+	font-family: Helvetica;
+	font-weight: bold;
+}
+/* some elements used in demo only */
+.spinner-preview {
+	width: 100px;
+	height: 100px;
+	text-align: center;
+	margin-top: 60px;
+}
 </style>
 
 </head>
@@ -184,7 +232,7 @@ function checkValidation(e){
 											</div>
 											<hr />
 											<div class="wizard-actions">
-												<button class="btn btn-prev">
+												<button class="btn btn-prev" data-last="Finish">
 													<i class="ace-icon fa fa-arrow-left"></i>
 													Prev
 												</button>
@@ -199,7 +247,6 @@ function checkValidation(e){
 								</div>
 							</div><!-- /.col -->
 						</div><!-- /.row -->
-					<%-- <iframe src="${context}/my/analysis/start.do" width="100%" height="800px" frameBorder="0"> </iframe> --%>
 				</div>
 			</div>
 			<!-- /.page-content -->
@@ -218,13 +265,15 @@ function checkValidation(e){
 	<script src="${context}/resources/assets/js/jquery.bootstrap-duallistbox.min.js"></script>
 	<script src="${context}/resources/assets/js/jquery-typeahead.js"></script>
 	<script src="${context}/resources/assets/js/bootstrap-tag.min.js"></script>
+	<script src="${context}/resources/assets/js/jquery-ui.min.js"></script>
+	<script src="${context}/resources/assets/js/spin.js"></script>
+	
 	<%-- <script src="${pageContext.request.contextPath }/resources/cloud.min.js"></script> --%>
 	
 	<!-- inline scripts related to this page -->
 	
 	<script>
 		jQuery(function($) {
-			var $validation = false;
 			//Prev & Next 버튼 클릭 이벤트
 			$('#fuelux-wizard-container').ace_wizard({
 			//step: 2 //optional argument. wizard will jump to step "2" at first
@@ -244,12 +293,55 @@ function checkValidation(e){
 						getDictionary();
 					}
 				}else if(info.step == 2 && info.direction == "next"){
+					userDic=[];
 					checkValidation(e);
-				}
-				if (info.step == 1 && $validation) {
-
-					if (!$('#validation-form').valid())
-						e.preventDefault();
+				}else if(info.step == 3 && info.direction == "next" && usefulTerms.length==0){
+					alert('유효한 단어가 존재하지 않아 사전을 만들 수 없습니다.');
+					e.preventDefault();
+				}else if(info.step == 3 && info.direction == "next" && !successful){
+					e.preventDefault();
+					userDic=[];
+					for(var i in usefulTerms){
+						var term = usefulTerms[i].key;
+						userDic.push(term);
+					}
+					userDicTable(1);
+					$( "#dialog-confirm" ).removeClass('hide').dialog({
+						resizable: false,
+						width: '640',
+						modal: true,
+						title: "<div class='widget-header'><h4 class='smaller'><i class='ace-icon fa fa-book'></i> 나만의 분석 등록</h4></div>",
+						title_html: true,
+						buttons: [
+							{
+								html: "<i class='ace-icon fa fa-times bigger-110'></i>&nbsp; Cancel",
+								"class" : "btn btn-minier",
+								click: function() {
+									userDic=[];
+									$( this ).dialog( "close" );
+								}
+							},
+							{
+								text: "OK",
+								"class" : "btn btn-primary btn-minier",
+								click: function() {
+									dicName = $('#dicNameInput').val();
+									if(dicName == ''){
+										alert('나만의 분석 이름을 등록해주세요.');
+									}else{
+										insertUserDic();
+										successful=true;
+										$( this ).dialog( "close" );
+										$('.btn-next').trigger('click');
+										$('.btn-prev').attr({
+											'disabled' : 'disabled',
+											'data-last' : 'Finish'
+										});
+									}
+								} 
+							}
+						]
+					});
 				}
 			}).on('changed.fu.wizard', function(info) {
 				
@@ -332,6 +424,42 @@ function checkValidation(e){
 				//autosize($('#form-field-tags'));
 			}
 			
+			$.widget("ui.dialog", $.extend({}, $.ui.dialog.prototype, {
+				_title: function(title) {
+					var $title = this.options.title || '&nbsp;'
+					if( ("title_html" in this.options) && this.options.title_html == true )
+						title.html($title);
+					else title.text($title);
+				}
+			}));
+			var opts = {
+					  lines: 13 // The number of lines to draw
+					, length: 28 // The length of each line
+					, width: 14 // The line thickness
+					, radius: 42 // The radius of the inner circle
+					, scale: 1 // Scales overall size of the spinner
+					, corners: 1 // Corner roundness (0..1)
+					, color: '#000' // #rgb or #rrggbb or array of colors
+					, opacity: 0.25 // Opacity of the lines
+					, rotate: 0 // The rotation offset
+					, direction: 1 // 1: clockwise, -1: counterclockwise
+					, speed: 1 // Rounds per second
+					, trail: 60 // Afterglow percentage
+					, fps: 20 // Frames per second when using setTimeout() as a fallback for CSS
+					, zIndex: 2e9 // The z-index (defaults to 2000000000)
+					, className: 'spinner' // The CSS class to assign to the spinner
+					, top: '50%' // Top position relative to parent
+					, left: '50%' // Left position relative to parent
+					, shadow: false // Whether to render a shadow
+					, hwaccel: false // Whether to use hardware acceleration
+					, position: 'absolute' // Element positioning
+					}
+			var target = document.getElementById('inputTerm');
+			var spinner = new Spinner(opts).spin(target);
+/* 			var spinner = new Spinner().spin();
+			target.appendChild('inputTerm');
+ */		
+
 
 		});
 	</script>

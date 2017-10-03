@@ -30,29 +30,54 @@ public class DictionaryController {
 	
 	
 	//=======================Connect to MongoDB================================//
-	@RequestMapping("/mongo/selectOpiDic.do")
+	@RequestMapping("/mongo/selectOpiDic.json")
 	@ResponseBody
 	public String selectOpiDicMongo(String comName,String opinion, String newsCode){
 		JSONObject obj = dService.selectOpiDicMongo(comName, opinion, newsCode);
 		return obj.toJSONString();
 	}
 	
-	@RequestMapping("/mongo/selectProDic.do")
+	@RequestMapping("/mongo/selectProDic.json")
 	@ResponseBody
 	public String selectProDicMongo(String comName, String newsCode){
 		return  dService.selectProDicMongo(comName, newsCode).toJSONString();
 	}
 	
-	@RequestMapping("/mongo/selectPro2Dic.do")
+	@RequestMapping("/mongo/selectPro2Dic.json")
 	@ResponseBody
 	public String selectPro2Dic(String comName, String newsCode){
 		return  dService.selectPro2DicMongo(comName, newsCode).toJSONString();
 	}
-	@RequestMapping("/mongo/selectTFIDF.do")
+	
+	@RequestMapping("/mongo/selectTFIDF.json")
 	@ResponseBody
 	public String selectTFIDFMongo(String comName,String newsCode, String anaCode){
 		return dService.selectTFIDFMongo(comName,newsCode,anaCode).toJSONString();
 	}
+	
+	@RequestMapping("/mongo/insertUserDic.json")
+	@ResponseBody
+	public String insertUserDic (int userNo, String comName,String newsCode, String anaCode, String dicName, String userDic){
+		//request value
+		userDic = userDic.substring(1, userDic.length()-1).replaceAll("\"", "");
+		String[] userReqArr = userDic.split(",");
+		JSONArray dicArr = new JSONArray();
+		for(String term : userReqArr){
+			JSONObject obj = new JSONObject();
+			obj.put("term", term);
+			dicArr.add(obj);
+		}
+		JSONObject obj = new JSONObject();
+		obj.put("userNo", userNo);
+		obj.put("comName", comName);
+		obj.put("newsCode", newsCode);
+		obj.put("anaCode", anaCode);
+		obj.put("dicName", dicName);
+		obj.put("dictionary", dicArr);
+		return obj.toJSONString();
+		//return dService.selectTFIDFMongo(comName,newsCode,anaCode).toJSONString();
+	}
+	
 	
 	/*
 	 * anaCode
@@ -65,6 +90,7 @@ public class DictionaryController {
 	@ResponseBody
 	public String getDictionary(String id, String name, String anaCode, String newsCode){
 		id = SHA_ENC.SHA256_Encrypt(id); // id 암호화하여 고유 키로 사용
+		int size=0;
 		System.out.println("id : " + id);
 		System.out.println("name : " + name);
 		System.out.println("anaCode : " + anaCode);
@@ -78,25 +104,34 @@ public class DictionaryController {
 				opiDic.add(posDic);
 				opiDic.add(negDic);
 				userReqCheckDic.put(id, opiDic);
+				size = posDic.size() + negDic.size();
 				System.out.println("opiDic(" + opiDic.toJSONString().length() + ") 호출");
 				break;
 			case "pro1":
 				JSONArray proDic = dService.selectProDicMongo(name, newsCode);
 				userReqCheckDic.put(id, proDic);
+				size = proDic.size();
 				System.out.println("pro1Dic(" + proDic.toJSONString().length() + ") 호출");
 				break;
 			case "pro2":
 				JSONArray pro2Dic = dService.selectPro2DicMongo(name, newsCode);
 				userReqCheckDic.put(id, pro2Dic);
+				size = pro2Dic.size();
 				System.out.println("pro2Dic(" + pro2Dic.toJSONString().length() + ") 호출");
 				break;
 			default:
 				JSONArray tfidfDic = new JSONArray();
-				tfidfDic.add(dService.selectTFIDFMongo(name,newsCode,anaCode));
+				JSONObject obj = dService.selectTFIDFMongo(name,newsCode,anaCode);
+				tfidfDic.add(obj);
 				userReqCheckDic.put(id, tfidfDic);
+				size = obj.size();
 				System.out.println("tfidfDic(" + tfidfDic.toJSONString().length() + ") 호출");
 		}
-		return id;
+		JSONObject obj = new JSONObject();
+		obj.put("id",id);
+		obj.put("prevDic", userReqCheckDic.get(id));
+		obj.put("size", size);
+		return obj.toJSONString();
 	}
 	
 	@RequestMapping(value="/validation.json", method=RequestMethod.POST)
@@ -138,7 +173,7 @@ public class DictionaryController {
 				}
 			}else if(checkArr.size() == 2){//OPI_DIC
 				JSONObject posDic = (JSONObject)checkArr.get(0);
-				JSONObject negDic = (JSONObject)checkArr.get(0);
+				JSONObject negDic = (JSONObject)checkArr.get(1);
 				Iterator<String> userTermIter = userTermSet.iterator();
 				while(userTermIter.hasNext()){
 					String userTerm = userTermIter.next();
@@ -151,7 +186,7 @@ public class DictionaryController {
 					}else if(negDic.containsKey(userTerm)){
 						JSONObject termObject = new JSONObject();
 						termObject.put("key", userTerm);
-						termObject.put("value", Double.parseDouble((String)posDic.get(userTerm)));
+						termObject.put("value", Double.parseDouble((String)negDic.get(userTerm)));
 						termObject.put("opinion", "dec");
 						usefulTermArr.add(termObject);
 					}else{
