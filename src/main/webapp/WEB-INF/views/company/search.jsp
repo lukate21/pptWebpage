@@ -31,37 +31,56 @@
 <body class="no-skin">
 	<jsp:include page="../include/top-menu.jsp"></jsp:include>
 	<jsp:include page="../include/side-menu.jsp"></jsp:include>
-	<div class="content-lg">
-		<div class="main-container ace-save-state">
-			<div class="container">
-				<div class="main-content">
-					<div class="main-content-inner">
-						<div class="page-content">
-							<div class="col-sm-10" id="chart">
-								<iframe src="${context}/company/chart.do?name=${name}" width="100%" height="700px" frameBorder="0">
-								
-								</iframe>
-							</div>
-							<div class="col-sm-2">
-								<div class="row">
-									<div class="form-group">
-										<div class="pos-rel">
-											<input class="typeahead scrollable" type="text"placeholder="기업검색" />
-										</div>
-									</div>
+	<div class="main-content">
+		<div class="main-content-inner">
+			<div class="breadcrumbs ace-save-state breadcrumbs-fixed" id="breadcrumbs">
+				<ul class="breadcrumb">
+					<li><i class="ace-icon fa fa-home home-icon"></i> <a href="${context }">Home</a></li>
+					<li><a href="#">company</a></li>
+					<li class="active">기업검색</li>
+				</ul>
+				<!-- /.breadcrumb -->
+			</div>
+			<div class="page-content">
+				<div class="row">
+					<div class="col-sm-5" id="stockChart">
+						<iframe src="${context}/company/chart/stock.do?name=${name}"
+							width="100%" height="400px" frameBorder="0"> </iframe>
+					</div>
+					<div class="col-sm-5" id="RTAChart">
+						<iframe
+							src="${context}/company/chart/RTA.do?name=${name}&option=newsCode"
+							width="100%" height="400px" frameBorder="0"> </iframe>
+					</div>
+					<div class="col-sm-2">
+						<div class="row">
+							<div class="form-group pull-right">
+								<div class="pos-rel">
+									<input class="typeahead scrollable" type="text"
+										placeholder="기업검색" />
 								</div>
-								<div class="row">
-									<div class="section-seperator margin-b-50">
-										<div class="margin-b-50">
-											<div class="margin-b-30">
-												<h3 id="newsTitle">${name} 뉴스</h3>
-												<div id="news"></div>
-											</div>
-										</div>
+							</div>
+						</div>
+						<div class="row">
+							<div class="section-seperator margin-b-50">
+								<div class="margin-b-50">
+									<div class="margin-b-30">
+										<h3 id="newsTitle">${name}뉴스</h3>
+										<div id="news"></div>
 									</div>
 								</div>
 							</div>
 						</div>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-sm-6" id="relNewsChart">
+						<iframe src="${context}/company/chart/reliability.do?name=${name}&option=newsCode"
+							width="100%" height="400px" frameBorder="0"> </iframe>
+					</div>
+					<div class="col-sm-6" id="relAnaChart">
+						<iframe src="${context}/company/chart/reliability.do?name=${name}&option=anaCode"
+							width="100%" height="400px" frameBorder="0"> </iframe>
 					</div>
 				</div>
 			</div>
@@ -76,14 +95,17 @@
 <script src="${context}/resources/assets/js/jquery.bootstrap-duallistbox.min.js"></script>
 <script src="${context}/resources/assets/js/jquery-typeahead.js"></script>
 <script>
+	getNews('${name}');
 	$(document).on("click",".tt-suggestion.tt-selectable",function(){
 		change();
 	});
+	
 	$("input.typeahead").keydown(function (key) {
         if(key.keyCode == 13){//키가 13이면 실행 (엔터는 13)
         	change();
         }
     });
+	
 	function change(){
 		var comName;
 		if($('input.typeahead')[1].value != $('input.typeahead')[0].value && $('input.typeahead')[0].value != ''){
@@ -91,8 +113,18 @@
 		}else{
 			comName = $('input.typeahead')[1].value;
 		}
-		var tag = '<iframe src="${context}/company/chart.do?name='+comName+'" width="100%" height="700px" frameBorder="0"></iframe>'
-		$('#chart').html(tag);
+		var tag1 = '<iframe src="${context}/company/chart/stock.do?name='+comName+'" width="100%" height="400px" frameBorder="0"></iframe>'
+		var tag2 = '<iframe src="${context}/company/chart/RTA.do?name='+comName+'&option=newsCode" width="100%" height="400px" frameBorder="0"></iframe>'
+		var tag3 = '<iframe src="${context}/company/chart/reliability.do?name='+comName+'&option=newsCode" width="100%" height="400px" frameBorder="0"></iframe>'
+		var tag4 = '<iframe src="${context}/company/chart/reliability.do?name='+comName+'&option=anaCode" width="100%" height="400px" frameBorder="0"></iframe>'
+		$('#stockChart').html(tag1);
+		$('#RTAChart').html(tag2);
+		$('#relNewsChart').html(tag3);
+		$('#relAnaChart').html(tag4);
+		getNews(comName);
+	}
+	
+	function getNews(comName){
 		$.ajax({
 			url : "${context}/crawler/comNews.json?name="+comName,
 			success : function(data){
@@ -110,6 +142,7 @@
 			}
 		});
 	}
+	//검색 필터링
 	jQuery(function($) {
 		var demo1 = $('select[name="duallistbox_demo1[]"]').bootstrapDualListbox(
 						{

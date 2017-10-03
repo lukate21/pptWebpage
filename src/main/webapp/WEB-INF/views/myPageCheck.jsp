@@ -22,21 +22,34 @@
 <!-- ace settings handler -->
 <script src="${context}/resources/assets/js/ace-extra.min.js"></script>
 <script src="${context}/resources/assets/js/jquery-2.1.4.min.js"></script>
-<!------------------------------------------------------------------------------------------------------------------------------------>
 </head>
 <body class="no-skin">
-<jsp:include page="include/top-menu.jsp"></jsp:include>
+	<jsp:include page="include/top-menu.jsp"></jsp:include>
 	<jsp:include page="include/side-menu.jsp"></jsp:include>
 	<div class="main-content">
 		<div class="main-content-inner">
-			비밀번호를 입력해주세요<br/>
-		<form name="myForm" action="myPage.do" method="post" onSubmit="return checkForm()">
-			<input type="hidden" name="id" value="${sessionScope.loginUser.id}">
-			<input type="hidden" name="domain" value="${sessionScope.loginUser.domain}">
-			<input type="password" name="password" autofocus ><br/>
-			<div id="writePassword"></div>
-			<input type="submit" value="완료">
-		</form>
+			<div class="breadcrumbs ace-save-state breadcrumbs-fixed" id="breadcrumbs">
+				<ul class="breadcrumb">
+					<li><i class="ace-icon fa fa-home home-icon"></i> <a href="${context}/hello.do">Home</a></li>
+					<li class="active">myPage</li>
+				</ul>
+				<!-- /.breadcrumb -->
+			</div>
+			
+			<div class="page-content">
+				<div class="row margin-b-5">
+					<div class ="col-sm-4 col-sm-offset-4">
+						비밀번호를 입력해주세요<br/>
+						<form name="myForm" action="myPage.do" method="post" onSubmit="return checkForm()">
+							<input type="hidden" name="id" value="${sessionScope.loginUser.id}">
+							<input type="hidden" name="domain" value="${sessionScope.loginUser.domain}">
+							<input type="password" name="password" autofocus >
+							<div id="writePassword"></div><br/>
+							<input type="submit" value="완료">
+						</form>
+					</div>
+				</div>
+			</div>
 		</div>
 	</div>
 </div>

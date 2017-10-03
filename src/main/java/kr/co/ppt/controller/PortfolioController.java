@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import kr.co.ppt.serviceImpl.CompanyServiceImpl;
 
@@ -20,8 +21,14 @@ public class PortfolioController {
 	CompanyServiceImpl cService;
 	
 	@RequestMapping("/analysis.do")
-	public String analysis(){
+	public String analysis(Model model){
+		model.addAttribute("comList", cService.selectComList());
 		return "/my/analysis";
+	}
+	
+	@RequestMapping("/analysis/start.do")
+	public String start(){
+		return "/my/start";
 	}
 	
 	@RequestMapping("/analysis/first.do")
@@ -29,27 +36,29 @@ public class PortfolioController {
 		model.addAttribute("comList", cService.selectComList());
 		return "/my/firstStep";
 	}
-	@RequestMapping("/analysis/second.do")
-	public String second(Model model, String name,String newsCode){
+	
+	@RequestMapping("/analysis/getMorp.json")
+	@ResponseBody
+	public String getMorp(String type, String data){
+		String text = "";
+		String result = "";
 		try {
-			URL url = new URL("http://222.106.22.63:8080/ppt/dictionary/mongo/selectTFIDF.do?newsCode="+newsCode);
+			URL url = new URL("http://222.106.22.63:8080/ppt/morp/reqMorp.do?type="+type+"&data="+data);
 			URLConnection uc = url.openConnection();
 			uc.connect();
 			InputStream is = uc.getInputStream();
 			InputStreamReader isr = new InputStreamReader(is,"utf-8");
 			BufferedReader br = new BufferedReader(isr);
-			String text = "";
-			String data = "";
 			while((text = br.readLine()) != null){
-				data += text;
+				result += text;
 			}
-			model.addAttribute("dictionary", data);
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		return "/my/secondStep";
+		return result;
 	}
+	
 	@RequestMapping("/analysis/third.do")
 	public String third(String name){
 		return "/my/thirdStep";

@@ -28,40 +28,49 @@
 <body class="no-skin">
 	<jsp:include page="include/top-menu.jsp"></jsp:include>
 	<jsp:include page="include/side-menu.jsp"></jsp:include>
-	<br/><br/><br/>
 	<div class="main-content">
 		<div class="main-content-inner">
-		<div class="row">
-			<div class="col-sm-12">
-					<div align="center">
-						<h1>.PPT</h1>
+			<div class="breadcrumbs ace-save-state breadcrumbs-fixed" id="breadcrumbs">
+				<ul class="breadcrumb">
+					<li><i class="ace-icon fa fa-home home-icon"></i> <a href="${context}/hello.do">Home</a></li>
+					<li class="active">로그인</li>
+				</ul>
+				<!-- /.breadcrumb -->
+			</div>
+			
+			<div class="page-content">
+				<div class="row">
+					<div class="col-sm-12">
+							<div align="center">
+								<h1>.PPT</h1>
+							</div>
 					</div>
-			</div>
-		</div>
-		<div class="row margin-b-5">
-			<div class ="col-sm-4 col-sm-offset-4">
-				<form name="loginForm" action="login.do" method="post" onSubmit="return checkForm()">
-					<input type="email" style="width:100%; height:50px" placeholder="&nbsp;&nbsp;아이디" autofocus name="email" value="${cookie.savedId.value}"><br/><br/>
-					<input type="password" style="width:100%; height:50px" placeholder="&nbsp;&nbsp;패스워드" name="password"  value="${cookie.savedPassword.value}"><br/><br/>
-					<div id="loginFail"></div>
-					<input type="checkbox" name="remember" ${cookie.savedCheck.value }>&nbsp;로그인 상태 유지<br/><br/>
-					<input type="submit" value="로그인" id="btnLogin" class="custom-button blue-text" style="font-size:20px; width:100%">
-				</form>
-			<hr/>
-			</div>
-		</div>
-		<div class="row">
-			<div align="center" >
-				<div class="col-sm-12" align="center">
-						<%-- ${cookie.user_remember.value} --%>
-						<a href="#">아이디를 잊으셨나요?</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;
-						<a href="#">비밀번호를 잊으셨나요?</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;
-						<a href="join.do">회원가입</a>
+				</div>
+				<div class="row margin-b-5">
+					<div class ="col-sm-4 col-sm-offset-4">
+						<form name="loginForm" action="login.do" method="post" onSubmit="return checkForm()">
+							<input type="email" style="width:100%; height:50px" placeholder="&nbsp;&nbsp;아이디" autofocus name="email" value="${cookie.savedId.value}"><br/><br/>
+							<input type="password" style="width:100%; height:50px" placeholder="&nbsp;&nbsp;패스워드" name="password"  value="${cookie.savedPassword.value}"><br/><br/>
+							<div id="loginFail"></div>
+							<input type="checkbox" class="ace" name="remember" ${cookie.savedCheck.value }>
+							<span class="lbl">&nbsp;로그인 상태 유지<br/><br/></span>
+							<input type="submit" value="로그인" id="btnLogin" class="btn btn-info" style="font-size:20px; width:100%">
+						</form>
+					<hr/>
+					</div>
+				</div>
+				<div class="row">
+					<div align="center" >
+						<div class="col-sm-12" align="center">
+							<a href="#">아이디를 잊으셨나요?</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;
+							<a href="#">비밀번호를 잊으셨나요?</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;
+							<a href="join.do">회원가입</a>
+						</div>
+					</div>
 				</div>
 			</div>
 		</div>
 	</div>
-</div>
 </div>
 	<!--========== FOOTER ==========-->
 	<footer>

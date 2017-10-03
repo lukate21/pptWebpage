@@ -1,11 +1,15 @@
 package kr.co.ppt.controller;
 
 
+import java.util.HashMap;
+import java.util.Map;
+
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.json.simple.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -35,7 +39,7 @@ public class HomeController {
 	 */
 	@RequestMapping(value="join.do", method=RequestMethod.GET )
 	public String joinForm(){
-		return "";
+		return "join";
 	}
 	
 	@RequestMapping(value="join.do", method=RequestMethod.POST )
@@ -129,14 +133,16 @@ public class HomeController {
 			String msg = "로그인에 성공했습니다.";
 			String ref = "hello.do";
 			
-			request.setAttribute("msg", msg);
-			request.setAttribute("ref", ref);
+			/*request.setAttribute("msg", msg);
+			request.setAttribute("ref", ref);*/
+			makeMessage(msg, ref, request);
 		} else {
 			String msg = "아이디 또는 비밀번호가 잘못되었습니다.";
 			String ref = "login.do";
 			
-			request.setAttribute("msg", msg);
-			request.setAttribute("ref", ref);
+			/*request.setAttribute("msg", msg);
+			request.setAttribute("ref", ref);*/
+			makeMessage(msg, ref, request);
 		}
 		
 		return "messageAlert";
@@ -149,8 +155,9 @@ public class HomeController {
 		String msg = "로그아웃 되었습니다.";
 		String ref = "hello.do";
 		
-		request.setAttribute("msg", msg);
-		request.setAttribute("ref", ref);
+		/*request.setAttribute("msg", msg);
+		request.setAttribute("ref", ref);*/
+		makeMessage(msg, ref, request);
 		
 		return "messageAlert";
 	}
@@ -173,12 +180,42 @@ public class HomeController {
 		else {
 			String msg = "일치하는 정보가 없습니다.";
 			String ref = "myPage.do";
-			request.setAttribute("msg", msg);
-			request.setAttribute("ref", ref);
+			/*request.setAttribute("msg", msg);
+			request.setAttribute("ref", ref);*/
+			makeMessage(msg, ref, request);
 			
 			return "messageAlert";
 		}
 	}
+	
+	@RequestMapping(value="modify.do", method=RequestMethod.POST)
+	public String modify(String email, String password, String tel, HttpServletRequest request) {
+		MemberVO member = makeBasicInfo(email, password);
+		if(tel != null)
+			member.setTel(tel);
+		
+		int result = memberService.modifyUser(member);
+		if(result == 1) {
+			String msg = "수정되었습니다.";
+			String ref = "hello.do";
+		/*	request.setAttribute("msg", msg);
+			request.setAttribute("ref", ref);*/
+			makeMessage(msg, ref, request);
+			return "messageAlert";
+		} else {
+			String msg = "수정 실패했습니다.";
+			String ref = "myPage.do";
+			makeMessage(msg, ref, request);
+			return "messageAlert";
+		}
+	}
+	
+	@RequestMapping(value="modify.do", method=RequestMethod.GET)
+	public String test(String password) {
+		String ppp = SHA_ENC.SHA256_Encrypt(password);
+		return ppp;
+	}
+	
 	@ResponseBody
 	@RequestMapping("stock.json")
 	public void getStock(){
@@ -208,17 +245,25 @@ public class HomeController {
 	public String mobileLogin(String email, String password){
 		
 		int result = 0;
-		String memberData = "";
+//		String memberData = "";
 		MemberVO member = makeBasicInfo(email, password);
 		
 		MemberVO loginUser = memberService.login(member);
 
 		if(loginUser != null) {
 			result = 1;
-			memberData = "{ \"result\" : \""+result+"\", \"id\" : \""+ loginUser.getId()+"\", \"domain\" : \""+ loginUser.getDomain()
+			Map<Object,Object> map = new HashMap<>();
+			map.put("result", result);
+			map.put("id", loginUser.getId());
+			map.put("domain", loginUser.getDomain());
+			map.put("name", loginUser.getName());
+			map.put("tel", loginUser.getTel());
+			JSONObject obj = new JSONObject(map);
+			return obj.toJSONString();
+			/*memberData = "{ \"result\" : \""+result+"\", \"id\" : \""+ loginUser.getId()+"\", \"domain\" : \""+ loginUser.getDomain()
 			+"\", \"name\" : \""+loginUser.getName()+"\", \"tel\" : \""+loginUser.getTel()+"\"}";
 			
-			return memberData;
+			return memberData;*/
 		}
 		else 
 			return "{\"result\" : \""+result+"\"}"; 
@@ -252,5 +297,10 @@ public class HomeController {
 		member.setPassword(SHA_ENC.SHA256_Encrypt(password));
 		
 		return member;
+	}
+	
+	private void makeMessage(String msg, String ref, HttpServletRequest request) {
+		request.setAttribute("msg", msg);
+		request.setAttribute("ref", ref);
 	}
 }

@@ -23,6 +23,10 @@
 <!-- ace settings handler -->
 <script src="${context}/resources/assets/js/ace-extra.min.js"></script>
 <script src="${context}/resources/assets/js/jquery-2.1.4.min.js"></script>
+<!-- owl.carousel -->
+<link rel="stylesheet" href="${context}/resources/assets/owlcarousel/assets/owl.carousel.css" />
+<link rel="stylesheet" href="${context}/resources/assets/owlcarousel/assets/owl.theme.green.css" />
+<script src="${context}/resources/assets/owlcarousel/owl.carousel.js"></script>
 <!------------------------------------------------------------------------------------------------------------------------->
 </head>
 <body class="no-skin">
@@ -32,9 +36,7 @@
 		<div class="main-content-inner">
 			<div class="breadcrumbs ace-save-state breadcrumbs-fixed" id="breadcrumbs">
 				<ul class="breadcrumb">
-					<li><i class="ace-icon fa fa-home home-icon"></i> <a href="${context }">Home</a></li>
-					<li><a href="#">Other Pages</a></li>
-					<li class="active">Error 404</li>
+					<li><i class="ace-icon fa fa-home home-icon"></i> <a href="${context}/hello.do">Home</a></li>
 				</ul>
 				<!-- /.breadcrumb -->
 			</div>
@@ -234,14 +236,11 @@
 					<div class="modal-footer">
 						<c:choose>
 							<c:when test="${ empty sessionScope.loginUser}">
-								<button data-bb-handler="cancel" id="btnJoin" type="button"
-									class="buttons button">회원가입</button>
-								<button data-bb-handler="confirm" id="btnLogin" type="button"
-									class="buttons button blue-btn">로그인&nbsp;</button>
+								<button id="btnJoin" class="btn btn-warning">회원가입</button>
+								<button id="btnLogin" class="btn btn-info">로그인&nbsp;</button>
 							</c:when>
 							<c:otherwise>
-								<button data-bb-handler="confirm" id="btnLogout" type="button"
-									class="buttons button blue-btn">로그아웃</button>
+								<button id="btnLogout" class="btn btn-danger">로그아웃</button>
 							</c:otherwise>
 						</c:choose>
 					</div>
@@ -252,12 +251,12 @@
 <script src="${context}/resources/assets/owlcarousel/owl.carousel.min.js"></script>
 <script>
 	$(document).ready(function() {
-		//$('#myModal').modal();
+		$('#myModal').modal();
 		$('#btnLogin').click(function() {
 			goLogin();
 		});
 		$('#btnJoin').click(function() {
-			$('#myModal').modal('hide')
+			goJoin();
 		});
 		$('#btnLogout').click(function() {
 			goLogout();
@@ -387,6 +386,10 @@
 	
 	function goLogout() {
 		location.href = "logout.do"
+	}
+	
+	function goJoin() {
+		location.href = "join.do"
 	}
 
 </script>
