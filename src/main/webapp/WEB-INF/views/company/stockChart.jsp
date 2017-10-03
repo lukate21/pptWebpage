@@ -19,22 +19,24 @@
 </head>
 <body>
 	<div class="row">
-		<div class="col-sm-6">
-			<span><b>${name }</b></span>
-			<span id="now"></span>
-			<span id="raise"></span>
-			<span id="rate"></span>
-			예측 : <span id="predict"></span>
-			<span style="cursor:pointer;" class="badge badge-success" onclick="drawChart('1_DAY')">1일</span> 
-			<span style="cursor:pointer;" class="badge badge-success" onclick="drawChart2('1_MONTH')">1개월</span>
-			<span style="cursor:pointer;" class="badge badge-success" onclick="drawChart2('1_YEAR')">1년</span>
+		<div class="col-sm-12">
+			<span><b>${name }</b></span>&nbsp;&nbsp;
+			<span id="now"></span>&nbsp;
+			<span id="raise"></span>&nbsp;
+			<span id="rate"></span>&nbsp;
+			예측 : <span id="predict"></span>&nbsp;
+			베스트 예측 : <span id="bestPredict"></span>
+			<span style="cursor:pointer;" class="badge badge-success pull-right" onclick="drawChart2('1_YEAR')">1년</span>
+			<span style="cursor:pointer;" class="badge badge-success pull-right" onclick="drawChart2('1_MONTH')">1개월</span>
+			<span style="cursor:pointer;" class="badge badge-success pull-right" onclick="drawChart('1_DAY')">1일</span> 
 		</div>
 	</div>
 	
 	<div id="chartdiv" class="col-sm-12" style="height:300px;"></div>
 	
 	<script>
-	drawChart('1_DAY');
+	var bestAnaCode = '${bestAnalysis.anaCode}';
+	var bestNewsCode = '${bestAnalysis.newsCode}';
 	var RTA = ${RTA};
 	var pCnt = 0;
 	var mCnt = 0;
@@ -43,6 +45,9 @@
 			pCnt++;
 		else if(RTA[i].todayFluc == "m")
 			mCnt++;
+		if(RTA[i].anaCode == bestAnaCode && RTA[i].newsCode == bestNewsCode){
+			$('#bestPredict').text(RTA[i].todayFluc);
+		}
 	}
 	var predicValue;
 	if(pCnt>mCnt){
@@ -50,8 +55,10 @@
 	}else if(pCnt<mCnt){
 		$('#predict').text('-'+(mCnt/(pCnt+mCnt)*100).toFixed(0)+'%');
 	}else{
-		$('#predict').text('-');
+		$('#predict').text('X');
 	}
+	
+	drawChart('1_DAY');
 	function drawChart(timeFrame){
 		$.ajax({
 			url : '${context}/company/rtStock.json?name=${name}&timeFrame='+timeFrame,

@@ -8,5 +8,6 @@
 		<typeAlias alias="companyVO" type="kr.co.ppt.vo.CompanyVO" />
 		<typeAlias alias="stockVO" type="kr.co.ppt.vo.StockVO" />
 		<typeAlias alias="rtaVO" type="kr.co.ppt.vo.RTAVO" />
+		<typeAlias alias="reliabilityVO" type="kr.co.ppt.vo.ReliabilityVO" />
 	</typeAliases>
 </configuration>

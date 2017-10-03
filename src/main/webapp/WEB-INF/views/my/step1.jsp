@@ -5,8 +5,7 @@
 <div class="step-pane active" data-step="1">
 	<form class="form-horizontal" id="sample-form">
 		<div class="form-group">
-			<label class="control-label col-xs-12 col-sm-2 no-padding-right"
-				for="email">기업선택</label>
+			<label class="control-label col-xs-12 col-sm-2 no-padding-right">기업선택</label>
 			<div class="col-xs-12 col-sm-10">
 				<div class="clearfix col-sm-12">
 					<input class="typeahead scrollable" type="text"/>
@@ -17,8 +16,7 @@
 		<div class="space-2"></div>
 
 		<div class="form-group">
-			<label class="control-label col-xs-12 col-sm-2 no-padding-right"
-				for="state">분석방법</label>
+			<label class="control-label col-xs-12 col-sm-2 no-padding-right">분석방법</label>
 
 			<div class="col-xs-12 col-sm-10">
 				<div class="col-sm-4">
@@ -44,8 +42,7 @@
 		<div class="space-2"></div>
 
 		<div class="form-group">
-			<label class="control-label col-xs-12 col-sm-2 no-padding-right"
-				for="state">뉴스 카테고리 선택</label>
+			<label class="control-label col-xs-12 col-sm-2 no-padding-right">뉴스 카테고리</label>
 			<div class="col-xs-12 col-sm-10">
 				<div class="col-sm-4">
 					<p>
@@ -81,6 +78,7 @@
 		}
 		console.log(comName);
 		$('#comNameSpan').html('<i class="ace-icon fa fa-angle-double-right"></i>'+comName);
+		$('#comNameDiv').html('<i class="ace-icon fa fa-angle-double-right"></i>'+comName);
 	}
 	$('.anaCode').click(function(){
 		anaCode = this.value;
@@ -93,6 +91,7 @@
 		var attr = $(this).attr('class') + ' active';
 		$(this).attr('class',attr);
 		$('#anaCodeSpan').html('<i class="ace-icon fa fa-angle-double-right"></i>'+this.innerText);
+		$('#anaCodeDiv').html('<i class="ace-icon fa fa-angle-double-right"></i>'+this.innerText);
 		//$('#anaInfo').html('<p class="red-text">'+this.value+'</p>설명');
 	});
 	$('.newsCode').click(function(){
@@ -106,6 +105,7 @@
 		var attr = $(this).attr('class') + ' active';
 		$(this).attr('class',attr);
 		$('#newsCodeSpan').html('<i class="ace-icon fa fa-angle-double-right"></i>'+this.innerText);
+		$('#newsCodeDiv').html('<i class="ace-icon fa fa-angle-double-right"></i>'+this.innerText);
 		//$('#anaInfo').html('<p class="red-text">'+this.value+'</p>설명');
 	});
 </script>
