@@ -24,6 +24,7 @@ import com.mongodb.client.model.Filters;
 import kr.co.ppt.daoImpl.CompanyDAOImpl;
 import kr.co.ppt.vo.CompanyVO;
 import kr.co.ppt.vo.RTAVO;
+import kr.co.ppt.vo.ReliabilityVO;
 import yahoofinance.Stock;
 import yahoofinance.YahooFinance;
 
@@ -97,5 +98,13 @@ public class CompanyServiceImpl {
 			arr.add(obj);
 		}
 		return arr;
+	}
+	
+	public ReliabilityVO selectBestAnalysis(String comName){
+		return cDAO.selectBestAnalysis(comName);
+	}
+	
+	public List<ReliabilityVO> selectReliability(String comName){
+		return cDAO.selectReliability(comName);
 	}
 }

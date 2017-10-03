@@ -31,9 +31,9 @@
 								<div class="tab-content">
 									<div id="textTab" class="tab-pane fade active in">
 										<input type="text" id="inputTerm" size="30" placeholder="단어를 입력해주세요">
-										<button class="btn btn-white btn-info btn-bold pull-right"
-											onclick="drawPrevDic(1)">
-											<i class="ace-icon fa fa-spinner fa-spin orange bigger-125"></i>
+										<button class="btn btn-white btn-info btn-bold pull-right">
+											<div id="spinner">
+											</div>
 											<i class="ace-icon fa fa-cloud-download bigger-120 blue"></i>
 											사전불러오기
 										</button>

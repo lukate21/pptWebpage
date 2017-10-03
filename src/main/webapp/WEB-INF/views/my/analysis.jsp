@@ -31,6 +31,29 @@
 <script src="${context}/resources/liquidFillGauge.js"></script>
 <!------------------------------------------------------------------------------------------------------------------------->
 <script>
+var opts = {
+		  lines: 10 // The number of lines to draw
+		, length: 8 // The length of each line
+		, width: 6 // The line thickness
+		, radius: 8 // The radius of the inner circle
+		, scale: 1 // Scales overall size of the spinner
+		, corners: 1 // Corner roundness (0..1)
+		, color: '#000' // #rgb or #rrggbb or array of colors
+		, opacity: 0.25 // Opacity of the lines
+		, rotate: 0 // The rotation offset
+		, direction: 1 // 1: clockwise, -1: counterclockwise
+		, speed: 1 // Rounds per second
+		, trail: 60 // Afterglow percentage
+		, fps: 20 // Frames per second when using setTimeout() as a fallback for CSS
+		, zIndex: 2e9 // The z-index (defaults to 2000000000)
+		, className: 'spinner' // The CSS class to assign to the spinner
+		//, top: '50%' // Top position relative to parent
+		//, left: '50%' // Left position relative to parent
+		, shadow: false // Whether to render a shadow
+		, hwaccel: false // Whether to use hardware acceleration
+		, position: 'absolute' // Element positioning
+		}
+		
 //step1 to 2
 //step1 member variable
 var comName = '';
@@ -43,6 +66,8 @@ function getDictionary(){
 	dicValidationKey='';
 	prevDic=[];
 	prevDicSize=0;
+	var target = document.getElementById('spinner');
+	var spinner = new Spinner(opts).spin(target);
 	$.ajax({
 		url : "${context}/dictionary/getDictionary.json",
 		data : {
@@ -58,6 +83,8 @@ function getDictionary(){
 			prevDic = obj.prevDic;
 			prevDicSize = obj.size;
 			console.log(dicValidationKey);
+			$('#textTab').attr('onclick','drawPrevDic(1)');
+			$('#spinner').empty();
 		},
 		error : function(e){
 			console.log("error : "+ e);
@@ -116,6 +143,32 @@ var userDic = [];
 var successful = false;
 //step3 to 4
 //step3 member variable
+function selectUserDic(){
+	var nonexistent = false;
+	$.ajax({
+		url : "${context}/dictionary/mongo/selectUserDic.json",
+		type: 'get',
+		data : {
+			'userNo' : 1,//userNo로 변경
+			'dicName' : dicName
+		},
+		async : false,
+		success : function(data){
+			var obj = JSON.parse(data);
+			if(obj.length == 0)
+				nonexistent = true;
+			else{
+				alert('중복된 이름입니다.');
+				nonexistent = false;
+			}
+		},
+		error : function(error){
+			console.log("error : "+ error);
+		}
+	});
+	return nonexistent;
+}
+
 function insertUserDic(){
 	$.ajax({
 		url : "${context}/dictionary/mongo/insertUserDic.json",
@@ -133,6 +186,11 @@ function insertUserDic(){
 		success : function(data){
 			var obj = JSON.parse(data);
 			console.log(obj);
+			$('#dicNameP').text(obj.dicName);
+			$('#comNameP').text(obj.comName);
+			$('#anaCodeP').text(obj.anaCode);
+			$('#newsCodeP').text(obj.newsCode);
+			$('#dictionaryP').text(obj.dictionary.length+'개');
 		},
 		error : function(error){
 			console.log("error : "+ error);
@@ -266,7 +324,7 @@ function insertUserDic(){
 	<script src="${context}/resources/assets/js/jquery-typeahead.js"></script>
 	<script src="${context}/resources/assets/js/bootstrap-tag.min.js"></script>
 	<script src="${context}/resources/assets/js/jquery-ui.min.js"></script>
-	<script src="${context}/resources/assets/js/spin.js"></script>
+	<script src="${context}/resources/assets/js/spin.min.js"></script>
 	
 	<%-- <script src="${pageContext.request.contextPath }/resources/cloud.min.js"></script> --%>
 	
@@ -328,7 +386,7 @@ function insertUserDic(){
 									dicName = $('#dicNameInput').val();
 									if(dicName == ''){
 										alert('나만의 분석 이름을 등록해주세요.');
-									}else{
+									}else if(selectUserDic()){
 										insertUserDic();
 										successful=true;
 										$( this ).dialog( "close" );
@@ -432,35 +490,6 @@ function insertUserDic(){
 					else title.text($title);
 				}
 			}));
-			var opts = {
-					  lines: 13 // The number of lines to draw
-					, length: 28 // The length of each line
-					, width: 14 // The line thickness
-					, radius: 42 // The radius of the inner circle
-					, scale: 1 // Scales overall size of the spinner
-					, corners: 1 // Corner roundness (0..1)
-					, color: '#000' // #rgb or #rrggbb or array of colors
-					, opacity: 0.25 // Opacity of the lines
-					, rotate: 0 // The rotation offset
-					, direction: 1 // 1: clockwise, -1: counterclockwise
-					, speed: 1 // Rounds per second
-					, trail: 60 // Afterglow percentage
-					, fps: 20 // Frames per second when using setTimeout() as a fallback for CSS
-					, zIndex: 2e9 // The z-index (defaults to 2000000000)
-					, className: 'spinner' // The CSS class to assign to the spinner
-					, top: '50%' // Top position relative to parent
-					, left: '50%' // Left position relative to parent
-					, shadow: false // Whether to render a shadow
-					, hwaccel: false // Whether to use hardware acceleration
-					, position: 'absolute' // Element positioning
-					}
-			var target = document.getElementById('inputTerm');
-			var spinner = new Spinner(opts).spin(target);
-/* 			var spinner = new Spinner().spin();
-			target.appendChild('inputTerm');
- */		
-
-
 		});
 	</script>
 </body>

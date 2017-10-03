@@ -50,14 +50,15 @@ public class CompanyController {
 	public String stock(Model model, String name){
 		model.addAttribute("name", name);
 		model.addAttribute("RTA", cService.selectRTA(name, null));
+		model.addAttribute("bestAnalysis", cService.selectBestAnalysis(name));
 		return "company/stockChart";
 	}
 	
 	@RequestMapping("/chart/RTA.do")
-	public String RTA(Model model, String name, String option){
+	public String RTA(Model model, String name){
 		model.addAttribute("name", name);
-		model.addAttribute("option", option);
 		model.addAttribute("RTA", cService.selectRTA(name, null));
+		model.addAttribute("bestAnalysis", cService.selectBestAnalysis(name));
 		return "company/RTAChart";
 	}
 
@@ -65,7 +66,8 @@ public class CompanyController {
 	public String reliability(Model model, String name, String option){
 		model.addAttribute("name", name);
 		model.addAttribute("option", option);
-		model.addAttribute("RTA", cService.selectRTA(name, null));
+		model.addAttribute("bestAnalysis", cService.selectBestAnalysis(name));
+		model.addAttribute("reliability", cService.selectReliability(name));
 		return "company/reliabilityChart";
 	}
 	
@@ -115,7 +117,6 @@ public class CompanyController {
 				comCode = cService.selectCom(companyVO).getCode().split("\\.")[0] + ":ks";
 		}
 		try {
-			System.out.println(comCode);
 			URL url = new URL("https://www.bloomberg.com/markets/api/bulk-time-series/price/"+comCode+"?timeFrame="+timeFrame);
 			URLConnection bloomberg = url.openConnection();
 			bloomberg.connect();

@@ -39,4 +39,24 @@
 		from RT_ANALISYS, company
 		where RT_ANALISYS.com_no = company.no and company.name = #{name}
 	</select>
+	
+	<select id="selectBestAnalysis" parameterType="String" resultType="reliabilityVO">
+		select no, com_name as comName, ana_code as anaCode, news_code as newsCode, value
+		from(
+			select *
+			from(
+				select *
+				from ANA_RELIABILITY
+				where com_name = #{comName}
+				order by value desc
+			)
+		)
+		where rownum=1
+	</select>
+	
+	<select id="selectReliability" parameterType="String" resultType="reliabilityVO">
+		select no, com_name as comName, ana_code as anaCode, news_code as newsCode, value
+		from ANA_RELIABILITY
+		where com_name = #{comName}
+	</select>
 </mapper>

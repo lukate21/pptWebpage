@@ -1,18 +1,15 @@
 package kr.co.ppt.controller;
 
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
-import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import org.bson.Document;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
-import org.json.simple.parser.JSONParser;
-import org.json.simple.parser.ParseException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -55,10 +52,16 @@ public class DictionaryController {
 		return dService.selectTFIDFMongo(comName,newsCode,anaCode).toJSONString();
 	}
 	
-	@RequestMapping("/mongo/insertUserDic.json")
+	@RequestMapping("/mongo/selectUserDic.json")
+	@ResponseBody
+	public String selectUserDic (int userNo, String dicName){
+		JSONArray arr = dService.selectUserDic(userNo, dicName);
+		return arr.toJSONString();
+	}
+	
+	@RequestMapping(value = "/mongo/insertUserDic.json", method=RequestMethod.POST)
 	@ResponseBody
 	public String insertUserDic (int userNo, String comName,String newsCode, String anaCode, String dicName, String userDic){
-		//request value
 		userDic = userDic.substring(1, userDic.length()-1).replaceAll("\"", "");
 		String[] userReqArr = userDic.split(",");
 		JSONArray dicArr = new JSONArray();
@@ -67,14 +70,15 @@ public class DictionaryController {
 			obj.put("term", term);
 			dicArr.add(obj);
 		}
-		JSONObject obj = new JSONObject();
-		obj.put("userNo", userNo);
-		obj.put("comName", comName);
-		obj.put("newsCode", newsCode);
-		obj.put("anaCode", anaCode);
-		obj.put("dicName", dicName);
-		obj.put("dictionary", dicArr);
-		return obj.toJSONString();
+		Document document = new Document();
+		document.append("userNo", userNo);
+		document.append("comName", comName);
+		document.append("newsCode", newsCode);
+		document.append("anaCode", anaCode);
+		document.append("dicName", dicName);
+		document.append("dictionary", dicArr);
+		dService.insertUserDic(document);
+		return document.toJson();
 		//return dService.selectTFIDFMongo(comName,newsCode,anaCode).toJSONString();
 	}
 	

@@ -57,20 +57,25 @@
 			</div>
 			<div class="row">
 				<div class="col-xs-12 center">
-					<div class="col-xs-5">
-						<h4>기업이름
-							<small id="comNameDiv"></small>
-						</h4>
-					</div>
 					<div class="col-xs-4">
-						<h4>분석방법
-							<small id="anaCodeDiv"></small>
-						</h4>
+						<h5>기업명
+							<small id="comNameDiv"></small>
+						</h5>
 					</div>
 					<div class="col-xs-3">
-						<h4>뉴스
+						<h5>분석방법
+							<small id="anaCodeDiv"></small>
+						</h5>
+					</div>
+					<div class="col-xs-2">
+						<h5>뉴스
 							<small id="newsCodeDiv"></small>
-						</h4>
+						</h5>
+					</div>
+					<div class="col-xs-3">
+						<h5>신뢰도??
+							<small id="anonymus">80%</small>
+						</h5>
 					</div>
 				</div>
 			</div>
@@ -195,7 +200,7 @@
 	}
 	
 	function userDicTable(page){
-		if(page > (usefulTerms.length/10).toFixed(0)){
+		if(page > (usefulTerms.length/10).toFixed(0) && (usefulTerms.length/10).toFixed(0)!=0){
 			alert('마지막 페이지 입니다.');
 			return;
 		}else{
@@ -225,12 +230,14 @@
 				}
 			}
 		}
-		var pageBtn = '<span class="pull-right">';
-		if(page>1){
-			pageBtn += '<i class="ace-icon fa fa-arrow-left blue bigger-110" style="cursor:pointer" onclick="userDicTable('+(page-1)+')"></i>';
+		if((usefulTerms.length/10).toFixed(0)!=0){
+			var pageBtn = '<span class="pull-right">';
+			if(page>1){
+				pageBtn += '<i class="ace-icon fa fa-arrow-left blue bigger-110" style="cursor:pointer" onclick="userDicTable('+(page-1)+')"></i>';
+			}
+			pageBtn += '&nbsp;&nbsp;' + page+'/'+(usefulTerms.length/10).toFixed(0) + '&nbsp;&nbsp;';
+			pageBtn += '<i roll="button" class="ace-icon fa fa-arrow-right blue bigger-110" style="cursor:pointer" onclick="userDicTable('+(page+1)+')"></i>';
+			$('#pageBtn').html(pageBtn);
 		}
-		pageBtn += '&nbsp;&nbsp;' + page+'/'+(usefulTerms.length/10).toFixed(0) + '&nbsp;&nbsp;';
-		pageBtn += '<i roll="button" class="ace-icon fa fa-arrow-right blue bigger-110" style="cursor:pointer" onclick="userDicTable('+(page+1)+')"></i>';
-		$('#pageBtn').html(pageBtn);
 	}
 </script>
