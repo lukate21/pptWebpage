@@ -55,7 +55,7 @@ public class CompanyController {
 	}
 	
 	@RequestMapping("/chart/RTA.do")
-	public String RTA(Model model, String name){
+	public String RTA(Model model, String name, String option){
 		model.addAttribute("name", name);
 		model.addAttribute("RTA", cService.selectRTA(name, null));
 		model.addAttribute("bestAnalysis", cService.selectBestAnalysis(name));

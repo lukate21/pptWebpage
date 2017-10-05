@@ -23,6 +23,7 @@ import com.mongodb.client.model.Filters;
 
 import kr.co.ppt.daoImpl.CompanyDAOImpl;
 import kr.co.ppt.vo.CompanyVO;
+import kr.co.ppt.vo.MyFavoriteVO;
 import kr.co.ppt.vo.RTAVO;
 import kr.co.ppt.vo.ReliabilityVO;
 import yahoofinance.Stock;
@@ -79,6 +80,20 @@ public class CompanyServiceImpl {
 		return cDAO.selectComList();
 	}
 	
+	public List<MyFavoriteVO> selectFavoriteList(int userNo){
+		return cDAO.selectFavoriteList(userNo);
+	}
+	
+	public MyFavoriteVO selectFavoriteAble(Map<String,Object> map){
+		return cDAO.selectFavoriteAble(map);
+	}
+	public void insertFavorite(Map<String,Object> map){
+		cDAO.insertFavorite(map);
+	}
+	public void deleteFavorite(Map<String,Object> map){
+		cDAO.deleteFavorite(map);
+	}
+	
 	public JSONArray selectRTA(String name, String newsCode){
 		JSONArray arr = new JSONArray();
 		for(RTAVO rta : cDAO.selectRTA(name)){
@@ -92,7 +107,7 @@ public class CompanyServiceImpl {
 				map.put("newsCode", rta.getNewsCode());
 				map.put("todayFluc", rta.getTodayFluc());
 				map.put("tomorrowFluc", rta.getTomorrowFluc());
-				map.put("regDate", rta.getRegDate());
+				map.put("regDate", rta.getRegDate().toString());
 			}
 			JSONObject obj = new JSONObject(map);
 			arr.add(obj);

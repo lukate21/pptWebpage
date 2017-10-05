@@ -24,18 +24,22 @@ public class CrawlerSerivceImpl {
 			Map<String, String> newsCodeMap = NewsCategoryVO.getTabMap();
 			Iterator<String> newsCodeIter = newsCodeMap.keySet().iterator();
 			while(newsCodeIter.hasNext()){
-				String newsCode = newsCodeIter.next();
-				DaumNewsDom daum = new DaumNewsDom();
-				daum.setDom(Jsoup.connect(newsCodeMap.get(newsCode)).get());
-				List<String> hrefList = daum.getHref();
-				DaumNewsDom news = new DaumNewsDom();
-				news.setDom(Jsoup.connect(hrefList.get(0)).get());
-				Map<String,String> map = new HashMap<>();
-				map.put("newsCode", newsCode);
-				map.put("title", news.getTitle());
-				map.put("link", hrefList.get(0));
-				JSONObject obj = new JSONObject(map);
-				arr.add(obj);
+				try{
+					String newsCode = newsCodeIter.next();
+					DaumNewsDom daum = new DaumNewsDom();
+					daum.setDom(Jsoup.connect(newsCodeMap.get(newsCode)).get());
+					List<String> hrefList = daum.getHref();
+					DaumNewsDom news = new DaumNewsDom();
+					news.setDom(Jsoup.connect(hrefList.get(0)).get());
+					Map<String,String> map = new HashMap<>();
+					map.put("newsCode", newsCode);
+					map.put("title", news.getTitle());
+					map.put("link", hrefList.get(0));
+					JSONObject obj = new JSONObject(map);
+					arr.add(obj);
+				}catch(Exception e){
+					continue;
+				}
 			}
 			DaumNewsDom daum = new DaumNewsDom();
 			daum.setDom(Jsoup.connect("http://media.daum.net/").get());
@@ -60,23 +64,27 @@ public class CrawlerSerivceImpl {
 			List<String> hrefList = newsCode.equals("main")?daum.getHeadHref():daum.getHref();
 			Set<String> titleSet = new HashSet<>();
 			for(int i=0; i<hrefList.size(); i++){
-				DaumNewsDom news = new DaumNewsDom();
-				news.setDom(Jsoup.connect(hrefList.get(i)).get());
-				Map<String,String> map = new HashMap<>();
-				if(titleSet.isEmpty()){
-					titleSet.add(news.getTitle());
-				}else if(titleSet.contains(news.getTitle())){
+				try{
+					DaumNewsDom news = new DaumNewsDom();
+					news.setDom(Jsoup.connect(hrefList.get(i)).get());
+					Map<String,String> map = new HashMap<>();
+					if(titleSet.isEmpty()){
+						titleSet.add(news.getTitle());
+					}else if(titleSet.contains(news.getTitle())){
+						continue;
+					}else{
+						map.put("newsCode", newsCode);
+						map.put("title", news.getTitle());
+						map.put("link", hrefList.get(i));
+						JSONObject obj = new JSONObject(map);
+						arr.add(obj);
+						titleSet.add(news.getTitle());
+					}
+					if(arr.size() == num)
+						break;
+				}catch(Exception e){
 					continue;
-				}else{
-					map.put("newsCode", newsCode);
-					map.put("title", news.getTitle());
-					map.put("link", hrefList.get(i));
-					JSONObject obj = new JSONObject(map);
-					arr.add(obj);
-					titleSet.add(news.getTitle());
 				}
-				if(arr.size() == num)
-					break;
 			}
 		}catch(Exception e){
 			e.printStackTrace();
@@ -93,14 +101,18 @@ public class CrawlerSerivceImpl {
 			Map<String,String> searchMap = daum.getSearchHref();
 			Iterator<String> iter = searchMap.keySet().iterator();
 			while(iter.hasNext()){
-				Map<String,String> map = new HashMap<>();
-				String key = iter.next();
-				map.put("title", key);
-				map.put("link", searchMap.get(key));
-				JSONObject obj = new JSONObject(map);
-				arr.add(obj);
-				if(arr.size() == num)
-					break;
+				try{
+					Map<String,String> map = new HashMap<>();
+					String key = iter.next();
+					map.put("title", key);
+					map.put("link", searchMap.get(key));
+					JSONObject obj = new JSONObject(map);
+					arr.add(obj);
+					if(arr.size() == num)
+						break;
+				}catch(Exception e){
+					continue;
+				}
 			}
 		}catch(Exception e){
 			e.printStackTrace();

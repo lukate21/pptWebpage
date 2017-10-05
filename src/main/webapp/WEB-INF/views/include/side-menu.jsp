@@ -47,9 +47,35 @@
 						<li class="">
 							<a class="" href="${context }/company/search.do">기업검색</a>
 						</li>
-						<li class="">
-							<a class="" href="${context }/my/analysis.do">사용자포트폴리오</a>
-						</li>
+						<li class="js_nav-item nav-item">
+									<a class="dropdown-toggle" href="">
+										<span>사용자포트폴리오</span>
+										<b class="arrow fa fa-angle-down"></b>
+									</a>
+									<ul class="submenu" >
+										<li class="">
+											<a href="${context}/my/stock.do">
+												<i class="menu-icon fa fa-caret-right"></i>
+												보유주식
+											</a>
+											<b class="arrow"></b>
+										</li>
+										<li class="">
+											<a href="${context}/my/favorite.do?userNo=${loginUser.no}">
+												<i class="menu-icon fa fa-caret-right"></i>
+												관심기업
+											</a>
+											<b class="arrow"></b>
+										</li>
+										<li class="">
+											<a class="" href="${context }/my/analysis.do">
+												<i class="menu-icon fa fa-caret-right"></i>
+												나만의 분석 만들기
+											</a>
+											<b class="arrow"></b>
+										</li>
+									</ul>
+								</li>
 						<li class="">
 							<a	class="" href="#">증권거래소</a>
 						</li>

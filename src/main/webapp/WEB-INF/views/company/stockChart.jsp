@@ -65,7 +65,6 @@
 			success : function(data){
 				var obj = JSON.parse(data)[0];
 				var chartData = obj.price;
-				console.log(chartData);
 				var start = chartData[0].value;
 				var now = chartData[chartData.length-1].value;
 				$('#now').text(now);
@@ -114,8 +113,8 @@
 					}],
 
 					panels: [{
-							showCategoryAxis: false,
-							title: "Value",
+							showCategoryAxis: true,
+							//title: "${name}",
 							percentHeight: 70,
 
 							valueAxes:[{
@@ -128,7 +127,8 @@
 								valueField: "value",
 								type: "smoothedLine",
 								lineThickness: 2,
-								balloonText: "[[dateTime]]:<b>[[value]]</b>",
+								dateFormat: "MM-DD HH:NN",
+								balloonText: "<b>[[value]]</b>",
 								bullet: "round"
 							}],
 
@@ -173,7 +173,7 @@
 
 					periodSelector: {
 						position: "bottom",
-						dateFormat: "YYYY-MM-DD HH:NN",
+						dateFormat: "MM-DD HH:NN",
 						inputFieldWidth: 100,
 						periods: [{
 							period: "hh",
@@ -236,14 +236,14 @@
 					// PANELS ///////////////////////////////////////////
 					// first stock panel
 					var stockPanel1 = new AmCharts.StockPanel();
-					stockPanel1.showCategoryAxis = false;
-					stockPanel1.title = "Value";
+					stockPanel1.showCategoryAxis = true;
+					//stockPanel1.title = "Value";
 					stockPanel1.percentHeight = 70;
 		
 					// graph of first stock panel
 					var graph1 = new AmCharts.StockGraph();
 					graph1.valueField = "value";
-					graph1.balloonText = "[[date]]:<b>[[value]]</b>",
+					graph1.balloonText = '<b>[[value]]</b>',
 					graph1.type = "smoothedLine";
 					graph1.lineThickness = 2;
 					graph1.bullet = "round";
@@ -298,7 +298,7 @@
 					// PERIOD SELECTOR ///////////////////////////////////
 					var periodSelector = new AmCharts.PeriodSelector();
 					periodSelector.position = "bottom";
-					periodSelector.dateFormat = "YYYY-MM-DD JJ:NN";
+					periodSelector.dateFormat = "YYYY-MM-DD";
 					periodSelector.inputFieldWidth = 150;
 					if(timeFrame == "1_MONTH"){
 						periodSelector.periods = [{
