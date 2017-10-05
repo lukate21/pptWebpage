@@ -242,18 +242,15 @@
 			bootbox.dialog({
 				message: "회원가입이 완료되었습니다.", 
 				buttons: {
-					 /* confirm : {
-						"label" : "확인",
-						"className" : "btn-sm btn-primary"
-					}, cancel : {
-						"label" : "취소",
-						"className" : "btn-sm btn-primary"
-					},  */
-					"메인으로" : function(result){
-						$('#validation-form').submit();
-						//callhome();
-					} 
-				}
+					 ok : {
+						label : "확인",
+						className : "btn-sm btn-primary",
+						callback : function(){
+							$("#validation-form").submit();
+							console.log("submit btn clicked");
+						}
+						}
+					}
 			});
 		}).on('stepclick.fu.wizard', function(e){
 			//e.preventDefault();//this will prevent clicking and selecting steps
@@ -353,7 +350,7 @@
 	})
 	
 	function callhome(){
-		location.href = "${context}/hello.do"
+		$('#validation-form').submit();
 	}
 	
 </script>

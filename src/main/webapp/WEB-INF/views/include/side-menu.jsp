@@ -67,11 +67,39 @@
 									</a>
 									<ul class="submenu" >
 										<li class="">
-											<a href="${context}/myPage.do">
-												<i class="menu-icon fa fa-caret-right"></i>
+											<a href="#" class="dropdown-toggle">
 												마이페이지
+												<b class="arrow fa fa-angle-down"></b>
 											</a>
 											<b class="arrow"></b>
+											<ul class="submenu">
+												<li class="">
+													<a href="#">
+														<i class="menu-icon fa fa-caret-right"></i>
+														주식등록
+													</a>
+			
+													<b class="arrow"></b>
+												</li>
+			
+												<li class="">
+													<a href="${context}/myPage/myPage.do">
+														<i class="menu-icon fa fa-caret-right"></i>
+														정보변경
+													</a>
+			
+													<b class="arrow"></b>
+												</li>
+			
+												<li class="">
+													<a href="#">
+														<i class="menu-icon fa fa-caret-right"></i>
+														회원탈퇴
+													</a>
+			
+													<b class="arrow"></b>
+												</li>
+											</ul>
 										</li>
 										<li class="">
 											<a href="${context}/logout.do">

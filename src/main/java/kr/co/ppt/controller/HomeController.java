@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import kr.co.ppt.service.MemberService;
 import kr.co.ppt.util.SHA_ENC;
+import kr.co.ppt.util.UserUtil;
 import kr.co.ppt.vo.MemberVO;
 
 @Controller
@@ -45,7 +46,7 @@ public class HomeController {
 	@RequestMapping(value="join.do", method=RequestMethod.POST )
 	public String join(String email, String password, String name, String tel){
 		
-		MemberVO member = makeBasicInfo(email, password);
+		MemberVO member = UserUtil.makeBasicInfo(email, password);
 		member.setName(name);
 		member.setTel(tel);
 		
@@ -97,7 +98,7 @@ public class HomeController {
 	public String login(String email,String password, 
 			HttpSession session, HttpServletRequest request, HttpServletResponse response){
 		
-		MemberVO member = makeBasicInfo(email, password);
+		MemberVO member = UserUtil.makeBasicInfo(email, password);
 		String remember = request.getParameter("remember");
 		System.out.println("remember: "+remember);
 
@@ -135,14 +136,14 @@ public class HomeController {
 			
 			/*request.setAttribute("msg", msg);
 			request.setAttribute("ref", ref);*/
-			makeMessage(msg, ref, request);
+			UserUtil.makeMessage(msg, ref, request);
 		} else {
 			String msg = "아이디 또는 비밀번호가 잘못되었습니다.";
 			String ref = "login.do";
 			
 			/*request.setAttribute("msg", msg);
 			request.setAttribute("ref", ref);*/
-			makeMessage(msg, ref, request);
+			UserUtil.makeMessage(msg, ref, request);
 		}
 		
 		return "messageAlert";
@@ -157,64 +158,12 @@ public class HomeController {
 		
 		/*request.setAttribute("msg", msg);
 		request.setAttribute("ref", ref);*/
-		makeMessage(msg, ref, request);
+		UserUtil.makeMessage(msg, ref, request);
 		
 		return "messageAlert";
 	}
 	
-	@RequestMapping(value="myPage.do", method=RequestMethod.GET)
-	public String myPage() {
-		return "myPageCheck";
-	}
 	
-	@RequestMapping(value="myPage.do", method=RequestMethod.POST)
-	public String modifyPage(String id, String domain, String password, HttpServletRequest request) {
-		String email = id+"@"+domain;
-		System.out.println(email);
-		MemberVO member = makeBasicInfo(email, password);
-		System.out.println(member);
-		
-		MemberVO loginUser = memberService.getUserInfo(member);
-		if(loginUser != null)
-			return "myPage";
-		else {
-			String msg = "일치하는 정보가 없습니다.";
-			String ref = "myPage.do";
-			/*request.setAttribute("msg", msg);
-			request.setAttribute("ref", ref);*/
-			makeMessage(msg, ref, request);
-			
-			return "messageAlert";
-		}
-	}
-	
-	@RequestMapping(value="modify.do", method=RequestMethod.POST)
-	public String modify(String email, String password, String tel, HttpServletRequest request) {
-		MemberVO member = makeBasicInfo(email, password);
-		if(tel != null)
-			member.setTel(tel);
-		
-		int result = memberService.modifyUser(member);
-		if(result == 1) {
-			String msg = "수정되었습니다.";
-			String ref = "hello.do";
-		/*	request.setAttribute("msg", msg);
-			request.setAttribute("ref", ref);*/
-			makeMessage(msg, ref, request);
-			return "messageAlert";
-		} else {
-			String msg = "수정 실패했습니다.";
-			String ref = "myPage.do";
-			makeMessage(msg, ref, request);
-			return "messageAlert";
-		}
-	}
-	
-	@RequestMapping(value="modify.do", method=RequestMethod.GET)
-	public String test(String password) {
-		String ppp = SHA_ENC.SHA256_Encrypt(password);
-		return ppp;
-	}
 	
 	@ResponseBody
 	@RequestMapping("stock.json")
@@ -246,7 +195,7 @@ public class HomeController {
 		
 		int result = 0;
 //		String memberData = "";
-		MemberVO member = makeBasicInfo(email, password);
+		MemberVO member = UserUtil.makeBasicInfo(email, password);
 		
 		MemberVO loginUser = memberService.login(member);
 
@@ -281,7 +230,7 @@ public class HomeController {
 	@RequestMapping(value="joinM.do", method=RequestMethod.POST)
 	public int mobileJoin(String email, String password, String name, String tel){
 		
-		MemberVO member = makeBasicInfo(email, password);
+		MemberVO member = UserUtil.makeBasicInfo(email, password);
 		member.setName(name);
 		member.setTel(tel);
 		
@@ -290,17 +239,4 @@ public class HomeController {
 		return result;
 	}
 	
-	private MemberVO makeBasicInfo(String email, String password){
-		MemberVO member = new MemberVO();
-		member.setId(email.split("@")[0]);
-		member.setDomain(email.split("@")[1]);
-		member.setPassword(SHA_ENC.SHA256_Encrypt(password));
-		
-		return member;
-	}
-	
-	private void makeMessage(String msg, String ref, HttpServletRequest request) {
-		request.setAttribute("msg", msg);
-		request.setAttribute("ref", ref);
-	}
 }

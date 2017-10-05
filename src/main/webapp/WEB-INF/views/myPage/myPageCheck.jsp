@@ -24,8 +24,8 @@
 <script src="${context}/resources/assets/js/jquery-2.1.4.min.js"></script>
 </head>
 <body class="no-skin">
-	<jsp:include page="include/top-menu.jsp"></jsp:include>
-	<jsp:include page="include/side-menu.jsp"></jsp:include>
+	<jsp:include page="../include/top-menu.jsp"></jsp:include>
+	<jsp:include page="../include/side-menu.jsp"></jsp:include>
 	<div class="main-content">
 		<div class="main-content-inner">
 			<div class="breadcrumbs ace-save-state breadcrumbs-fixed" id="breadcrumbs">
@@ -54,7 +54,7 @@
 	</div>
 </div>
 <footer>
-	<jsp:include page="include/bottom.jsp"></jsp:include>
+	<jsp:include page="../include/bottom.jsp"></jsp:include>
 </footer>
 <script>
 function isNull(obj, msg){
