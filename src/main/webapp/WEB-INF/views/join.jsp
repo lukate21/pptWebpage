@@ -85,7 +85,7 @@
 											<div class="step-pane active" data-step="1">
 												<h3 class="lighter block green">정보를 입력해주세요</h3>
 	
-												<form class="form-horizontal" id="validation-form" method="get" action="${context}/hello.do">
+												<form class="form-horizontal" id="validation-form" method="get" action="${context}/login.do">
 													<div class="form-group">
 														<label class="control-label col-xs-12 col-sm-3 no-padding-right" for="email">이메일:</label>
 	
@@ -183,7 +183,7 @@
 	
 									<hr />
 									<div class="wizard-actions">
-										<button class="btn btn-prev" data-last="취소">
+										<button class="btn btn-prev">
 											<i class="ace-icon fa fa-arrow-left"></i>
 											이전
 										</button>
@@ -242,17 +242,17 @@
 			bootbox.dialog({
 				message: "회원가입이 완료되었습니다.", 
 				buttons: {
-					/* confirm : {
+					 /* confirm : {
 						"label" : "확인",
 						"className" : "btn-sm btn-primary"
 					}, cancel : {
 						"label" : "취소",
 						"className" : "btn-sm btn-primary"
-					}, */
+					},  */
 					"메인으로" : function(result){
 						$('#validation-form').submit();
 						//callhome();
-					}
+					} 
 				}
 			});
 		}).on('stepclick.fu.wizard', function(e){
@@ -349,7 +349,13 @@
 			//in ajax mode, remove remaining elements before leaving page
 			$('[class*=select2]').remove();
 		});
+		
 	})
+	
+	function callhome(){
+		location.href = "${context}/hello.do"
+	}
+	
 </script>
 </body>
 </html>
