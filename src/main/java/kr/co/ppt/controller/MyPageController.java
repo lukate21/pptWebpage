@@ -19,12 +19,12 @@ public class MyPageController {
 	@Autowired
 	MemberService memberService;
 
-	@RequestMapping(value="myPage.do", method=RequestMethod.GET)
+	@RequestMapping(value="modifyCheck.do", method=RequestMethod.GET)
 	public String myPage() {
 		return "myPage/myPageCheck";
 	}
 	
-	@RequestMapping(value="myPage.do", method=RequestMethod.POST)
+	@RequestMapping(value="modifyCheck.do", method=RequestMethod.POST)
 	public String modifyPage(String id, String domain, String password, HttpServletRequest request) {
 		String email = id+"@"+domain;
 		System.out.println(email);
@@ -67,6 +67,11 @@ public class MyPageController {
 	public String test(String password) {
 		String ppp = SHA_ENC.SHA256_Encrypt(password);
 		return ppp;
+	}
+	
+	@RequestMapping("myStock.do")
+	public String myStock(){
+		return "myPage/myStock";
 	}
 	
 	

@@ -27,31 +27,100 @@
 
 <body class="no-skin">
 <jsp:include page="../include/top-menu.jsp"></jsp:include>
-	<jsp:include page="../include/side-menu.jsp"></jsp:include>
+<jsp:include page="../include/side-menu.jsp"></jsp:include>
 	<div class="main-content">
 		<div class="main-content-inner">
 			<div class="breadcrumbs ace-save-state breadcrumbs-fixed" id="breadcrumbs">
 				<ul class="breadcrumb">
 					<li><i class="ace-icon fa fa-home home-icon"></i> <a href="${context}/hello.do">Home</a></li>
-					<li class="active">myPage</li>
+					<li>마이페이지</li>
+					<li class="active">정보수정</li>
 				</ul>
 				<!-- /.breadcrumb -->
 			</div>
 			
 			<div class="page-content">
-				<div class="row margin-b-5">
-					<div class ="col-sm-4 col-sm-offset-4">
-						<h1>${sessionScope.loginUser.name}님의 정보수정</h1>
-						<form name="modifyForm" action="modify.do" method="post" onSubmit="return checkInfo()">
-								 		<input type="hidden" name="email" value="${sessionScope.loginUser.id}@${sessionScope.loginUser.domain}"><br/><br/>
-							비밀번호  		<input type="password" placeholder="password" name="password"><br/><br/>
-							비밀번호확인  	<input type="password" placeholder="password" name="repassword"><br/><br/>
-							전화번호 		<input type="tel" placeholder="'-'생략가능" name="tel"><br/>
-										<input type="submit" value="완료">
+				<div class="page-header">
+					<h1>
+						회원정보 수정
+						<small>
+							<i class="ace-icon fa fa-angle-double-right"></i>
+							${sessionScope.loginUser.name}님의 정보 수정
+						</small>
+					</h1>
+				</div><!-- /.page-header -->
+	
+				<div class="row">
+					<div class="col-xs-12">
+						<!-- PAGE CONTENT BEGINS -->
+						<form class="form-horizontal" role="form" action="${context}/myPage/modify.do" onSubmit="return checkEle()">
+							<div class="form-group">
+								<label class="col-sm-3 control-label no-padding-right" for="form-input-readonly"> 이메일 </label>
+	
+								<div class="col-sm-9">
+									<input readonly="" type="text" class="col-xs-10 col-sm-5" id="form-input-readonly" value="${sessionScope.loginUser.name}@${sessionScope.loginUser.domain}" />
+								</div>
+							</div>
+	
+							<div class="space-4"></div>
+	
+							<div class="form-group">
+								<label class="col-sm-3 control-label no-padding-right" for="form-field-2"> 현재 비밀번호 </label>
+	
+								<div class="col-sm-9">
+									<input type="password" id="form-field-2" placeholder="Password" class="col-xs-10 col-sm-5" />
+									<span class="help-inline col-xs-12 col-sm-7">
+										<span class="middle">비밀번호를 확인합니다</span>
+									</span>
+								</div>
+							</div>
+							
+							<div class="form-group">
+								<label class="col-sm-3 control-label no-padding-right" for="form-field-2"> 변경할 비밀번호 </label>
+	
+								<div class="col-sm-9">
+									<input type="password" id="form-field-2" placeholder="Password" class="col-xs-10 col-sm-5" />
+								</div>
+							</div>
+							
+							<div class="form-group">
+								<label class="col-sm-3 control-label no-padding-right" for="form-field-2"> 비밀번호 재입력 </label>
+	
+								<div class="col-sm-9">
+									<input type="password" id="form-field-2" placeholder="Password" class="col-xs-10 col-sm-5" />
+									<span class="help-inline col-xs-12 col-sm-7">
+										<span class="middle">비밀번호가 일치하지 않습니다.</span>
+									</span>
+								</div>
+							</div>
+							
+							<div class="form-group">
+								<label class="col-sm-3 control-label no-padding-right" for="form-filed-2"> 전화번호 </label>
+								
+								<div class="col-sm-9">
+									<input type="text" id="form-filed=2" placeholder="(-)생략" class="col-xs-10 col-sm-5" value="${sessionScope.loginUser.tel}"/>
+								</div>
+							</div>
+	
+							<div class="space-4"></div>
+	
+							<div class="clearfix form-actions">
+								<div class="col-md-offset-3 col-md-9">
+									<button id="btnModify" class="btn btn-info" type="button">
+										<i class="ace-icon fa fa-check bigger-110"></i>
+										완료
+									</button>
+	
+									&nbsp; &nbsp; &nbsp;
+									<button class="btn" type="reset">
+										<i class="ace-icon fa fa-undo bigger-110"></i>
+										초기화
+									</button>
+								</div>
+							</div>
 						</form>
-						 <div id="fail"><br/><br/></div>
-					 </div>
-				 </div>
+					</div><!-- /.row -->
+				</div><!-- /.row -->
 			</div>
 		</div>
 	</div>

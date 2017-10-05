@@ -40,52 +40,65 @@
 					<ul class="nav nav-list">
 						<li class="">
 							<a class="" href="${context}/hello.do">
-								<i class="menu-icon fa fa-tachometer"></i>
+								<i class="menu-icon fa fa-home home-icon"></i>
 								<span class="menu-text">HOME</span>
 							</a>
 						</li>
 						<li class="">
-							<a class="" href="${context }/company/search.do">기업검색</a>
+							<a class="" href="${context }/company/search.do">
+								<i class="menu-icon fa fa-building-o building-o-icon"></i>
+								<span class="menu-text">기업검색</span>
+							</a>
 						</li>
 						<li class="">
-							<a class="" href="${context }/my/analysis.do">사용자포트폴리오</a>
+							<a class="" href="${context }/my/analysis.do">
+								<i class="menu-icon fa fa-book book-icon"></i>
+								<span class="menu-text">사용자포트폴리오</span>
+							</a>
 						</li>
 						<li class="">
-							<a	class="" href="#">증권거래소</a>
+							<a	class="" href="#">
+								<i class="menu-icon fa fa-globe globe-icon"></i>
+								<span class="menu-text">증권거래소</span>
+							</a>
 						</li>
 						<c:choose>
 							<c:when test="${ empty sessionScope.loginUser}">
 								<li class="">
-									<a class="" href="${context}/login.do">로그인</a>
+									<a class="" href="${context}/login.do">
+										<i class="menu-icon fa fa-hand-o-right"></i>
+										<span class="menu-text">로그인</span>
+									</a>
 								</li>
 							</c:when>
 							<c:otherwise>
 								<li class="js_nav-item nav-item">
 									<a class="dropdown-toggle" href="">
+										<i class="menu-icon fa fa-user"></i>
 										<span>${sessionScope.loginUser.id }</span>
 										<b class="arrow fa fa-angle-down"></b>
 									</a>
 									<ul class="submenu" >
 										<li class="">
 											<a href="#" class="dropdown-toggle">
-												마이페이지
+												<span>마이페이지</span>
 												<b class="arrow fa fa-angle-down"></b>
 											</a>
 											<b class="arrow"></b>
 											<ul class="submenu">
 												<li class="">
-													<a href="#">
+													<a href="${context}/myPage/myStock.do">
 														<i class="menu-icon fa fa-caret-right"></i>
-														주식등록
+														주식현황
 													</a>
 			
 													<b class="arrow"></b>
 												</li>
 			
 												<li class="">
-													<a href="${context}/myPage/myPage.do">
+													<a href="${context}/myPage/modifyCheck.do">
 														<i class="menu-icon fa fa-caret-right"></i>
-														정보변경
+														정보수정
 													</a>
 			
 													<b class="arrow"></b>
