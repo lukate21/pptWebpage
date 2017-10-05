@@ -59,5 +59,13 @@ public class DictionaryDAOImpl {
 		return map;
 	}
 	
-	//=======================Connect to Oracle================================//
+	public void insertUserDic(Document dom){
+		collection = jsonReader.DB.getCollection("USER_DIC");
+		collection.insertOne(dom);
+	}
+	
+	public FindIterable<Document> selectUserDic(Bson query){
+		collection = jsonReader.DB.getCollection("USER_DIC"); 
+		return collection.find(query);
+	}
 }

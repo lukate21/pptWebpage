@@ -41,19 +41,10 @@
 				</ul>
 				<!-- /.breadcrumb -->
 			</div>
+			
 			<div class="page-content">
 				<div class="row">
-					<div class="col-sm-5" id="stockChart">
-						<iframe src="${context}/company/chart/stock.do?name=${name}"
-							width="100%" height="400px" frameBorder="0"> </iframe>
-					</div>
-					<div class="col-sm-5" id="RTAChart">
-						<iframe
-							src="${context}/company/chart/RTA.do?name=${name}&option=newsCode"
-							width="100%" height="400px" frameBorder="0"> </iframe>
-					</div>
-					<div class="col-sm-2">
-						<div class="row">
+					<div class="col-sm-12">
 							<div class="form-group pull-right">
 								<div class="pos-rel">
 									<input class="typeahead scrollable" type="text"
@@ -61,26 +52,67 @@
 								</div>
 							</div>
 						</div>
-						<div class="row">
-							<div class="section-seperator margin-b-50">
-								<div class="margin-b-50">
-									<div class="margin-b-30">
-										<h3 id="newsTitle">${name}뉴스</h3>
-										<div id="news"></div>
-									</div>
-								</div>
-							</div>
-						</div>
+					</div>
+				<div class="row">
+					<div class="col-sm-6" id="stockChart">
+						<iframe src="${context}/company/chart/stock.do?name=${name}"
+							width="100%" height="400px" frameBorder="0"> </iframe>
+					</div>
+					<div class="col-sm-6" id="RTAChart">
+						<iframe src="${context}/company/chart/RTA.do?name=${name}"
+							width="100%" height="400px" frameBorder="0"> </iframe>
 					</div>
 				</div>
 				<div class="row">
 					<div class="col-sm-6" id="relNewsChart">
-						<iframe src="${context}/company/chart/reliability.do?name=${name}&option=newsCode"
-							width="100%" height="400px" frameBorder="0"> </iframe>
+						<iframe
+							src="${context}/company/chart/reliability.do?name=${name}&option=newsCode"
+							width="100%" height="500px" frameBorder="0"> </iframe>
 					</div>
 					<div class="col-sm-6" id="relAnaChart">
-						<iframe src="${context}/company/chart/reliability.do?name=${name}&option=anaCode"
-							width="100%" height="400px" frameBorder="0"> </iframe>
+						<iframe
+							src="${context}/company/chart/reliability.do?name=${name}&option=anaCode"
+							width="100%" height="500px" frameBorder="0"> </iframe>
+					</div>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-xs-12">
+					<div id="right-menu" class="modal aside" data-body-scroll="false"
+						data-offset="true" data-placement="right" data-fixed="true"
+						data-backdrop="false" tabindex="-1">
+						<div class="modal-dialog">
+							<div class="modal-content">
+								<div class="modal-header no-padding">
+									<div class="table-header" id="newsTitle">
+										<button type="button" class="close" data-dismiss="modal"
+											aria-hidden="true">
+											<span class="white">&times;</span>
+										</button>
+										${name} 뉴스
+									</div>
+								</div>
+
+								<div class="modal-body">
+									<div class="section-seperator margin-b-50">
+										<div class="margin-b-50">
+											<div class="margin-b-30">
+												<div id="news"></div>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+							<!-- /.modal-content -->
+
+							<button
+								class="aside-trigger btn btn-info btn-app btn-xs ace-settings-btn"
+								data-target="#right-menu" data-toggle="modal" type="button">
+								<i data-icon1="fa-plus" data-icon2="fa-minus"
+									class="ace-icon fa fa-plus bigger-110 icon-only"></i>
+							</button>
+						</div>
+						<!-- /.modal-dialog -->
 					</div>
 				</div>
 			</div>
@@ -96,55 +128,67 @@
 <script src="${context}/resources/assets/js/jquery-typeahead.js"></script>
 <script>
 	getNews('${name}');
-	$(document).on("click",".tt-suggestion.tt-selectable",function(){
+	$(document).on("click", ".tt-suggestion.tt-selectable", function() {
 		change();
 	});
-	
-	$("input.typeahead").keydown(function (key) {
-        if(key.keyCode == 13){//키가 13이면 실행 (엔터는 13)
-        	change();
-        }
-    });
-	
-	function change(){
+
+	$("input.typeahead").keydown(function(key) {
+		if (key.keyCode == 13) {//키가 13이면 실행 (엔터는 13)
+			change();
+		}
+	});
+
+	function change() {
 		var comName;
-		if($('input.typeahead')[1].value != $('input.typeahead')[0].value && $('input.typeahead')[0].value != ''){
+		if ($('input.typeahead')[1].value != $('input.typeahead')[0].value
+				&& $('input.typeahead')[0].value != '') {
 			comName = $('input.typeahead')[0].value;
-		}else{
+		} else {
 			comName = $('input.typeahead')[1].value;
 		}
-		var tag1 = '<iframe src="${context}/company/chart/stock.do?name='+comName+'" width="100%" height="400px" frameBorder="0"></iframe>'
-		var tag2 = '<iframe src="${context}/company/chart/RTA.do?name='+comName+'&option=newsCode" width="100%" height="400px" frameBorder="0"></iframe>'
-		var tag3 = '<iframe src="${context}/company/chart/reliability.do?name='+comName+'&option=newsCode" width="100%" height="400px" frameBorder="0"></iframe>'
-		var tag4 = '<iframe src="${context}/company/chart/reliability.do?name='+comName+'&option=anaCode" width="100%" height="400px" frameBorder="0"></iframe>'
+		var tag1 = '<iframe src="${context}/company/chart/stock.do?name='
+				+ comName
+				+ '" width="100%" height="400px" frameBorder="0"></iframe>'
+		var tag2 = '<iframe src="${context}/company/chart/RTA.do?name='
+				+ comName
+				+ '" width="100%" height="400px" frameBorder="0"></iframe>'
+		var tag3 = '<iframe src="${context}/company/chart/reliability.do?name='
+				+ comName
+				+ '&option=newsCode" width="100%" height="500px" frameBorder="0"></iframe>'
+		var tag4 = '<iframe src="${context}/company/chart/reliability.do?name='
+				+ comName
+				+ '&option=anaCode" width="100%" height="500px" frameBorder="0"></iframe>'
 		$('#stockChart').html(tag1);
 		$('#RTAChart').html(tag2);
 		$('#relNewsChart').html(tag3);
 		$('#relAnaChart').html(tag4);
 		getNews(comName);
 	}
-	
-	function getNews(comName){
+
+	function getNews(comName) {
 		$.ajax({
-			url : "${context}/crawler/comNews.json?name="+comName,
-			success : function(data){
+			url : "${context}/crawler/comNews.json?name=" + comName,
+			success : function(data) {
 				var obj = []
 				obj = JSON.parse(data);
 				console.log(obj);
 				$('#news').empty();
-				$('#newsTitle').html(comName+' 뉴스');
-				for(var i = 0;i<obj.length;i++){
-					$('#news').append('<p><a href="'+obj[i].link+'">'+obj[i].title+"</a><br/></p>");
+				$('#newsTitle').html(comName + ' 뉴스');
+				for (var i = 0; i < obj.length; i++) {
+					$('#news').append(
+							'<p><a href="'+obj[i].link+'">' + obj[i].title
+									+ "</a><br/></p>");
 				}
 			},
-			error : function(e){
-				console.log("error : "+ e);
+			error : function(e) {
+				console.log("error : " + e);
 			}
 		});
 	}
 	//검색 필터링
 	jQuery(function($) {
-		var demo1 = $('select[name="duallistbox_demo1[]"]').bootstrapDualListbox(
+		var demo1 = $('select[name="duallistbox_demo1[]"]')
+				.bootstrapDualListbox(
 						{
 							infoTextFiltered : '<span class="label label-purple label-lg">Filtered</span>'
 						});
@@ -152,14 +196,14 @@
 		container1.find('.btn').addClass('btn-white btn-info btn-bold');
 		var comList = [];
 		<c:forEach items="${comList}" var="companyVO">
-			comList.push("${companyVO.name}");
+		comList.push("${companyVO.name}");
 		</c:forEach>
 		//typeahead.js
 		//example taken from plugin's page at: https://twitter.github.io/typeahead.js/examples/
 		var substringMatcher = function(strs) {
 			return function findMatches(q, cb) {
 				var matches, substringRegex;
-				
+
 				// an array that will be populated with substring matches
 				matches = [];
 
@@ -172,7 +216,7 @@
 							value : str
 						});
 					}
-				}); 
+				});
 				cb(matches);
 			}
 		}
@@ -184,11 +228,24 @@
 			name : 'company',
 			displayKey : 'value',
 			source : substringMatcher(comList),
-			limit : 10
+			limit : 20
 		});
 
 		///////////////
-		
+		$('.modal.aside').ace_aside();
+
+		$('#aside-inside-modal').addClass('aside').ace_aside({
+			container : '#my-modal > .modal-dialog'
+		});
+
+		//$('#top-menu').modal('show')
+
+		$(document).one('ajaxloadstart.page', function(e) {
+			//in ajax mode, remove before leaving page
+			$('.modal.aside').remove();
+			$(window).off('.aside')
+		});
+
 	});
 </script>
 </body>

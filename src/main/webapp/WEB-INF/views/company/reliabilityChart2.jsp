@@ -13,106 +13,84 @@
 <link rel="stylesheet" href="${context }/resources/amcharts_3.21.6.free/images/style.css" type="text/css">
 <script src="${context }/resources/amcharts_3.21.6.free/amcharts/amcharts.js" type="text/javascript"></script>
 <script src="${context }/resources/amcharts_3.21.6.free/amcharts/serial.js" type="text/javascript"></script>
+<script>
+	var RTA = ${RTA};
+</script>
 </head>
 <body>
 	<div class="row">
-		<div id="chart" class="col-sm-12" style="height:450px;"></div>
+		<div id="chart" class="col-sm-12" style="height:350px;"></div>
 	</div>
-	
 	<script>
-	var bestAnaCode = '${bestAnalysis.anaCode}';
-	var bestNewsCode = '${bestAnalysis.newsCode}';
-	var reliability = [];
-	<c:forEach items="${reliability}" var="reliabilityVO">
-		reliability.push({
-			anaCode : '${reliabilityVO.anaCode }',
-			newsCode : '${reliabilityVO.newsCode }',
-			value : '${reliabilityVO.value }'
-		});
-	</c:forEach>
 	respons('${option}');
 	function respons(option){
 		var chart;
 		//카테고리별 오늘 상승/하락/동결 - 카테고리별 내일 상승/하락/동결
 		var map = new Map();
-		var chartData = [];
+		var chartData1 = [];
+		var chartData2 = [];
 		if(option == 'newsCode'){
-			var cultureList = [];
-			var digitalList = [];
-			var economicList = [];
-			var entertainList = [];
-			var foreignList = [];
-			var politicsList = [];
-			var societyList = [];
-			for(var i in reliability){
-				if(reliability[i].newsCode == 'culture')
-					cultureList.push(reliability[i].value);
-				else if(reliability[i].newsCode == 'digital')
-					digitalList.push(reliability[i].value);
-				else if(reliability[i].newsCode == 'economic')
-					economicList.push(reliability[i].value);
-				else if(reliability[i].newsCode == 'entertain')
-					entertainList.push(reliability[i].value);
-				else if(reliability[i].newsCode == 'foreign')
-					foreignList.push(reliability[i].value);
-				else if(reliability[i].newsCode == 'politics')
-					politicsList.push(reliability[i].value);
-				else if(reliability[i].newsCode == 'society')
-					societyList.push(reliability[i].value);
+			for(var i in RTA){
+				var newsCode = RTA[i].newsCode;
+				if(map.has(newsCode)){
+					var updateList = map.get(newsCode);
+					if(RTA[i].todayFluc == 'p')
+						updateList[0]++;
+					else if(RTA[i].todayFluc == 'm')
+						updateList[1]++;
+					else
+						updateList[2]++;
+					if(RTA[i].tomorrowFluc == 'p')
+						updateList[3]++;
+					else if(RTA[i].tomorrowFluc == 'm')
+						updateList[4]++;
+					else
+						updateList[5]++;
+					map.set(newsCode,updateList);
+				}else{
+					var list = [0,0,0,0,0,0];
+					if(RTA[i].todayFluc == 'p')
+						list[0]++;
+					else if(RTA[i].todayFluc == 'm')
+						list[1]++;
+					else
+						list[2]++;
+					if(RTA[i].tomorrowFluc == 'p')
+						list[3]++;
+					else if(RTA[i].tomorrowFluc == 'm')
+						list[4]++;
+					else
+						list[5]++;
+					map.set(newsCode,list);
+				}
 			}
+			console.log(map);
 			var types = ['감정분석1','감정분석2','확률분석1','확률분석2','필터분석1','필터분석2','통합분석1','통합분석2'];
 			for(var i=0; i<types.length; i++){
-				chartData.push({
+				chartData1.push({
 					type : types[i],
-					culture : cultureList[i],
-					digital : digitalList[i],
-					economic : economicList[i],
-					entertain : entertainList[i],
-					foreign : foreignList[i],
-					politics : politicsList[i],
-					society : societyList[i]
+					economic : (map.get('economic')[i]/8*100).toFixed(1),
+					digital : (map.get('digital')[i]/8*100).toFixed(1),
+					culture : (map.get('culture')[i]/8*100).toFixed(1),
+					politics : (map.get('politics')[i]/8*100).toFixed(1),
+					foreign : (map.get('foreign')[i]/8*100).toFixed(1),
 				});
 			}
-			var bestTitle = '';
-			if(bestNewsCode == 'culture')
-				bestTitle += '문화';
-			else if(bestNewsCode == 'digital')
-				bestTitle += 'IT';
-			else if(bestNewsCode == 'economic')
-				bestTitle += '경제';
-			else if(bestNewsCode == 'entertain')
-				bestTitle += '연예';
-			else if(bestNewsCode == 'foreign')
-				bestTitle += '국제';
-			else if(bestNewsCode == 'politics')
-				bestTitle += '정치';
-			else if(bestNewsCode == 'society')
-				bestTitle += '사회';
-			
-			bestTitle += ' - ';
-			
-			if(bestAnaCode == 'opi1')
-				bestTitle += '감정분석1';
-			else if(bestAnaCode == 'opi2')
-				bestTitle += '감정분석2';
-			else if(bestAnaCode == 'pro1')
-				bestTitle += '확률분석1';
-			else if(bestAnaCode == 'pro2')
-				bestTitle += '확률분석2';
-			else if(bestAnaCode == 'fit1')
-				bestTitle += '필터분석1';
-			else if(bestAnaCode == 'fit2')
-				bestTitle += '필터분석2';
-			else if(bestAnaCode == 'meg1')
-				bestTitle += '통합분석1';
-			else if(bestAnaCode == 'meg2')
-				bestTitle += '통합분석2';
-			
-			makeChart(chartData,"chart");
-			
+			for(var i=3; i<types.length; i++){
+				chartData2.push({
+					type : types[i],
+					economic : (map.get('economic')[i]/8*100).toFixed(1),
+					digital : (map.get('digital')[i]/8*100).toFixed(1),
+					culture : (map.get('culture')[i]/8*100).toFixed(1),
+					politics : (map.get('politics')[i]/8*100).toFixed(1),
+					foreign : (map.get('foreign')[i]/8*100).toFixed(1),
+				});
+			}
+			makeChart(chartData1,"chart");
+			//makeChart(chartData2,"newsTomorrowChart");
 			function makeChart(chartData,div){
 				chart = new AmCharts.AmSerialChart();
-				chart.addTitle("뉴스 - 분석방법 신뢰도 (" + bestTitle + ")", 14);
+				chart.addTitle("뉴스 - 분석방법 신뢰도", 14);
 	            chart.dataProvider = chartData;
 	            chart.categoryField = "type";
 	            chart.startDuration = 0.5;
@@ -130,51 +108,22 @@
 
 	            // value
 	            var valueAxis = new AmCharts.ValueAxis();
-	            valueAxis.title = "예측확률";
+	            valueAxis.title = "예측확률(%)";
 	            valueAxis.dashLength = 5;
 	            valueAxis.axisAlpha = 0;
-	            valueAxis.minimum = 20;
-	            valueAxis.maximum = 80;
+	            valueAxis.minimum = 0;
+	            valueAxis.maximum = 100;
 	            valueAxis.integersOnly = true;
 	            valueAxis.gridCount = 10;
 	            valueAxis.reversed = false; // this line makes the value axis reversed
 	            chart.addValueAxis(valueAxis);
 
-	            
 	            // GRAPHS
-	            var graph = new AmCharts.AmGraph();
-	            graph.title = "문화";
-	            graph.valueField = "culture";
-	            graph.balloonText = "문화뉴스의 [[category]]: [[value]]";
-	            graph.lineAlpha = 1;
-	            graph.bullet = "round";
-	            chart.addGraph(graph);
-	            
-	            var graph = new AmCharts.AmGraph();
-	            graph.title = "IT";
-	            graph.valueField = "digital";
-	            graph.balloonText = "IT뉴스의 [[category]]: [[value]]";
-	            graph.bullet = "round";
-	            chart.addGraph(graph);
-	            
 	            var graph = new AmCharts.AmGraph();
 	            graph.title = "경제";
 	            graph.valueField = "economic";
 	            graph.balloonText = "경제뉴스의 [[category]]: [[value]]";
-	            graph.bullet = "round";
-	            chart.addGraph(graph);
-	            
-	            var graph = new AmCharts.AmGraph();
-	            graph.title = "연예";
-	            graph.valueField = "entertain";
-	            graph.balloonText = "연예뉴스의 [[category]]: [[value]]";
-	            graph.bullet = "round";
-	            chart.addGraph(graph);
-	            
-	            var graph = new AmCharts.AmGraph();
-	            graph.title = "국제";
-	            graph.valueField = "foreign";
-	            graph.balloonText = "국제뉴스의 [[category]]: [[value]]";
+	            graph.lineAlpha = 1;
 	            graph.bullet = "round";
 	            chart.addGraph(graph);
 
@@ -188,10 +137,26 @@
 	            var graph = new AmCharts.AmGraph();
 	            graph.title = "사회";
 	            graph.valueField = "foreign";
-	            graph.balloonText = "사회뉴스의 [[category]]: [[value]]";
+	            graph.balloonText = "IT뉴스의 [[category]]: [[value]]";
 	            graph.bullet = "round";
 	            chart.addGraph(graph);
 	            
+	            var graph = new AmCharts.AmGraph();
+	            graph.title = "문화";
+	            graph.valueField = "culture";
+	            graph.balloonText = "문화뉴스의 [[category]]: [[value]]";
+	            graph.bullet = "round";
+	            chart.addGraph(graph);
+	            
+	            
+	            var graph = new AmCharts.AmGraph();
+	            graph.title = "IT";
+	            graph.valueField = "digital";
+	            graph.balloonText = "IT뉴스의 [[category]]: [[value]]";
+	            graph.bullet = "round";
+	            chart.addGraph(graph);
+	            
+
 	            // CURSOR
 	            var chartCursor = new AmCharts.ChartCursor();
 	            chartCursor.cursorPosition = "mouse";
@@ -209,86 +174,73 @@
 	            $('a').remove();
 			}
 		}else if(option == 'anaCode'){
-			var opi1List = [];
-			var opi2List = [];
-			var pro1List = [];
-			var pro2List = [];
-			var fit1List = [];
-			var fit2List = [];
-			var meg1List = [];
-			var meg2List = [];
-			for(var i in reliability){
-				if(reliability[i].anaCode == 'opi1')
-					opi1List.push(reliability[i].value);
-				else if(reliability[i].anaCode == 'opi2')
-					opi2List.push(reliability[i].value);
-				else if(reliability[i].anaCode == 'pro1')
-					pro1List.push(reliability[i].value);
-				else if(reliability[i].anaCode == 'pro2')
-					pro2List.push(reliability[i].value);
-				else if(reliability[i].anaCode == 'fit1')
-					fit1List.push(reliability[i].value);
-				else if(reliability[i].anaCode == 'fit2')
-					fit2List.push(reliability[i].value);
-				else if(reliability[i].anaCode == 'meg1')
-					meg1List.push(reliability[i].value);
-				else if(reliability[i].anaCode == 'meg2')
-					meg2List.push(reliability[i].value);
+			for(var i in RTA){
+				var anaCode = RTA[i].anaCode;
+				if(map.has(anaCode)){
+					var updateList = map.get(anaCode);
+					if(RTA[i].todayFluc == 'p')
+						updateList[0]++;
+					else if(RTA[i].todayFluc == 'm')
+						updateList[1]++;
+					else
+						updateList[2]++;
+					if(RTA[i].tomorrowFluc == 'p')
+						updateList[3]++;
+					else if(RTA[i].tomorrowFluc == 'm')
+						updateList[4]++;
+					else
+						updateList[5]++;
+					map.set(anaCode,updateList);
+				}else{
+					var list = [0,0,0,0,0,0];
+					if(RTA[i].todayFluc == 'p')
+						list[0]++;
+					else if(RTA[i].todayFluc == 'm')
+						list[1]++;
+					else
+						list[2]++;
+					if(RTA[i].tomorrowFluc == 'p')
+						list[3]++;
+					else if(RTA[i].tomorrowFluc == 'm')
+						list[4]++;
+					else
+						list[5]++;
+					map.set(anaCode,list);
+				}
 			}
-			var types = ['문화','IT','경제','연예','국제','정치','사회'];
+			var types = ['정치','경제','사회','문화','연예','IT']
 			for(var i=0; i<types.length; i++){
-				chartData.push({
+				chartData1.push({
 					type : types[i],
-					opi1 : opi1List[i],
-					opi2 : opi2List[i],
-					pro1 : pro1List[i],
-					pro2 : pro2List[i],
-					fit1 : fit1List[i],
-					fit2 : fit2List[i],
-					meg1 : meg1List[i],
-					meg2 : meg2List[i]
+					opi1 : (map.get('opi1')[i]/5*100).toFixed(1), 
+					opi2 : (map.get('opi2')[i]/5*100).toFixed(1), 
+					pro1 : (map.get('pro1')[i]/5*100).toFixed(1), 
+					pro2 : (map.get('pro2')[i]/5*100).toFixed(1), 
+					fit1 : (map.get('fit1')[i]/5*100).toFixed(1), 
+					fit2 : (map.get('fit2')[i]/5*100).toFixed(1), 
+					meg1 : (map.get('meg1')[i]/5*100).toFixed(1), 
+					meg2 : (map.get('meg2')[i]/5*100).toFixed(1), 
 				});
 			}
-			var bestTitle = '';
-			if(bestAnaCode == 'opi1')
-				bestTitle += '감정분석1';
-			else if(bestAnaCode == 'opi2')
-				bestTitle += '감정분석2';
-			else if(bestAnaCode == 'pro1')
-				bestTitle += '확률분석1';
-			else if(bestAnaCode == 'pro2')
-				bestTitle += '확률분석2';
-			else if(bestAnaCode == 'fit1')
-				bestTitle += '필터분석1';
-			else if(bestAnaCode == 'fit2')
-				bestTitle += '필터분석2';
-			else if(bestAnaCode == 'meg1')
-				bestTitle += '통합분석1';
-			else if(bestAnaCode == 'meg2')
-				bestTitle += '통합분석2';
-			
-			bestTitle += ' - ';
-			
-			if(bestNewsCode == 'culture')
-				bestTitle += '문화';
-			else if(bestNewsCode == 'digital')
-				bestTitle += 'IT';
-			else if(bestNewsCode == 'economic')
-				bestTitle += '경제';
-			else if(bestNewsCode == 'entertain')
-				bestTitle += '연예';
-			else if(bestNewsCode == 'foreign')
-				bestTitle += '국제';
-			else if(bestNewsCode == 'politics')
-				bestTitle += '정치';
-			else if(bestNewsCode == 'society')
-				bestTitle += '사회';
-			
-			makeChart(chartData,"chart");
+			/* for(var i=3; i<types.length; i++){
+				chartData2.push({
+					type : types[i],
+					opi1 : (map.get('opi1')[i]/5*100).toFixed(1), 
+					opi2 : (map.get('opi2')[i]/5*100).toFixed(1), 
+					pro1 : (map.get('pro1')[i]/5*100).toFixed(1), 
+					pro2 : (map.get('pro2')[i]/5*100).toFixed(1), 
+					fit1 : (map.get('fit1')[i]/5*100).toFixed(1), 
+					fit2 : (map.get('fit2')[i]/5*100).toFixed(1), 
+					meg1 : (map.get('meg1')[i]/5*100).toFixed(1), 
+					meg2 : (map.get('meg2')[i]/5*100).toFixed(1), 
+				});
+			} */
+			makeChart(chartData1,"chart");
+			//makeChart(chartData2,"anaTomorrowChart");
 			function makeChart(chartData,div){
 	            chart = new AmCharts.AmSerialChart();
 	            chart.dataProvider = chartData;
-	            chart.addTitle("분석방법 - 뉴스 신뢰도 (" + bestTitle + ")", 14);
+	            chart.addTitle("분석방법 - 뉴스 신뢰도", 14);
 	            chart.categoryField = "type";
 	            chart.startDuration = 0.5;
 	            chart.balloon.color = "#000000";
@@ -305,11 +257,11 @@
 	
 	            // value
 	            var valueAxis = new AmCharts.ValueAxis();
-	            valueAxis.title = "예측확률";
+	            valueAxis.title = "예측확률(%)";
 	            valueAxis.dashLength = 5;
 	            valueAxis.axisAlpha = 0;
-	            valueAxis.minimum = 20;
-	            valueAxis.maximum = 80;
+	            valueAxis.minimum = 0;
+	            valueAxis.maximum = 100;
 	            valueAxis.integersOnly = true;
 	            valueAxis.gridCount = 10;
 	            valueAxis.reversed = false; // this line makes the value axis reversed

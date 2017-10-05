@@ -19,8 +19,10 @@ import org.springframework.core.io.ClassPathResource;
 import org.springframework.core.io.Resource;
 import org.springframework.stereotype.Service;
 
+import com.mongodb.Cursor;
 import com.mongodb.MongoClient;
 import com.mongodb.client.MongoCollection;
+import com.mongodb.client.MongoCursor;
 import com.mongodb.client.MongoDatabase;
 import com.mongodb.client.model.Filters;
 
@@ -134,4 +136,29 @@ public class DictionaryServiceImpl {
 		return new JSONObject(map);
 	}
 	
+	public void insertUserDic(Document dom){
+		dDAO.insertUserDic(dom);
+	}
+	
+	public JSONArray selectUserDic(int userNo, String dicName){
+		JSONArray arr = new JSONArray();
+		Bson query = null;
+		if(dicName != null)//selectOne
+			query = Filters.and(Filters.eq("userNo",userNo), Filters.eq("dicName",dicName));
+		else
+			query = Filters.eq("userNo",userNo);
+		MongoCursor<Document> cursor = dDAO.selectUserDic(query).iterator();
+		while(cursor.hasNext()){
+			Document dom = cursor.next();
+			JSONObject obj = new JSONObject();
+			obj.put("userNo", dom.get("userNo"));
+			obj.put("comName", dom.get("comName"));
+			obj.put("newsCode", dom.get("newsCode"));
+			obj.put("anaCode", dom.get("anaCode"));
+			obj.put("dicName", dom.get("dicName"));
+			obj.put("dictionary", dom.get("dictionary"));
+			arr.add(obj);
+		}
+		return arr;
+	}
 }
