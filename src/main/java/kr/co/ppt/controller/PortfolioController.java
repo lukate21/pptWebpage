@@ -5,14 +5,18 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.URL;
 import java.net.URLConnection;
+import java.util.HashMap;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import kr.co.ppt.serviceImpl.CompanyServiceImpl;
+import kr.co.ppt.vo.CompanyVO;
 
 @Controller
 @RequestMapping("/my")
@@ -26,16 +30,40 @@ public class PortfolioController {
 		return "/my/analysis";
 	}
 	
-	@RequestMapping("/analysis/start.do")
-	public String start(){
-		return "/my/start";
+	@RequestMapping(value="/favorite.do",method=RequestMethod.GET)
+	public String favorite(Model model, int userNo){
+		model.addAttribute("favoriteList", cService.selectFavoriteList(userNo));
+		return "/my/favorite";
 	}
 	
-	@RequestMapping("/analysis/first.do")
-	public String first(Model model){
-		model.addAttribute("comList", cService.selectComList());
-		return "/my/firstStep";
+	@RequestMapping(value="/favorite.json",method=RequestMethod.GET)
+	@ResponseBody
+	public String checkFavorite(int userNo, String comName){
+		Map<String,Object> map = new HashMap<>();
+		map.put("userNo", userNo);
+		map.put("comName", comName);
+		if(cService.selectFavoriteAble(map) == null)
+			return "able";
+		else
+			return "disable";
 	}
+	
+	@RequestMapping(value="/favorite.json",method=RequestMethod.POST)
+	@ResponseBody
+	public String addFavorite(int userNo, String comName, String method){
+		CompanyVO companyVO = new CompanyVO();
+		companyVO.setName(comName);
+		companyVO = cService.selectCom(companyVO);
+		Map<String,Object> map = new HashMap<>();
+		map.put("userNo", userNo);
+		map.put("comNo", companyVO.getNo());
+		if(method.equals("insert"))
+			cService.insertFavorite(map);
+		else if(method.equals("delete"))
+			cService.deleteFavorite(map);
+		return "성공";
+	}
+	
 	
 	@RequestMapping("/analysis/getMorp.json")
 	@ResponseBody
@@ -59,10 +87,6 @@ public class PortfolioController {
 		return result;
 	}
 	
-	@RequestMapping("/analysis/third.do")
-	public String third(String name){
-		return "/my/thirdStep";
-	}
 	@RequestMapping("/analysis/result.do")
 	public String result(){
 		return "/my/result";
