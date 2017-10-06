@@ -7,6 +7,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <!-- bootstrap & fontawesome -->
 <link rel="stylesheet" href="${context}/resources/assets/css/bootstrap.min.css" />
+<link rel="stylesheet" href="${context}/resources/assets/font-awesome/4.5.0/css/font-awesome.min.css" />
 <!-- inline styles related to this page -->
 <script src="${context}/resources/assets/js/jquery-2.1.4.min.js"></script>
 <!-- chart -->
@@ -17,20 +18,13 @@
 <script src="${context }/resources/amcharts_3.21.6.free/amcharts/amcharts.js" type="text/javascript"></script>
 <script src="${context }/resources/amcharts_3.21.6.free/amcharts/serial.js" type="text/javascript"></script>
 </head>
-<body>
-	<div class="row">
-		<div class="col-sm-12">
-			<span><b>${name }</b></span>&nbsp;&nbsp;
-			<span id="now"></span>&nbsp;
-			<span id="raise"></span>&nbsp;
-			<span id="rate"></span>&nbsp;
-			예측 : <span id="predict"></span>&nbsp;
+<body style="margin-top:0;margin-bottom:0">
+			&nbsp;<span id="now"></span>
+			금일 예측 : <span id="predict"></span>&nbsp;&nbsp;&nbsp;
 			베스트 예측 : <span id="bestPredict"></span>
 			<span style="cursor:pointer;" class="badge badge-success pull-right" onclick="drawChart2('1_YEAR')">1년</span>
 			<span style="cursor:pointer;" class="badge badge-success pull-right" onclick="drawChart2('1_MONTH')">1개월</span>
 			<span style="cursor:pointer;" class="badge badge-success pull-right" onclick="drawChart('1_DAY')">1일</span> 
-		</div>
-	</div>
 	
 	<div id="chartdiv" class="col-sm-12" style="height:300px;"></div>
 	
@@ -46,16 +40,30 @@
 		else if(RTA[i].todayFluc == "m")
 			mCnt++;
 		if(RTA[i].anaCode == bestAnaCode && RTA[i].newsCode == bestNewsCode){
-			$('#bestPredict').text(RTA[i].todayFluc);
+			var predict = RTA[i].todayFluc;
+			if(predict == 'p'){
+				predict = '상승';
+				$('#bestPredict').html('<span class="text-danger"><b><i class="fa fa-caret-up"></i>&nbsp;'+predict+'</b></span>');
+			}
+			else if(predict == 'm'){
+				predict = '하락';
+				$('#bestPredict').html('<span class="text-primary"><b><i class="fa fa-caret-down"></i>&nbsp;'+predict+'</b></span>');
+			}else if(predict == '-'){
+				predict = '동결';
+				$('#bestPredict').html('<b>- '+predict+'</b>');
+			}else if(predict == 'x'){
+				predict = '데이터 부족';
+				$('#bestPredict').html('<b>'+predict+'</b>');
+			}
 		}
 	}
 	var predicValue;
 	if(pCnt>mCnt){
-		$('#predict').text('+'+(pCnt/(pCnt+mCnt)*100).toFixed(0)+'%');
+		$('#predict').html('<span class="text-danger"><b><i class="fa fa-caret-up"></i>'+(pCnt/56*100).toFixed(0)+'%</b></span>');
 	}else if(pCnt<mCnt){
-		$('#predict').text('-'+(mCnt/(pCnt+mCnt)*100).toFixed(0)+'%');
+		$('#predict').html('<span class="text-primary"><b><i class="fa fa-caret-down"></i>'+(mCnt/56*100).toFixed(0)+'%</b></span>');
 	}else{
-		$('#predict').text('X');
+		$('#predict').html('<b>-</b>');
 	}
 	
 	drawChart('1_DAY');
@@ -67,13 +75,18 @@
 				var chartData = obj.price;
 				var start = chartData[0].value;
 				var now = chartData[chartData.length-1].value;
-				$('#now').text(now);
 				if(start<now){
-					$('#raise').text('+'+(now-start).toFixed(2));
-					$('#rate').text('+'+((now-start)/start*100).toFixed(2)+'%');
+					$('#now').html('<span class="text-danger"><h3 style="margin-top:0"><b>'+now+'</b><small class="text-danger">'
+									+'&nbsp;&nbsp;&nbsp;<i class="fa fa-caret-up"></i>&nbsp;'+(now-start)
+									+'&nbsp;&nbsp;&nbsp;+'+((now-start)/start*100).toFixed(2)+'%</small></h3></span>');
+				}else if(start>now){
+					$('#now').html('<span class="text-primary"><h3 style="margin-top:0"><b>'+now+'</b><small class="text-primary">'
+							+'&nbsp;&nbsp;&nbsp;<i class="fa fa-caret-down"></i>&nbsp;'+(start-now)
+							+'&nbsp;&nbsp;&nbsp;-'+((start-now)/start*100).toFixed(2)+'%</small></h3></span>');
 				}else{
-					$('#raise').text('-'+(start-now).toFixed(2));
-					$('#rate').text('-'+((start-now)/start*100).toFixed(2)+'%');
+					$('#now').html('<span><h3 style="margin-top:0"><b>'+now+'</b><small>'
+							+'&nbsp;&nbsp;&nbsp;-'+(start-now)
+							+'&nbsp;&nbsp;&nbsp;-'+((start-now)/start*100).toFixed(2)+'%</small></h3></span>');
 				}
 				var chart = AmCharts.makeChart("chartdiv", {
 					type: "stock",

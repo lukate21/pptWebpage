@@ -149,7 +149,7 @@ function selectUserDic(){
 		url : "${context}/dictionary/mongo/selectUserDic.json",
 		type: 'get',
 		data : {
-			'userNo' : 1,//userNo로 변경
+			'userNo' : '${loginUser.no}',
 			'dicName' : dicName
 		},
 		async : false,
@@ -174,7 +174,7 @@ function insertUserDic(){
 		url : "${context}/dictionary/mongo/insertUserDic.json",
 		type: 'post',
 		data : {
-			'userNo' : 1,//userNo로 변경
+			'userNo' : '${loginUser.no}',
 			'comName' : comName,
 			'newsCode' : newsCode,
 			'anaCode' : anaCode,
