@@ -45,13 +45,18 @@
 			<div class="page-content">
 				<div class="row">
 					<div class="col-sm-12">
+						<div class="col-sm-3">
+							<h3><span id="newsTitle"></span>
+								<button class="btn btn-white btn-xs no-border" onclick="addFavorite('${name}')" id="favorite">
+									<i class="fa fa-star-o bigger-150" aria-hidden="true" ></i>
+								</button>
+							</h3>
+						</div>
 							<div class="form-group pull-right">
 								<div class="pos-rel">
+									
 									<input class="typeahead scrollable" type="text"
 										placeholder="기업검색" />
-										<button class="btn btn-success pull-right" onclick="addFavorite('${name}')" id="favorite">
-									<i class="glyphicon glyphicon-star-empty" aria-hidden="true" ></i>
-								</button>
 								</div>
 							</div>
 						</div>
@@ -66,7 +71,6 @@
 							width="100%" height="400px" frameBorder="0"> </iframe>
 					</div>
 					<div class="col-sm-2">
-						<h3 id="newsTitle">${name}</h3>
 						<div id="news"></div>
 					</div>
 					
@@ -190,11 +194,11 @@
 				var obj = []
 				obj = JSON.parse(data);
 				console.log(obj);
-				$('#news').empty();
-				$('#newsTitle').html(comName);
+				$('#news').html('<div class="space-24"></div>');
+				$('#newsTitle').text(comName);
 				for (var i = 0; i < obj.length; i++) {
 					$('#news').append(
-							'<p><a href="'+obj[i].link+'">' + obj[i].title
+							'<p><a href="'+obj[i].link+'" target="_blank">' + obj[i].title
 									+ "</a><br/></p>");
 				}
 			},
@@ -219,9 +223,9 @@
 			success : function(data){
 				console.log(data);
 				if(data == "able"){
-					$('#favorite i').attr("class","glyphicon  glyphicon-star-empty");
+					$('#favorite i').attr("class","fa fa-star-o bigger-150");
 				}else if(data == 'disable'){
-					$('#favorite i').attr("class","glyphicon glyphicon-star");
+					$('#favorite i').attr("class","fa fa-star bigger-150");
 				}
 			}
 		});
@@ -229,7 +233,7 @@
 	
 	function addFavorite(comName){
 		var method;
-		if($('#favorite i')[0].className.split(" ")[1] == "glyphicon-star"){
+		if($('#favorite i')[0].className.split(" ")[1] == "fa-star"){
 			if(confirm('이미 즐겨찾기에 등록되어 있습니다.\n목록에서 삭제하겠습니까?')){
 				method = "delete";
 			}else{
@@ -252,9 +256,9 @@
 				contentType : 'application/x-www-form-urlencoded; charset=utf-8',
 				success : function(data){
 					if(method =="delete"){
-						$('#favorite i').attr("class","glyphicon glyphicon-star-empty");
+						$('#favorite i').attr("class","fa fa-star-o bigger-150");
 					}else{
-						$('#favorite i').attr("class","glyphicon glyphicon-star");
+						$('#favorite i').attr("class","fa fa-star bigger-150");
 					}
 				}
 			});

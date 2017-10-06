@@ -106,7 +106,7 @@
 				value : value1
 			});
 		}
-		$('#chart').append('<div class="row"><div class="space-6"></div><div id="todayChart" class="col-xs-6" style="height: 300px;"></div>'
+		$('#chart').append('<div class="row"><div class="space-24"></div><div id="todayChart" class="col-xs-6" style="height: 300px;"></div>'
 							+'<div id="tomorrowChart" class="col-xs-6" style="height: 300px;"></div></div>')
 		
 		makeChart(chartData1, "todayChart", "금일 주가 예측");
@@ -162,6 +162,25 @@
 				RTA[i].anaCode = '통합분석1';
 			else if(RTA[i].anaCode == 'meg2')
 				RTA[i].anaCode = '통합분석2';
+			
+			if(RTA[i].todayFluc == 'p')
+				RTA[i].todayFluc = '상승';
+			else if(RTA[i].todayFluc == 'm')
+				RTA[i].todayFluc = '하락';
+			else if(RTA[i].todayFluc == '-')
+				RTA[i].todayFluc = '동결';
+			else if(RTA[i].todayFluc == 'x')
+				RTA[i].todayFluc = '데이터부족';
+			
+			if(RTA[i].tomorrowFluc == 'p')
+				RTA[i].tomorrowFluc = '상승';
+			else if(RTA[i].tomorrowFluc == 'm')
+				RTA[i].tomorrowFluc = '하락';
+			else if(RTA[i].tomorrowFluc == '-')
+				RTA[i].tomorrowFluc = '동결';
+			else if(RTA[i].tomorrowFluc == 'x')
+				RTA[i].tomorrowFluc = '데이터부족';
+			
 		}
 		var bestTitle = '';
 		if(bestNewsCode == 'culture')
@@ -222,7 +241,7 @@
 			jQuery(grid_selector).jqGrid({
 				data: RTA,
 				datatype: "local",
-				height: 320,
+				height: 340,
 				colNames:['뉴스 카테고리','분석방법', '금일 예측', '익일 예측','예측시간'],
 				colModel:[
 					{name:'newsCode',index:'newsCode',width:90, editable:true,unformat: pickDate},
