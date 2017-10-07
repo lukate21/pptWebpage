@@ -36,7 +36,6 @@
 			<div class="breadcrumbs ace-save-state breadcrumbs-fixed" id="breadcrumbs">
 				<ul class="breadcrumb">
 					<li><i class="ace-icon fa fa-home home-icon"></i> <a href="${context }">Home</a></li>
-					<li><a href="#">company</a></li>
 					<li class="active">기업검색</li>
 				</ul>
 				<!-- /.breadcrumb -->

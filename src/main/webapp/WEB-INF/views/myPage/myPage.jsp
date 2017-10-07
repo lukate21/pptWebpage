@@ -68,7 +68,7 @@
 								<label class="col-sm-3 control-label no-padding-right" for="form-field-2"> 현재 비밀번호 </label>
 	
 								<div class="col-sm-9">
-									<input type="password" id="form-field-2" placeholder="Password" class="col-xs-10 col-sm-5" />
+									<input type="password" id="form-field-2" placeholder="현재 비밀번호" class="col-xs-10 col-sm-5" />
 									<span class="help-inline col-xs-12 col-sm-7">
 										<span class="middle">비밀번호를 확인합니다</span>
 									</span>
@@ -79,7 +79,7 @@
 								<label class="col-sm-3 control-label no-padding-right" for="form-field-2"> 변경할 비밀번호 </label>
 	
 								<div class="col-sm-9">
-									<input type="password" id="form-field-2" placeholder="Password" class="col-xs-10 col-sm-5" />
+									<input type="password" id="form-field-2" placeholder="변경할 비밀번호" class="col-xs-10 col-sm-5" />
 								</div>
 							</div>
 							
@@ -87,7 +87,7 @@
 								<label class="col-sm-3 control-label no-padding-right" for="form-field-2"> 비밀번호 재입력 </label>
 	
 								<div class="col-sm-9">
-									<input type="password" id="form-field-2" placeholder="Password" class="col-xs-10 col-sm-5" />
+									<input type="password" id="form-field-2" placeholder="비밀번호 재입력" class="col-xs-10 col-sm-5" />
 									<span class="help-inline col-xs-12 col-sm-7">
 										<span class="middle">비밀번호가 일치하지 않습니다.</span>
 									</span>
@@ -98,7 +98,10 @@
 								<label class="col-sm-3 control-label no-padding-right" for="form-filed-2"> 전화번호 </label>
 								
 								<div class="col-sm-9">
-									<input type="text" id="form-filed=2" placeholder="(-)생략" class="col-xs-10 col-sm-5" value="${sessionScope.loginUser.tel}"/>
+									<input type="text" id="form-filed=2" class="col-xs-10 col-sm-5" value="${sessionScope.loginUser.tel}"/>
+									<span class="help-inline col-xs-12 col-sm-7">
+										<span class="middle">"-"제외하고 입력해주세요.</span>
+									</span>
 								</div>
 							</div>
 	

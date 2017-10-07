@@ -31,7 +31,8 @@
 			<div class="breadcrumbs ace-save-state breadcrumbs-fixed" id="breadcrumbs">
 				<ul class="breadcrumb">
 					<li><i class="ace-icon fa fa-home home-icon"></i> <a href="${context}/hello.do">Home</a></li>
-					<li class="active">myPage</li>
+					<li>마이페이지</li>
+					<li class="active">정보수정</li>
 				</ul>
 				<!-- /.breadcrumb -->
 			</div>

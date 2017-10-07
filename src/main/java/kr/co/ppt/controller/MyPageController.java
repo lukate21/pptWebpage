@@ -1,6 +1,7 @@
 package kr.co.ppt.controller;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -8,6 +9,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import kr.co.ppt.service.MemberService;
+import kr.co.ppt.serviceImpl.CompanyServiceImpl;
 import kr.co.ppt.util.SHA_ENC;
 import kr.co.ppt.util.UserUtil;
 import kr.co.ppt.vo.MemberVO;
@@ -18,6 +20,9 @@ public class MyPageController {
 	
 	@Autowired
 	MemberService memberService;
+	
+	@Autowired
+	CompanyServiceImpl cService;
 
 	@RequestMapping(value="modifyCheck.do", method=RequestMethod.GET)
 	public String myPage() {
@@ -70,7 +75,8 @@ public class MyPageController {
 	}
 	
 	@RequestMapping("myStock.do")
-	public String myStock(){
+	public String myStock(HttpServletRequest request){
+		request.setAttribute("comList", cService.selectComList());
 		return "myPage/myStock";
 	}
 	
