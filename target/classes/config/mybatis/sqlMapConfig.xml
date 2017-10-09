@@ -10,5 +10,6 @@
 		<typeAlias alias="stockVO" type="kr.co.ppt.vo.StockVO" />
 		<typeAlias alias="rtaVO" type="kr.co.ppt.vo.RTAVO" />
 		<typeAlias alias="reliabilityVO" type="kr.co.ppt.vo.ReliabilityVO" />
+		<typeAlias alias="newsCountVO" type="kr.co.ppt.vo.NewsCountVO" />
 	</typeAliases>
 </configuration>

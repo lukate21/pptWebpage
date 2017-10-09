@@ -20,7 +20,8 @@
 <style>
 	.main-content, body, html {
 	min-height: 90%;
-	margin : auto;
+	margin-top : 0;
+	margin-bottom : 0;
 }
 </style>
 </head>
@@ -33,7 +34,8 @@
 			data-onstyle="success" data-offstyle="danger" id="toggleBtn">
 			</span>
 		</div>
-		<div id="chart" class="col-sm-12" style="height:450px;"></div>
+		<div id="chart" class="col-sm-12" style="height:400px;"></div>
+		<div class="pull-right"><i>2017-07-01 ~ 2017-08-31</i></div>
 	</div>
 	<script>
 	$('#toggleBtn').change(function(){

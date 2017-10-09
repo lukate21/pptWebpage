@@ -106,8 +106,8 @@
 				value : value1
 			});
 		}
-		$('#chart').append('<div class="row"><div class="space-24"></div><div id="todayChart" class="col-xs-6" style="height: 300px;"></div>'
-							+'<div id="tomorrowChart" class="col-xs-6" style="height: 300px;"></div></div>')
+		$('#chart').append('<div class="row"><div class="space-12"></div><div id="todayChart" class="col-xs-6" style="height: 400px;"></div>'
+							+'<div id="tomorrowChart" class="col-xs-6" style="height: 400px;"></div></div>')
 		
 		makeChart(chartData1, "todayChart", "금일 주가 예측");
 		makeChart(chartData2, "tomorrowChart", "익일 주가 예측");

@@ -20,8 +20,8 @@
 </head>
 <body style="margin-top:0;margin-bottom:0">
 			&nbsp;<span id="now"></span>
-			금일 예측 : <span id="predict"></span>&nbsp;&nbsp;&nbsp;
-			베스트 예측 : <span id="bestPredict"></span>
+			<span id="yesterPredict"></span>(전일) | <span id="todayPredict"></span>(금일) | <span id="tomorrowPredict"></span>(익일) | 
+			<span id="bestTodayPredict"></span>(베스트 금일) | <span id="bestTomorrowPredict"></span>(베스트 익일)
 			<span style="cursor:pointer;" class="badge badge-success pull-right" onclick="drawChart2('1_YEAR')">1년</span>
 			<span style="cursor:pointer;" class="badge badge-success pull-right" onclick="drawChart2('1_MONTH')">1개월</span>
 			<span style="cursor:pointer;" class="badge badge-success pull-right" onclick="drawChart('1_DAY')">1일</span> 
@@ -32,38 +32,76 @@
 	var bestAnaCode = '${bestAnalysis.anaCode}';
 	var bestNewsCode = '${bestAnalysis.newsCode}';
 	var RTA = ${RTA};
-	var pCnt = 0;
-	var mCnt = 0;
+	var yesterdayPcnt = 0;
+	var yesterdayMcnt = 0;
+	var todayPcnt = 0;
+	var todayMcnt = 0;
+	var tomorrowPcnt = 0;
+	var tomorrowMcnt = 0;
 	for(var i in RTA){
+		if(RTA[i].yesterdayFluc == "p")
+			yesterdayPcnt++;
+		else if(RTA[i].yesterdayFluc == "m")
+			yesterdayMcnt++;
 		if(RTA[i].todayFluc == "p")
-			pCnt++;
+			todayPcnt++;
 		else if(RTA[i].todayFluc == "m")
-			mCnt++;
+			todayMcnt++;
+		if(RTA[i].tomorrowFluc == "p")
+			tomorrowPcnt++;
+		else if(RTA[i].tomorrowFluc == "m")
+			tomorrowMcnt++;
+		
 		if(RTA[i].anaCode == bestAnaCode && RTA[i].newsCode == bestNewsCode){
-			var predict = RTA[i].todayFluc;
-			if(predict == 'p'){
-				predict = '상승';
-				$('#bestPredict').html('<span class="text-danger"><b><i class="fa fa-caret-up"></i>&nbsp;'+predict+'</b></span>');
+			var todayPredict = RTA[i].todayFluc;
+			var tomorrowPredict = RTA[i].tomorrowFluc;
+			//오늘
+			if(todayPredict == 'p'){
+				todayPredict = '상승';
+				$('#bestTodayPredict').html('<span class="text-danger"><b><i class="fa fa-caret-up"></i>&nbsp;'+todayPredict+'</b></span>');
 			}
-			else if(predict == 'm'){
-				predict = '하락';
-				$('#bestPredict').html('<span class="text-primary"><b><i class="fa fa-caret-down"></i>&nbsp;'+predict+'</b></span>');
-			}else if(predict == '-'){
-				predict = '동결';
-				$('#bestPredict').html('<b>- '+predict+'</b>');
-			}else if(predict == 'x'){
-				predict = '데이터 부족';
-				$('#bestPredict').html('<b>'+predict+'</b>');
+			else if(todayPredict == 'm'){
+				todayPredict = '하락';
+				$('#bestTodayPredict').html('<span class="text-primary"><b><i class="fa fa-caret-down"></i>&nbsp;'+todayPredict+'</b></span>');
+			}else if(todayPredict == '-'){
+				todayPredict = '동결';
+				$('#bestTodayPredict').html('<b>- '+todayPredict+'</b>');
+			}else if(todayPredict == 'x'){
+				todayPredict = '데이터 부족';
+				$('#bestTodayPredict').html('<b>'+todayPredict+'</b>');
+			}
+			
+			//내일
+			if(tomorrowPredict == 'p'){
+				tomorrowPredict = '상승';
+				$('#bestTomorrowPredict').html('<span class="text-danger"><b><i class="fa fa-caret-up"></i>&nbsp;'+tomorrowPredict+'</b></span>');
+			}
+			else if(tomorrowPredict == 'm'){
+				tomorrowPredict = '하락';
+				$('#bestTomorrowPredict').html('<span class="text-primary"><b><i class="fa fa-caret-down"></i>&nbsp;'+tomorrowPredict+'</b></span>');
+			}else if(tomorrowPredict == '-'){
+				tomorrowPredict = '동결';
+				$('#bestTomorrowPredict').html('<b>- '+tomorrowPredict+'</b>');
+			}else if(tomorrowPredict == 'x'){
+				tomorrowPredict = '데이터 부족';
+				$('#bestTomorrowPredict').html('<b>'+tomorrowPredict+'</b>');
 			}
 		}
 	}
 	var predicValue;
-	if(pCnt>mCnt){
-		$('#predict').html('<span class="text-danger"><b><i class="fa fa-caret-up"></i>'+(pCnt/56*100).toFixed(0)+'%</b></span>');
-	}else if(pCnt<mCnt){
-		$('#predict').html('<span class="text-primary"><b><i class="fa fa-caret-down"></i>'+(mCnt/56*100).toFixed(0)+'%</b></span>');
+	if(todayPcnt>todayMcnt){
+		$('#todayPredict').html('<span class="text-danger"><b><i class="fa fa-caret-up"></i>'+(todayPcnt/56*100).toFixed(0)+'%</b></span>');
+	}else if(todayPcnt<todayMcnt){
+		$('#todayPredict').html('<span class="text-primary"><b><i class="fa fa-caret-down"></i>'+(todayMcnt/56*100).toFixed(0)+'%</b></span>');
 	}else{
-		$('#predict').html('<b>-</b>');
+		$('#todayPredict').html('<b>-</b>');
+	}
+	if(tomorrowPcnt>tomorrowMcnt){
+		$('#tomorrowPredict').html('<span class="text-danger"><b><i class="fa fa-caret-up"></i>'+(tomorrowPcnt/56*100).toFixed(0)+'%</b></span>');
+	}else if(tomorrowPcnt<tomorrowMcnt){
+		$('#tomorrowPredict').html('<span class="text-primary"><b><i class="fa fa-caret-down"></i>'+(tomorrowMcnt/56*100).toFixed(0)+'%</b></span>');
+	}else{
+		$('#tomorrowPredict').html('<b>-</b>');
 	}
 	
 	drawChart('1_DAY');
@@ -73,6 +111,43 @@
 			success : function(data){
 				var obj = JSON.parse(data)[0];
 				var chartData = obj.price;
+				var yesterdayEnd;
+				$.ajax({
+					url : '${context}/company/rtStock.json?name=${name}&timeFrame=1_MONTH',
+					async:false,
+					success : function(data){
+						var todayDate = chartData[0].dateTime.split('T')[0];
+						var obj = JSON.parse(data)[0];
+						var yesterdayData = obj.price;
+						var yesterPredict;
+						var d1,d2; //d1 = 하루전, d2 = 이틀전
+						if(todayDate == yesterdayData[yesterdayData.length-1].date){
+							yesterdayEnd = yesterdayData[yesterdayData.length-2];
+							d1 = yesterdayData[yesterdayData.length-2].value;
+							d2 = yesterdayData[yesterdayData.length-3].value;
+						}else{
+							yesterdayEnd = yesterdayData[yesterdayData.length-1];
+							d1 = yesterdayData[yesterdayData.length-1].value;
+							d2 = yesterdayData[yesterdayData.length-2].value;
+						}
+						if(d1<d2){
+							yesterPredict = '하락';
+						}else if(d1>d2){
+							yesterPredict = '상승';
+						}else
+							yesterPredict = '동결';
+						console.log(yesterPredict);
+						if((yesterdayPcnt>yesterdayMcnt && yesterPredict == '상승') || (yesterdayPcnt<yesterdayMcnt && yesterPredict == '하락')){
+							$('#yesterPredict').html('<span class="text-success"><b>예측성공</b></span>');
+						}else {
+							$('#yesterPredict').html('<span class="text-danger"><b>예측실패</b></span>');
+						}
+					}
+				});
+				chartData.unshift({
+					dateTime : yesterdayEnd.date+'T23:55:00Z',
+					value : yesterdayEnd.value
+				});
 				var start = chartData[0].value;
 				var now = chartData[chartData.length-1].value;
 				if(start<now){
@@ -221,7 +296,6 @@
 				var obj = JSON.parse(data)[0];
 				var chartData = [];
 				chartData = obj.price;
-				console.log(chartData);
 				createStockChart();
 				function createStockChart() {
 					chart = new AmCharts.AmStockChart();
