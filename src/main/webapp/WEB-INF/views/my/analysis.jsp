@@ -289,8 +289,7 @@ function insertUserDic(){
 			<div class="breadcrumbs ace-save-state breadcrumbs-fixed" id="breadcrumbs">
 				<ul class="breadcrumb">
 					<li><i class="ace-icon fa fa-home home-icon"></i> <a href="${context }">Home</a></li>
-					<li><a href="#">Other Pages</a></li>
-					<li class="active">Error 404</li>
+					<li class="active">사용자 포트폴리오</li>
 				</ul>
 				<!-- /.breadcrumb -->
 			</div>

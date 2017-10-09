@@ -2,20 +2,30 @@
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <c:set var="context" value="${pageContext.request.contextPath}" />
-<div class="container content-lg">
-	<div class="row">
-		<div class="col-xs-6">
-			<img class="footer-logo" src="${context}/assets/acecv/img/logo.png"
-				alt="Acecv Logo">
-		</div>
-		<div class="col-xs-6 text-right sm-text-left">
-			<p class="margin-b-0">
-				<a class="fweight-700" href="hello.do">Acecv</a> Theme Powered by: <a
-					class="fweight-700" href="http://www.keenthemes.com/">KeenThemes.com</a>
-			</p>
+<div class="footer">
+	<div class="footer-inner">
+		<div class="footer-content">
+			<span class="bigger-120">
+				<span class="blue bolder">Ace</span>
+				Application &copy; 2013-2014
+			</span>
+
+			&nbsp; &nbsp;
+			<span class="action-buttons">
+				<a href="#">
+					<i class="ace-icon fa fa-twitter-square light-blue bigger-150"></i>
+				</a>
+
+				<a href="#">
+					<i class="ace-icon fa fa-facebook-square text-primary bigger-150"></i>
+				</a>
+
+				<a href="#">
+					<i class="ace-icon fa fa-rss-square orange bigger-150"></i>
+				</a>
+			</span>
 		</div>
 	</div>
-	<!--// end row -->
 </div>
 		<script src="${context}/resources/assets/js/bootstrap.min.js"></script>
 		<!-- page specific plugin scripts -->
