@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  
+<mapper namespace="myStock">
+	
+	
+	<select id="getInfo" parameterType="String" resultType="MyStockVO">
+		select m.com_no, c.name, buy_price, volume, buy_date
+		from my_stock m, company c, users u
+		where m.com_no = c.no and m.user_no = u.no and u.id = #{id}
+	</select>
+	
+</mapper>

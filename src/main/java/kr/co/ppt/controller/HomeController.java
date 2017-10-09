@@ -203,6 +203,7 @@ public class HomeController {
 			result = 1;
 			Map<Object,Object> map = new HashMap<>();
 			map.put("result", result);
+			map.put("no", loginUser.getNo());
 			map.put("id", loginUser.getId());
 			map.put("domain", loginUser.getDomain());
 			map.put("name", loginUser.getName());

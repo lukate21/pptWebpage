@@ -57,20 +57,6 @@
 				</div><!-- /.page-header -->
 				<div class="row">
 					<div class="row">
-						<div class="col-sm-12">
-							<div class="form-group pull-left">
-								<div class="pos-rel">
-									<input class="typeahead scrollable" type="text"	placeholder="기업검색" />
-								</div>
-							</div>
-						</div>
-					</div>
-					<div class="row">
-						<!-- <div class="col-xs-12">
-							<table id="grid-table"></table>
-	
-							<div id="grid-pager"></div>
-						</div> -->
 						<!-- div.dataTables_borderWrap -->
 						<div class="col-xs-12">
 							<div>
@@ -91,14 +77,19 @@
 												<i class="ace-icon fa fa-clock-o bigger-110 hidden-480"></i>
 												구매일
 											</th>
-											<th class="hidden-480">Status</th>
 	
 											<th></th>
 										</tr>
 									</thead>
 	
 									<tbody>
-										<tr>
+										<c:choose>
+											<c:when test="${empty myStockList }">
+												
+											</c:when>
+											<c:otherwise>
+												<c:forEach items="${myStockList}" var="myStock">
+													<tr>
 											<td class="center">
 												<label class="pos-rel">
 													<input type="checkbox" class="ace" />
@@ -107,21 +98,13 @@
 											</td>
 	
 											<td>
-												<a href="#">app.com</a>
+												<a href="#">${myStock.comName}</a>
 											</td>
-											<td>$45</td>
-											<td class="hidden-480">3,330</td>
-											<td>Feb 12</td>
-	
-											<td class="hidden-480">
-												<span class="label label-sm label-warning">Expiring</span>
-											</td>
-	
+											<td>${myStock.buyPrice}</td>
+											<td class="hidden-480">${myStock.volume}</td>
+											<td>${myStock.buyDate}</td>
 											<td>
 												<div class="hidden-sm hidden-xs action-buttons">
-													<a class="blue" href="#">
-														<i class="ace-icon fa fa-search-plus bigger-130"></i>
-													</a>
 	
 													<a class="green" href="#">
 														<i class="ace-icon fa fa-pencil bigger-130"></i>
@@ -139,13 +122,6 @@
 														</button>
 	
 														<ul class="dropdown-menu dropdown-only-icon dropdown-yellow dropdown-menu-right dropdown-caret dropdown-close">
-															<li>
-																<a href="#" class="tooltip-info" data-rel="tooltip" title="View">
-																	<span class="blue">
-																		<i class="ace-icon fa fa-search-plus bigger-120"></i>
-																	</span>
-																</a>
-															</li>
 	
 															<li>
 																<a href="#" class="tooltip-success" data-rel="tooltip" title="Edit">
@@ -167,11 +143,92 @@
 												</div>
 											</td>
 										</tr>
-	
+												</c:forEach>
+											</c:otherwise>
+										
+										</c:choose>
 									</tbody>
 								</table>
 							</div>
+							<h4 class="pink">
+									<i class="ace-icon fa fa-hand-o-right icon-animated-hand-pointer blue"></i>
+									<a href="#modal-table" role="button" class="green" data-toggle="modal"> 등록 </a>
+								</h4>
 						</div>
+						<div id="modal-table" class="modal fade" tabindex="-1">
+							<div class="modal-dialog">
+								<div class="modal-content">
+									<div class="modal-header no-padding">
+										<div class="table-header">
+											<button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+												<span class="white">&times;</span>
+											</button>
+											보유 주식 등록
+										</div>
+									</div>
+
+									<div class="modal-body no-padding">
+										<div class="row">
+											<div class="col-xs-12">
+												
+											</div>
+										</div>
+										<div class="space-4"></div>
+										<div class="row">
+											<div class="col-xs-12">
+												<!-- PAGE CONTENT BEGINS -->
+												<form id="frmStock" name="frmStock" class="form-horizontal" role="form" action="${context}/myPage/myStock.json" method="post" onSubmit="return checkEle()">
+													<input type="hidden" id="comName" name="comName" value=""/>
+													<div class="form-group">
+														<label class="col-sm-3 control-label no-padding-right" for="form-field-2"> 기업명 </label>
+														<div class="col-sm-9">
+															<input class="col-xs-10 col-sm-5 typeahead scrollable" type="text"	placeholder="기업검색" />
+														</div>
+													</div>
+													<div class="form-group">
+														<label class="col-sm-3 control-label no-padding-right" for="form-field-2"> 구매 가격 </label>
+							
+														<div class="col-sm-9">
+															<input type="text" id="buyPrice" name="buyPrice" class="col-xs-10 col-sm-5" />
+														</div>
+													</div>
+													
+													<div class="form-group">
+														<label class="col-sm-3 control-label no-padding-right" for="form-field-2"> 보유량 </label>
+							
+														<div class="col-sm-9">
+															<input type="text" id="volume" name="volume" class="col-xs-10 col-sm-5" />
+														</div>
+													</div>
+													
+													<div class="form-group">
+														<label class="col-sm-3 control-label no-padding-right" for="form-field-2"> 구매일 </label>
+							
+														<div class="col-sm-9">
+															<input type="date" id="buyDate" name="buyDate" class="col-xs-10 col-sm-5" />
+														</div>
+													</div>
+												</form>
+											</div><!-- /.row -->
+										</div><!-- /.row -->
+									</div>
+
+									<div class="modal-footer no-margin-top">
+										<button class="btn btn-sm btn-danger pull-right" data-dismiss="modal">
+											<i class="ace-icon fa fa-times"></i>
+											취소
+										</button>
+
+										<button class="btn btn-sm btn-primary pull-right" id="btnReg" data-dismiss="modal">
+											<i class="ace-icon fa fa-circle-o"></i>
+											등록
+										</button>
+
+									</div>
+								</div><!-- /.modal-content -->
+							</div><!-- /.modal-dialog -->
+						</div>
+						
 					</div>
 				</div>
 			</div>
@@ -189,7 +246,6 @@
 <script src="${context}/resources/assets/js/dataTables.buttons.min.js"></script>
 <script src="${context}/resources/assets/js/buttons.flash.min.js"></script>
 <script src="${context}/resources/assets/js/buttons.html5.min.js"></script>
-<script src="${context}/resources/assets/js/buttons.print.min.js"></script>
 <script src="${context}/resources/assets/js/buttons.colVis.min.js"></script>
 <script src="${context}/resources/assets/js/dataTables.select.min.js"></script>
 <script>
@@ -203,6 +259,13 @@
 		}
 	});
 	
+	$(document).ready(function(){
+		$('#btnReg').click(function(){
+			$('#frmStock').submit();
+		})
+		
+	});
+	
 	function change() {
 		var comName;
 		if ($('input.typeahead')[1].value != $('input.typeahead')[0].value
@@ -211,6 +274,8 @@
 		} else {
 			comName = $('input.typeahead')[1].value;
 		}
+		console.log(comName)
+		$('#comName').attr("value", comName);
 	}
 	
 	//검색 필터링
@@ -270,7 +335,7 @@
 			bAutoWidth: false,
 			"aoColumns": [
 			  { "bSortable": false },
-			  null, null,null, null, null,
+			  null, null,null, null,
 			  { "bSortable": false }
 			],
 			"aaSorting": [],
@@ -379,6 +444,19 @@
 	
 	});	
 	
+	function checkEle(){
+		var form = document.frmStock;
+		var comName = form.comName;
+		var buyPrice = form.buyPrice;
+		var volume = form.volume;
+		var buyDate = form.buyDate;
+		
+		if(comName.value == "" || buyPrice.value == "" || volume.value == "" || buyDate.value == ""){
+			alert("모든 항목을 입력하셔야 합니다.")
+			return false;
+		}
+		return true;
+	}
 </script>
 </body>
 </html>
