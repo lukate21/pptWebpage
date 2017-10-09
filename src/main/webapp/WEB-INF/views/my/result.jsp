@@ -6,77 +6,253 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-
 <title>PPT-제법 쓸만한 예측 툴</title>
 
 <!-- Main import -->
+<meta name="description" content="overview &amp; stats" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0" />
+<!-- bootstrap & fontawesome -->
+<link rel="stylesheet" href="${context}/resources/assets/css/bootstrap.min.css" />
+<link rel="stylesheet" href="${context}/resources/assets/font-awesome/4.5.0/css/font-awesome.min.css" />
 <!-- text fonts -->
-<link rel="stylesheet" href="${context}/assets/css/fonts.googleapis.com.css" />
+<link rel="stylesheet" href="${context}/resources/assets/css/fonts.googleapis.com.css" />
 <!-- ace styles -->
-<link rel="stylesheet" href="${context}/assets/css/ace.min.css" class="ace-main-stylesheet" id="main-ace-style" />
-<!-- Zerif -->
-<link rel="stylesheet" href="${pageContext.request.contextPath }/resources/zerif/css/bootstrap.min.css">
-<link rel="stylesheet" href="${pageContext.request.contextPath }/resources/zerif/css/owl.theme.css">
-<link rel="stylesheet" href="${pageContext.request.contextPath }/resources/zerif/css/owl.carousel.css">
-<link rel="stylesheet" href="${pageContext.request.contextPath }/resources/zerif/css/jquery.vegas.min.css">
-<link rel="stylesheet" href="${pageContext.request.contextPath }/resources/zerif/css/animate.min.css">
-<link href="${pageContext.request.contextPath }/resources/zerif/css/style.css" rel="stylesheet">
-<link href="${pageContext.request.contextPath }/resources/zerif/css/response.css" rel="stylesheet">
-<link href="${pageContext.request.contextPath }/resources/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
-<script src="${context}/assets/js/jquery-2.1.4.min.js"></script>
+<link rel="stylesheet" href="${context}/resources/assets/css/ace.min.css" class="ace-main-stylesheet" id="main-ace-style" />
+<link rel="stylesheet" href="${context}/resources/assets/css/ace-skins.min.css" />
+<link rel="stylesheet" href="${context}/resources/assets/css/ace-rtl.min.css" />
+<!-- ace settings handler -->
+<link rel="stylesheet" href="${context}/resources/assets/css/jquery-ui.min.css" />
 
-<!------------------------------------------------------------------------------------------------------------------------------------>
-
-<!-- page specific plugin styles -->
-<link rel="stylesheet" href="${context}/assets/css/bootstrap-duallistbox.min.css" />
-<link rel="stylesheet" href="${context}/assets/css/bootstrap-multiselect.min.css" />
-<link rel="stylesheet" href="${context}/assets/css/select2.min.css" />
-<link rel="stylesheet" href="${context}/assets/css/ace-skins.min.css" />
-<link rel="stylesheet" href="${context}/assets/css/ace-rtl.min.css" />
-<script src="${context}/assets/js/ace-extra.min.js"></script>
+<script src="${context}/resources/assets/js/ace-extra.min.js"></script>
+<script src="${context}/resources/assets/js/jquery-2.1.4.min.js"></script>
+<!------------------------------------------------------------------------------------------------------------------------->
+<script>
+	var myDic = JSON.parse('${myDic}');
+	console.log(myDic);
+	$(function(){
+		for(var i in myDic){
+			var anaCode = '';
+			var newsCode = '';
+			if(myDic[i].anaCode == 'opi1')
+				anaCode = '감정분석1';
+			else if(myDic[i].anaCode == 'opi2')
+				anaCode = '감정분석2';
+			else if(myDic[i].anaCode == 'pro1')
+				anaCode = '확률분석1';
+			else if(myDic[i].anaCode == 'pro2')
+				anaCode = '확률분석2';
+			else if(myDic[i].anaCode == 'fit1')
+				anaCode = '필터분석1';
+			else if(myDic[i].anaCode == 'fit2')
+				anaCode = '필터분석2';
+			else if(myDic[i].anaCode == 'meg1')
+				anaCode = '통합분석1';
+			else if(myDic[i].anaCode == 'meg2')
+				anaCode = '통합분석2';
+			if(myDic[i].newsCode == 'culture')
+				newsCode = '문화';
+			else if(myDic[i].newsCode == 'digital')
+				newsCode = 'IT';
+			else if(myDic[i].newsCode == 'economic')
+				newsCode = '경제';
+			else if(myDic[i].newsCode == 'entertain')
+				newsCode = '연예';
+			else if(myDic[i].newsCode == 'foreign')
+				newsCode = '국제';
+			else if(myDic[i].newsCode == 'politics')
+				newsCode = '정치';
+			else if(myDic[i].newsCode == 'society')
+				newsCode = '사회';
+			$('#simple-table tbody').append('<tr><td>'+myDic[i].dicName+'</td><td>'+myDic[i].comName+'</td><td>'+anaCode
+											+'</td><td>'+newsCode+'</td><td>'+myDic[i].reliability+'%</td><td>'+myDic[i].dictionary.length
+											+'</td><td class="center"><div class="action-buttons"><a href="#" class="green bigger-140 show-details-btn" title="Show Details">'
+											+'<i class="ace-icon fa fa-angle-double-down"></i><span class="sr-only">Details</span></a></div></td>'
+											+'<td class="center"><div class="hidden-sm hidden-xs btn-group center"><button class="btn btn-xs btn-danger"><i class="ace-icon fa fa-trash-o bigger-120"></i></button></div></td></tr>');
+			var detail = '';
+			var dictionary = myDic[i].dictionary;
+			for(var i in dictionary){
+				detail += '<span class="label label-lg label-yellow arrowed-in arrowed-in-right">'
+				detail += dictionary[i].term;
+				detail += '</span>';
+			}
+			
+			$('#simple-table tbody').append('<tr class="detail-row"><td colspan="8"><div class="table-detail">'+detail+'</div></td></tr>');
+		}
+	});
+</script>
 </head>
-<body>
-	<div class="row projects">
-		<div id="loader">
-			<div class="loader-icon"></div>
-		</div>
-		<div class="col-md-12" id="portfolio-list">
-			<!-- PORTFOLIO ITEMS-->
-			<ul class="cbp-rfgrid">
+<body class="no-skin">
+	<jsp:include page="../include/top-menu.jsp"></jsp:include>
+	<jsp:include page="../include/side-menu.jsp"></jsp:include>
+	<div class="main-content">
+		<div class="main-content-inner">
+			<div class="breadcrumbs ace-save-state breadcrumbs-fixed" id="breadcrumbs">
+				<ul class="breadcrumb">
+					<li><i class="ace-icon fa fa-home home-icon"></i> <a href="${context }">Home</a></li>
+					<li><a href="#">Other Pages</a></li>
+					<li class="active">Error 404</li>
+				</ul>
+				<!-- /.breadcrumb -->
+			</div>
 
-				<!-- PROJECT -->
-				<li class="wow fadeInLeft animated animated" data-wow-offset="30"
-					data-wow-duration="1.5s" data-wow-delay="0.15s"
-					style="visibility: visible; -webkit-animation-duration: 1.5s; -moz-animation-duration: 1.5s; animation-duration: 1.5s; -webkit-animation-delay: 0.15s; -moz-animation-delay: 0.15s; animation-delay: 0.15s;">
-					<a href="${context }/my/analysis/result.do" class="more">
-						<img src="${context }/resources/blur-1853262_1280.jpg" alt="project">
-						<div class="project-info">
-							<div class="project-details">
-								<h5 class="white-text red-border-bottom">나만의 분석 만들기 끝</h5>
-								<div class="details white-text">Create custom analysis</div>
+			<div class="page-content">
+				<div class="row">
+					<div class="col-xs-12">
+						<!-- PAGE CONTENT BEGINS -->
+						<div class="row">
+							<div class="col-xs-10 col-xs-offset-1">
+								<table id="simple-table"
+									class="table  table-bordered table-hover">
+									<thead>
+										<tr>
+											<th class="center">나만의 분석명</th>
+											<th class="center">기업명</th>
+											<th class="center">분석방법</th>
+											<th class="center">뉴스</th>
+											<th class="center">신뢰도</th>
+											<th class="center">단어 개수</th>
+											<th class="center">자세히</th>
+											<th></th>
+										</tr>
+									</thead>
+									<tbody>
+										<tr class="detail-row">
+											<td colspan="8">
+												<div class="table-detail">
+													<div class="row">
+														<div class="col-xs-12 col-sm-2">
+															<div class="text-center">
+																<img height="150"
+																	class="thumbnail inline no-margin-bottom"
+																	alt="Domain Owner's Avatar"
+																	src="assets/images/avatars/profile-pic.jpg" /> <br />
+																<div
+																	class="width-80 label label-info label-xlg arrowed-in arrowed-in-right">
+																	<div class="inline position-relative">
+																		<a class="user-title-label" href="#"> <i
+																			class="ace-icon fa fa-circle light-green"></i> &nbsp;
+																			<span class="white">Alex M. Doe</span>
+																		</a>
+																	</div>
+																</div>
+															</div>
+														</div>
+
+														<div class="col-xs-12 col-sm-7">
+															<div class="space visible-xs"></div>
+
+															<div class="profile-user-info profile-user-info-striped">
+																<div class="profile-info-row">
+																	<div class="profile-info-name">Username</div>
+
+																	<div class="profile-info-value">
+																		<span>alexdoe</span>
+																	</div>
+																</div>
+
+																<div class="profile-info-row">
+																	<div class="profile-info-name">Location</div>
+
+																	<div class="profile-info-value">
+																		<i class="fa fa-map-marker light-orange bigger-110"></i>
+																		<span>Netherlands, Amsterdam</span>
+																	</div>
+																</div>
+
+																<div class="profile-info-row">
+																	<div class="profile-info-name">Age</div>
+
+																	<div class="profile-info-value">
+																		<span>38</span>
+																	</div>
+																</div>
+
+																<div class="profile-info-row">
+																	<div class="profile-info-name">Joined</div>
+
+																	<div class="profile-info-value">
+																		<span>2010/06/20</span>
+																	</div>
+																</div>
+
+																<div class="profile-info-row">
+																	<div class="profile-info-name">Last Online</div>
+
+																	<div class="profile-info-value">
+																		<span>3 hours ago</span>
+																	</div>
+																</div>
+
+																<div class="profile-info-row">
+																	<div class="profile-info-name">About Me</div>
+
+																	<div class="profile-info-value">
+																		<span>Bio</span>
+																	</div>
+																</div>
+															</div>
+														</div>
+
+														<div class="col-xs-12 col-sm-3">
+															<div class="space visible-xs"></div>
+															<h4 class="header blue lighter less-margin">Send a
+																message to Alex</h4>
+
+															<div class="space-6"></div>
+
+															<form>
+																<fieldset>
+																	<textarea class="width-100" resize="none"
+																		placeholder="Type something…"></textarea>
+																</fieldset>
+
+																<div class="hr hr-dotted"></div>
+
+																<div class="clearfix">
+																	<label class="pull-left"> <input
+																		type="checkbox" class="ace" /> <span class="lbl">
+																			Email me a copy</span>
+																	</label>
+
+																	<button
+																		class="pull-right btn btn-sm btn-primary btn-white btn-round"
+																		type="button">
+																		Submit <i
+																			class="ace-icon fa fa-arrow-right icon-on-right bigger-110"></i>
+																	</button>
+																</div>
+															</form>
+														</div>
+													</div>
+												</div>
+											</td>
+										</tr>
+									</tbody>
+								</table>
 							</div>
+							<!-- /.span -->
 						</div>
-					</a>
-				</li>
-				<!-- / PROJECT -->
-			</ul>
+						<!-- /.row -->
+
+					</div>
+					<!-- /.page-content -->
+				</div>
+			</div>
 		</div>
-		<!-- END OF PORTFOLIO ITEMS-->
 	</div>
+</div>
+	<footer>
+		<jsp:include page="../include/bottom.jsp"></jsp:include>
+	</footer>
+		<script type="text/javascript">
+			jQuery(function($) {
+				$('.show-details-btn').on('click', function(e) {
+					e.preventDefault();
+					$(this).closest('tr').next().toggleClass('open');
+					$(this).find(ace.vars['.icon']).toggleClass('fa-angle-double-down').toggleClass('fa-angle-double-up');
+				});
 
-	<!-- PROJECT DETAILS WILL BE LOADED HERE -->
-	<div id="loaded-content"></div>
-
-	<a id="back-button" class="red-btn" href="#"><i
-		class="icon-fontawesome-webfont-27"></i> Go Back</a>
-
-	<script src="${pageContext.request.contextPath }/resources/zerif/js/bootstrap.min.js"></script>
-<script src="${pageContext.request.contextPath }/resources/zerif/js/wow.min.js"></script>
-<script src="${pageContext.request.contextPath }/resources/zerif/js/jquery.nav.js"></script>
-<script src="${pageContext.request.contextPath }/resources/zerif/js/jquery.knob.js"></script>
-<script src="${pageContext.request.contextPath }/resources/zerif/js/owl.carousel.min.js"></script>
-<%-- <script src="${pageContext.request.contextPath }/resources/js/menu/smoothscroll.js"></script> --%>
-<script src="${pageContext.request.contextPath }/resources/zerif/js/jquery.vegas.min.js"></script>
-<script src="${pageContext.request.contextPath }/resources/zerif/js/zerif.js"></script>
+			})
+		</script>
 </body>
 </html>

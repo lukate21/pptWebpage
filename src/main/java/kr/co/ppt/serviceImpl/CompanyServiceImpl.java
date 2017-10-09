@@ -24,6 +24,7 @@ import com.mongodb.client.model.Filters;
 import kr.co.ppt.daoImpl.CompanyDAOImpl;
 import kr.co.ppt.vo.CompanyVO;
 import kr.co.ppt.vo.MyFavoriteVO;
+import kr.co.ppt.vo.NewsCountVO;
 import kr.co.ppt.vo.RTAVO;
 import kr.co.ppt.vo.ReliabilityVO;
 import yahoofinance.Stock;
@@ -105,8 +106,15 @@ public class CompanyServiceImpl {
 				map.put("comName", rta.getComName());
 				map.put("anaCode", rta.getAnaCode());
 				map.put("newsCode", rta.getNewsCode());
+				map.put("yesterdayFluc", rta.getYseterdayFluc());
 				map.put("todayFluc", rta.getTodayFluc());
+				map.put("todayInc", rta.getTodayInc());
+				map.put("todayDec", rta.getTodayDec());
+				map.put("todayEqu", rta.getTodayEqu());
 				map.put("tomorrowFluc", rta.getTomorrowFluc());
+				map.put("tomorrowInc", rta.getTomorrowInc());
+				map.put("tomorrowDec", rta.getTomorrowDec());
+				map.put("tomorrowEqu", rta.getTomorrowEqu());
 				map.put("regDate", rta.getRegDate().toString());
 			}
 			JSONObject obj = new JSONObject(map);
@@ -121,5 +129,9 @@ public class CompanyServiceImpl {
 	
 	public List<ReliabilityVO> selectReliability(String comName){
 		return cDAO.selectReliability(comName);
+	}
+	
+	public List<NewsCountVO> selectNewsCount(){
+		return cDAO.selectNewsCount();
 	}
 }

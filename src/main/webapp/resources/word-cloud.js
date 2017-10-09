@@ -62,8 +62,6 @@ function draw(data, bounds) {
 			return  "rgb(0, 0, 255)";
 		else if(d.opinion == "equ")
 			return "rgb(0, 255, 0)";
-		else if(d.opinion == "neu")
-			return "rgb(255, 165, 0)";
 		else
 			return "rgb(128, 128, 128)";
 	}).text(function(d) {

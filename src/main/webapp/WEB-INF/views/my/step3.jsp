@@ -8,7 +8,7 @@
 			<div class="col-xs-6 center">
 				<h4 class="green">유효한 단어</h4>
 				<div class="row">
-					<div class="col-xs-3 ">
+					<div class="col-xs-3 col-xs-offset-2">
 						<svg id="fillgaugeInc" width="100%" height="100"></svg>
 					</div>
 					<div class="col-xs-3">
@@ -16,9 +16,6 @@
 					</div>
 					<div class="col-xs-3">
 						<svg id="fillgaugeEqu" width="100%" height="100"></svg>
-					</div>
-					<div class="col-xs-3">
-						<svg id="fillgaugeNeu" width="100%" height="100"></svg>
 					</div>
 				</div>
 				<div class="space-2"></div>
@@ -32,8 +29,6 @@
 					<span class="blue"><strong>하락</strong>관여 단어</span>&nbsp;&nbsp;&nbsp;&nbsp;
 					<i class="fa fa-flag green bigger-130"></i> 
 					<span class="green"><strong>동결</strong>관여 단어</span>
-					<i class="fa fa-flag orange bigger-130"></i> 
-					<span class="orange"><strong>중립</strong>관여 단어</span>
 				</div>
 			</div>
 			<div class="col-xs-6 center">
@@ -73,8 +68,8 @@
 						</h5>
 					</div>
 					<div class="col-xs-3">
-						<h5>신뢰도??
-							<small id="anonymus">80%</small>
+						<h5>예측신뢰도
+							<small id="reliabilityDiv"><div id="reliabilitySpinner"></div></small>
 						</h5>
 					</div>
 				</div>
@@ -121,12 +116,6 @@
 	fillgaugeEquConfig.textColor = "#0E5144";
 	fillgaugeEquConfig.waveTextColor = "#6DA398";
 	fillgaugeEquConfig.waveColor = "#246D5F";
-	//중립
-	var fillgaugeNeuConfig = liquidFillGaugeDefaultSettings();
-	fillgaugeNeuConfig.circleColor = "#FFA500";
-	fillgaugeNeuConfig.textColor = "#FFA500";
-	fillgaugeNeuConfig.waveTextColor = "#FFA500";
-	fillgaugeNeuConfig.waveColor = "#FFCC00";
 	//무의미
 	var fillgaugeNoneConfig = liquidFillGaugeDefaultSettings();
 	fillgaugeNoneConfig.circleColor = "#808015";
@@ -143,7 +132,6 @@
 		var incValue = 0;
 		var decValue = 0;
 		var equValue = 0;
-		var neuValue = 0;
 		for (i in usefulTerms) {
 			if (usefulTerms[i].opinion == "inc")
 				incValue++;
@@ -151,13 +139,10 @@
 				decValue++;
 			else if (usefulTerms[i].opinion == "equ")
 				equValue++;
-			else if (usefulTerms[i].opinion == "neu")
-				neuValue++;
 		}
 		$('#fillgaugeInc').empty();
 		$('#fillgaugeDec').empty();
 		$('#fillgaugeEqu').empty();
-		$('#fillgaugeNeu').empty();
 		$('#fillgaugeNone').empty();
 		gaugeConfig(fillgaugeIncConfig, 0, totalTermSize);
 		var gaugeInc = loadLiquidFillGauge("fillgaugeInc", incValue, fillgaugeIncConfig);
@@ -165,8 +150,6 @@
 		var gaugeDec = loadLiquidFillGauge("fillgaugeDec", decValue, fillgaugeDecConfig);
 		gaugeConfig(fillgaugeEquConfig, 0, totalTermSize);
 		var gaugeEqu = loadLiquidFillGauge("fillgaugeEqu", equValue, fillgaugeEquConfig);
-		gaugeConfig(fillgaugeNeuConfig, 0, totalTermSize);
-		var gaugeNeu = loadLiquidFillGauge("fillgaugeNeu", neuValue, fillgaugeNeuConfig);
 		gaugeConfig(fillgaugeNoneConfig, 0, totalTermSize);
 		var gaugeNone = loadLiquidFillGauge("fillgaugeNone",
 				uselessTerms.length, fillgaugeNoneConfig);
@@ -224,8 +207,6 @@
 						opinion = '하락';
 					else if(opinion == 'equ')
 						opinion = '동결';
-					else if(opinion == 'neu')
-						opinion = '중립';
 					$('#userDicTable tbody').append('<tr><td>'+term+'</td><td>'+value+'</td><td>'+opinion+'</td></tr>');
 				}
 			}

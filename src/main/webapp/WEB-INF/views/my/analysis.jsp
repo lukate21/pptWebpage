@@ -78,11 +78,11 @@ function getDictionary(){
 		},
 		success : function(data){
 			var obj = JSON.parse(data);
-			console.log(obj);
+			//console.log(obj);
 			dicValidationKey = obj.id;
 			prevDic = obj.prevDic;
 			prevDicSize = obj.size;
-			console.log(dicValidationKey);
+			//console.log(dicValidationKey);
 			$('#textTab').attr('onclick','drawPrevDic(1)');
 			$('#spinner').empty();
 		},
@@ -91,6 +91,61 @@ function getDictionary(){
 		}
 	});
 	$('#inputDic').empty();
+}
+var myDic = [];
+function selectUserDic(){
+	$.ajax({
+		url : "${context}/dictionary/mongo/selectUserDic.json",
+		type: 'get',
+		data : {
+			'userNo' : '${loginUser.no}'
+		},
+		async : false,
+		success : function(data){
+			myDic = JSON.parse(data);
+			console.log(myDic);
+			$('#mydicTab tbody').empty();
+			for(var i in myDic){
+				var anaCode = '';
+				var newsCode = '';
+				if(myDic[i].anaCode == 'opi1')
+					anaCode = '감정분석1';
+				else if(myDic[i].anaCode == 'opi2')
+					anaCode = '감정분석2';
+				else if(myDic[i].anaCode == 'pro1')
+					anaCode = '확률분석1';
+				else if(myDic[i].anaCode == 'pro2')
+					anaCode = '확률분석2';
+				else if(myDic[i].anaCode == 'fit1')
+					anaCode = '필터분석1';
+				else if(myDic[i].anaCode == 'fit2')
+					anaCode = '필터분석2';
+				else if(myDic[i].anaCode == 'meg1')
+					anaCode = '통합분석1';
+				else if(myDic[i].anaCode == 'meg2')
+					anaCode = '통합분석2';
+				if(myDic[i].newsCode == 'culture')
+					newsCode = '문화';
+				else if(myDic[i].newsCode == 'digital')
+					newsCode = 'IT';
+				else if(myDic[i].newsCode == 'economic')
+					newsCode = '경제';
+				else if(myDic[i].newsCode == 'entertain')
+					newsCode = '연예';
+				else if(myDic[i].newsCode == 'foreign')
+					newsCode = '국제';
+				else if(myDic[i].newsCode == 'politics')
+					newsCode = '정치';
+				else if(myDic[i].newsCode == 'society')
+					newsCode = '사회';
+				$('#mydicTab tbody').append('<tr style="cursor:pointer;" onclick="drawMyDic('+i+')"><td>'+myDic[i].dicName+'</td><td>'+myDic[i].comName+'</td><td>'+anaCode
+												+'</td><td>'+newsCode+'</td><td>'+myDic[i].reliability+'%</td><td>'+myDic[i].dictionary.length+'</td></tr>');
+			}
+		},
+		error : function(error){
+			console.log("error : "+ error);
+		}
+	});
 }
 
 //step2 to 3
@@ -138,37 +193,54 @@ function checkValidation(e){
 		});
 	}
 }
-var dicName = '';
-var userDic = [];
-var successful = false;
-//step3 to 4
-//step3 member variable
-function selectUserDic(){
-	var nonexistent = false;
+var reliability ='';
+function getReliability(){
+	var target = document.getElementById('reliabilitySpinner');
+	var spinner = new Spinner(opts).spin(target);
 	$.ajax({
-		url : "${context}/dictionary/mongo/selectUserDic.json",
-		type: 'get',
+		url : "${context}/my/analysis/getReliability.json",
+		type: 'post',
 		data : {
-			'userNo' : '${loginUser.no}',
-			'dicName' : dicName
+			'comName' : comName,
+			'newsCode' : newsCode,
+			'anaCode' : anaCode,
+			'userDic' : JSON.stringify(userDic)
 		},
-		async : false,
+		contentType : 'application/x-www-form-urlencoded; charset=utf-8',
 		success : function(data){
-			var obj = JSON.parse(data);
-			if(obj.length == 0)
-				nonexistent = true;
-			else{
-				alert('중복된 이름입니다.');
-				nonexistent = false;
-			}
+			reliability = data;
+			$('#reliabilityDiv').empty();
+			$('#reliabilityDiv').html('<i class="ace-icon fa fa-angle-double-right"></i>'+reliability+'%');
 		},
 		error : function(error){
 			console.log("error : "+ error);
 		}
 	});
-	return nonexistent;
 }
 
+//step3 to 4
+//step3 member variable
+var dicName = '';
+var userDic = [];
+var successful = false;
+function checkDicName(dicName){
+	var able = true;
+	for(var i in myDic){
+		if(myDic[i].dicName == dicName){
+			able = false;
+			alert('동일한 이름이 존재합니다.')
+			break;			
+		}
+	}
+	if(reliability == ''){
+		able = false;
+		alert('예측 신뢰도를 측정 중입니다.\n잠시만 기다려주세요.');
+	}
+	return able;
+}
+
+
+//last
 function insertUserDic(){
 	$.ajax({
 		url : "${context}/dictionary/mongo/insertUserDic.json",
@@ -179,18 +251,13 @@ function insertUserDic(){
 			'newsCode' : newsCode,
 			'anaCode' : anaCode,
 			'dicName' : dicName,
+			'reliability' : reliability,
 			'userDic' : JSON.stringify(userDic)
 		},
 		contentType : 'application/x-www-form-urlencoded; charset=utf-8',
 		async : false,
 		success : function(data){
-			var obj = JSON.parse(data);
-			console.log(obj);
-			$('#dicNameP').text(obj.dicName);
-			$('#comNameP').text(obj.comName);
-			$('#anaCodeP').text(obj.anaCode);
-			$('#newsCodeP').text(obj.newsCode);
-			$('#dictionaryP').text(obj.dictionary.length+'개');
+			location.href="${context}/my/result.do";
 		},
 		error : function(error){
 			console.log("error : "+ error);
@@ -349,20 +416,22 @@ function insertUserDic(){
 						e.preventDefault();
 					}else{
 						getDictionary();
+						selectUserDic();
 					}
 				}else if(info.step == 2 && info.direction == "next"){
 					userDic=[];
+					successful=false;
 					checkValidation(e);
+					for(var i in usefulTerms){
+						var term = usefulTerms[i].key;
+						userDic.push(term);
+					}
+					getReliability();
 				}else if(info.step == 3 && info.direction == "next" && usefulTerms.length==0){
 					alert('유효한 단어가 존재하지 않아 사전을 만들 수 없습니다.');
 					e.preventDefault();
 				}else if(info.step == 3 && info.direction == "next" && !successful){
 					e.preventDefault();
-					userDic=[];
-					for(var i in usefulTerms){
-						var term = usefulTerms[i].key;
-						userDic.push(term);
-					}
 					userDicTable(1);
 					$( "#dialog-confirm" ).removeClass('hide').dialog({
 						resizable: false,
@@ -386,20 +455,23 @@ function insertUserDic(){
 									dicName = $('#dicNameInput').val();
 									if(dicName == ''){
 										alert('나만의 분석 이름을 등록해주세요.');
-									}else if(selectUserDic()){
-										insertUserDic();
+									}else if(checkDicName(dicName)){
+										$('#dicNameP').text(dicName);
+										$('#comNameP').text($('#comNameSpan').text());
+										$('#anaCodeP').text($('#anaCodeSpan').text());
+										$('#newsCodeP').text($('#newsCodeSpan').text());
+										$('#reliabilityP').text(reliability+'%');
+										$('#dictionaryP').text(userDic.length+'개');
 										successful=true;
 										$( this ).dialog( "close" );
 										$('.btn-next').trigger('click');
-										$('.btn-prev').attr({
-											'disabled' : 'disabled',
-											'data-last' : 'Finish'
-										});
 									}
 								} 
 							}
 						]
 					});
+				}else if(info.step == 4 && info.direction == "next"){
+					insertUserDic();
 				}
 			}).on('changed.fu.wizard', function(info) {
 				

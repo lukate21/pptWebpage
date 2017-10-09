@@ -62,12 +62,12 @@
 						</div>
 					</div>
 				<div class="row">
-					<div class="col-sm-5" id="stockChart">
+					<div class="col-sm-6" id="stockChart">
 						<iframe src="${context}/company/chart/stock.do?name=${name}"
 							width="100%" height="400px" frameBorder="0"> </iframe>
 					</div>
-					<div class="col-sm-5" id="RTAChartPie">
-						<iframe src="${context}/company/chart/RTA.do?name=${name}&option=pie"
+					<div class="col-sm-4" id="newsChart">
+						<iframe src="${context}/company/chart/newsCount.do"
 							width="100%" height="400px" frameBorder="0"> </iframe>
 					</div>
 					<div class="col-sm-2">
@@ -76,9 +76,8 @@
 					
 				</div>
 				<div class="row">
-					<div class="col-sm-6" id="relNewsChart">
-						<iframe
-							src="${context}/company/chart/reliability.do?name=${name}&option=newsCode"
+					<div class="col-sm-6" id="RTAChartPie">
+						<iframe src="${context}/company/chart/RTA.do?name=${name}&option=pie"
 							width="100%" height="500px" frameBorder="0"> </iframe>
 					</div>
 					<div class="col-sm-6" id="RTAChartTable">
@@ -87,11 +86,15 @@
 					</div>
 				</div>
 				<div class="row">
-<%-- 					<div class="col-sm-6" id="relAnaChart">
+					<div class="col-sm-6" id="relNewsChart">
 						<iframe
-							src="${context}/company/chart/reliability.do?name=${name}&option=anaCode"
+							src="${context}/company/chart/reliability.do?name=${name}&option=newsCode"
 							width="100%" height="500px" frameBorder="0"> </iframe>
-					</div> --%>
+					</div>
+					<div class="col-sm-6" id="dTreeChart">
+						<iframe src="${context}/company/chart/dTree.do?name=${name}"
+							width="100%" height="500px" frameBorder="0"> </iframe>
+					</div>
 				</div>
 			</div>
 			<div class="row">
@@ -168,20 +171,26 @@
 		var tag1 = '<iframe src="${context}/company/chart/stock.do?name='
 				+ comName
 				+ '" width="100%" height="400px" frameBorder="0"></iframe>'
-		var tag2 = '<iframe src="${context}/company/chart/RTA.do?name='
+		var tag2 = '<iframe src="${context}/company/chart/newsCount.do" width="100%" height="400px" frameBorder="0"> </iframe>'
+		var tag3 = '<iframe src="${context}/company/chart/RTA.do?name='
 				+ comName
-				+ '&option=pie" width="100%" height="400px" frameBorder="0"></iframe>'
-		var tag3 = '<iframe src="${context}/company/chart/reliability.do?name='
+				+ '&option=pie" width="100%" height="500px" frameBorder="0"></iframe>'
+		var tag4 = '<iframe src="${context}/company/chart/reliability.do?name='
 				+ comName
 				+ '&option=newsCode" width="100%" height="500px" frameBorder="0"></iframe>'
-		var tag4  = '<iframe src="${context}/company/chart/RTA.do?name='
+		var tag5  = '<iframe src="${context}/company/chart/RTA.do?name='
 			+ comName
 			+ '&option=table" width="100%" height="500px" frameBorder="0"></iframe>'
+		var tag6  = '<iframe src="${context}/company/chart/dTree.do?name='
+			+ comName
+			+ '" width="100%" height="500px" frameBorder="0"></iframe>'
 			
 		$('#stockChart').html(tag1);
-		$('#RTAChartPie').html(tag2);
-		$('#relNewsChart').html(tag3);
-		$('#RTAChartTable').html(tag4);
+		$('#newsChart').html(tag2);
+		$('#RTAChartPie').html(tag3);
+		$('#relNewsChart').html(tag4);
+		$('#RTAChartTable').html(tag5);
+		$('#dTreeChart').html(tag6);
 		$('#favorite').attr('onclick','addFavorite("'+comName+'")');
 		getNews(comName);
 		checkFavorite(comName);
