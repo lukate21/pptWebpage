@@ -145,9 +145,10 @@
 					}
 				});
 				chartData.unshift({
-					dateTime : yesterdayEnd.date+'T23:55:00Z',
+					dateTime : chartData[0].dateTime.split('T')[0]+'T00:00:00Z',
 					value : yesterdayEnd.value
 				});
+				chartData[1].dateTime=chartData[1].dateTime.split('T')[0]+'T00:01:00Z'
 				var start = chartData[0].value;
 				var now = chartData[chartData.length-1].value;
 				if(start<now){

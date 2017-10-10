@@ -444,7 +444,6 @@ function insertUserDic(){
 								html: "<i class='ace-icon fa fa-times bigger-110'></i>&nbsp; Cancel",
 								"class" : "btn btn-minier",
 								click: function() {
-									userDic=[];
 									$( this ).dialog( "close" );
 								}
 							},
