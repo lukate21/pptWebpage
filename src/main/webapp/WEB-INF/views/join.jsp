@@ -61,27 +61,20 @@
 						<!-- PAGE CONTENT BEGINS -->
 						<div class="widget-box">
 							<div class="widget-header widget-header-blue widget-header-flat">
-								<h4 class="widget-title lighter">New Item Wizard</h4>
+								<h4 class="widget-title lighter">회원가입 페이지입니다</h4>
 							</div>
-	
 							<div class="widget-body">
 								<div class="widget-main">
 									<div id="fuelux-wizard-container">
 										<div>
 											<ul class="steps">
 												<li data-step="1" class="active">
-													<span class="step">1</span>
-													<span class="title">정보입력</span>
 												</li>
 	
 												<li data-step="2">
-													<span class="step">2</span>
-													<span class="title">정보확인</span>
 												</li>
 	
 												<li data-step="3">
-													<span class="step">3</span>
-													<span class="title">가입완료</span>
 												</li>
 											</ul>
 										</div>
@@ -90,7 +83,7 @@
 	
 										<div class="step-content pos-rel">
 											<div class="step-pane active" data-step="1">
-												<h3 class="lighter block green">Enter the following information</h3>
+												<h3 class="lighter block green">정보를 입력해주세요</h3>
 	
 												<form class="form-horizontal" id="validation-form" method="get" action="${context}/hello.do">
 													<div class="form-group">
@@ -99,6 +92,7 @@
 														<div class="col-xs-12 col-sm-9">
 															<div class="clearfix">
 																<input type="email" name="email" id="email" class="col-xs-12 col-sm-6" />
+																&nbsp;&nbsp;<span><button class="btn btn-sm btn-warning">중복확인</button></span>
 															</div>
 														</div>
 													</div>
@@ -179,8 +173,8 @@
 	
 											<div class="step-pane" data-step="3">
 												<div class="center">
-													<h3 class="green">Congrats!</h3>
-													"PPT-제법 쓸만한 예측 툴"에 가입하신것을 축하합니다!
+													<h3 class="green">축하합니다!</h3>
+													"PPT-제법 쓸만한 예측 툴"에 가입하신것을 환영합니다!
 												</div>
 											</div>
 	
