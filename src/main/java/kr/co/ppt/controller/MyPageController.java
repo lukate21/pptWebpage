@@ -1,22 +1,33 @@
 package kr.co.ppt.controller;
 
+
+import java.io.BufferedReader;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.net.URL;
+import java.net.URLConnection;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
+import org.json.simple.parser.JSONParser;
+import org.json.simple.parser.ParseException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.converter.json.GsonBuilderUtils;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
 
 import kr.co.ppt.service.MemberService;
 import kr.co.ppt.serviceImpl.CompanyServiceImpl;
 import kr.co.ppt.serviceImpl.MyStockServiceImpl;
 import kr.co.ppt.util.SHA_ENC;
 import kr.co.ppt.util.UserUtil;
+import kr.co.ppt.vo.CompanyVO;
 import kr.co.ppt.vo.MemberVO;
 import kr.co.ppt.vo.MyStockVO;
 
@@ -90,19 +101,92 @@ public class MyPageController {
 		System.out.println("myStock id : "+id);
 		
 		List<MyStockVO> myStockList = myStockService.getStockInfo(id);
-
-		request.setAttribute("myStockList", myStockList);
+		List<MyStockVO> newStockList = new ArrayList<>();
+		
+		for(MyStockVO myStock : myStockList){
+			CompanyVO company = new CompanyVO();
+			company.setName(myStock.getComName());
+			String data = getComStock(company,"1_DAY");
+			JSONParser parser = new JSONParser();
+			JSONObject obj = null;
+			JSONArray arr = null;
+			try {
+				obj = (JSONObject)((JSONArray)parser.parse(data)).get(0);
+				arr = (JSONArray)obj.get("price");
+				int nowPrice = Integer.parseInt(((JSONObject)arr.get(arr.size()-1)).get("value").toString());
+				myStock.setNowPrice(nowPrice);
+				newStockList.add(myStock);
+			} catch (ParseException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		
+		request.setAttribute("myStockList", newStockList);
 		request.setAttribute("comList", cService.selectComList());
+		
 		return "myPage/myStock";
 	}
 	
-	@RequestMapping(value="myStock.json", method=RequestMethod.POST)
-	@ResponseBody
+	private String getComStock(CompanyVO companyVO,String timeFrame){
+		String comCode = "";
+		if(timeFrame == null){
+			timeFrame = "1_DAY";//디폴트 하루
+		}
+		if(companyVO.getCode() != null){
+			comCode = companyVO.getCode().split("\\.")[0] + ":ks";
+		}else if(companyVO.getName() != null && companyVO.getCode() == null){
+			if(companyVO.getName().toUpperCase().equals("KOSPI"))
+				comCode = "KOSPI:IND";  
+			else if(companyVO.getName().toUpperCase().equals("KOSPI2"))
+				comCode = "KOSPI2:IND";
+			else if(companyVO.getName().toUpperCase().equals("KOSDAQ"))
+				comCode = "KOSDAQ:IND";
+			else
+				comCode = cService.selectCom(companyVO).getCode().split("\\.")[0] + ":ks";
+		}
+		try {
+			URL url = new URL("https://www.bloomberg.com/markets/api/bulk-time-series/price/"+comCode+"?timeFrame="+timeFrame);
+			URLConnection bloomberg = url.openConnection();
+			bloomberg.connect();
+			InputStream is = bloomberg.getInputStream();
+			InputStreamReader isr = new InputStreamReader(is,"utf-8");
+			BufferedReader br = new BufferedReader(isr);
+			String text = "";
+			String data = "";
+			while((text = br.readLine()) != null){
+				data += text;
+			}
+			return data;
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		return "기업이름 또는 코드를 입력해주세요.";
+	}
+	
+	@RequestMapping(value="myStock.do", method=RequestMethod.POST)
 	public String addMyStock(String comName, String buyPrice, String volume, String buyDate, HttpSession session ){
-		MemberVO member = (MemberVO)session.getAttribute("loginUser");
 		System.out.println("comName : "+comName+", buyPrice :"+buyPrice+", volume :"+volume+", buyDate :"+buyDate);
 		
-		return "myPage/myStock";
+		MemberVO member = (MemberVO)session.getAttribute("loginUser");
+		String id = member.getId();
+		int userNo = myStockService.getUserNo(id);
+		int comNo = myStockService.getComNo(comName);
+		
+		MyStockVO myStock = new MyStockVO();
+		myStock.setUserNo(userNo);
+		myStock.setComNo(comNo);
+		myStock.setBuyPrice(Integer.parseInt(buyPrice));
+		myStock.setVolume(Integer.parseInt(volume));
+		myStock.setBuyDate(buyDate);
+		
+		String msg = myStockService.insertMyStock(myStock);
+		System.out.println("추가 결과 : "+msg);
+		
+		
+		return "redirect:myStock.do";
 	}
 	
 	

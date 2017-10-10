@@ -58,146 +58,86 @@
 	
 				<div class="row">
 					<div class="col-xs-12">
-						<!-- PAGE CONTENT BEGINS -->
-						<div class="widget-box">
-							<div class="widget-header widget-header-blue widget-header-flat">
-								<h4 class="widget-title lighter">회원가입 페이지입니다</h4>
+						<form class="form-horizontal" name="joinForm" role="form" action="${context}/login.do" onsubmit="return checkEle()" method="get">
+							<div class="form-group">
+								<label class="col-sm-3 control-label no-padding-right" for="form-field-1"> 이메일 </label>
+	
+								<div class="col-sm-9">
+									<input data-rel="tooltip" type="text" name="email" id="form-field-1" placeholder="e-mail" class="col-xs-10 col-sm-5"  title="이메일을 입력해 주세요" data-placement="top"/>
+									<span class="help-inline col-xs-12 col-sm-7">
+										<span class="btn btn-xs btn-warning" id="btnDup">중복확인</span>
+									</span>
+								</div>
 							</div>
-							<div class="widget-body">
-								<div class="widget-main">
-									<div id="fuelux-wizard-container">
-										<div>
-											<ul class="steps">
-												<li data-step="1" class="active">
-												</li>
 	
-												<li data-step="2">
-												</li>
+							<div class="space-4"></div>
 	
-												<li data-step="3">
-												</li>
-											</ul>
-										</div>
+							<div class="form-group">
+								<label class="col-sm-3 control-label no-padding-right" for="form-field-2"> 
+									비밀번호 <span class="help-button" data-rel="popover" data-trigger="hover" data-placement="top" data-content="대소문자와 숫자조합으로 5글자이상" title="비밀번호 작성시">?</span>
+								</label>
+								
+								<div class="col-sm-9">
+									<input type="password" name="password" id="form-field-2" placeholder="Password" class="col-xs-10 col-sm-5" />
+									<span class="help-inline col-xs-12 col-sm-7">
+										<span class="middle" id="password">Inline help text</span>
+									</span>
+								</div>
+							</div>
+							
+							<div class="form-group">
+								<label class="col-sm-3 control-label no-padding-right" for="form-field-2"> 비밀번호 재입력 </label>
 	
-										<hr />
+								<div class="col-sm-9">
+									<input type="password" id="rePassword" name="repassword" placeholder="Password" class="col-xs-10 col-sm-5" />
+									<span class="help-inline col-xs-12 col-sm-7">
+										<span class="middle" id="rPassword"></span>
+									</span>
+								</div>
+							</div>
 	
-										<div class="step-content pos-rel">
-											<div class="step-pane active" data-step="1">
-												<h3 class="lighter block green">정보를 입력해주세요</h3>
+							<div class="space-4"></div> 
+							
+							<div class="form-group">
+								<label class="col-sm-3 control-label no-padding-right" for="form-field-6"> 이름 </label>
 	
-												<form class="form-horizontal" id="validation-form" method="get" action="${context}/login.do">
-													<div class="form-group">
-														<label class="control-label col-xs-12 col-sm-3 no-padding-right" for="email">이메일:</label>
-	
-														<div class="col-xs-12 col-sm-9">
-															<div class="clearfix">
-																<input type="email" name="email" id="email" class="col-xs-12 col-sm-6" />
-																&nbsp;&nbsp;<span><button class="btn btn-sm btn-warning">중복확인</button></span>
-															</div>
-														</div>
-													</div>
-	
-													<div class="space-2"></div>
-	
-													<div class="form-group">
-														<label class="control-label col-xs-12 col-sm-3 no-padding-right" for="password">비밀번호:</label>
-	
-														<div class="col-xs-12 col-sm-9">
-															<div class="clearfix">
-																<input type="password" name="password" id="password" class="col-xs-12 col-sm-4" />
-															</div>
-														</div>
-													</div>
-	
-													<div class="space-2"></div>
-	
-													<div class="form-group">
-														<label class="control-label col-xs-12 col-sm-3 no-padding-right" for="password2">비밀번호 재입력:</label>
-	
-														<div class="col-xs-12 col-sm-9">
-															<div class="clearfix">
-																<input type="password" name="password2" id="password2" class="col-xs-12 col-sm-4" />
-															</div>
-														</div>
-													</div>
-	
-													<div class="hr hr-dotted"></div>
-	
-													<div class="form-group">
-														<label class="control-label col-xs-12 col-sm-3 no-padding-right" for="name">이름:</label>
-	
-														<div class="col-xs-12 col-sm-9">
-															<div class="clearfix">
-																<input type="text" id="name" name="name" class="col-xs-12 col-sm-5" />
-															</div>
-														</div>
-													</div>
-	
-													<div class="space-2"></div>
-	
-													<div class="form-group">
-														<label class="control-label col-xs-12 col-sm-3 no-padding-right" for="phone">전화번호:</label>
-	
-														<div class="col-xs-12 col-sm-9">
-															<div class="input-group">
-																<span class="input-group-addon">
-																	<i class="ace-icon fa fa-phone"></i>
-																</span>
-	
-																<input type="tel" id="phone" name="phone" />
-															</div>
-														</div>
-													</div>
-	
-													<div class="hr hr-dotted"></div>
-	
-													<div class="space-8"></div>
-	
-													<div class="form-group">
-														<div class="col-xs-12 col-sm-4 col-sm-offset-3">
-															<label>
-																<input name="agree" id="agree" type="checkbox" class="ace" />
-																<span class="lbl"> 약관 내용에 동의합니다</span>
-															</label>
-														</div>
-													</div>
-												</form>
-											</div>
-	
-											<div class="step-pane" data-step="2">
-												<div class="center">
-													<h3 class="green">입력하신 정보입니다!</h3>
-													맞으시면 다음버튼을 눌러주세요.
-												</div>
-											</div>
-	
-											<div class="step-pane" data-step="3">
-												<div class="center">
-													<h3 class="green">축하합니다!</h3>
-													"PPT-제법 쓸만한 예측 툴"에 가입하신것을 환영합니다!
-												</div>
-											</div>
-	
-										</div>
+								<div class="col-sm-9">
+									<input data-rel="tooltip" type="text" name="userName" id="form-field-6" placeholder="name" title="이름을 입력해 주세요" data-placement="bottom" />
+								</div>
+							</div>
+							
+							<div class="form-group">
+								<label class="control-label col-xs-12 col-sm-3 no-padding-right" for="phone">Phone Number:</label>
+
+								<div class="col-xs-12 col-sm-9">
+									<div class="input-group">
+										<span class="input-group-addon">
+											<i class="ace-icon fa fa-phone"></i>
+										</span>
+
+										<input type="tel" id="phone" name="phone" />
 									</div>
+								</div>
+							</div>
 	
-									<hr />
-									<div class="wizard-actions">
-										<button class="btn btn-prev">
-											<i class="ace-icon fa fa-arrow-left"></i>
-											이전
-										</button>
 	
-										<button class="btn btn-success btn-next" data-last="완료">
-											다음
-											<i class="ace-icon fa fa-arrow-right icon-on-right"></i>
-										</button>
-									</div>
-								</div><!-- /.widget-main -->
-							</div><!-- /.widget-body -->
-						</div>
-					</div><!-- /.col -->
-				</div><!-- /.row -->
+							<div class="clearfix form-actions">
+								<div class="col-md-offset-3 col-md-9">
+									<button class="btn btn-info" type="submit">
+										<i class="ace-icon fa fa-check bigger-110"></i>
+										Submit
+									</button>
+	
+									&nbsp; &nbsp; &nbsp;
+									<button class="btn" type="reset">
+										<i class="ace-icon fa fa-undo bigger-110"></i>
+										Reset
+									</button>
+								</div>
+							</div>
+						</form>
+					</div>
+				</div>
 			</div><!-- /.page-content -->
 		</div><!-- main-content-inner -->
 	</div><!-- main-content -->
@@ -207,152 +147,94 @@
 		<jsp:include page="include/bottom.jsp"></jsp:include>
 	</footer>
 <!-- page specific plugin scripts -->
-<script src="${context}/resources/assets/js/wizard.min.js"></script>
-<script src="${context}/resources/assets/js/jquery.validate.min.js"></script>
-<script src="${context}/resources/assets/js/jquery-additional-methods.min.js"></script>
-<script src="${context}/resources/assets/js/bootbox.js"></script>
-<script src="${context}/resources/assets/js/jquery.maskedinput.min.js"></script>
-<script src="${context}/resources/assets/js/select2.min.js"></script>
 <!-- inline scripts related to this page -->
+<script src="${context}/resources/assets/js/jquery-ui.custom.min.js"></script>
+<script src="${context}/resources/assets/js/jquery.ui.touch-punch.min.js"></script>
+<script src="${context}/resources/assets/js/chosen.jquery.min.js"></script>
+<script src="${context}/resources/assets/js/moment.min.js"></script>
+<script src="${context}/resources/assets/js/autosize.min.js"></script>
+<script src="${context}/resources/assets/js/jquery.inputlimiter.min.js"></script>
+<script src="${context}/resources/assets/js/jquery.maskedinput.min.js"></script>
 <script type="text/javascript">
-	jQuery(function($) {
-	
-		$('[data-rel=tooltip]').tooltip();
-	
-		$('.select2').css('width','200px').select2({allowClear:true})
-		.on('change', function(){
-			$(this).closest('form').validate().element($(this));
-		}); 
-	
-	
-		//var $validation = this.checked;
-		$('#fuelux-wizard-container')
-		.ace_wizard({
-			//step: 2 //optional argument. wizard will jump to step "2" at first
-			//buttons: '.wizard-actions:eq(0)'
-		})
-		.on('actionclicked.fu.wizard' , function(e, info){
-			if(info.step == 1) {
-				if(!$('#validation-form').valid()) e.preventDefault();
-			}
-		})
-		//.on('changed.fu.wizard', function() {
-		//})
-		.on('finished.fu.wizard', function(e) {
-			bootbox.dialog({
-				message: "회원가입이 완료되었습니다.", 
-				buttons: {
-					 ok : {
-						label : "확인",
-						className : "btn-sm btn-primary",
-						callback : function(){
-							$("#validation-form").submit();
-							console.log("submit btn clicked");
-						}
-						}
-					}
-			});
-		}).on('stepclick.fu.wizard', function(e){
-			//e.preventDefault();//this will prevent clicking and selecting steps
-		});
-		
-	
-		//hide or show the other form which requires validation
-		//this is for demo only, you usullay want just one form in your application
-	
-		//documentation : http://docs.jquery.com/Plugins/Validation/validate
-	
+jQuery(function($) {
 		$.mask.definitions['~']='[+-]';
 		$('#phone').mask('(999) 9999-9999');
 	
-		jQuery.validator.addMethod("phone", function (value, element) {
+		/* jQuery.validator.addMethod("phone", function (value, element) {
 			return this.optional(element) || /^\(\d{3}\) \d{4}\-\d{4}( x\d{1,6})?$/.test(value);
-		}, "올바른 전화번호를 입력해주세요.");
-	
-		$('#validation-form').validate({
-			debug : true,
-			errorElement: 'div',
-			errorClass: 'help-block',
-			focusInvalid: false,
-			ignore: "",
-			rules: {
-				email: {
-					required: true,
-					email:true
-				},
-				password: {
-					required: true,
-					minlength: 5
-				},
-				password2: {
-					required: true,
-					minlength: 5,
-					equalTo: "#password"
-				},
-				name: {
-					required: true
-				},
-				phone: {
-					required: true,
-					phone: 'required'
-				},
-				agree: {
-					required: true,
-				}
-			},
-	
-			messages: {
-				email: {
-					required: "이메일 주소를 입력해 주세요.",
-					email: "이메일 주소를 입력해 주세요."
-				},
-				password: {
-					required: "비밀번호를 입력해주세요.",
-					minlength: "비밀번호를 입력해주세요."
-				},
-				agree: "약관 동의에 체크해주세요."
-			},
-	
-	
-			highlight: function (e) {
-				$(e).closest('.form-group').removeClass('has-info').addClass('has-error');
-			},
-	
-			success: function (e) {
-				$(e).closest('.form-group').removeClass('has-error');//.addClass('has-info');
-				$(e).remove();
-			},
-	
-			errorPlacement: function (error, element) {
-				if(element.is('input[type=checkbox]') || element.is('input[type=radio]')) {
-					var controls = element.closest('div[class*="col-"]');
-					if(controls.find(':checkbox,:radio').length > 1) controls.append(error);
-					else error.insertAfter(element.nextAll('.lbl:eq(0)').eq(0));
-				}
-				else if(element.is('.chosen-select')) {
-					error.insertAfter(element.siblings('[class*="chosen-container"]:eq(0)'));
-				}
-				else error.insertAfter(element.parent());
-			},
-	
-			submitHandler: function (form) {
-			},
-			invalidHandler: function (form) {
+		}, "올바른 전화번호를 입력해주세요."); */
+		
+		$('[data-rel=tooltip]').tooltip({container:'body'});
+		$('[data-rel=popover]').popover({container:'body'});
+		
+		$('#btnDup').click(function(){
+			var form = document.joinForm;
+			var email = form.email;
+
+			if(email.value == ""){
+				alert("이메일을 입력해주세요.")
+				email.focus();
+			}else{
+				var param = "email="+email.value;
+				$.ajax({
+					url : "${context}/idCheck.json",
+					data : param,
+					method : "post",
+					success : function(result){
+						if(result == 1) alert("이미 사용중인 이메일입니다.");
+						else alert("사용 가능한 이메일입니다.");
+					}
+				});
 			}
 		});
-		
-		
-		$(document).one('ajaxloadstart.page', function(e) {
-			//in ajax mode, remove remaining elements before leaving page
-			$('[class*=select2]').remove();
+});
+
+function isNull(obj, msg){
+	if(obj.value == ""){
+		$('#loginFail').text(msg).css({
+			'color' : 'red'
 		});
-		
-	})
+		obj.focus();
+		return true;
+	}
+	return false;
+}
+
+function checkEle(){
+	var form = document.joinForm;
+	var email = form.email;
+	var password = form.password;
+	var phone = form.phone;
 	
-	function callhome(){
-		$('#validation-form').submit();
+	if(isNull(form.email,"아이디를 입력하시오.")){
+		return false;
+	}
+	if(isNull(form.password, '패스워드를 입력하세요')){
+		return false;
+	}
+	if(!/^[a-zA-Z0-9]{4,15}$/.test(form.password.value)){
+		$('#loginFail').text('암호는 숫자와 영문자 조합으로 4~15자리를 사용해야 합니다.').css({
+			'color' : 'red'
+		});
+		return false;
+	}
+	if(/^\(\d{3}\) \d{4}\-\d{4}( x\d{1,6})?$/.test(phone.value)){
+		
+	}
+	return true;
+}
+
+$("#rePassword").keydown(function(key) {
+	var form = document.joinForm;
+	var password = form.password;
+	if (key.keyCode == 13) {//키가 13이면 실행 (엔터는 13)
+		change();
+	}
+	if(key == password.value){
+		$('#rPassword').text("비밀번호가 일치하지 않습니다."); 
 	}
 	
+});
 </script>
 </body>
 </html>

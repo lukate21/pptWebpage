@@ -17,10 +17,29 @@ public class MyStockServiceImpl {
 	public List<MyStockVO> getStockInfo(String id){
 		List<MyStockVO> myStockList = myStock.getMyStock(id);
 		
-		if(myStockList == null){
-			MyStockVO myStock = new MyStockVO();
-			myStockList.add(myStock);
-		}
+		for(MyStockVO my : myStockList)
+			System.out.println(my);
 		return myStockList;
+	}
+	
+	public int getUserNo(String id){
+		int userNo = myStock.getUserNo(id);
+		
+		return userNo;
+	}
+	
+	public int getComNo(String comName){
+		int comNo = myStock.getComNo(comName);
+		
+		return comNo;
+	}
+	
+	public String insertMyStock(MyStockVO myStockVO){
+		int result = myStock.insertMyStock(myStockVO);
+		String msg = "";
+		if(result == 0) msg = "실패";
+		else msg = "성공";
+		
+		return msg;
 	}
 }

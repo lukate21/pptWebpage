@@ -7,9 +7,22 @@
 	
 	
 	<select id="getInfo" parameterType="String" resultType="MyStockVO">
-		select m.com_no, c.name, buy_price, volume, buy_date
+		select m.com_no as comNo, c.name as comName, buy_price as buyPrice, volume, to_char(buy_date,'MM-dd-yy') as buyDate
 		from my_stock m, company c, users u
 		where m.com_no = c.no and m.user_no = u.no and u.id = #{id}
 	</select>
+	
+	<select id="getUserNo" parameterType="String" resultType="int">
+		select no from users where id=#{id}
+	</select>
+	
+	<select id="getComNo" parameterType="String" resultType="int">
+		select no from company where name=#{name}
+	</select>
+	
+	<insert id="insertMyStock" parameterType="MyStockVO">
+		insert into my_stock(no, user_no, com_no, buy_price, volume, buy_date)
+		values(my_stock_seq.nextval, #{userNo}, #{comNo}, #{buyPrice}, #{volume}, #{buyDate})
+	</insert>
 	
 </mapper>

@@ -63,7 +63,6 @@ public class HomeController {
 	@ResponseBody
 	@RequestMapping(value="idCheck.json", method=RequestMethod.POST)
 	public int idCheck(String email){
-		
 		String id = email.split("@")[0];
 		String domain = email.split("@")[1];
 		
