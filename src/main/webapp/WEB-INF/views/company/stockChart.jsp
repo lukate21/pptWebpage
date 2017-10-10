@@ -30,23 +30,49 @@
 	var RTA = ${RTA};
 	var yesterdayPcnt = 0;
 	var yesterdayMcnt = 0;
+	var yesterdayEcnt = 0;
 	var todayPcnt = 0;
 	var todayMcnt = 0;
+	var todayEcnt = 0;
 	var tomorrowPcnt = 0;
 	var tomorrowMcnt = 0;
+	var tomorrowEcnt = 0;
+	var reliability = [];
+	<c:forEach items="${reliability}" var="reliabilityVO">
+		reliability.push({
+			anaCode : '${reliabilityVO.anaCode }',
+			newsCode : '${reliabilityVO.newsCode }',
+			value : '${reliabilityVO.value }'
+		});
+	</c:forEach>
 	for(var i in RTA){
+		var newsCode = RTA[i].newsCode;
+		var anaCode = RTA[i].anaCode;
+		var add;
+		for(var j in reliability){
+			if(reliability[j].anaCode == anaCode && reliability[j].newsCode == newsCode){
+				add = Number(reliability[j].value)/100;
+				break;
+			}
+		}
 		if(RTA[i].yesterdayFluc == "p")
-			yesterdayPcnt++;
+			yesterdayPcnt += add;
 		else if(RTA[i].yesterdayFluc == "m")
-			yesterdayMcnt++;
+			yesterdayMcnt += add;
+		else if(RTA[i].yesterdayFluc == "-")
+			yesterdayEcnt += add;
 		if(RTA[i].todayFluc == "p")
-			todayPcnt++;
+			todayPcnt += add;
 		else if(RTA[i].todayFluc == "m")
-			todayMcnt++;
+			todayMcnt += add;
+		else if(RTA[i].todayFluc == "-")
+			todayEcnt += add;
 		if(RTA[i].tomorrowFluc == "p")
-			tomorrowPcnt++;
+			tomorrowPcnt += add;
 		else if(RTA[i].tomorrowFluc == "m")
-			tomorrowMcnt++;
+			tomorrowMcnt += add;
+		else if(RTA[i].tomorrowFluc == "-")
+			tomorrowEcnt += add;
 		
 		if(RTA[i].anaCode == bestAnaCode && RTA[i].newsCode == bestNewsCode){
 			var todayPredict = RTA[i].todayFluc;
@@ -85,17 +111,19 @@
 		}
 	}
 	var predicValue;
+	var todayTotal = todayPcnt + todayMcnt + todayEcnt;
+	var tomorrowTotal = tomorrowPcnt + tomorrowMcnt + tomorrowEcnt;
 	if(todayPcnt>todayMcnt){
-		$('#todayPredict').html('<span class="text-danger"><b><i class="fa fa-caret-up"></i>'+(todayPcnt/56*100).toFixed(0)+'%</b></span>');
+		$('#todayPredict').html('<span class="text-danger"><b><i class="fa fa-caret-up"></i>'+(todayPcnt/todayTotal*100).toFixed(0)+'%</b></span>');
 	}else if(todayPcnt<todayMcnt){
-		$('#todayPredict').html('<span class="text-primary"><b><i class="fa fa-caret-down"></i>'+(todayMcnt/56*100).toFixed(0)+'%</b></span>');
+		$('#todayPredict').html('<span class="text-primary"><b><i class="fa fa-caret-down"></i>'+(todayMcnt/todayTotal*100).toFixed(0)+'%</b></span>');
 	}else{
 		$('#todayPredict').html('<b>-</b>');
 	}
 	if(tomorrowPcnt>tomorrowMcnt){
-		$('#tomorrowPredict').html('<span class="text-danger"><b><i class="fa fa-caret-up"></i>'+(tomorrowPcnt/56*100).toFixed(0)+'%</b></span>');
+		$('#tomorrowPredict').html('<span class="text-danger"><b><i class="fa fa-caret-up"></i>'+(tomorrowPcnt/tomorrowTotal*100).toFixed(0)+'%</b></span>');
 	}else if(tomorrowPcnt<tomorrowMcnt){
-		$('#tomorrowPredict').html('<span class="text-primary"><b><i class="fa fa-caret-down"></i>'+(tomorrowMcnt/56*100).toFixed(0)+'%</b></span>');
+		$('#tomorrowPredict').html('<span class="text-primary"><b><i class="fa fa-caret-down"></i>'+(tomorrowMcnt/tomorrowTotal*100).toFixed(0)+'%</b></span>');
 	}else{
 		$('#tomorrowPredict').html('<b>-</b>');
 	}
@@ -146,6 +174,10 @@
 				chartData[1].dateTime=chartData[1].dateTime.split('T')[0]+'T00:01:00Z'
 				var start = chartData[0].value;
 				var now = chartData[chartData.length-1].value;
+				if('${name}'=="KOSPI" || '${name}' == "KOSDAQ" || '${name}' == "KOSPI2"){
+					now = now.toFixed(2);
+					start = start.toFixed(2);
+				}
 				if(start<now){
 					$('#now').html('<span class="text-danger"><h3 style="margin-top:0"><b>'+now+'</b><small class="text-danger">'
 									+'&nbsp;&nbsp;&nbsp;<i class="fa fa-caret-up"></i>&nbsp;'+(now-start)

@@ -54,6 +54,7 @@ public class CompanyController {
 		model.addAttribute("name", name);
 		model.addAttribute("draw", draw);
 		model.addAttribute("RTA", cService.selectRTA(name, null));
+		model.addAttribute("reliability", cService.selectReliability(name));
 		model.addAttribute("bestAnalysis", cService.selectBestAnalysis(name));
 		return "company/stockChart";
 	}
@@ -68,6 +69,7 @@ public class CompanyController {
 	public String RTA(Model model, String name, String option){
 		model.addAttribute("name", name);
 		model.addAttribute("RTA", cService.selectRTA(name, null));
+		model.addAttribute("reliability", cService.selectReliability(name));
 		model.addAttribute("bestAnalysis", cService.selectBestAnalysis(name));
 		return "company/RTAChart";
 	}
@@ -82,10 +84,13 @@ public class CompanyController {
 	}
 	
 	@RequestMapping("/chart/dTree.do")
-	public String reliability(Model model, String name, String anaCode, String newsCode){
+	public String reliability(Model model, String name, String anaCode, String newsCode, String inc, String dec, String equ){
 		model.addAttribute("name", name);
 		model.addAttribute("anaCode", anaCode);
 		model.addAttribute("newsCode", newsCode);
+		model.addAttribute("inc", inc);
+		model.addAttribute("dec", dec);
+		model.addAttribute("equ", equ);
 		model.addAttribute("dTree",dService.selectDtree(name).toJSONString());
 		return "company/dTreeChart";
 	}

@@ -81,20 +81,6 @@ public class CompanyServiceImpl {
 		return cDAO.selectComList();
 	}
 	
-	public List<MyFavoriteVO> selectFavoriteList(int userNo){
-		return cDAO.selectFavoriteList(userNo);
-	}
-	
-	public MyFavoriteVO selectFavoriteAble(Map<String,Object> map){
-		return cDAO.selectFavoriteAble(map);
-	}
-	public void insertFavorite(Map<String,Object> map){
-		cDAO.insertFavorite(map);
-	}
-	public void deleteFavorite(Map<String,Object> map){
-		cDAO.deleteFavorite(map);
-	}
-	
 	public JSONArray selectRTA(String name, String newsCode){
 		JSONArray arr = new JSONArray();
 		for(RTAVO rta : cDAO.selectRTA(name)){

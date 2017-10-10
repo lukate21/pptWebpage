@@ -85,15 +85,15 @@
 					</div>
 				</div>
 				<div class="row">
-					<div class="col-sm-6" id="relNewsChart">
+					<div class="col-sm-6 col-sm-offset-3" id="relNewsChart">
 						<iframe
 							src="${context}/company/chart/reliability.do?name=${name}&option=newsCode"
 							width="100%" height="500px" frameBorder="0"> </iframe>
 					</div>
-					<div class="col-sm-6" id="dTreeChart">
+					<%-- <div class="col-sm-6" id="dTreeChart">
 						<iframe src="${context}/company/chart/dTree.do?name=${name}"
 							width="100%" height="500px" frameBorder="0"> </iframe>
-					</div>
+					</div> --%>
 				</div>
 			</div>
 			<div class="row">

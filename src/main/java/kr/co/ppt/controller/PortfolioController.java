@@ -24,6 +24,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import kr.co.ppt.serviceImpl.CompanyServiceImpl;
 import kr.co.ppt.serviceImpl.DictionaryServiceImpl;
+import kr.co.ppt.serviceImpl.PortfolioServiceImpl;
 import kr.co.ppt.vo.CompanyVO;
 import kr.co.ppt.vo.MemberVO;
 import kr.co.ppt.vo.MyFavoriteVO;
@@ -35,6 +36,8 @@ public class PortfolioController {
 	CompanyServiceImpl cService;
 	@Autowired
 	DictionaryServiceImpl dService;
+	@Autowired
+	PortfolioServiceImpl pService;
 	
 	@RequestMapping("/analysis.do")
 	public String analysis(Model model){
@@ -45,7 +48,9 @@ public class PortfolioController {
 	@RequestMapping("/list.do")
 	public String list(Model model,HttpSession session){
 		MemberVO memberVO = (MemberVO)session.getAttribute("loginUser");
-		JSONArray arr = dService.selectUserDic(memberVO.getNo(), null);
+		int userNo = memberVO.getNo();
+		JSONArray arr = dService.selectUserDic(userNo, null);
+		model.addAttribute("myAnalysisList", pService.selectMyAnalysis(userNo));
 		model.addAttribute("myDic", arr.toJSONString());
 		model.addAttribute("comList", cService.selectComList());
 		return "/my/list";
@@ -54,7 +59,7 @@ public class PortfolioController {
 	@RequestMapping(value="/favorite.do",method=RequestMethod.GET)
 	public String favorite(Model model,HttpSession session){
 		MemberVO memberVO = (MemberVO)session.getAttribute("loginUser");
-		model.addAttribute("favoriteList", cService.selectFavoriteList(memberVO.getNo()));
+		model.addAttribute("favoriteList", pService.selectFavoriteList(memberVO.getNo()));
 		return "/my/favorite";
 	}
 	
@@ -64,7 +69,7 @@ public class PortfolioController {
 		Map<String,Object> map = new HashMap<>();
 		map.put("userNo", userNo);
 		map.put("comName", comName);
-		if(cService.selectFavoriteAble(map) == null)
+		if(pService.selectFavoriteAble(map) == null)
 			return "able";
 		else
 			return "disable";
@@ -80,16 +85,16 @@ public class PortfolioController {
 		map.put("userNo", userNo);
 		map.put("comNo", companyVO.getNo());
 		if(method.equals("insert"))
-			cService.insertFavorite(map);
+			pService.insertFavorite(map);
 		else if(method.equals("delete"))
-			cService.deleteFavorite(map);
+			pService.deleteFavorite(map);
 		return "성공";
 	}
 	
 	@RequestMapping(value="/favoriteList.json",method=RequestMethod.GET)
 	@ResponseBody
 	public String favoriteList(int userNo){
-		List<MyFavoriteVO> list = cService.selectFavoriteList(userNo);
+		List<MyFavoriteVO> list = pService.selectFavoriteList(userNo);
 		JSONArray arr = new JSONArray();
 		for(MyFavoriteVO myFavoriteVO: list){
 			JSONObject obj = new JSONObject();

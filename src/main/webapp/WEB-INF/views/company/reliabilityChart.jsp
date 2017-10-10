@@ -56,6 +56,20 @@
 			value : '${reliabilityVO.value }'
 		});
 	</c:forEach>
+	var sum=0;
+	var deviation=0;
+	for(i in reliability){
+		var value = Number(reliability[i].value);
+		sum += value;
+		deviation += (value*value);
+	}
+	var mean = sum/56;
+	deviation = Math.sqrt((deviation/56 - (mean*mean)));
+	var variance = deviation*deviation;
+	console.log('평균 : ' + mean);
+	console.log('표준편차 : '+ deviation);
+	console.log('분산 : '+variance);
+	
 	respons('${option}');
 	function respons(option){
 		var chart;

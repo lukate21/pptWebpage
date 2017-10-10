@@ -26,64 +26,6 @@
 <script src="${context}/resources/assets/js/ace-extra.min.js"></script>
 <script src="${context}/resources/assets/js/jquery-2.1.4.min.js"></script>
 <!------------------------------------------------------------------------------------------------------------------------->
-<script>
-	var myDic = JSON.parse('${myDic}');
-	console.log(myDic);
-	$(function(){
-		for(var i in myDic){
-			var anaCode = '';
-			var newsCode = '';
-			if(myDic[i].anaCode == 'opi1')
-				anaCode = '감정분석1';
-			else if(myDic[i].anaCode == 'opi2')
-				anaCode = '감정분석2';
-			else if(myDic[i].anaCode == 'pro1')
-				anaCode = '확률분석1';
-			else if(myDic[i].anaCode == 'pro2')
-				anaCode = '확률분석2';
-			else if(myDic[i].anaCode == 'fit1')
-				anaCode = '필터분석1';
-			else if(myDic[i].anaCode == 'fit2')
-				anaCode = '필터분석2';
-			else if(myDic[i].anaCode == 'meg1')
-				anaCode = '통합분석1';
-			else if(myDic[i].anaCode == 'meg2')
-				anaCode = '통합분석2';
-			if(myDic[i].newsCode == 'culture')
-				newsCode = '문화';
-			else if(myDic[i].newsCode == 'digital')
-				newsCode = 'IT';
-			else if(myDic[i].newsCode == 'economic')
-				newsCode = '경제';
-			else if(myDic[i].newsCode == 'entertain')
-				newsCode = '연예';
-			else if(myDic[i].newsCode == 'foreign')
-				newsCode = '국제';
-			else if(myDic[i].newsCode == 'politics')
-				newsCode = '정치';
-			else if(myDic[i].newsCode == 'society')
-				newsCode = '사회';
-			$('#simple-table tbody').append('<tr><td>'+myDic[i].dicName+'</td><td>'+myDic[i].comName+'</td><td>'+anaCode
-											+'</td><td>'+newsCode+'</td><td>'+myDic[i].reliability+'%</td><td>'+myDic[i].dictionary.length
-											+'</td><td class="center"><div class="action-buttons"><a href="#" class="green bigger-140 show-details-btn" title="Show Details">'
-											+'<i class="ace-icon fa fa-angle-double-down"></i><span class="sr-only">Details</span></a></div></td>'
-											+'<td class="center"><div class="hidden-sm hidden-xs btn-group center"><button class="btn btn-xs btn-danger"><i class="ace-icon fa fa-trash-o bigger-120"></i></button></div></td></tr>');
-			var detail = '';
-			var dictionary = myDic[i].dictionary;
-		/* 	for(var i in dictionary){
-				detail += '<span class="label label-lg label-yellow arrowed-in arrowed-in-right">'
-				detail += dictionary[i].term;
-				detail += '</span>';
-			} */
-			
-			$('#simple-table tbody').append('<tr class="detail-row"><td colspan="8"><div class="table-detail"><div class="row">'
-					+'<div class="col-sm-6"><iframe src="${context}/company/chart/stock.do?name='+myDic[i].comName+'&draw=true" width="100%" height="400px" frameBorder="0"></iframe></div>'
-					+'<div class="col-sm-6"><div class="row">나만의 예측</div>'
-					+'<div class="row"><iframe src="${context}/company/chart/dTree.do?name='+myDic[i].comName+'&anaCode='+anaCode+'&newsCode='+newsCode+'"width="100%" height="400px" frameBorder="0"> </iframe></div>'
-					+'</div></div></div></td></tr>');
-		}
-	});
-</script>
 </head>
 <body class="no-skin">
 	<jsp:include page="../include/top-menu.jsp"></jsp:include>
@@ -248,6 +190,118 @@
 	<footer>
 		<jsp:include page="../include/bottom.jsp"></jsp:include>
 	</footer>
+	<script>
+	var myDic = JSON.parse('${myDic}');
+	var myAnalysisList = [];
+	<c:forEach items="${myAnalysisList}" var="myAnaysisVO">
+		myAnalysisList.push({
+			dicName : '${myAnaysisVO.dicName}',
+			yesterdayFluc : '${myAnaysisVO.yesterdayFluc}',
+			todayFluc : '${myAnaysisVO.todayFluc}',
+			todayInc : ${myAnaysisVO.todayInc},
+			todayDec : ${myAnaysisVO.todayDec},
+			todayEqu : ${myAnaysisVO.todayEqu},
+			tomorrowFluc : '${myAnaysisVO.tomorrowFluc}',
+			tomorrowInc : ${myAnaysisVO.tomorrowInc},
+			tomorrowDec : ${myAnaysisVO.tomorrowDec},
+			tomorrowEqu : ${myAnaysisVO.tomorrowEqu},
+		})
+	</c:forEach>
+		for(var i in myDic){
+			var anaCode = '';
+			var newsCode = '';
+			if(myDic[i].anaCode == 'opi1')
+				anaCode = '감정분석1';
+			else if(myDic[i].anaCode == 'opi2')
+				anaCode = '감정분석2';
+			else if(myDic[i].anaCode == 'pro1')
+				anaCode = '확률분석1';
+			else if(myDic[i].anaCode == 'pro2')
+				anaCode = '확률분석2';
+			else if(myDic[i].anaCode == 'fit1')
+				anaCode = '필터분석1';
+			else if(myDic[i].anaCode == 'fit2')
+				anaCode = '필터분석2';
+			else if(myDic[i].anaCode == 'meg1')
+				anaCode = '통합분석1';
+			else if(myDic[i].anaCode == 'meg2')
+				anaCode = '통합분석2';
+			if(myDic[i].newsCode == 'culture')
+				newsCode = '문화';
+			else if(myDic[i].newsCode == 'digital')
+				newsCode = 'IT';
+			else if(myDic[i].newsCode == 'economic')
+				newsCode = '경제';
+			else if(myDic[i].newsCode == 'entertain')
+				newsCode = '연예';
+			else if(myDic[i].newsCode == 'foreign')
+				newsCode = '국제';
+			else if(myDic[i].newsCode == 'politics')
+				newsCode = '정치';
+			else if(myDic[i].newsCode == 'society')
+				newsCode = '사회';
+			$('#simple-table tbody').append('<tr id="'+i+'"><td>'+myDic[i].dicName+'</td><td>'+myDic[i].comName+'</td><td>'+anaCode
+											+'</td><td>'+newsCode+'</td><td>'+myDic[i].reliability+'%</td><td>'+myDic[i].dictionary.length
+											+'</td><td class="center"><div class="action-buttons"><a href="#" class="green bigger-140 show-details-btn" title="Show Details">'
+											+'<i class="ace-icon fa fa-angle-double-down"></i><span class="sr-only">Details</span></a></div></td>'
+											+'<td class="center"><div class="hidden-sm hidden-xs btn-group center"><button class="btn btn-xs btn-danger"><i class="ace-icon fa fa-trash-o bigger-120"></i></button></div></td></tr>');
+			var detail = '';
+			var dictionary = myDic[i].dictionary;
+		/* 	for(var i in dictionary){
+				detail += '<span class="label label-lg label-yellow arrowed-in arrowed-in-right">'
+				detail += dictionary[i].term;
+				detail += '</span>';
+			} */
+			
+			for(var j in myAnalysisList){
+				if(myAnalysisList[j].dicName == myDic[i].dicName){
+					var todayPredict = myAnalysisList[j].todayFluc;
+					var tomorrowPredict = myAnalysisList[j].tomorrowFluc;
+					var todayInc =  myAnalysisList[j].todayInc;
+					var todayDec =  myAnalysisList[j].todayDec;
+					var todayEqu =  myAnalysisList[j].todayEqu;
+					var tomorrowInc =  myAnalysisList[j].tomorrowInc;
+					var tomorrowDec =  myAnalysisList[j].tomorrowDec;
+					var tomorrowEqu =  myAnalysisList[j].tomorrowEqu;
+					if(todayPredict == 'p'){
+						todayPredict = '<span class="text-danger"><b><i class="fa fa-caret-up"></i>&nbsp;상승</b></span>';
+					}
+					else if(todayPredict == 'm'){
+						todayPredict = '<span class="text-primary"><b><i class="fa fa-caret-down"></i>&nbsp;하락</b></span>';
+					}else if(todayPredict == '-'){
+						todayPredict = '<b>- 동결</b>';
+					}else if(todayPredict == 'x'){
+						todayPredict = '<b>데이터 부족</b>';
+					}
+					
+					//내일
+					if(tomorrowPredict == 'p'){
+						tomorrowPredict = '<span class="text-danger"><b><i class="fa fa-caret-up"></i>&nbsp;상승</b></span>';
+					}else if(tomorrowPredict == 'm'){
+						tomorrowPredict = '<span class="text-primary"><b><i class="fa fa-caret-down"></i>&nbsp;하락</b></span>';
+					}else if(tomorrowPredict == '-'){
+						tomorrowPredict = '<b>- 동결</b>';
+					}else if(tomorrowPredict == 'x'){
+						tomorrowPredict = '<b>데이터 부족</b>';
+					}
+					$('#simple-table tbody').append('<tr class="detail-row"><td colspan="8"><div class="table-detail"><div class="row">'
+							+'<div class="col-sm-9"><iframe src="${context}/company/chart/stock.do?name='+myDic[i].comName+'&draw=true" width="100%" height="400px" frameBorder="0"></iframe></div>'
+							+'<div class="col-sm-3"><div class="row">주가예측 : '+todayPredict+'(금일) | '+tomorrowPredict+'(익일)<br/>'
+							+'금일 상승치 : '+todayInc.toFixed(2)+' | 금일 하락치 : '+todayDec.toFixed(2)+' | 금일 동결치 : '+todayEqu.toFixed(2) + '<br/>'
+							+'익일 상승치 : '+tomorrowInc.toFixed(2)+' | 익일 하락치 : '+tomorrowDec.toFixed(2)+' | 익일 동결치 : '+tomorrowEqu.toFixed(2) + '</div></div>'
+							+'</div><div class="row"><div class="col-sm-6"><iframe src="${context}/company/chart/dTree.do'
+							+'?name='+myDic[i].comName+'&anaCode='+myDic[i].anaCode+'&newsCode='+myDic[i].newsCode+'&inc='+todayInc+'&dec='+todayDec+'&equ='+todayEqu
+							+'"width="100%" height="500px" frameBorder="0" id="today'+i+'"> </iframe></div>'
+							+'<div class="col-sm-6"><iframe src="${context}/company/chart/dTree.do'
+							+'?name='+myDic[i].comName+'&anaCode='+myDic[i].anaCode+'&newsCode='+myDic[i].newsCode+'&inc='+tomorrowInc+'&dec='+tomorrowDec+'&equ='+tomorrowEqu
+							+'"width="100%" height="500px" frameBorder="0" id="tomorrow'+i+'"> </iframe></div>'
+							+'</div></div></td></tr>');
+					break;
+				}
+			}
+			
+		}
+</script>
 		<script type="text/javascript">
 			jQuery(function($) {
 				$('.show-details-btn').on('click', function(e) {

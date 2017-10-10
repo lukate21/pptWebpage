@@ -64,7 +64,7 @@
 														<i class="ace-icon fa fa-bars"></i>
 													</a>
 													<ul class="dropdown-menu dropdown-menu-right dropdown-light-blue dropdown-caret dropdown-closer">
-														<li><a style="cursor:pointer" onclick="changeChart('#widget-main-${favoriteVO.no }','stock.do?name=${favoriteVO.comName}'&draw=true)">실시간 주가 차트</a>
+														<li><a style="cursor:pointer" onclick="changeChart('#widget-main-${favoriteVO.no }','stock.do?name=${favoriteVO.comName}&draw=true')">실시간 주가 차트</a>
 														</li>
 														<li><a style="cursor:pointer" onclick="changeChart('#widget-main-${favoriteVO.no}','RTA.do?name=${favoriteVO.comName}&option=pie')">주가 예측 차트</a>
 														</li>
@@ -87,7 +87,7 @@
 
 										<div class="widget-body">
 											<div class="widget-main" id="widget-main-${favoriteVO.no }">
-											<iframe src="${context}/company/chart/stock.do?name=${favoriteVO.comName }"
+											<iframe src="${context}/company/chart/stock.do?name=${favoriteVO.comName }&draw=true"
 												width="100%" height="500px" frameBorder="0"> </iframe>
 											</div>
 										</div>

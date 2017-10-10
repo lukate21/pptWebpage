@@ -22,7 +22,29 @@
 	<script src="${context }/resources/treant/Treant.js"></script>
 	<script>
 	drawDtree();
+	function decision(value,splits){
+		var bool;
+		if(splits.includes('<')){
+			if(value<splits.substring(1))
+				bool=true;
+			else
+				bool=false;
+		}else{
+			if(value>splits.substring(1))
+				bool=true;
+			else
+				bool=false;
+		}
+		return bool;
+	}
+	
 	function drawDtree(){
+		var inc = ${inc };
+		var dec = ${dec };
+		var equ = ${equ };
+		var currentBool;
+		var currentFloor = 2;
+		var currentParent = 0;
 		var simple_chart_config = [];
 		var config = {
 			container: "#OrganiseChart-simple"
@@ -42,14 +64,25 @@
 		var branch = dTree[0];
 		var score = eval('branch.var');
 		var name = branch.splits;
-		if(score.includes('Inc'))
+		if(score.includes('Inc')){
+			currentBool = decision(inc,name);
 			name = '상승치'+name;
-		else if(score.includes('Dec'))
+		}else if(score.includes('Dec')){
+			currentBool = decision(dec,name);
 			name = '하락치'+name;
-		else if(score.includes('Equ'))
+		}else if(score.includes('Equ')){
+			currentBool = decision(equ,name);
 			name = '동결치'+name;
+		}
 		var node0 = {
-				text : { name : name}
+				text : { name : name},
+				HTMLclass: "blue",
+				connectors: {
+					type : 'step',
+					style: {
+						'stroke': '#FF5555'
+					}
+				}
 		};
 		simple_chart_config.push(node0);
 	 	for(var i=1; i<dTree.length; i++){
@@ -57,12 +90,13 @@
 			var branch = dTree[i];
 			var score = eval('branch.var');
 			var name = branch.splits;
-			if(score.includes('Inc'))
+			if(score.includes('Inc')){
 				name = '상승치'+name;
-			else if(score.includes('Dec'))
+			}else if(score.includes('Dec')){
 				name = '하락치'+name;
-			else if(score.includes('Equ'))
+			}else if(score.includes('Equ')){
 				name = '동결치'+name;
+			}
 			var index=0;
 			for(var j=i-1; j>=0; j--){
 				var checkBranch = dTree[j];
@@ -81,8 +115,36 @@
 				else if(branch.yVal == '-')
 					name = '동결'
 			}
-			eval('var node' + i + '={parent : node'+ index + ',text : {name : "'+name +'"}}');
-			simple_chart_config.push(eval("node"+i));
+			if(branch.floor == currentFloor){
+				if(currentParent == index){
+					if(currentBool){
+						eval('var node' + i + '={parent : node'+ index + ',HTMLclass: "blue", text : {name : "'
+							+name.substring(0,8) +'"}, connectors: {type : "step",style: {"stroke": "#FF5555"}}}');
+						simple_chart_config.push(eval("node"+i));
+						if(score.includes('Inc')){
+							currentBool = decision(inc,name.substring(3));
+						}else if(score.includes('Dec')){
+							currentBool = decision(dec,name.substring(3));
+						}else if(score.includes('Equ')){
+							currentBool = decision(equ,name.substring(3));
+						}
+						currentParent = i;
+						currentFloor++;
+					}else{
+						currentBool = !currentBool;
+						eval('var node' + i + '={parent : node'+ index + ', text : {name : "'+name.substring(0,8) +'"}, connectors: {type : "step"}}');
+						simple_chart_config.push(eval("node"+i));
+					}
+				}else{
+					eval('var node' + i + '={parent : node'+ index + ', text : {name : "'+name.substring(0,8) +'"}, connectors: {type : "step"}}');
+					simple_chart_config.push(eval("node"+i));
+				}
+			}else{
+				eval('var node' + i + '={parent : node'+ index + ', text : {name : "'+name.substring(0,8) +'"}, connectors: {type : "step"}}');
+				simple_chart_config.push(eval("node"+i));
+			}
+			
+			
 			
 		}  
 		new Treant( simple_chart_config );

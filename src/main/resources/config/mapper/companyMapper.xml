@@ -28,29 +28,6 @@
 		</where>
 	</select>
 	
-	<select id="selectFavoriteList" parameterType="int" resultType="myFavoriteVO">
-		select MY_FAVORITE.no, MY_FAVORITE.user_no as userNo, MY_FAVORITE.com_no as comNo, company.name as comName
-		from MY_FAVORITE, company
-		where MY_FAVORITE.com_no = company.no and user_no = #{userNo}
-		order by no
-	</select>
-	
-	<select id="selectFavoriteAble" parameterType="java.util.Map" resultType="myFavoriteVO">
-		select MY_FAVORITE.no, MY_FAVORITE.user_no as userNo, MY_FAVORITE.com_no as comNo
-		from MY_FAVORITE, (select * from company where name = #{comName}) company
-		where company.no = MY_FAVORITE.com_no and user_no = #{userNo}
-		order by no
-	</select>
-	
-	<insert id="insertFavorite" parameterType="java.util.Map">
-		insert into MY_FAVORITE(NO, user_no, com_no) 
-		values(MY_FAVORITE_SEQ.nextVal, #{userNo}, #{comNo})
-	</insert>
-	<delete id="deleteFavorite" parameterType="java.util.Map">
-		delete from MY_FAVORITE
-		where user_no = #{userNo} and com_no = #{comNo}
-	</delete>
-	
 	<select id="selectStockList" parameterType="String" resultType="stockVO">
 		select stock.no, com_no as comNo, open_date as openDate, open_price as open, close_price as close, high_price as high, low_price as low, volume, fluc_state as flucState, raise, rate
 		from stock, (select no from company where name=#{comName}) company

@@ -44,44 +44,61 @@
 	var bestAnaCode = '${bestAnalysis.anaCode}';
 	var bestNewsCode = '${bestAnalysis.newsCode}';
 	var RTA = ${RTA};
+	var reliability = [];
+	<c:forEach items="${reliability}" var="reliabilityVO">
+		reliability.push({
+			anaCode : '${reliabilityVO.anaCode }',
+			newsCode : '${reliabilityVO.newsCode }',
+			value : '${reliabilityVO.value }'
+		});
+	</c:forEach>
 	if(option == 'pie'){
 		var chart;
 		//카테고리별 오늘 상승/하락/동결 - 카테고리별 내일 상승/하락/동결
 		var map = new Map();
 		for ( var i in RTA) {
 			var newsCode = RTA[i].newsCode;
+			var anaCode = RTA[i].anaCode;
+			var add;
+			for(var j in reliability){
+				if(reliability[j].anaCode == anaCode && reliability[j].newsCode == newsCode){
+					add = Number(reliability[j].value)/100;
+					break;
+				}
+			}
 			if (map.has(newsCode)) {
 				var updateList = map.get(newsCode);
 				if (RTA[i].todayFluc == 'p')
-					updateList[0]++;
+					updateList[0] += add;
 				else if (RTA[i].todayFluc == 'm')
-					updateList[1]++;
+					updateList[1] += add;
 				else
-					updateList[2]++;
+					updateList[2] += add;
 				if (RTA[i].tomorrowFluc == 'p')
-					updateList[3]++;
+					updateList[3] += add;
 				else if (RTA[i].tomorrowFluc == 'm')
-					updateList[4]++;
+					updateList[4] += add;
 				else
-					updateList[5]++;
+					updateList[5] += add;
 				map.set(newsCode, updateList);
 			} else {
 				var list = [ 0, 0, 0, 0, 0, 0 ];
 				if (RTA[i].todayFluc == 'p')
-					list[0]++;
+					list[0] += add;
 				else if (RTA[i].todayFluc == 'm')
-					list[1]++;
+					list[1] += add;
 				else
-					list[2]++;
+					list[2] += add;
 				if (RTA[i].tomorrowFluc == 'p')
-					list[3]++;
+					list[3] += add;
 				else if (RTA[i].tomorrowFluc == 'm')
-					list[4]++;
+					list[4] += add;
 				else
-					list[5]++;
+					list[5] += add;
 				map.set(newsCode, list);
 			}
 		}
+		console.log(map);
 		var types = [ '상승', '하락', '동결', '상승', '하락', '동결' ]
 		var newsCodes = [ 'culture', 'digital', 'economic', 'entertain', 'foreign', 'politics', 'society'];
 		var chartData1 = [];
@@ -106,8 +123,8 @@
 				value : value1
 			});
 		}
-		$('#chart').append('<div class="row"><div class="space-12"></div><div id="todayChart" class="col-xs-6" style="height: 400px;"></div>'
-							+'<div id="tomorrowChart" class="col-xs-6" style="height: 400px;"></div></div>')
+		$('#chart').append('<div class="row"><div class="space-12"></div><div id="todayChart" class="col-sm-6" style="height: 400px;"></div>'
+							+'<div id="tomorrowChart" class="col-sm-6" style="height: 400px;"></div></div>')
 		
 		makeChart(chartData1, "todayChart", "금일 주가 예측");
 		makeChart(chartData2, "tomorrowChart", "익일 주가 예측");

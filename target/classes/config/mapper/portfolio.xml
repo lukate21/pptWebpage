@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper
+	PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="portfolio">
+	
+	<select id="selectFavoriteList" parameterType="int" resultType="myFavoriteVO">
+		select MY_FAVORITE.no, MY_FAVORITE.user_no as userNo, MY_FAVORITE.com_no as comNo, company.name as comName
+		from MY_FAVORITE, company
+		where MY_FAVORITE.com_no = company.no and user_no = #{userNo}
+		order by no
+	</select>
+	
+	<select id="selectFavoriteAble" parameterType="java.util.Map" resultType="myFavoriteVO">
+		select MY_FAVORITE.no, MY_FAVORITE.user_no as userNo, MY_FAVORITE.com_no as comNo
+		from MY_FAVORITE, (select * from company where name = #{comName}) company
+		where company.no = MY_FAVORITE.com_no and user_no = #{userNo}
+		order by no
+	</select>
+	
+	<insert id="insertFavorite" parameterType="java.util.Map">
+		insert into MY_FAVORITE(NO, user_no, com_no) 
+		values(MY_FAVORITE_SEQ.nextVal, #{userNo}, #{comNo})
+	</insert>
+	
+	<delete id="deleteFavorite" parameterType="java.util.Map">
+		delete from MY_FAVORITE
+		where user_no = #{userNo} and com_no = #{comNo}
+	</delete>
+	
+	<select id="selectMyAnalysis" parameterType="int" resultType="myAnalisysVO">
+		select no, user_no as userNo, dic_name as dicName, com_name as comName, ana_code as anaCode, news_code as newsCode,
+		yesterday_fluc as yesterdayFluc, today_fluc as todayFluc, today_inc as todayInc, today_dec as todayDec, today_equ as todayEqu,
+		tomorrow_fluc as tomorrowFluc, tomorrow_inc as tomorrowInc, tomorrow_dec as tomorrowDec, tomorrow_equ as tomorrowEqu,
+		to_char(reg_date,'yyyy-MM-dd') as regDate
+		from MY_ANALISYS
+		where user_no = #{userNo}
+	</select>
+</mapper>

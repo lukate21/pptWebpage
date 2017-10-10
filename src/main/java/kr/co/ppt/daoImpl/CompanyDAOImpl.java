@@ -45,20 +45,6 @@ public class CompanyDAOImpl {
 		return template.selectList("company.selectComList");
 	}
 	
-	public List<MyFavoriteVO> selectFavoriteList(int userNo){
-		return template.selectList("company.selectFavoriteList",userNo);
-	}
-	
-	public MyFavoriteVO selectFavoriteAble(Map<String,Object> map){
-		return template.selectOne("company.selectFavoriteAble",map);
-	}
-	
-	public void insertFavorite(Map<String,Object> map){
-		template.insert("company.insertFavorite",map);
-	}
-	public void deleteFavorite(Map<String,Object> map){
-		template.delete("company.deleteFavorite",map);
-	}
 	
 	public CompanyVO selectCom(CompanyVO companyVO){
 		return template.selectOne("company.selectCom",companyVO);
