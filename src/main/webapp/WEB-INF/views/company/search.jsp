@@ -62,7 +62,7 @@
 					</div>
 				<div class="row">
 					<div class="col-sm-6" id="stockChart">
-						<iframe src="${context}/company/chart/stock.do?name=${name}"
+						<iframe src="${context}/company/chart/stock.do?name=${name}&draw=true"
 							width="100%" height="400px" frameBorder="0"> </iframe>
 					</div>
 					<div class="col-sm-4" id="newsChart">
@@ -169,7 +169,7 @@
 		}
 		var tag1 = '<iframe src="${context}/company/chart/stock.do?name='
 				+ comName
-				+ '" width="100%" height="400px" frameBorder="0"></iframe>'
+				+ '&draw=true" width="100%" height="400px" frameBorder="0"></iframe>'
 		var tag2 = '<iframe src="${context}/company/chart/newsCount.do" width="100%" height="400px" frameBorder="0"> </iframe>'
 		var tag3 = '<iframe src="${context}/company/chart/RTA.do?name='
 				+ comName

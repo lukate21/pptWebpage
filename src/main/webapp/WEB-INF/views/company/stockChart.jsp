@@ -22,11 +22,7 @@
 			&nbsp;<span id="now"></span>
 			<span id="yesterPredict"></span>(전일) | <span id="todayPredict"></span>(금일) | <span id="tomorrowPredict"></span>(익일) | 
 			<span id="bestTodayPredict"></span>(베스트 금일) | <span id="bestTomorrowPredict"></span>(베스트 익일)
-			<span style="cursor:pointer;" class="badge badge-success pull-right" onclick="drawChart2('1_YEAR')">1년</span>
-			<span style="cursor:pointer;" class="badge badge-success pull-right" onclick="drawChart2('1_MONTH')">1개월</span>
-			<span style="cursor:pointer;" class="badge badge-success pull-right" onclick="drawChart('1_DAY')">1일</span> 
-	
-	<div id="chartdiv" class="col-sm-12" style="height:300px;"></div>
+			
 	
 	<script>
 	var bestAnaCode = '${bestAnalysis.anaCode}';
@@ -136,7 +132,6 @@
 							yesterPredict = '상승';
 						}else
 							yesterPredict = '동결';
-						console.log(yesterPredict);
 						if((yesterdayPcnt>yesterdayMcnt && yesterPredict == '상승') || (yesterdayPcnt<yesterdayMcnt && yesterPredict == '하락')){
 							$('#yesterPredict').html('<span class="text-success"><b>예측성공</b></span>');
 						}else {
@@ -164,128 +159,137 @@
 							+'&nbsp;&nbsp;&nbsp;-'+(start-now)
 							+'&nbsp;&nbsp;&nbsp;-'+((start-now)/start*100).toFixed(2)+'%</small></h3></span>');
 				}
-				var chart = AmCharts.makeChart("chartdiv", {
-					type: "stock",
+				if('${draw}'== 'true'){
+					$('body').append('<span style="cursor:pointer;" class="badge badge-success pull-right" onclick="drawChart2(\'1_YEAR\')">1년</span>');
+					$('body').append('<span style="cursor:pointer;" class="badge badge-success pull-right" onclick="drawChart2(\'1_MONTH\')">1개월</span>');
+					$('body').append('<span style="cursor:pointer;" class="badge badge-success pull-right" onclick="drawChart(\'1_DAY\')">1일</span> ');
+					$('body').append('<div id="chartdiv" class="col-sm-12" style="height:300px;"></div>');
+					
+			
+			
+					var chart = AmCharts.makeChart("chartdiv", {
+						type: "stock",
 
-					categoryAxesSettings: {
-						minPeriod: "mm"
-					},
+						categoryAxesSettings: {
+							minPeriod: "mm"
+						},
 
-					dataSets: [{
-						color: "#b0de09",
-						 fieldMappings: [{
-							fromField: "value",
-							toField: "value"
-						}/* , {
-							fromField: "volume",
-							toField: "volume"
-						} */],
+						dataSets: [{
+							color: "#b0de09",
+							 fieldMappings: [{
+								fromField: "value",
+								toField: "value"
+							}/* , {
+								fromField: "volume",
+								toField: "volume"
+							} */],
 
-						dataProvider: chartData,
-						categoryField: "dateTime",
-						/* stockEvents: [{
-							date: new Date(chartData[60].dateTime),
-							type: "sign",
-							backgroundColor: "#85CDE6",
-							graph: "g1",
-							text: "S",
-							description: "This is description of an event"
-						}, {
-							date: new Date(chartData[70].dateTime),
-							type: "arrowUp",
-							backgroundColor: "#FFFFFF",
-							backgroundAlpha: 0.5,
-							graph: "g1",
-							text: "F",
-							description: "Some longer\ntext can also\n be added"
-						}] */
-					}],
+							dataProvider: chartData,
+							categoryField: "dateTime",
+							/* stockEvents: [{
+								date: new Date(chartData[60].dateTime),
+								type: "sign",
+								backgroundColor: "#85CDE6",
+								graph: "g1",
+								text: "S",
+								description: "This is description of an event"
+							}, {
+								date: new Date(chartData[70].dateTime),
+								type: "arrowUp",
+								backgroundColor: "#FFFFFF",
+								backgroundAlpha: 0.5,
+								graph: "g1",
+								text: "F",
+								description: "Some longer\ntext can also\n be added"
+							}] */
+						}],
 
-					panels: [{
-							showCategoryAxis: true,
-							//title: "${name}",
-							percentHeight: 70,
+						panels: [{
+								showCategoryAxis: true,
+								//title: "${name}",
+								percentHeight: 70,
 
-							valueAxes:[{
-									id:"v1"
+								valueAxes:[{
+										id:"v1"
+									}
+								],
+
+								stockGraphs: [{
+									id: "g1",
+									valueField: "value",
+									type: "smoothedLine",
+									lineThickness: 2,
+									dateFormat: "MM-DD HH:NN",
+									balloonText: "<b>[[value]]</b>",
+									bullet: "round"
+								}],
+
+								stockLegend: {
+									valueTextRegular: " ",
+									markerType: "none"
 								}
-							],
-
-							stockGraphs: [{
-								id: "g1",
-								valueField: "value",
-								type: "smoothedLine",
-								lineThickness: 2,
-								dateFormat: "MM-DD HH:NN",
-								balloonText: "<b>[[value]]</b>",
-								bullet: "round"
-							}],
-
-							stockLegend: {
-								valueTextRegular: " ",
-								markerType: "none"
-							}
-						}/* ,
+							}/* ,
 
 
 
-						{
-							title: "Volume",
-							percentHeight: 30,
+							{
+								title: "Volume",
+								percentHeight: 30,
 
-							stockGraphs: [{
-								valueField: "volume",
-								type: "column",
-								cornerRadiusTop: 2,
-								fillAlphas: 1
-							}],
-	 
-							stockLegend: {
-								valueTextRegular: " ",
-								markerType: "none"
-							}
-						} */
-					],
+								stockGraphs: [{
+									valueField: "volume",
+									type: "column",
+									cornerRadiusTop: 2,
+									fillAlphas: 1
+								}],
+		 
+								stockLegend: {
+									valueTextRegular: " ",
+									markerType: "none"
+								}
+							} */
+						],
 
-					chartScrollbarSettings: {
-						graph: "g1",
-						usePeriod: "10mm",
-						position: "bottom",
-						updateOnReleaseOnly:false
-					},
+						chartScrollbarSettings: {
+							graph: "g1",
+							usePeriod: "10mm",
+							position: "bottom",
+							updateOnReleaseOnly:false
+						},
 
-					chartCursorSettings: {
-						valueBalloonsEnabled: true,
-						valueLineBalloonEnabled:true,
-						valueLineEnabled:true
-					},
+						chartCursorSettings: {
+							valueBalloonsEnabled: true,
+							valueLineBalloonEnabled:true,
+							valueLineEnabled:true
+						},
 
-					periodSelector: {
-						position: "bottom",
-						dateFormat: "MM-DD HH:NN",
-						inputFieldWidth: 100,
-						periods: [{
-							period: "hh",
-							count: 1,
-							label: "1시간"
-						}, {
-							period: "hh",
-							count: 3,
-							label: "3시간"
-						}, {
-							period: "MAX",
-							selected:true,
-							label: "MAX"
-						}]
-					},
+						periodSelector: {
+							position: "bottom",
+							dateFormat: "MM-DD HH:NN",
+							inputFieldWidth: 100,
+							periods: [{
+								period: "hh",
+								count: 1,
+								label: "1시간"
+							}, {
+								period: "hh",
+								count: 3,
+								label: "3시간"
+							}, {
+								period: "MAX",
+								selected:true,
+								label: "MAX"
+							}]
+						},
 
-					panelsSettings: {
-						mouseWheelZoomEnabled:true,
-						usePrefixes: true,
-						accessible: true
-					}
-				});
-				$('a').remove();
+						panelsSettings: {
+							mouseWheelZoomEnabled:true,
+							usePrefixes: true,
+							accessible: true
+						}
+					});
+					$('a').remove();
+				}
 			}
 		});
 	}

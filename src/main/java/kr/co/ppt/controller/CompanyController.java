@@ -50,8 +50,9 @@ public class CompanyController {
 	}
 	
 	@RequestMapping("/chart/stock.do")
-	public String stock(Model model, String name){
+	public String stock(Model model, String name, String draw){
 		model.addAttribute("name", name);
+		model.addAttribute("draw", draw);
 		model.addAttribute("RTA", cService.selectRTA(name, null));
 		model.addAttribute("bestAnalysis", cService.selectBestAnalysis(name));
 		return "company/stockChart";
@@ -81,8 +82,10 @@ public class CompanyController {
 	}
 	
 	@RequestMapping("/chart/dTree.do")
-	public String reliability(Model model, String name){
+	public String reliability(Model model, String name, String anaCode, String newsCode){
 		model.addAttribute("name", name);
+		model.addAttribute("anaCode", anaCode);
+		model.addAttribute("newsCode", newsCode);
 		model.addAttribute("dTree",dService.selectDtree(name).toJSONString());
 		return "company/dTreeChart";
 	}

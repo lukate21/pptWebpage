@@ -42,18 +42,19 @@ public class PortfolioController {
 		return "/my/analysis";
 	}
 	
-	@RequestMapping("/result.do")
-	public String result(Model model,HttpSession session){
+	@RequestMapping("/list.do")
+	public String list(Model model,HttpSession session){
 		MemberVO memberVO = (MemberVO)session.getAttribute("loginUser");
 		JSONArray arr = dService.selectUserDic(memberVO.getNo(), null);
 		model.addAttribute("myDic", arr.toJSONString());
 		model.addAttribute("comList", cService.selectComList());
-		return "/my/result";
+		return "/my/list";
 	}
 	
 	@RequestMapping(value="/favorite.do",method=RequestMethod.GET)
-	public String favorite(Model model, int userNo){
-		model.addAttribute("favoriteList", cService.selectFavoriteList(userNo));
+	public String favorite(Model model,HttpSession session){
+		MemberVO memberVO = (MemberVO)session.getAttribute("loginUser");
+		model.addAttribute("favoriteList", cService.selectFavoriteList(memberVO.getNo()));
 		return "/my/favorite";
 	}
 	

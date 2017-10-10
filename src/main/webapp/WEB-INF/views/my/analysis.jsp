@@ -257,7 +257,7 @@ function insertUserDic(){
 		contentType : 'application/x-www-form-urlencoded; charset=utf-8',
 		async : false,
 		success : function(data){
-			location.href="${context}/my/result.do";
+			location.href="${context}/my/list.do";
 		},
 		error : function(error){
 			console.log("error : "+ error);

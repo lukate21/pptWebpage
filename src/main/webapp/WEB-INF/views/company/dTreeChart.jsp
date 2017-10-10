@@ -16,39 +16,12 @@
 
 </head>
 <body>
-	<div>
-		<select id="newsCode">
-			<option value="culture">문화</option>
-			<option value="digital">IT</option>
-			<option value="economic">경제</option>
-			<option value="entertain">연예</option>
-			<option value="foreign">국제</option>
-			<option value="politics">정치</option>
-			<option value="society">사회</option>
-		</select>
-		<select id="anaCode">
-			<option value="opi1">감정분석1</option>
-			<option value="opi2">감정분석2</option>
-			<option value="pro1">확률분석1</option>
-			<option value="pro2">확률분석2</option>
-			<option value="fit1">필터분석1</option>
-			<option value="fit2">필터분석2</option>
-			<option value="meg1">통합분석1</option>
-			<option value="meg2">통합분석2</option>
-		</select>
-	</div>
 	<div class="chart" id="OrganiseChart-simple" style="width:100%;height:450px">
 	</div>
-	
 	<script src="${context }/resources/treant/vendor/raphael.js"></script>
 	<script src="${context }/resources/treant/Treant.js"></script>
 	<script>
-	$('#newsCode').change(function(){
-		drawDtree();
-	});
-	$('#anaCode').change(function(){
-		drawDtree();
-	});
+	drawDtree();
 	function drawDtree(){
 		var simple_chart_config = [];
 		var config = {
@@ -56,8 +29,8 @@
 		};
 		simple_chart_config.push(config);
 		
-		var newsCode = $('#newsCode').val();
-		var anaCode = $('#anaCode').val();
+		var newsCode = '${newsCode}';
+		var anaCode = '${anaCode}';
 		var index=0;
 		for(var i in data){
 			if(data[i].newsCode == newsCode && data[i].anaCode == anaCode){
@@ -66,7 +39,6 @@
 			}
 		}
 		var dTree = data[index].dTree;
-		console.log(dTree);
 		var branch = dTree[0];
 		var score = eval('branch.var');
 		var name = branch.splits;

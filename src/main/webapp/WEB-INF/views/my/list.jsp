@@ -70,13 +70,17 @@
 											+'<td class="center"><div class="hidden-sm hidden-xs btn-group center"><button class="btn btn-xs btn-danger"><i class="ace-icon fa fa-trash-o bigger-120"></i></button></div></td></tr>');
 			var detail = '';
 			var dictionary = myDic[i].dictionary;
-			for(var i in dictionary){
+		/* 	for(var i in dictionary){
 				detail += '<span class="label label-lg label-yellow arrowed-in arrowed-in-right">'
 				detail += dictionary[i].term;
 				detail += '</span>';
-			}
+			} */
 			
-			$('#simple-table tbody').append('<tr class="detail-row"><td colspan="8"><div class="table-detail">'+detail+'</div></td></tr>');
+			$('#simple-table tbody').append('<tr class="detail-row"><td colspan="8"><div class="table-detail"><div class="row">'
+					+'<div class="col-sm-6"><iframe src="${context}/company/chart/stock.do?name='+myDic[i].comName+'&draw=true" width="100%" height="400px" frameBorder="0"></iframe></div>'
+					+'<div class="col-sm-6"><div class="row">나만의 예측</div>'
+					+'<div class="row"><iframe src="${context}/company/chart/dTree.do?name='+myDic[i].comName+'&anaCode='+anaCode+'&newsCode='+newsCode+'"width="100%" height="400px" frameBorder="0"> </iframe></div>'
+					+'</div></div></div></td></tr>');
 		}
 	});
 </script>

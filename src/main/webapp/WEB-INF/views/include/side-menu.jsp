@@ -65,7 +65,7 @@
 											<b class="arrow"></b>
 										</li>
 										<li class="">
-											<a href="${context}/my/favorite.do?userNo=${loginUser.no}">
+											<a href="${context}/my/favorite.do">
 												<i class="menu-icon fa fa-caret-right"></i>
 												관심기업
 											</a>
@@ -75,6 +75,13 @@
 											<a class="" href="${context }/my/analysis.do">
 												<i class="menu-icon fa fa-caret-right"></i>
 												나만의 분석 만들기
+											</a>
+											<b class="arrow"></b>
+										</li>
+										<li class="">
+											<a class="" href="${context }/my/list.do">
+												<i class="menu-icon fa fa-caret-right"></i>
+												나만의 분석 보기
 											</a>
 											<b class="arrow"></b>
 										</li>
