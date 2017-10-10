@@ -50,9 +50,9 @@
 								<span class="menu-text">기업검색</span>
 							</a>
 						</li>
-<<<<<<< HEAD
 						<li class="js_nav-item nav-item">
 									<a class="dropdown-toggle" href="">
+										<i class="menu-icon fa fa-book book-icon"></i>
 										<span>사용자포트폴리오</span>
 										<b class="arrow fa fa-angle-down"></b>
 									</a>
@@ -80,14 +80,6 @@
 										</li>
 									</ul>
 								</li>
-=======
-						<li class="">
-							<a class="" href="${context }/my/analysis.do">
-								<i class="menu-icon fa fa-book book-icon"></i>
-								<span class="menu-text">사용자포트폴리오</span>
-							</a>
-						</li>
->>>>>>> eca9b760a3f3487b4d03d083d84f2c2fb45345a3
 						<li class="">
 							<a	class="" href="#">
 								<i class="menu-icon fa fa-globe globe-icon"></i>
