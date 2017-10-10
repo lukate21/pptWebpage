@@ -8,6 +8,7 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.net.URLConnection;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpSession;
@@ -25,6 +26,7 @@ import kr.co.ppt.serviceImpl.CompanyServiceImpl;
 import kr.co.ppt.serviceImpl.DictionaryServiceImpl;
 import kr.co.ppt.vo.CompanyVO;
 import kr.co.ppt.vo.MemberVO;
+import kr.co.ppt.vo.MyFavoriteVO;
 
 @Controller
 @RequestMapping("/my")
@@ -83,6 +85,21 @@ public class PortfolioController {
 		return "성공";
 	}
 	
+	@RequestMapping(value="/favoriteList.json",method=RequestMethod.GET)
+	@ResponseBody
+	public String favoriteList(int userNo){
+		List<MyFavoriteVO> list = cService.selectFavoriteList(userNo);
+		JSONArray arr = new JSONArray();
+		for(MyFavoriteVO myFavoriteVO: list){
+			JSONObject obj = new JSONObject();
+			obj.put("no", myFavoriteVO.getNo());
+			obj.put("userNo", myFavoriteVO.getUserNo());
+			obj.put("comNo", myFavoriteVO.getComNo());
+			obj.put("comName", myFavoriteVO.getComName());
+			arr.add(obj);
+		}
+		return arr.toJSONString();
+	}
 	
 	@RequestMapping("/analysis/getMorp.json")
 	@ResponseBody
