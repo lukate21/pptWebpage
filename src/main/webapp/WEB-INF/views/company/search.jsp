@@ -44,8 +44,16 @@
 			<div class="page-content">
 				<div class="row">
 					<div class="col-sm-12">
+						<div class="col-sm-3">
+							<h3><span id="newsTitle"></span>
+								<button class="btn btn-white btn-xs no-border" onclick="addFavorite('${name}')" id="favorite">
+									<i class="fa fa-star-o bigger-150" aria-hidden="true" ></i>
+								</button>
+							</h3>
+						</div>
 							<div class="form-group pull-right">
 								<div class="pos-rel">
+									
 									<input class="typeahead scrollable" type="text"
 										placeholder="기업검색" />
 								</div>
@@ -54,25 +62,38 @@
 					</div>
 				<div class="row">
 					<div class="col-sm-6" id="stockChart">
-						<iframe src="${context}/company/chart/stock.do?name=${name}"
+						<iframe src="${context}/company/chart/stock.do?name=${name}&draw=true"
 							width="100%" height="400px" frameBorder="0"> </iframe>
 					</div>
-					<div class="col-sm-6" id="RTAChart">
-						<iframe src="${context}/company/chart/RTA.do?name=${name}"
+					<div class="col-sm-4" id="newsChart">
+						<iframe src="${context}/company/chart/newsCount.do"
 							width="100%" height="400px" frameBorder="0"> </iframe>
+					</div>
+					<div class="col-sm-2">
+						<div id="news"></div>
+					</div>
+					
+				</div>
+				<div class="row">
+					<div class="col-sm-6" id="RTAChartPie">
+						<iframe src="${context}/company/chart/RTA.do?name=${name}&option=pie"
+							width="100%" height="500px" frameBorder="0"> </iframe>
+					</div>
+					<div class="col-sm-6" id="RTAChartTable">
+						<iframe src="${context}/company/chart/RTA.do?name=${name}&option=table"
+							width="100%" height="500px" frameBorder="0"> </iframe>
 					</div>
 				</div>
 				<div class="row">
-					<div class="col-sm-6" id="relNewsChart">
+					<div class="col-sm-6 col-sm-offset-3" id="relNewsChart">
 						<iframe
 							src="${context}/company/chart/reliability.do?name=${name}&option=newsCode"
 							width="100%" height="500px" frameBorder="0"> </iframe>
 					</div>
-					<div class="col-sm-6" id="relAnaChart">
-						<iframe
-							src="${context}/company/chart/reliability.do?name=${name}&option=anaCode"
+					<%-- <div class="col-sm-6" id="dTreeChart">
+						<iframe src="${context}/company/chart/dTree.do?name=${name}"
 							width="100%" height="500px" frameBorder="0"> </iframe>
-					</div>
+					</div> --%>
 				</div>
 			</div>
 			<div class="row">
@@ -96,7 +117,7 @@
 									<div class="section-seperator margin-b-50">
 										<div class="margin-b-50">
 											<div class="margin-b-30">
-												<div id="news"></div>
+												<!-- <div id="news"></div> -->
 											</div>
 										</div>
 									</div>
@@ -127,6 +148,7 @@
 <script src="${context}/resources/assets/js/jquery-typeahead.js"></script>
 <script>
 	getNews('${name}');
+	checkFavorite('${name}');
 	$(document).on("click", ".tt-suggestion.tt-selectable", function() {
 		change();
 	});
@@ -147,21 +169,30 @@
 		}
 		var tag1 = '<iframe src="${context}/company/chart/stock.do?name='
 				+ comName
-				+ '" width="100%" height="400px" frameBorder="0"></iframe>'
-		var tag2 = '<iframe src="${context}/company/chart/RTA.do?name='
+				+ '&draw=true" width="100%" height="400px" frameBorder="0"></iframe>'
+		var tag2 = '<iframe src="${context}/company/chart/newsCount.do" width="100%" height="400px" frameBorder="0"> </iframe>'
+		var tag3 = '<iframe src="${context}/company/chart/RTA.do?name='
 				+ comName
-				+ '" width="100%" height="400px" frameBorder="0"></iframe>'
-		var tag3 = '<iframe src="${context}/company/chart/reliability.do?name='
-				+ comName
-				+ '&option=newsCode" width="100%" height="500px" frameBorder="0"></iframe>'
+				+ '&option=pie" width="100%" height="500px" frameBorder="0"></iframe>'
 		var tag4 = '<iframe src="${context}/company/chart/reliability.do?name='
 				+ comName
-				+ '&option=anaCode" width="100%" height="500px" frameBorder="0"></iframe>'
+				+ '&option=newsCode" width="100%" height="500px" frameBorder="0"></iframe>'
+		var tag5  = '<iframe src="${context}/company/chart/RTA.do?name='
+			+ comName
+			+ '&option=table" width="100%" height="500px" frameBorder="0"></iframe>'
+		var tag6  = '<iframe src="${context}/company/chart/dTree.do?name='
+			+ comName
+			+ '" width="100%" height="500px" frameBorder="0"></iframe>'
+			
 		$('#stockChart').html(tag1);
-		$('#RTAChart').html(tag2);
-		$('#relNewsChart').html(tag3);
-		$('#relAnaChart').html(tag4);
+		$('#newsChart').html(tag2);
+		$('#RTAChartPie').html(tag3);
+		$('#relNewsChart').html(tag4);
+		$('#RTAChartTable').html(tag5);
+		$('#dTreeChart').html(tag6);
+		$('#favorite').attr('onclick','addFavorite("'+comName+'")');
 		getNews(comName);
+		checkFavorite(comName);
 	}
 
 	function getNews(comName) {
@@ -171,11 +202,11 @@
 				var obj = []
 				obj = JSON.parse(data);
 				console.log(obj);
-				$('#news').empty();
-				$('#newsTitle').html(comName + ' 뉴스');
+				$('#news').html('<div class="space-24"></div>');
+				$('#newsTitle').text(comName);
 				for (var i = 0; i < obj.length; i++) {
 					$('#news').append(
-							'<p><a href="'+obj[i].link+'">' + obj[i].title
+							'<p><a href="'+obj[i].link+'" target="_blank">' + obj[i].title
 									+ "</a><br/></p>");
 				}
 			},
@@ -184,6 +215,64 @@
 			}
 		});
 	}
+	
+	function checkFavorite(comName){
+		var userNo = '${loginUser.no}'; 
+		if(userNo == ''){
+			userNo=0;
+		}
+		$.ajax({
+			url : '${context}/my/favorite.json',
+			type : 'get',
+			data : {
+				'userNo' : userNo,
+				'comName' : comName
+			},
+			success : function(data){
+				console.log(data);
+				if(data == "able"){
+					$('#favorite i').attr("class","fa fa-star-o bigger-150");
+				}else if(data == 'disable'){
+					$('#favorite i').attr("class","fa fa-star bigger-150");
+				}
+			}
+		});
+	}
+	
+	function addFavorite(comName){
+		var method;
+		if($('#favorite i')[0].className.split(" ")[1] == "fa-star"){
+			if(confirm('이미 즐겨찾기에 등록되어 있습니다.\n목록에서 삭제하겠습니까?')){
+				method = "delete";
+			}else{
+				return false;
+			}
+		}else{
+			method = "insert";
+		}
+		if('${loginUser.no}' == ''){
+			alert('로그인이 필요합니다.');
+		}else{
+			$.ajax({
+				url : '${context}/my/favorite.json',
+				type : 'post',
+				data : {
+					'userNo' : '${loginUser.no}',
+					'comName' : comName,
+					'method' : method
+				},
+				contentType : 'application/x-www-form-urlencoded; charset=utf-8',
+				success : function(data){
+					if(method =="delete"){
+						$('#favorite i').attr("class","fa fa-star-o bigger-150");
+					}else{
+						$('#favorite i').attr("class","fa fa-star bigger-150");
+					}
+				}
+			});
+		}
+	}
+	
 	//검색 필터링
 	jQuery(function($) {
 		var demo1 = $('select[name="duallistbox_demo1[]"]')
@@ -247,5 +336,6 @@
 
 	});
 </script>
+
 </body>
 </html>

@@ -156,6 +156,7 @@ public class DictionaryServiceImpl {
 			obj.put("newsCode", dom.get("newsCode"));
 			obj.put("anaCode", dom.get("anaCode"));
 			obj.put("dicName", dom.get("dicName"));
+			obj.put("reliability", dom.get("reliability"));
 			obj.put("dictionary", dom.get("dictionary"));
 			arr.add(obj);
 		}

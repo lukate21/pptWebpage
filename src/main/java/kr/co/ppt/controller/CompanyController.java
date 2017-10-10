@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import kr.co.ppt.serviceImpl.CompanyServiceImpl;
+import kr.co.ppt.serviceImpl.DtreeService;
 import kr.co.ppt.vo.CompanyVO;
 
 @Controller
@@ -26,6 +27,8 @@ import kr.co.ppt.vo.CompanyVO;
 public class CompanyController {
 	@Autowired
 	CompanyServiceImpl cService;
+	@Autowired
+	DtreeService dService;
 	
 	@RequestMapping("/wordcloud.do")
 	public String wordCloud(Model model,String name){
@@ -47,17 +50,26 @@ public class CompanyController {
 	}
 	
 	@RequestMapping("/chart/stock.do")
-	public String stock(Model model, String name){
+	public String stock(Model model, String name, String draw){
 		model.addAttribute("name", name);
+		model.addAttribute("draw", draw);
 		model.addAttribute("RTA", cService.selectRTA(name, null));
+		model.addAttribute("reliability", cService.selectReliability(name));
 		model.addAttribute("bestAnalysis", cService.selectBestAnalysis(name));
 		return "company/stockChart";
 	}
 	
+	@RequestMapping("/chart/newsCount.do")
+	public String news(Model model){
+		model.addAttribute("newsCount", cService.selectNewsCount());
+		return "company/newsChart";
+	}
+	
 	@RequestMapping("/chart/RTA.do")
-	public String RTA(Model model, String name){
+	public String RTA(Model model, String name, String option){
 		model.addAttribute("name", name);
 		model.addAttribute("RTA", cService.selectRTA(name, null));
+		model.addAttribute("reliability", cService.selectReliability(name));
 		model.addAttribute("bestAnalysis", cService.selectBestAnalysis(name));
 		return "company/RTAChart";
 	}
@@ -69,6 +81,18 @@ public class CompanyController {
 		model.addAttribute("bestAnalysis", cService.selectBestAnalysis(name));
 		model.addAttribute("reliability", cService.selectReliability(name));
 		return "company/reliabilityChart";
+	}
+	
+	@RequestMapping("/chart/dTree.do")
+	public String reliability(Model model, String name, String anaCode, String newsCode, String inc, String dec, String equ){
+		model.addAttribute("name", name);
+		model.addAttribute("anaCode", anaCode);
+		model.addAttribute("newsCode", newsCode);
+		model.addAttribute("inc", inc);
+		model.addAttribute("dec", dec);
+		model.addAttribute("equ", equ);
+		model.addAttribute("dTree",dService.selectDtree(name).toJSONString());
+		return "company/dTreeChart";
 	}
 	
 	@RequestMapping("/selectCompanyList.json")

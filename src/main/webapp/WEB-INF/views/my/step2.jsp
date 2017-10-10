@@ -73,7 +73,20 @@
 									</div>
 	
 									<div id="mydicTab" class="tab-pane fade">
-										<p>내사전</p>
+											<table class="table table-striped table-bordered table-hover">
+												<thead>
+													<tr>
+														<th>나만의 분석명</th>
+														<th>기업명</th>
+														<th>분석방법</th>
+														<th>뉴스</th>
+														<th>신뢰도</th>
+														<th>단어 개수</th>
+													</tr>
+												</thead>
+												<tbody>
+												</tbody>
+											</table>
 									</div>
 								</div>
 							</div>
@@ -130,7 +143,7 @@
 		if(prevDic.length == 0){
 			alert('사전을 불러오고 있습니다.');
 			return;
-		}else if(page > (prevDicSize/2000).toFixed(0)){
+		}else if(page > (prevDicSize/2000).toFixed(0) && page != 1){
 			alert('마지막 페이지 입니다.');
 			return;
 		}
@@ -327,6 +340,26 @@
 		}
 		$('#selectedTermCnt').text(0);
 		$('#termCntSpan').html('<i class="ace-icon fa fa-angle-double-right"></i>'+$('#selectedTermCnt').text());
+	}
+	
+	function drawMyDic(index){
+		$('#inputDic').html('<select multiple="multiple" size="10" name="duallistbox_demo1[]" id="duallist"></select>');
+		var morp = myDic[index].dictionary;
+		for (i in morp) {
+			$('#duallist').append('<option value="'+morp[i].term+'">' + morp[i].term + '</option>');
+		}
+		
+		var demo1 = $('select[name="duallistbox_demo1[]"]')
+		.bootstrapDualListbox(
+				{
+					infoTextFiltered : '<span class="label label-purple label-lg">Filtered</span>'
+				});
+		var container1 = demo1.bootstrapDualListbox('getContainer');
+		container1.find('.btn').addClass('btn-white btn-info btn-bold');
+		$('.btn.clear1').remove();
+		$('.btn.clear2').remove();
+		$($('.info-container')[1]).append('<button class="btn btn-sm btn-success btn-white btn-round pull-right" onclick="addAll()">'
+				+'<i class="ace-icon fa fa-share green bigger-110"></i>추가</button>');
 	}
 	//개수 카운트
 	$(document).on('keydown','.tags',function(key){

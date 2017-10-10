@@ -5,6 +5,7 @@ public class MyFavoriteVO {
 	private int no;
 	private int userNo;
 	private int comNo;
+	private String comName;
 
 	public MyFavoriteVO() {}
 
@@ -36,6 +37,15 @@ public class MyFavoriteVO {
 
 	public void setComNo(int comNo) {
 		this.comNo = comNo;
+	}
+
+	
+	public String getComName() {
+		return comName;
+	}
+
+	public void setComName(String comName) {
+		this.comName = comName;
 	}
 
 	@Override

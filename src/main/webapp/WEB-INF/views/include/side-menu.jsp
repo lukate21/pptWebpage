@@ -50,12 +50,43 @@
 								<span class="menu-text">기업검색</span>
 							</a>
 						</li>
-						<li class="">
-							<a class="" href="${context }/my/analysis.do">
-								<i class="menu-icon fa fa-book book-icon"></i>
-								<span class="menu-text">사용자포트폴리오</span>
-							</a>
-						</li>
+						<li class="js_nav-item nav-item">
+									<a class="dropdown-toggle" href="">
+										<i class="menu-icon fa fa-book book-icon"></i>
+										<span>사용자포트폴리오</span>
+										<b class="arrow fa fa-angle-down"></b>
+									</a>
+									<ul class="submenu" >
+										<li class="">
+											<a href="${context}/my/stock.do">
+												<i class="menu-icon fa fa-caret-right"></i>
+												보유주식
+											</a>
+											<b class="arrow"></b>
+										</li>
+										<li class="">
+											<a href="${context}/my/favorite.do">
+												<i class="menu-icon fa fa-caret-right"></i>
+												관심기업
+											</a>
+											<b class="arrow"></b>
+										</li>
+										<li class="">
+											<a class="" href="${context }/my/analysis.do">
+												<i class="menu-icon fa fa-caret-right"></i>
+												나만의 분석 만들기
+											</a>
+											<b class="arrow"></b>
+										</li>
+										<li class="">
+											<a class="" href="${context }/my/list.do">
+												<i class="menu-icon fa fa-caret-right"></i>
+												나만의 분석 보기
+											</a>
+											<b class="arrow"></b>
+										</li>
+									</ul>
+								</li>
 						<li class="">
 							<a	class="" href="#">
 								<i class="menu-icon fa fa-globe globe-icon"></i>

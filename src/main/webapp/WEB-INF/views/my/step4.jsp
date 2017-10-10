@@ -4,7 +4,7 @@
 <c:set var="context" value="${pageContext.request.contextPath}" />
 <div class="step-pane" data-step="4">
 	<div class="center">
-		<h3 class="green">등록되었습니다.</h3>
+		<h3 class="green">이대로 등록할까요?</h3>
 	</div>
 	<div class="space-6"></div>
 	<div class="row">
@@ -44,13 +44,13 @@
 		<div class="col-xs-6 text-right">신뢰도</div>
 		<div class="col-xs-6">
 			<div class="clearfix col-sm-12">
-				<p>80%</p>
+				<p id="reliabilityP"></p>
 			</div>
 		</div>
 	</div>
 	<div class="row">
 		<div class="col-xs-6 text-right">등록
-			단어 갯수</div>
+			단어 개수</div>
 		<div class="col-xs-6">
 			<div class="clearfix col-sm-12">
 				<p id="dictionaryP"></p>

@@ -7,6 +7,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <!-- bootstrap & fontawesome -->
 <link rel="stylesheet" href="${context}/resources/assets/css/bootstrap.min.css" />
+<link rel="stylesheet" href="${context}/resources/assets/font-awesome/4.5.0/css/font-awesome.min.css" />
 <!-- inline styles related to this page -->
 <script src="${context}/resources/assets/js/jquery-2.1.4.min.js"></script>
 <!-- chart -->
@@ -17,45 +18,114 @@
 <script src="${context }/resources/amcharts_3.21.6.free/amcharts/amcharts.js" type="text/javascript"></script>
 <script src="${context }/resources/amcharts_3.21.6.free/amcharts/serial.js" type="text/javascript"></script>
 </head>
-<body>
-	<div class="row">
-		<div class="col-sm-12">
-			<span><b>${name }</b></span>&nbsp;&nbsp;
-			<span id="now"></span>&nbsp;
-			<span id="raise"></span>&nbsp;
-			<span id="rate"></span>&nbsp;
-			예측 : <span id="predict"></span>&nbsp;
-			베스트 예측 : <span id="bestPredict"></span>
-			<span style="cursor:pointer;" class="badge badge-success pull-right" onclick="drawChart2('1_YEAR')">1년</span>
-			<span style="cursor:pointer;" class="badge badge-success pull-right" onclick="drawChart2('1_MONTH')">1개월</span>
-			<span style="cursor:pointer;" class="badge badge-success pull-right" onclick="drawChart('1_DAY')">1일</span> 
-		</div>
-	</div>
-	
-	<div id="chartdiv" class="col-sm-12" style="height:300px;"></div>
+<body style="margin-top:0;margin-bottom:0">
+			&nbsp;<span id="now"></span>
+			<span id="yesterPredict"></span>(전일) | <span id="todayPredict"></span>(금일) | <span id="tomorrowPredict"></span>(익일) | 
+			<span id="bestTodayPredict"></span>(베스트 금일) | <span id="bestTomorrowPredict"></span>(베스트 익일)
+			
 	
 	<script>
 	var bestAnaCode = '${bestAnalysis.anaCode}';
 	var bestNewsCode = '${bestAnalysis.newsCode}';
 	var RTA = ${RTA};
-	var pCnt = 0;
-	var mCnt = 0;
+	var yesterdayPcnt = 0;
+	var yesterdayMcnt = 0;
+	var yesterdayEcnt = 0;
+	var todayPcnt = 0;
+	var todayMcnt = 0;
+	var todayEcnt = 0;
+	var tomorrowPcnt = 0;
+	var tomorrowMcnt = 0;
+	var tomorrowEcnt = 0;
+	var reliability = [];
+	<c:forEach items="${reliability}" var="reliabilityVO">
+		reliability.push({
+			anaCode : '${reliabilityVO.anaCode }',
+			newsCode : '${reliabilityVO.newsCode }',
+			value : '${reliabilityVO.value }'
+		});
+	</c:forEach>
 	for(var i in RTA){
+		var newsCode = RTA[i].newsCode;
+		var anaCode = RTA[i].anaCode;
+		var add;
+		for(var j in reliability){
+			if(reliability[j].anaCode == anaCode && reliability[j].newsCode == newsCode){
+				add = Number(reliability[j].value)/100;
+				break;
+			}
+		}
+		if(RTA[i].yesterdayFluc == "p")
+			yesterdayPcnt += add;
+		else if(RTA[i].yesterdayFluc == "m")
+			yesterdayMcnt += add;
+		else if(RTA[i].yesterdayFluc == "-")
+			yesterdayEcnt += add;
 		if(RTA[i].todayFluc == "p")
-			pCnt++;
+			todayPcnt += add;
 		else if(RTA[i].todayFluc == "m")
-			mCnt++;
+			todayMcnt += add;
+		else if(RTA[i].todayFluc == "-")
+			todayEcnt += add;
+		if(RTA[i].tomorrowFluc == "p")
+			tomorrowPcnt += add;
+		else if(RTA[i].tomorrowFluc == "m")
+			tomorrowMcnt += add;
+		else if(RTA[i].tomorrowFluc == "-")
+			tomorrowEcnt += add;
+		
 		if(RTA[i].anaCode == bestAnaCode && RTA[i].newsCode == bestNewsCode){
-			$('#bestPredict').text(RTA[i].todayFluc);
+			var todayPredict = RTA[i].todayFluc;
+			var tomorrowPredict = RTA[i].tomorrowFluc;
+			//오늘
+			if(todayPredict == 'p'){
+				todayPredict = '상승';
+				$('#bestTodayPredict').html('<span class="text-danger"><b><i class="fa fa-caret-up"></i>&nbsp;'+todayPredict+'</b></span>');
+			}
+			else if(todayPredict == 'm'){
+				todayPredict = '하락';
+				$('#bestTodayPredict').html('<span class="text-primary"><b><i class="fa fa-caret-down"></i>&nbsp;'+todayPredict+'</b></span>');
+			}else if(todayPredict == '-'){
+				todayPredict = '동결';
+				$('#bestTodayPredict').html('<b>- '+todayPredict+'</b>');
+			}else if(todayPredict == 'x'){
+				todayPredict = '데이터 부족';
+				$('#bestTodayPredict').html('<b>'+todayPredict+'</b>');
+			}
+			
+			//내일
+			if(tomorrowPredict == 'p'){
+				tomorrowPredict = '상승';
+				$('#bestTomorrowPredict').html('<span class="text-danger"><b><i class="fa fa-caret-up"></i>&nbsp;'+tomorrowPredict+'</b></span>');
+			}
+			else if(tomorrowPredict == 'm'){
+				tomorrowPredict = '하락';
+				$('#bestTomorrowPredict').html('<span class="text-primary"><b><i class="fa fa-caret-down"></i>&nbsp;'+tomorrowPredict+'</b></span>');
+			}else if(tomorrowPredict == '-'){
+				tomorrowPredict = '동결';
+				$('#bestTomorrowPredict').html('<b>- '+tomorrowPredict+'</b>');
+			}else if(tomorrowPredict == 'x'){
+				tomorrowPredict = '데이터 부족';
+				$('#bestTomorrowPredict').html('<b>'+tomorrowPredict+'</b>');
+			}
 		}
 	}
 	var predicValue;
-	if(pCnt>mCnt){
-		$('#predict').text('+'+(pCnt/(pCnt+mCnt)*100).toFixed(0)+'%');
-	}else if(pCnt<mCnt){
-		$('#predict').text('-'+(mCnt/(pCnt+mCnt)*100).toFixed(0)+'%');
+	var todayTotal = todayPcnt + todayMcnt + todayEcnt;
+	var tomorrowTotal = tomorrowPcnt + tomorrowMcnt + tomorrowEcnt;
+	if(todayPcnt>todayMcnt){
+		$('#todayPredict').html('<span class="text-danger"><b><i class="fa fa-caret-up"></i>'+(todayPcnt/todayTotal*100).toFixed(0)+'%</b></span>');
+	}else if(todayPcnt<todayMcnt){
+		$('#todayPredict').html('<span class="text-primary"><b><i class="fa fa-caret-down"></i>'+(todayMcnt/todayTotal*100).toFixed(0)+'%</b></span>');
 	}else{
-		$('#predict').text('X');
+		$('#todayPredict').html('<b>-</b>');
+	}
+	if(tomorrowPcnt>tomorrowMcnt){
+		$('#tomorrowPredict').html('<span class="text-danger"><b><i class="fa fa-caret-up"></i>'+(tomorrowPcnt/tomorrowTotal*100).toFixed(0)+'%</b></span>');
+	}else if(tomorrowPcnt<tomorrowMcnt){
+		$('#tomorrowPredict').html('<span class="text-primary"><b><i class="fa fa-caret-down"></i>'+(tomorrowMcnt/tomorrowTotal*100).toFixed(0)+'%</b></span>');
+	}else{
+		$('#tomorrowPredict').html('<b>-</b>');
 	}
 	
 	drawChart('1_DAY');
@@ -65,138 +135,193 @@
 			success : function(data){
 				var obj = JSON.parse(data)[0];
 				var chartData = obj.price;
-				console.log(chartData);
-				var start = chartData[0].value;
-				var now = chartData[chartData.length-1].value;
-				$('#now').text(now);
-				if(start<now){
-					$('#raise').text('+'+(now-start).toFixed(2));
-					$('#rate').text('+'+((now-start)/start*100).toFixed(2)+'%');
-				}else{
-					$('#raise').text('-'+(start-now).toFixed(2));
-					$('#rate').text('-'+((start-now)/start*100).toFixed(2)+'%');
-				}
-				var chart = AmCharts.makeChart("chartdiv", {
-					type: "stock",
-
-					categoryAxesSettings: {
-						minPeriod: "mm"
-					},
-
-					dataSets: [{
-						color: "#b0de09",
-						 fieldMappings: [{
-							fromField: "value",
-							toField: "value"
-						}/* , {
-							fromField: "volume",
-							toField: "volume"
-						} */],
-
-						dataProvider: chartData,
-						categoryField: "dateTime",
-						/* stockEvents: [{
-							date: new Date(chartData[60].dateTime),
-							type: "sign",
-							backgroundColor: "#85CDE6",
-							graph: "g1",
-							text: "S",
-							description: "This is description of an event"
-						}, {
-							date: new Date(chartData[70].dateTime),
-							type: "arrowUp",
-							backgroundColor: "#FFFFFF",
-							backgroundAlpha: 0.5,
-							graph: "g1",
-							text: "F",
-							description: "Some longer\ntext can also\n be added"
-						}] */
-					}],
-
-					panels: [{
-							showCategoryAxis: false,
-							title: "Value",
-							percentHeight: 70,
-
-							valueAxes:[{
-									id:"v1"
-								}
-							],
-
-							stockGraphs: [{
-								id: "g1",
-								valueField: "value",
-								type: "smoothedLine",
-								lineThickness: 2,
-								balloonText: "[[dateTime]]:<b>[[value]]</b>",
-								bullet: "round"
-							}],
-
-							stockLegend: {
-								valueTextRegular: " ",
-								markerType: "none"
-							}
-						}/* ,
-
-
-
-						{
-							title: "Volume",
-							percentHeight: 30,
-
-							stockGraphs: [{
-								valueField: "volume",
-								type: "column",
-								cornerRadiusTop: 2,
-								fillAlphas: 1
-							}],
-	 
-							stockLegend: {
-								valueTextRegular: " ",
-								markerType: "none"
-							}
-						} */
-					],
-
-					chartScrollbarSettings: {
-						graph: "g1",
-						usePeriod: "10mm",
-						position: "bottom",
-						updateOnReleaseOnly:false
-					},
-
-					chartCursorSettings: {
-						valueBalloonsEnabled: true,
-						valueLineBalloonEnabled:true,
-						valueLineEnabled:true
-					},
-
-					periodSelector: {
-						position: "bottom",
-						dateFormat: "YYYY-MM-DD HH:NN",
-						inputFieldWidth: 100,
-						periods: [{
-							period: "hh",
-							count: 1,
-							label: "1시간"
-						}, {
-							period: "hh",
-							count: 3,
-							label: "3시간"
-						}, {
-							period: "MAX",
-							selected:true,
-							label: "MAX"
-						}]
-					},
-
-					panelsSettings: {
-						mouseWheelZoomEnabled:true,
-						usePrefixes: true,
-						accessible: true
+				var yesterdayEnd;
+				$.ajax({
+					url : '${context}/company/rtStock.json?name=${name}&timeFrame=1_MONTH',
+					async:false,
+					success : function(data){
+						var todayDate = chartData[0].dateTime.split('T')[0];
+						var obj = JSON.parse(data)[0];
+						var yesterdayData = obj.price;
+						var yesterPredict;
+						var d1,d2; //d1 = 하루전, d2 = 이틀전
+						if(todayDate == yesterdayData[yesterdayData.length-1].date){
+							yesterdayEnd = yesterdayData[yesterdayData.length-2];
+							d1 = yesterdayData[yesterdayData.length-2].value;
+							d2 = yesterdayData[yesterdayData.length-3].value;
+						}else{
+							yesterdayEnd = yesterdayData[yesterdayData.length-1];
+							d1 = yesterdayData[yesterdayData.length-1].value;
+							d2 = yesterdayData[yesterdayData.length-2].value;
+						}
+						if(d1<d2){
+							yesterPredict = '하락';
+						}else if(d1>d2){
+							yesterPredict = '상승';
+						}else
+							yesterPredict = '동결';
+						if((yesterdayPcnt>yesterdayMcnt && yesterPredict == '상승') || (yesterdayPcnt<yesterdayMcnt && yesterPredict == '하락')){
+							$('#yesterPredict').html('<span class="text-success"><b>예측성공</b></span>');
+						}else {
+							$('#yesterPredict').html('<span class="text-danger"><b>예측실패</b></span>');
+						}
 					}
 				});
-				$('a').remove();
+				chartData.unshift({
+					dateTime : chartData[0].dateTime.split('T')[0]+'T00:00:00Z',
+					value : yesterdayEnd.value
+				});
+				chartData[1].dateTime=chartData[1].dateTime.split('T')[0]+'T00:01:00Z'
+				var start = chartData[0].value;
+				var now = chartData[chartData.length-1].value;
+				if('${name}'=="KOSPI" || '${name}' == "KOSDAQ" || '${name}' == "KOSPI2"){
+					now = now.toFixed(2);
+					start = start.toFixed(2);
+				}
+				if(start<now){
+					$('#now').html('<span class="text-danger"><h3 style="margin-top:0"><b>'+now+'</b><small class="text-danger">'
+									+'&nbsp;&nbsp;&nbsp;<i class="fa fa-caret-up"></i>&nbsp;'+(now-start)
+									+'&nbsp;&nbsp;&nbsp;+'+((now-start)/start*100).toFixed(2)+'%</small></h3></span>');
+				}else if(start>now){
+					$('#now').html('<span class="text-primary"><h3 style="margin-top:0"><b>'+now+'</b><small class="text-primary">'
+							+'&nbsp;&nbsp;&nbsp;<i class="fa fa-caret-down"></i>&nbsp;'+(start-now)
+							+'&nbsp;&nbsp;&nbsp;-'+((start-now)/start*100).toFixed(2)+'%</small></h3></span>');
+				}else{
+					$('#now').html('<span><h3 style="margin-top:0"><b>'+now+'</b><small>'
+							+'&nbsp;&nbsp;&nbsp;-'+(start-now)
+							+'&nbsp;&nbsp;&nbsp;-'+((start-now)/start*100).toFixed(2)+'%</small></h3></span>');
+				}
+				if('${draw}'== 'true'){
+					$('body').append('<span style="cursor:pointer;" class="badge badge-success pull-right" onclick="drawChart2(\'1_YEAR\')">1년</span>');
+					$('body').append('<span style="cursor:pointer;" class="badge badge-success pull-right" onclick="drawChart2(\'1_MONTH\')">1개월</span>');
+					$('body').append('<span style="cursor:pointer;" class="badge badge-success pull-right" onclick="drawChart(\'1_DAY\')">1일</span> ');
+					$('body').append('<div id="chartdiv" class="col-sm-12" style="height:300px;"></div>');
+					
+			
+			
+					var chart = AmCharts.makeChart("chartdiv", {
+						type: "stock",
+
+						categoryAxesSettings: {
+							minPeriod: "mm"
+						},
+
+						dataSets: [{
+							color: "#b0de09",
+							 fieldMappings: [{
+								fromField: "value",
+								toField: "value"
+							}/* , {
+								fromField: "volume",
+								toField: "volume"
+							} */],
+
+							dataProvider: chartData,
+							categoryField: "dateTime",
+							/* stockEvents: [{
+								date: new Date(chartData[60].dateTime),
+								type: "sign",
+								backgroundColor: "#85CDE6",
+								graph: "g1",
+								text: "S",
+								description: "This is description of an event"
+							}, {
+								date: new Date(chartData[70].dateTime),
+								type: "arrowUp",
+								backgroundColor: "#FFFFFF",
+								backgroundAlpha: 0.5,
+								graph: "g1",
+								text: "F",
+								description: "Some longer\ntext can also\n be added"
+							}] */
+						}],
+
+						panels: [{
+								showCategoryAxis: true,
+								//title: "${name}",
+								percentHeight: 70,
+
+								valueAxes:[{
+										id:"v1"
+									}
+								],
+
+								stockGraphs: [{
+									id: "g1",
+									valueField: "value",
+									type: "smoothedLine",
+									lineThickness: 2,
+									dateFormat: "MM-DD HH:NN",
+									balloonText: "<b>[[value]]</b>",
+									bullet: "round"
+								}],
+
+								stockLegend: {
+									valueTextRegular: " ",
+									markerType: "none"
+								}
+							}/* ,
+
+
+
+							{
+								title: "Volume",
+								percentHeight: 30,
+
+								stockGraphs: [{
+									valueField: "volume",
+									type: "column",
+									cornerRadiusTop: 2,
+									fillAlphas: 1
+								}],
+		 
+								stockLegend: {
+									valueTextRegular: " ",
+									markerType: "none"
+								}
+							} */
+						],
+
+						chartScrollbarSettings: {
+							graph: "g1",
+							usePeriod: "10mm",
+							position: "bottom",
+							updateOnReleaseOnly:false
+						},
+
+						chartCursorSettings: {
+							valueBalloonsEnabled: true,
+							valueLineBalloonEnabled:true,
+							valueLineEnabled:true
+						},
+
+						periodSelector: {
+							position: "bottom",
+							dateFormat: "MM-DD HH:NN",
+							inputFieldWidth: 100,
+							periods: [{
+								period: "hh",
+								count: 1,
+								label: "1시간"
+							}, {
+								period: "hh",
+								count: 3,
+								label: "3시간"
+							}, {
+								period: "MAX",
+								selected:true,
+								label: "MAX"
+							}]
+						},
+
+						panelsSettings: {
+							mouseWheelZoomEnabled:true,
+							usePrefixes: true,
+							accessible: true
+						}
+					});
+					$('a').remove();
+				}
 			}
 		});
 	}
@@ -208,7 +333,6 @@
 				var obj = JSON.parse(data)[0];
 				var chartData = [];
 				chartData = obj.price;
-				console.log(chartData);
 				createStockChart();
 				function createStockChart() {
 					chart = new AmCharts.AmStockChart();
@@ -236,14 +360,14 @@
 					// PANELS ///////////////////////////////////////////
 					// first stock panel
 					var stockPanel1 = new AmCharts.StockPanel();
-					stockPanel1.showCategoryAxis = false;
-					stockPanel1.title = "Value";
+					stockPanel1.showCategoryAxis = true;
+					//stockPanel1.title = "Value";
 					stockPanel1.percentHeight = 70;
 		
 					// graph of first stock panel
 					var graph1 = new AmCharts.StockGraph();
 					graph1.valueField = "value";
-					graph1.balloonText = "[[date]]:<b>[[value]]</b>",
+					graph1.balloonText = '<b>[[value]]</b>',
 					graph1.type = "smoothedLine";
 					graph1.lineThickness = 2;
 					graph1.bullet = "round";
@@ -298,7 +422,7 @@
 					// PERIOD SELECTOR ///////////////////////////////////
 					var periodSelector = new AmCharts.PeriodSelector();
 					periodSelector.position = "bottom";
-					periodSelector.dateFormat = "YYYY-MM-DD JJ:NN";
+					periodSelector.dateFormat = "YYYY-MM-DD";
 					periodSelector.inputFieldWidth = 150;
 					if(timeFrame == "1_MONTH"){
 						periodSelector.periods = [{

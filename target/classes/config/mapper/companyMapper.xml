@@ -35,7 +35,10 @@
 	</select>
 	
 	<select id="selectRTA" parameterType="String" resultType="rtaVO">
-		select RT_ANALISYS.no, company.name as comName, ana_code as anaCode, news_code as newsCode, today_fluc as todayFluc, tomorrow_fluc as tomorrowFluc, reg_date as regDate
+		select RT_ANALISYS.no, company.name as comName, ana_code as anaCode, news_code as newsCode, yesterday_fluc as yseterdayFluc,
+		today_fluc as todayFluc, today_inc as todayInc, today_dec as todayDec, today_equ as todayEqu,
+		tomorrow_fluc as tomorrowFluc, tomorrow_inc as tomorrowInc, tomorrow_dec as tomorrowDec, tomorrow_equ as tomorrowEqu,
+		to_char(reg_date,'yyyy-MM-dd') as regDate
 		from RT_ANALISYS, company
 		where RT_ANALISYS.com_no = company.no and company.name = #{name}
 	</select>
@@ -58,5 +61,10 @@
 		select no, com_name as comName, ana_code as anaCode, news_code as newsCode, value
 		from ANA_RELIABILITY
 		where com_name = #{comName}
+	</select>
+	
+	<select id="selectNewsCount" resultType="newsCountVO">
+		select no, news_code as newsCode, today, total
+		from news_count
 	</select>
 </mapper>

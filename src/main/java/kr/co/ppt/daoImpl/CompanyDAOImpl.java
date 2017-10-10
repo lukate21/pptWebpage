@@ -15,6 +15,8 @@ import com.mongodb.client.MongoDatabase;
 
 import kr.co.ppt.mongo.JSONReader;
 import kr.co.ppt.vo.CompanyVO;
+import kr.co.ppt.vo.MyFavoriteVO;
+import kr.co.ppt.vo.NewsCountVO;
 import kr.co.ppt.vo.RTAVO;
 import kr.co.ppt.vo.ReliabilityVO;
 
@@ -43,6 +45,7 @@ public class CompanyDAOImpl {
 		return template.selectList("company.selectComList");
 	}
 	
+	
 	public CompanyVO selectCom(CompanyVO companyVO){
 		return template.selectOne("company.selectCom",companyVO);
 	}
@@ -57,5 +60,8 @@ public class CompanyDAOImpl {
 	
 	public List<ReliabilityVO> selectReliability(String comName){
 		return template.selectList("company.selectReliability",comName);
+	}
+	public List<NewsCountVO> selectNewsCount(){
+		return template.selectList("company.selectNewsCount");
 	}
 }

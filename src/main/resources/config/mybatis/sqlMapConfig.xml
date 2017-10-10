@@ -6,9 +6,12 @@
 	<typeAliases>
 		<typeAlias alias="memberVO" type="kr.co.ppt.vo.MemberVO" />
 		<typeAlias alias="companyVO" type="kr.co.ppt.vo.CompanyVO" />
+		<typeAlias alias="myFavoriteVO" type="kr.co.ppt.vo.MyFavoriteVO" />
 		<typeAlias alias="stockVO" type="kr.co.ppt.vo.StockVO" />
 		<typeAlias alias="rtaVO" type="kr.co.ppt.vo.RTAVO" />
+		<typeAlias alias="myAnalisysVO" type="kr.co.ppt.vo.MyAnalisysVO" />
 		<typeAlias alias="reliabilityVO" type="kr.co.ppt.vo.ReliabilityVO" />
+		<typeAlias alias="newsCountVO" type="kr.co.ppt.vo.NewsCountVO" />
 		<typeAlias alias="MyStockVO" type="kr.co.ppt.vo.MyStockVO" />
 	</typeAliases>
 </configuration>

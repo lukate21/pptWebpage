@@ -8,20 +8,46 @@
 <link rel="stylesheet" href="${context}/resources/assets/css/bootstrap.min.css" />
 <script src="${context}/resources/assets/js/jquery-2.1.4.min.js"></script>
 <script src="${context}/resources/assets/js/bootstrap.min.js"></script>
+<link rel="stylesheet" href="${context}/resources/assets/css/ace.min.css" class="ace-main-stylesheet" id="main-ace-style" />
+
 <!-- inline styles related to this page -->
 <!-- chart -->
 <link rel="stylesheet" href="${context }/resources/amcharts_3.21.6.free/images/style.css" type="text/css">
 <script src="${context }/resources/amcharts_3.21.6.free/amcharts/amcharts.js" type="text/javascript"></script>
 <script src="${context }/resources/amcharts_3.21.6.free/amcharts/serial.js" type="text/javascript"></script>
+<link href="https://gitcdn.github.io/bootstrap-toggle/2.2.2/css/bootstrap-toggle.min.css" rel="stylesheet">
+<script src="https://gitcdn.github.io/bootstrap-toggle/2.2.2/js/bootstrap-toggle.min.js"></script>
+<style>
+	.main-content, body, html {
+	min-height: 90%;
+	margin-top : 0;
+	margin-bottom : 0;
+}
+</style>
 </head>
 <body>
 	<div class="row">
-		<div id="chart" class="col-sm-12" style="height:450px;"></div>
+		<div class="col-xs-12">
+			<span class="pull-right">
+			<input type="checkbox" class="ace ace-switch ace-switch-5 pull-right"
+			checked data-toggle="toggle" data-on="뉴스" data-off="분석방법" 
+			data-onstyle="success" data-offstyle="danger" id="toggleBtn">
+			</span>
+		</div>
+		<div id="chart" class="col-sm-12" style="height:400px;"></div>
+		<div class="pull-right"><i>2017-07-01 ~ 2017-08-31</i></div>
 	</div>
-	
 	<script>
+	$('#toggleBtn').change(function(){
+		if( $(this).prop('checked')){
+			respons('newsCode');
+		}else{
+			respons('anaCode');
+		}
+	});
 	var bestAnaCode = '${bestAnalysis.anaCode}';
 	var bestNewsCode = '${bestAnalysis.newsCode}';
+	var bestValue = '${bestAnalysis.value}';
 	var reliability = [];
 	<c:forEach items="${reliability}" var="reliabilityVO">
 		reliability.push({
@@ -30,6 +56,20 @@
 			value : '${reliabilityVO.value }'
 		});
 	</c:forEach>
+	var sum=0;
+	var deviation=0;
+	for(i in reliability){
+		var value = Number(reliability[i].value);
+		sum += value;
+		deviation += (value*value);
+	}
+	var mean = sum/56;
+	deviation = Math.sqrt((deviation/56 - (mean*mean)));
+	var variance = deviation*deviation;
+	console.log('평균 : ' + mean);
+	console.log('표준편차 : '+ deviation);
+	console.log('분산 : '+variance);
+	
 	respons('${option}');
 	function respons(option){
 		var chart;
@@ -107,6 +147,8 @@
 				bestTitle += '통합분석1';
 			else if(bestAnaCode == 'meg2')
 				bestTitle += '통합분석2';
+			
+			bestTitle += ' : ' + bestValue + '%';
 			
 			makeChart(chartData,"chart");
 			
@@ -284,6 +326,7 @@
 			else if(bestNewsCode == 'society')
 				bestTitle += '사회';
 			
+			bestTitle += ' : ' + bestValue + '%';
 			makeChart(chartData,"chart");
 			function makeChart(chartData,div){
 	            chart = new AmCharts.AmSerialChart();
