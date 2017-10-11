@@ -83,7 +83,7 @@ function getDictionary(){
 			prevDic = obj.prevDic;
 			prevDicSize = obj.size;
 			//console.log(dicValidationKey);
-			$('#textTab').attr('onclick','drawPrevDic(1)');
+			$('#textTab button').attr('onclick','drawPrevDic(1)');
 			$('#spinner').empty();
 		},
 		error : function(e){

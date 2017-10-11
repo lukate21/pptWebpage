@@ -19,11 +19,14 @@
 <script src="${context }/resources/amcharts_3.21.6.free/amcharts/serial.js" type="text/javascript"></script>
 </head>
 <body style="margin-top:0;margin-bottom:0">
-			&nbsp;<span id="now"></span>
-			<span id="yesterPredict"></span>(전일) | <span id="todayPredict"></span>(금일) | <span id="tomorrowPredict"></span>(익일) | 
-			<span id="bestTodayPredict"></span>(베스트 금일) | <span id="bestTomorrowPredict"></span>(베스트 익일)
-			
-	
+			<div class="row">
+				<div class="col-sm-6" id="now"></div>
+				<div class="col-sm-6 text-right">
+					<span id="yesterPredict"></span>
+					<br/>주가예측  | 금일 <span id="todayPredict"></span> | 익일 <span id="tomorrowPredict"></span> 
+					<br/>베스트 분석 예측 | 금일 <span id="bestTodayPredict"></span> | 익일 <span id="bestTomorrowPredict"></span>
+				</div>
+			</div>
 	<script>
 	var bestAnaCode = '${bestAnalysis.anaCode}';
 	var bestNewsCode = '${bestAnalysis.newsCode}';
@@ -114,16 +117,16 @@
 	var todayTotal = todayPcnt + todayMcnt + todayEcnt;
 	var tomorrowTotal = tomorrowPcnt + tomorrowMcnt + tomorrowEcnt;
 	if(todayPcnt>todayMcnt){
-		$('#todayPredict').html('<span class="text-danger"><b><i class="fa fa-caret-up"></i>'+(todayPcnt/todayTotal*100).toFixed(0)+'%</b></span>');
+		$('#todayPredict').html('<span class="text-danger"><b><i class="fa fa-caret-up"></i>&nbsp'+(todayPcnt/todayTotal*100).toFixed(0)+'%</b></span>');
 	}else if(todayPcnt<todayMcnt){
-		$('#todayPredict').html('<span class="text-primary"><b><i class="fa fa-caret-down"></i>'+(todayMcnt/todayTotal*100).toFixed(0)+'%</b></span>');
+		$('#todayPredict').html('<span class="text-primary"><b><i class="fa fa-caret-down"></i>&nbsp'+(todayMcnt/todayTotal*100).toFixed(0)+'%</b></span>');
 	}else{
 		$('#todayPredict').html('<b>-</b>');
 	}
 	if(tomorrowPcnt>tomorrowMcnt){
-		$('#tomorrowPredict').html('<span class="text-danger"><b><i class="fa fa-caret-up"></i>'+(tomorrowPcnt/tomorrowTotal*100).toFixed(0)+'%</b></span>');
+		$('#tomorrowPredict').html('<span class="text-danger"><b><i class="fa fa-caret-up"></i>&nbsp'+(tomorrowPcnt/tomorrowTotal*100).toFixed(0)+'%</b></span>');
 	}else if(tomorrowPcnt<tomorrowMcnt){
-		$('#tomorrowPredict').html('<span class="text-primary"><b><i class="fa fa-caret-down"></i>'+(tomorrowMcnt/tomorrowTotal*100).toFixed(0)+'%</b></span>');
+		$('#tomorrowPredict').html('<span class="text-primary"><b><i class="fa fa-caret-down"></i>&nbsp'+(tomorrowMcnt/tomorrowTotal*100).toFixed(0)+'%</b></span>');
 	}else{
 		$('#tomorrowPredict').html('<b>-</b>');
 	}
@@ -160,18 +163,12 @@
 							yesterPredict = '상승';
 						}else
 							yesterPredict = '동결';
-						if((yesterdayPcnt>yesterdayMcnt && yesterPredict == '상승') || (yesterdayPcnt<yesterdayMcnt && yesterPredict == '하락')){
-							$('#yesterPredict').html('<span class="text-success"><b>예측성공</b></span>');
-						}else {
-							$('#yesterPredict').html('<span class="text-danger"><b>예측실패</b></span>');
-						}
 					}
 				});
 				chartData.unshift({
-					dateTime : chartData[0].dateTime.split('T')[0]+'T00:00:00Z',
+					dateTime : '${yesterday}T23:50:00Z',
 					value : yesterdayEnd.value
 				});
-				chartData[1].dateTime=chartData[1].dateTime.split('T')[0]+'T00:01:00Z'
 				var start = chartData[0].value;
 				var now = chartData[chartData.length-1].value;
 				if('${name}'=="KOSPI" || '${name}' == "KOSDAQ" || '${name}' == "KOSPI2"){
@@ -179,26 +176,29 @@
 					start = start.toFixed(2);
 				}
 				if(start<now){
-					$('#now').html('<span class="text-danger"><h3 style="margin-top:0"><b>'+now+'</b><small class="text-danger">'
+					$('#now').html('<h3 style="margin-top:0"><span class="text-danger"><b>'+now+'</b><small class="text-danger">'
 									+'&nbsp;&nbsp;&nbsp;<i class="fa fa-caret-up"></i>&nbsp;'+(now-start)
-									+'&nbsp;&nbsp;&nbsp;+'+((now-start)/start*100).toFixed(2)+'%</small></h3></span>');
+									+'&nbsp;&nbsp;&nbsp;+'+((now-start)/start*100).toFixed(2)+'%</small></span></h3>');
 				}else if(start>now){
-					$('#now').html('<span class="text-primary"><h3 style="margin-top:0"><b>'+now+'</b><small class="text-primary">'
+					$('#now').html('<h3 style="margin-top:0"><span class="text-primary"><b>'+now+'</b><small class="text-primary">'
 							+'&nbsp;&nbsp;&nbsp;<i class="fa fa-caret-down"></i>&nbsp;'+(start-now)
-							+'&nbsp;&nbsp;&nbsp;-'+((start-now)/start*100).toFixed(2)+'%</small></h3></span>');
+							+'&nbsp;&nbsp;&nbsp;-'+((start-now)/start*100).toFixed(2)+'%</small></span></h3>');
 				}else{
-					$('#now').html('<span><h3 style="margin-top:0"><b>'+now+'</b><small>'
+					$('#now').html('<h3 style="margin-top:0"><span><b>'+now+'</b><small>'
 							+'&nbsp;&nbsp;&nbsp;-'+(start-now)
-							+'&nbsp;&nbsp;&nbsp;-'+((start-now)/start*100).toFixed(2)+'%</small></h3></span>');
+							+'&nbsp;&nbsp;&nbsp;-'+((start-now)/start*100).toFixed(2)+'%</small></span></h3>');
+				}
+				if((yesterdayPcnt>yesterdayMcnt && yesterPredict == '상승') || (yesterdayPcnt<yesterdayMcnt && yesterPredict == '하락')){
+					$('#yesterPredict').html('전일예측 <span class="text-success"><b>성공</b></span>');
+				}else {
+					$('#yesterPredict').html('전일예측 <span class="text-danger"><b>실패</b></span>');
 				}
 				if('${draw}'== 'true'){
 					$('body').append('<span style="cursor:pointer;" class="badge badge-success pull-right" onclick="drawChart2(\'1_YEAR\')">1년</span>');
 					$('body').append('<span style="cursor:pointer;" class="badge badge-success pull-right" onclick="drawChart2(\'1_MONTH\')">1개월</span>');
 					$('body').append('<span style="cursor:pointer;" class="badge badge-success pull-right" onclick="drawChart(\'1_DAY\')">1일</span> ');
-					$('body').append('<div id="chartdiv" class="col-sm-12" style="height:300px;"></div>');
+					$('body').append('<div id="chartdiv" class="col-sm-12" style="height:400px;"></div>');
 					
-			
-			
 					var chart = AmCharts.makeChart("chartdiv", {
 						type: "stock",
 

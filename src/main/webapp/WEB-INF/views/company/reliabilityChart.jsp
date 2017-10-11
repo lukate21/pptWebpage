@@ -34,7 +34,7 @@
 			data-onstyle="success" data-offstyle="danger" id="toggleBtn">
 			</span>
 		</div>
-		<div id="chart" class="col-sm-12" style="height:400px;"></div>
+		<div id="chart" class="col-sm-12" style="height:600px;"></div>
 		<div class="pull-right"><i>2017-07-01 ~ 2017-08-31</i></div>
 	</div>
 	<script>

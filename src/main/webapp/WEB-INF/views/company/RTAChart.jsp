@@ -27,7 +27,7 @@
 <script src="${context }/resources/amcharts_3.21.6.free/amcharts/pie.js" type="text/javascript"></script>
 <style>
 	.main-content, body, html {
-	min-height: 95%
+	min-height: 100%
 }
 </style>
 </head>
@@ -72,13 +72,13 @@
 					updateList[0] += add;
 				else if (RTA[i].todayFluc == 'm')
 					updateList[1] += add;
-				else
+				else if(RTA[i].todayFluc == '-')
 					updateList[2] += add;
 				if (RTA[i].tomorrowFluc == 'p')
 					updateList[3] += add;
 				else if (RTA[i].tomorrowFluc == 'm')
 					updateList[4] += add;
-				else
+				else if(RTA[i].tomorrowFluc == '-')
 					updateList[5] += add;
 				map.set(newsCode, updateList);
 			} else {
@@ -87,13 +87,13 @@
 					list[0] += add;
 				else if (RTA[i].todayFluc == 'm')
 					list[1] += add;
-				else
+				else if (RTA[i].todayFluc == '-')
 					list[2] += add;
 				if (RTA[i].tomorrowFluc == 'p')
 					list[3] += add;
 				else if (RTA[i].tomorrowFluc == 'm')
 					list[4] += add;
-				else
+				else if (RTA[i].tomorrowFluc == '-')
 					list[5] += add;
 				map.set(newsCode, list);
 			}
@@ -123,8 +123,8 @@
 				value : value1
 			});
 		}
-		$('#chart').append('<div class="row"><div class="space-12"></div><div id="todayChart" class="col-sm-6" style="height: 400px;"></div>'
-							+'<div id="tomorrowChart" class="col-sm-6" style="height: 400px;"></div></div>')
+		$('#chart').append('<div class="row"><div class="space-12"></div><div id="todayChart" class="col-sm-6" style="height: 250px;"></div>'
+							+'<div id="tomorrowChart" class="col-sm-6" style="height: 250px;"></div></div>')
 		
 		makeChart(chartData1, "todayChart", "금일 주가 예측");
 		makeChart(chartData2, "tomorrowChart", "익일 주가 예측");
@@ -258,7 +258,7 @@
 			jQuery(grid_selector).jqGrid({
 				data: RTA,
 				datatype: "local",
-				height: 340,
+				height: 34*16,
 				colNames:['뉴스 카테고리','분석방법', '금일 예측', '익일 예측','예측시간'],
 				colModel:[
 					{name:'newsCode',index:'newsCode',width:90, editable:true,unformat: pickDate},
@@ -269,8 +269,8 @@
 				], 
 		
 				viewrecords : true,
-				rowNum:10,
-				rowList:[10,30,56],
+				rowNum:16,
+				rowList:[16,32,56],
 				pager : pager_selector,
 				altRows: true,
 				//toppager: true,
