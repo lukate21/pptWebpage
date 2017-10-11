@@ -7,15 +7,17 @@
 	
 	
 	<select id="getInfo" parameterType="String" resultType="MyStockVO">
-		select m.com_no as comNo, c.name as comName, buy_price as buyPrice, volume, to_char(buy_date,'MM-dd-yy') as buyDate
+		select m.no as no, m.com_no as comNo, c.name as comName, buy_price as buyPrice, volume, to_char(buy_date,'MM-dd-yy') as buyDate
 		from my_stock m, company c, users u
 		where m.com_no = c.no and m.user_no = u.no and u.id = #{id}
+		order by m.no asc
 	</select>
 
 	<select id="getInfoByUserNo" parameterType="int" resultType="MyStockVO">
-		select m.com_no as comNo, c.name as comName, buy_price as buyPrice, volume, to_char(buy_date,'MM-dd-yy') as buyDate
+		select m.no as no, m.com_no as comNo, c.name as comName, buy_price as buyPrice, volume, to_char(buy_date,'MM-dd-yy') as buyDate
 		from my_stock m, company c, users u
 		where m.com_no = c.no and m.user_no = u.no and u.no = #{no}
+		order by m.no asc
 	</select>
 	
 	<select id="getUserNo" parameterType="String" resultType="int">
@@ -31,4 +33,21 @@
 		values(my_stock_seq.nextval, #{userNo}, #{comNo}, #{buyPrice}, #{volume}, #{buyDate})
 	</insert>
 	
+	<update id="updateMyStock" parameterType="MyStockVO">
+		update my_stock
+		<set>
+			<if test="buyPrice != null">buy_price = #{buyPrice},</if>
+			<if test="volume != null">volume = #{volume},</if>
+			<if test="buyDate != null">buy_date = #{buyDate}</if>
+		</set>
+		where com_no=#{comNo} and user_no=#{userNo} and no=#{no}
+	</update>
+	
+	<delete id="deleteMyStock" parameterType="MyStockVO">
+		delete from my_stock
+		<where>
+			<if test="no != null">no=#{no}</if>
+			<if test="userNo != null">and user_no=#{userNo}</if>
+		</where>
+	</delete>
 </mapper>

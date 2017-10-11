@@ -62,12 +62,7 @@
 								<table id="dynamic-table" class="table table-striped table-bordered table-hover">
 									<thead>
 										<tr>
-											<th class="center">
-												<label class="pos-rel">
-													<input type="checkbox" class="ace" />
-													<span class="lbl"></span>
-												</label>
-											</th>
+											<th style="display:none"></th>
 											<th>기업명</th>
 											<th>매수가(원)</th>
 											<th class="hidden-480">매수량(주)</th>
@@ -91,19 +86,13 @@
 											</c:when>
 											<c:otherwise>
 												<c:forEach items="${myStockList}" var="myStock" varStatus="status">
-													<tr>
-											<td class="center">
-												<label class="pos-rel">
-													<input type="checkbox" class="ace" />
-													<span class="lbl"></span>
-												</label>
-											</td>
-	
-											<td>
+													<tr id="row">
+											<td class="hidden-480" style="display:none">${myStock.no}</td>
+											<td id="comName">
 												<a href="#">${myStock.comName}</a>
 											</td>
-											<td>${myStock.buyPrice}</td>
-											<td class="hidden-480" id="volume">${myStock.volume}</td>
+											<td id="buyPrice">${myStock.buyPrice}</td>
+											<td id="volume" class="hidden-480" id="volume">${myStock.volume}</td>
 											<td class="hidden-480" id="base">${myStock.volume*myStock.buyPrice}</td>
 											<td class="hidden-480" id="volume">${myStock.nowPrice}</td>
 											<c:choose>
@@ -114,15 +103,15 @@
 													<td class="hidden-480" style="color:red;">${myStock.volume*(myStock.nowPrice-myStock.buyPrice)}</td>
 												</c:otherwise>
 											</c:choose>
-											<td>${myStock.buyDate}</td>
+											<td id="buyDate">${myStock.buyDate}</td>
 											<td>
 												<div class="hidden-sm hidden-xs action-buttons">
 	
-													<a class="green" href="#">
+													<a class="green" href="#modal-modify" data-toggle="modal" >
 														<i class="ace-icon fa fa-pencil bigger-130"></i>
 													</a>
 	
-													<a class="red" href="#">
+													<a class="red" href="#modal-delete" data-toggle="modal">
 														<i class="ace-icon fa fa-trash-o bigger-130"></i>
 													</a>
 												</div>
@@ -136,7 +125,7 @@
 														<ul class="dropdown-menu dropdown-only-icon dropdown-yellow dropdown-menu-right dropdown-caret dropdown-close">
 	
 															<li>
-																<a href="#" class="tooltip-success" data-rel="tooltip" title="Edit">
+																<a href="#modal-modify" data-toggle="modal" class="tooltip-success" data-rel="tooltip" title="Edit">
 																	<span class="green">
 																		<i class="ace-icon fa fa-pencil-square-o bigger-120"></i>
 																	</span>
@@ -144,7 +133,7 @@
 															</li>
 	
 															<li>
-																<a href="#" class="tooltip-error" data-rel="tooltip" title="Delete">
+																<a href="#modal-delete" data-toggle="modal" class="tooltip-error" data-rel="tooltip" title="Delete">
 																	<span class="red">
 																		<i class="ace-icon fa fa-trash-o bigger-120"></i>
 																	</span>
@@ -163,10 +152,14 @@
 								</table>
 							</div>
 							<h4 class="pink">
-									<i class="ace-icon fa fa-hand-o-right icon-animated-hand-pointer blue"></i>
-									<a href="#modal-table" role="button" class="green" data-toggle="modal"> 등록 </a>
-								</h4>
+								<i class="ace-icon fa fa-hand-o-right icon-animated-hand-pointer blue"></i>
+								<a href="#modal-table" role="button" class="green" data-toggle="modal"> 등록 </a>
+							</h4>
 						</div>
+						<form id="formDelete" action="${context}/myPage/deleteMyStock.do" method="post">
+							<input type="hidden" id="deleteNo" name="no" value="" />
+						</form>	
+						
 						<div id="modal-table" class="modal fade" tabindex="-1">
 							<div class="modal-dialog">
 								<div class="modal-content">
@@ -201,7 +194,7 @@
 														<label class="col-sm-3 control-label no-padding-right" for="form-field-2"> 구매 가격 </label>
 							
 														<div class="col-sm-9">
-															<input type="text" id="buyPrice" name="buyPrice" class="col-xs-10 col-sm-5" />
+															<input type="number" id="buyPrice" name="buyPrice" class="col-xs-10 col-sm-5" />
 														</div>
 													</div>
 													
@@ -209,7 +202,7 @@
 														<label class="col-sm-3 control-label no-padding-right" for="form-field-2"> 보유량 </label>
 							
 														<div class="col-sm-9">
-															<input type="text" id="volume" name="volume" class="col-xs-10 col-sm-5" />
+															<input type="number" id="volume" name="volume" class="col-xs-10 col-sm-5" />
 														</div>
 													</div>
 													
@@ -232,7 +225,7 @@
 										</button>
 
 										<button class="btn btn-sm btn-primary pull-right" id="btnReg" data-dismiss="modal">
-											<i class="ace-icon fa fa-circle-o"></i>
+											<i class="ace-icon fa fa-check"></i>
 											등록
 										</button>
 
@@ -241,6 +234,118 @@
 							</div><!-- /.modal-dialog -->
 						</div>
 						
+						<div id="modal-modify" class="modal fade" tabindex="-1">
+							<div class="modal-dialog">
+								<div class="modal-content">
+									<div class="modal-header no-padding">
+										<div class="table-header">
+											<button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+												<span class="white">&times;</span>
+											</button>
+											수정하기
+										</div>
+									</div>
+
+									<div class="modal-body no-padding">
+										<div class="row">
+											<div class="col-xs-12">
+												
+											</div>
+										</div>
+										<div class="space-4"></div>
+										<div class="row">
+											<div class="col-xs-12">
+												<!-- PAGE CONTENT BEGINS -->
+												<form id="frmUpdate" name="frmUpdate" class="form-horizontal" role="form" action="${context}/myPage/myModify.do" method="post" onSubmit="return checkUpdate()">
+													<input type="hidden" id="editNo" name="no" value="" />
+													<div class="form-group">
+														<label class="col-sm-3 control-label no-padding-right" for="form-field-2"> 기업명 </label>
+														<div class="col-sm-9">
+															<input class="col-xs-10 col-sm-5 typeahead scrollable" type="text" id="editName" name="comName" value="${myStock.comName}" />
+														</div>
+													</div>
+													<div class="form-group">
+														<label class="col-sm-3 control-label no-padding-right" for="form-field-2"> 구매 가격 </label>
+							
+														<div class="col-sm-9">
+															<input type="number" id="editBuyPrice" name="buyPrice" class="col-xs-10 col-sm-5" />
+														</div>
+													</div>
+													
+													<div class="form-group">
+														<label class="col-sm-3 control-label no-padding-right" for="form-field-2"> 보유량 </label>
+							
+														<div class="col-sm-9">
+															<input type="number" id="editVolume" name="volume" class="col-xs-10 col-sm-5" />
+														</div>
+													</div>
+													
+													<div class="form-group">
+														<label class="col-sm-3 control-label no-padding-right" for="form-field-2"> 구매일 </label>
+							
+														<div class="col-sm-9">
+															<input type="date" id="editBuyDate" name="buyDate" class="col-xs-10 col-sm-5" />
+														</div>
+													</div>
+												</form>
+											</div><!-- /.row -->
+										</div><!-- /.row -->
+									</div>
+
+									<div class="modal-footer no-margin-top">
+										<button class="btn btn-sm btn-danger pull-right" data-dismiss="modal">
+											<i class="ace-icon fa fa-times"></i>
+											취소
+										</button>
+
+										<button class="btn btn-sm btn-primary pull-right" id="btnUpdate" data-dismiss="modal">
+											<i class="ace-icon fa fa-check"></i>
+											등록
+										</button>
+
+									</div>
+								</div><!-- /.modal-content -->
+							</div><!-- /.modal-dialog -->
+						</div>
+						
+						<div id="modal-delete" class="modal fade" tabindex="-1">
+							<div class="modal-dialog">
+								<div class="modal-content">
+									<div class="modal-header no-padding">
+										<div class="table-header">
+											<button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+												<span class="white">&times;</span>
+											</button>
+											항목 삭제
+										</div>
+									</div>
+
+									<div class="modal-body no-padding">
+										<div class="space-4"></div>
+										<div class="row">
+											<div class="col-xs-12">
+												<!-- PAGE CONTENT BEGINS -->
+												<sapn class="col-sm-4"> 정말로 삭제하시겠습니까?</sapn>
+											</div><!-- /.row -->
+										</div><!-- /.row -->
+										<div class="space-4"></div>
+									</div>
+
+									<div class="modal-footer no-margin-top">
+										<button class="btn btn-sm btn-danger pull-right" data-dismiss="modal">
+											<i class="ace-icon fa fa-times"></i>
+											취소
+										</button>
+
+										<button class="btn btn-sm btn-primary pull-right" id="btnDelete" data-dismiss="modal">
+											<i class="ace-icon fa fa-check"></i>
+											확인
+										</button>
+
+									</div>
+								</div><!-- /.modal-content -->
+							</div><!-- /.modal-dialog -->
+						</div>
 					</div>
 				</div>
 			</div>
@@ -261,6 +366,29 @@
 <script src="${context}/resources/assets/js/buttons.colVis.min.js"></script>
 <script src="${context}/resources/assets/js/dataTables.select.min.js"></script>
 <script>
+
+	$(document).on("click", ".fa-pencil", function() {
+		var tr = $(this).closest('tr');
+		var no = $(tr)[0].cells[0].innerText;
+		var comName = $(tr)[0].cells[1].innerText;
+		var buyPrice = $(tr)[0].cells[2].innerText;
+		var volume = $(tr)[0].cells[3].innerText;
+		var buyDate = $(tr)[0].cells[7].innerText;
+	
+		$('#editNo').attr("value", no);
+		$('#editName').attr("value", comName);
+		$('#editBuyPrice').attr("value", buyPrice);
+		$('#editVolume').attr("value", volume);
+		$('#editBuyDate').attr("value", buyDate);
+	});
+	
+	$(document).on("click", ".fa-trash-o", function(){
+		var tr = $(this).closest('tr');
+		var no = $(tr)[0].cells[0].innerText;
+
+		$('#deleteNo').attr("value", no);
+	});
+	
 	$(document).on("click", ".tt-suggestion.tt-selectable", function() {
 		change();
 	});
@@ -274,6 +402,13 @@
 	$(document).ready(function(){
 		$('#btnReg').click(function(){
 			$('#frmStock').submit();
+		});
+		
+		$('#btnUpdate').click(function(){
+			$('#frmUpdate').submit();
+		});
+		$('#btnDelete').click(function(){
+			$('#formDelete').submit();
 		});
 	});
 	
@@ -346,7 +481,7 @@
 			bAutoWidth: false,
 			"aoColumns": [
 			  { "bSortable": false },
-			  null, null, null, null, null, null, null,
+			   null, null, null, null, null, null, null,
 			  { "bSortable": false }
 			],
 			"aaSorting": [],
@@ -462,10 +597,23 @@
 		var volume = form.volume;
 		var buyDate = form.buyDate;
 		
+		alert(typeof(comName.value)+typeof(buyPrice.value)+typeof(volume.value)+typeof(buyDate.value))
+		
 		if(comName.value == "" || buyPrice.value == "" || volume.value == "" || buyDate.value == ""){
 			alert("모든 항목을 입력하셔야 합니다.")
 			return false;
 		}
+		return true;
+	}
+	
+	function checkUpdate(){
+		var form = document.frmUpdate;
+		var comName = form.comName;
+		var buyPrice = form.buyPrice;
+		var volume = form.volume;
+		var buyDate = form.buyDate;
+		
+		console.log("checkUpdate")
 		return true;
 	}
 </script>
