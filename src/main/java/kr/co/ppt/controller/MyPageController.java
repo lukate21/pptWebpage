@@ -7,7 +7,9 @@ import java.io.InputStreamReader;
 import java.net.URL;
 import java.net.URLConnection;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -21,6 +23,7 @@ import org.springframework.http.converter.json.GsonBuilderUtils;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import kr.co.ppt.service.MemberService;
 import kr.co.ppt.serviceImpl.CompanyServiceImpl;
@@ -61,7 +64,7 @@ public class MyPageController {
 			return "myPage/myPage";
 		else {
 			String msg = "일치하는 정보가 없습니다.";
-			String ref = "myPage.do";
+			String ref = "myPage/myPage.do";
 			UserUtil.makeMessage(msg, ref, request);
 			
 			return "messageAlert";
@@ -82,7 +85,7 @@ public class MyPageController {
 			return "messageAlert";
 		} else {
 			String msg = "수정 실패했습니다.";
-			String ref = "myPage.do";
+			String ref = "myPage/myPage.do";
 			UserUtil.makeMessage(msg, ref, request);
 			return "messageAlert";
 		}
@@ -187,6 +190,48 @@ public class MyPageController {
 		
 		
 		return "redirect:myStock.do";
+	}
+	
+	@ResponseBody
+	@RequestMapping("myStock.json")
+	public String myStock(int userNo){
+		
+		List<MyStockVO> myStockList = myStockService.getStockInfoByUserNo(userNo);
+
+		JSONArray jArr = new JSONArray();
+		JSONObject jObj = new JSONObject();
+		for(MyStockVO myStock : myStockList){
+			CompanyVO company = new CompanyVO();
+			company.setName(myStock.getComName());
+			String data = getComStock(company,"1_DAY");
+			JSONParser parser = new JSONParser();
+			JSONObject obj = null;
+			JSONArray arr = null;
+			try {
+				obj = (JSONObject)((JSONArray)parser.parse(data)).get(0);
+				arr = (JSONArray)obj.get("price");
+				int nowPrice = Integer.parseInt(((JSONObject)arr.get(arr.size()-1)).get("value").toString());
+				myStock.setNowPrice(nowPrice);
+				jObj = makeJson(myStock);
+				jArr.add(jObj);
+			} catch (ParseException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		return jArr.toJSONString();
+	}
+	
+	private JSONObject makeJson(MyStockVO myStock){
+		JSONObject obj = new JSONObject();
+		obj.put("comName", myStock.getComName());
+		obj.put("comNo", myStock.getComNo());
+		obj.put("buyPrice", myStock.getBuyPrice());
+		obj.put("volume", myStock.getVolume());
+		obj.put("buyDate", myStock.getBuyDate());
+		obj.put("nowPrice", myStock.getNowPrice());
+		
+		return obj;
 	}
 	
 	

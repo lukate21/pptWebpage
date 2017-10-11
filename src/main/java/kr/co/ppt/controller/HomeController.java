@@ -44,20 +44,28 @@ public class HomeController {
 	}
 	
 	@RequestMapping(value="join.do", method=RequestMethod.POST )
-	public String join(String email, String password, String name, String tel){
+	public String join(String email, String password, String name, String phone, HttpServletRequest request){
 		
 		MemberVO member = UserUtil.makeBasicInfo(email, password);
 		member.setName(name);
-		member.setTel(tel);
-		
+		member.setTel(phone);
+		System.out.println(member);
 		int result = memberService.join(member);
 		
 		System.out.println("result val : " + result);
 		
-		if(result == 1)
-			return "mainPage";
-		else
+		if(result == 1){
+			String msg = "회원가입에 성공했습니다.";
+			String ref = "hello.do";
+			UserUtil.makeMessage(msg, ref, request);
+			
+			return "messageAlert";
+		} else{
+			String msg = "회원가입에 실패했습니다.";
+			String ref = "join.do";
+			UserUtil.makeMessage(msg, ref, request);
 			return "";
+		}
 	}
 	
 	@ResponseBody

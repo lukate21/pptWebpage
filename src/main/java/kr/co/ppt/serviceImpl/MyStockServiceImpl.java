@@ -22,6 +22,14 @@ public class MyStockServiceImpl {
 		return myStockList;
 	}
 	
+	public List<MyStockVO> getStockInfoByUserNo(int userNo){
+		List<MyStockVO> myStockList = myStock.getMyStockByUserNo(userNo);
+		
+		for(MyStockVO my : myStockList)
+			System.out.println(my);
+		return myStockList;
+	}
+	
 	public int getUserNo(String id){
 		int userNo = myStock.getUserNo(id);
 		

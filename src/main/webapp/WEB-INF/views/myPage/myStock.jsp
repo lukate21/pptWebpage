@@ -72,6 +72,7 @@
 											<th>매수가(원)</th>
 											<th class="hidden-480">매수량(주)</th>
 											<th class="hidden-480">총매수금액(원)</th>
+											<th class="hidden-480">현재가(원)</th>
 											<th class="hidden-480">평가손익</th>
 	
 											<th>
@@ -104,6 +105,7 @@
 											<td>${myStock.buyPrice}</td>
 											<td class="hidden-480" id="volume">${myStock.volume}</td>
 											<td class="hidden-480" id="base">${myStock.volume*myStock.buyPrice}</td>
+											<td class="hidden-480" id="volume">${myStock.nowPrice}</td>
 											<c:choose>
 												<c:when test="${myStock.buyPrice > myStock.nowPrice}">
 													<td class="hidden-480" style="color:blue;">${myStock.volume*(myStock.buyPrice-myStock.nowPrice)}</td>
@@ -344,7 +346,7 @@
 			bAutoWidth: false,
 			"aoColumns": [
 			  { "bSortable": false },
-			  null, null, null, null, null, null,
+			  null, null, null, null, null, null, null,
 			  { "bSortable": false }
 			],
 			"aaSorting": [],

@@ -58,7 +58,7 @@
 	
 				<div class="row">
 					<div class="col-xs-12">
-						<form class="form-horizontal" name="joinForm" role="form" action="${context}/login.do" onsubmit="return checkEle()" method="get">
+						<form class="form-horizontal" name="joinForm" role="form" action="${context}/join.do" onsubmit="return checkEle()" method="post">
 							<div class="form-group">
 								<label class="col-sm-3 control-label no-padding-right" for="form-field-1"> 이메일 </label>
 	
@@ -80,7 +80,7 @@
 								<div class="col-sm-9">
 									<input type="password" name="password" id="form-field-2" placeholder="Password" class="col-xs-10 col-sm-5" />
 									<span class="help-inline col-xs-12 col-sm-7">
-										<span class="middle" id="password">Inline help text</span>
+										<span class="middle" id="password"></span>
 									</span>
 								</div>
 							</div>
@@ -102,7 +102,7 @@
 								<label class="col-sm-3 control-label no-padding-right" for="form-field-6"> 이름 </label>
 	
 								<div class="col-sm-9">
-									<input data-rel="tooltip" type="text" name="userName" id="form-field-6" placeholder="name" title="이름을 입력해 주세요" data-placement="bottom" />
+									<input data-rel="tooltip" type="text" name="name" id="form-field-6" placeholder="name" title="이름을 입력해 주세요" data-placement="bottom" />
 								</div>
 							</div>
 							
@@ -158,7 +158,7 @@
 <script type="text/javascript">
 jQuery(function($) {
 		$.mask.definitions['~']='[+-]';
-		$('#phone').mask('(999) 9999-9999');
+		$('#phone').mask('999-9999-9999');
 	
 		/* jQuery.validator.addMethod("phone", function (value, element) {
 			return this.optional(element) || /^\(\d{3}\) \d{4}\-\d{4}( x\d{1,6})?$/.test(value);
@@ -212,28 +212,36 @@ function checkEle(){
 	if(isNull(form.password, '패스워드를 입력하세요')){
 		return false;
 	}
+	if(isNull(form.repassword, '패스워드를 입력하세요')){
+		return false;
+	}
+	if(isNull(form.name, '이름을 입력하세요')){
+		return false;
+	}
+	if(isNull(form.phone, '전화번호를 입력하세요')){
+		return false;
+	}
 	if(!/^[a-zA-Z0-9]{4,15}$/.test(form.password.value)){
-		$('#loginFail').text('암호는 숫자와 영문자 조합으로 4~15자리를 사용해야 합니다.').css({
+		$('#password').text('암호는 숫자와 영문자 조합으로 4~15자리를 사용해야 합니다.').css({
 			'color' : 'red'
 		});
 		return false;
 	}
-	if(/^\(\d{3}\) \d{4}\-\d{4}( x\d{1,6})?$/.test(phone.value)){
-		
+	if(!/^[0-9]{2,3}-[0-9]{3,4}-[0-9]{4}$/.test(phone.value)){
+		alert("전화번호 형식에 맞지 않습니다.")
+		return false;
 	}
 	return true;
 }
 
-$("#rePassword").keydown(function(key) {
-	var form = document.joinForm;
-	var password = form.password;
-	if (key.keyCode == 13) {//키가 13이면 실행 (엔터는 13)
-		change();
-	}
-	if(key == password.value){
-		$('#rPassword').text("비밀번호가 일치하지 않습니다."); 
-	}
+function checkPassword(){
 	
+}
+
+$("#rePassword").keydown(function(key) {
+	if (key.keyCode == 13) {//키가 13이면 실행 (엔터는 13)
+		checkPassword();
+	}
 });
 </script>
 </body>
