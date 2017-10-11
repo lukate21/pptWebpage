@@ -194,7 +194,7 @@ public class MyPageController {
 	@RequestMapping(value="myStock.json", method=RequestMethod.POST)
 	public String myStock(HttpServletRequest request, int userNo){
 		
-		List<MyStockVO> myStockList = myStockService.getStockInfo(id);
+		List<MyStockVO> myStockList = myStockService.getStockInfoByUserNo(userNo);
 		List<MyStockVO> newStockList = new ArrayList<>();
 		
 		for(MyStockVO myStock : myStockList){

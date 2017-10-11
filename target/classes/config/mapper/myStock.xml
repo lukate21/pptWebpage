@@ -11,6 +11,12 @@
 		from my_stock m, company c, users u
 		where m.com_no = c.no and m.user_no = u.no and u.id = #{id}
 	</select>
+
+	<select id="getInfoByUserNo" parameterType="int" resultType="MyStockVO">
+		select m.com_no as comNo, c.name as comName, buy_price as buyPrice, volume, to_char(buy_date,'MM-dd-yy') as buyDate
+		from my_stock m, company c, users u
+		where m.com_no = c.no and m.user_no = u.no and u.no = #{no}
+	</select>
 	
 	<select id="getUserNo" parameterType="String" resultType="int">
 		select no from users where id=#{id}

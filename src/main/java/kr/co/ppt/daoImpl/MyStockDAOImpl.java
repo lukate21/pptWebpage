@@ -16,6 +16,12 @@ public class MyStockDAOImpl {
 	
 	public List<MyStockVO> getMyStock(String id){
 		List<MyStockVO> myStockList = sqlSession.selectList("myStock.getInfo",id);
+		
+		return myStockList;
+	}
+	
+	public List<MyStockVO> getMyStockByUserNo(int userNo){
+		List<MyStockVO> myStockList = sqlSession.selectList("myStock.getInfoByUserNo",userNo);
 
 		return myStockList;
 	}
