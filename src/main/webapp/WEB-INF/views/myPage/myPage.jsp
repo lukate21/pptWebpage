@@ -53,12 +53,12 @@
 				<div class="row">
 					<div class="col-xs-12">
 						<!-- PAGE CONTENT BEGINS -->
-						<form class="form-horizontal" role="form" action="${context}/myPage/modify.do" onSubmit="return checkEle()">
+						<form class="form-horizontal" role="form" action="${context}/myPage/modify.do" method="post" onSubmit="return checkEle()">
 							<div class="form-group">
 								<label class="col-sm-3 control-label no-padding-right" for="form-input-readonly"> 이메일 </label>
 	
 								<div class="col-sm-9">
-									<input readonly="" type="text" class="col-xs-10 col-sm-5" id="form-input-readonly" value="${sessionScope.loginUser.name}@${sessionScope.loginUser.domain}" />
+									<input readonly="" type="text" class="col-xs-10 col-sm-5" name="email" id="form-input-readonly" value="${sessionScope.loginUser.id}@${sessionScope.loginUser.domain}" />
 								</div>
 							</div>
 	
@@ -79,7 +79,7 @@
 								<label class="col-sm-3 control-label no-padding-right" for="form-field-2"> 변경할 비밀번호 </label>
 	
 								<div class="col-sm-9">
-									<input type="password" id="form-field-2" placeholder="변경할 비밀번호" class="col-xs-10 col-sm-5" />
+									<input type="password" id="form-field-2" name="password" placeholder="변경할 비밀번호" class="col-xs-10 col-sm-5" />
 								</div>
 							</div>
 							
@@ -87,7 +87,7 @@
 								<label class="col-sm-3 control-label no-padding-right" for="form-field-2"> 비밀번호 재입력 </label>
 	
 								<div class="col-sm-9">
-									<input type="password" id="form-field-2" placeholder="비밀번호 재입력" class="col-xs-10 col-sm-5" />
+									<input type="password" id="form-field-2" name="repassword" placeholder="비밀번호 재입력" class="col-xs-10 col-sm-5" />
 									<span class="help-inline col-xs-12 col-sm-7">
 										<span class="middle">비밀번호가 일치하지 않습니다.</span>
 									</span>
@@ -98,7 +98,7 @@
 								<label class="col-sm-3 control-label no-padding-right" for="form-filed-2"> 전화번호 </label>
 								
 								<div class="col-sm-9">
-									<input type="text" id="form-filed=2" class="col-xs-10 col-sm-5" value="${sessionScope.loginUser.tel}"/>
+									<input type="text" id="form-filed=2" class="col-xs-10 col-sm-5" name="tel" value="${sessionScope.loginUser.tel}"/>
 									<span class="help-inline col-xs-12 col-sm-7">
 										<span class="middle">"-"제외하고 입력해주세요.</span>
 									</span>
@@ -109,7 +109,7 @@
 	
 							<div class="clearfix form-actions">
 								<div class="col-md-offset-3 col-md-9">
-									<button id="btnModify" class="btn btn-info" type="button">
+									<button id="btnModify" class="btn btn-info" type="submit">
 										<i class="ace-icon fa fa-check bigger-110"></i>
 										완료
 									</button>
