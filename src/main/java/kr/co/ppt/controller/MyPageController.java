@@ -7,7 +7,9 @@ import java.io.InputStreamReader;
 import java.net.URL;
 import java.net.URLConnection;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -191,12 +193,13 @@ public class MyPageController {
 	}
 	
 	@ResponseBody
-	@RequestMapping(value="myStock.json", method=RequestMethod.POST)
-	public String myStock(HttpServletRequest request, int userNo){
+	@RequestMapping("myStock.json")
+	public String myStock(int userNo){
 		
 		List<MyStockVO> myStockList = myStockService.getStockInfoByUserNo(userNo);
-		List<MyStockVO> newStockList = new ArrayList<>();
-		
+
+		JSONArray jArr = new JSONArray();
+		JSONObject jObj = new JSONObject();
 		for(MyStockVO myStock : myStockList){
 			CompanyVO company = new CompanyVO();
 			company.setName(myStock.getComName());
@@ -209,17 +212,26 @@ public class MyPageController {
 				arr = (JSONArray)obj.get("price");
 				int nowPrice = Integer.parseInt(((JSONObject)arr.get(arr.size()-1)).get("value").toString());
 				myStock.setNowPrice(nowPrice);
-				newStockList.add(myStock);
+				jObj = makeJson(myStock);
+				jArr.add(jObj);
 			} catch (ParseException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 		}
+		return jArr.toJSONString();
+	}
+	
+	private JSONObject makeJson(MyStockVO myStock){
+		JSONObject obj = new JSONObject();
+		obj.put("comName", myStock.getComName());
+		obj.put("comNo", myStock.getComNo());
+		obj.put("buyPrice", myStock.getBuyPrice());
+		obj.put("volume", myStock.getVolume());
+		obj.put("buyDate", myStock.getBuyDate());
+		obj.put("nowPrice", myStock.getNowPrice());
 		
-		request.setAttribute("myStockList", newStockList);
-		request.setAttribute("comList", cService.selectComList());
-		
-		return "";
+		return obj;
 	}
 	
 	
