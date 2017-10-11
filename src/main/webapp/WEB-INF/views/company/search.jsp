@@ -42,54 +42,55 @@
 			</div>
 			
 			<div class="page-content">
-				<div class="row">
-					<div class="col-sm-12">
-						<div class="col-sm-3">
-							<h3><span id="newsTitle"></span>
-								<button class="btn btn-white btn-xs no-border" onclick="addFavorite('${name}')" id="favorite">
-									<i class="fa fa-star-o bigger-150" aria-hidden="true" ></i>
-								</button>
-							</h3>
-						</div>
-							<div class="form-group pull-right">
-								<div class="pos-rel">
-									
-									<input class="typeahead scrollable" type="text"
-										placeholder="기업검색" />
-								</div>
+				<div class="page-header">
+					<h1>
+						<span id="newsTitle"></span>
+						<button class="btn btn-white btn-xs no-border"
+							onclick="addFavorite('${name}')" id="favorite">
+							<i class="fa fa-star-o bigger-150" aria-hidden="true"></i>
+						</button>
+						<div class="form-group pull-right">
+							<div class="pos-rel">
+								<input class="typeahead scrollable" type="text"
+									placeholder="기업검색" />
 							</div>
 						</div>
-					</div>
+					</h1>
+				</div><!-- /.page-header -->
 				<div class="row">
-					<div class="col-sm-6" id="stockChart">
-						<iframe src="${context}/company/chart/stock.do?name=${name}&draw=true"
-							width="100%" height="400px" frameBorder="0"> </iframe>
+					<div class="col-sm-8">
+						<div class="row" id="stockChart">
+							<iframe src="${context}/company/chart/stock.do?name=${name}&draw=true"
+								width="100%" height="500px" frameBorder="0"> </iframe>
+						</div>
+						<div class="row" id="news">
+						</div>
+						<div class="row" id="relNewsChart">
+							<iframe
+							src="${context}/company/chart/reliability.do?name=${name}&option=newsCode"
+							width="100%" height="700px" frameBorder="0"> </iframe>
+						</div>
 					</div>
-					<div class="col-sm-4" id="newsChart">
+					<%-- <div class="col-sm-4" id="newsChart">
 						<iframe src="${context}/company/chart/newsCount.do"
 							width="100%" height="400px" frameBorder="0"> </iframe>
+					</div> --%>
+					<div class="col-sm-4" id="RTAChartPie">
+						<iframe src="${context}/company/chart/RTA.do?name=${name}&option=pie"
+							width="100%" height="550px" frameBorder="0"> </iframe>
 					</div>
-					<div class="col-sm-2">
-						<div id="news"></div>
+					<div class="col-sm-4" id="RTAChartTable">
+						<iframe src="${context}/company/chart/RTA.do?name=${name}&option=table"
+							width="100%" height="800px" frameBorder="0"> </iframe>
 					</div>
 					
 				</div>
 				<div class="row">
-					<div class="col-sm-6" id="RTAChartPie">
-						<iframe src="${context}/company/chart/RTA.do?name=${name}&option=pie"
-							width="100%" height="500px" frameBorder="0"> </iframe>
-					</div>
-					<div class="col-sm-6" id="RTAChartTable">
-						<iframe src="${context}/company/chart/RTA.do?name=${name}&option=table"
-							width="100%" height="500px" frameBorder="0"> </iframe>
-					</div>
+					
+					
 				</div>
 				<div class="row">
-					<div class="col-sm-6 col-sm-offset-3" id="relNewsChart">
-						<iframe
-							src="${context}/company/chart/reliability.do?name=${name}&option=newsCode"
-							width="100%" height="500px" frameBorder="0"> </iframe>
-					</div>
+					
 					<%-- <div class="col-sm-6" id="dTreeChart">
 						<iframe src="${context}/company/chart/dTree.do?name=${name}"
 							width="100%" height="500px" frameBorder="0"> </iframe>
@@ -169,27 +170,23 @@
 		}
 		var tag1 = '<iframe src="${context}/company/chart/stock.do?name='
 				+ comName
-				+ '&draw=true" width="100%" height="400px" frameBorder="0"></iframe>'
-		var tag2 = '<iframe src="${context}/company/chart/newsCount.do" width="100%" height="400px" frameBorder="0"> </iframe>'
+				+ '&draw=true" width="100%" height="500px" frameBorder="0"></iframe>'
+		var tag2 = '<iframe src="${context}/company/chart/newsCount.do" width="100%" height="300px" frameBorder="0"> </iframe>'
 		var tag3 = '<iframe src="${context}/company/chart/RTA.do?name='
 				+ comName
-				+ '&option=pie" width="100%" height="500px" frameBorder="0"></iframe>'
+				+ '&option=pie" width="100%" height="550px" frameBorder="0"></iframe>'
 		var tag4 = '<iframe src="${context}/company/chart/reliability.do?name='
 				+ comName
-				+ '&option=newsCode" width="100%" height="500px" frameBorder="0"></iframe>'
+				+ '&option=newsCode" width="100%" height="700px" frameBorder="0"></iframe>'
 		var tag5  = '<iframe src="${context}/company/chart/RTA.do?name='
 			+ comName
-			+ '&option=table" width="100%" height="500px" frameBorder="0"></iframe>'
-		var tag6  = '<iframe src="${context}/company/chart/dTree.do?name='
-			+ comName
-			+ '" width="100%" height="500px" frameBorder="0"></iframe>'
+			+ '&option=table" width="100%" height="800px" frameBorder="0"></iframe>'
 			
 		$('#stockChart').html(tag1);
 		$('#newsChart').html(tag2);
 		$('#RTAChartPie').html(tag3);
 		$('#relNewsChart').html(tag4);
 		$('#RTAChartTable').html(tag5);
-		$('#dTreeChart').html(tag6);
 		$('#favorite').attr('onclick','addFavorite("'+comName+'")');
 		getNews(comName);
 		checkFavorite(comName);
@@ -197,18 +194,21 @@
 
 	function getNews(comName) {
 		$.ajax({
-			url : "${context}/crawler/comNews.json?name=" + comName,
+			url : "${context}/crawler/comNews.json?name=" + comName+"&num=10",
 			success : function(data) {
 				var obj = []
 				obj = JSON.parse(data);
 				console.log(obj);
-				$('#news').html('<div class="space-24"></div>');
-				$('#newsTitle').text(comName);
+				$('#news').empty();
+				$('#newsTitle').text(' '+comName);
+				var str = '<div class="col-sm-5 col-sm-offset-1">'
 				for (var i = 0; i < obj.length; i++) {
-					$('#news').append(
-							'<p><a href="'+obj[i].link+'" target="_blank">' + obj[i].title
-									+ "</a><br/></p>");
+					str += '<p><a href="'+obj[i].link+'" target="_blank">' + obj[i].title + "</a><br/></p>";
+					if(i==4)
+						str+='</div><div class="col-sm-5 col-sm-offset-1">'
 				}
+				str+='</div>'
+				$('#news').append(str);
 			},
 			error : function(e) {
 				console.log("error : " + e);

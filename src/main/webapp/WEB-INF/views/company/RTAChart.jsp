@@ -123,8 +123,8 @@
 				value : value1
 			});
 		}
-		$('#chart').append('<div class="row"><div class="space-12"></div><div id="todayChart" class="col-sm-6" style="height: 400px;"></div>'
-							+'<div id="tomorrowChart" class="col-sm-6" style="height: 400px;"></div></div>')
+		$('#chart').append('<div class="row"><div class="space-12"></div><div id="todayChart" class="col-sm-6" style="height: 250px;"></div>'
+							+'<div id="tomorrowChart" class="col-sm-6" style="height: 250px;"></div></div>')
 		
 		makeChart(chartData1, "todayChart", "금일 주가 예측");
 		makeChart(chartData2, "tomorrowChart", "익일 주가 예측");
@@ -258,7 +258,7 @@
 			jQuery(grid_selector).jqGrid({
 				data: RTA,
 				datatype: "local",
-				height: 340,
+				height: 34*16,
 				colNames:['뉴스 카테고리','분석방법', '금일 예측', '익일 예측','예측시간'],
 				colModel:[
 					{name:'newsCode',index:'newsCode',width:90, editable:true,unformat: pickDate},
@@ -269,8 +269,8 @@
 				], 
 		
 				viewrecords : true,
-				rowNum:10,
-				rowList:[10,30,56],
+				rowNum:16,
+				rowList:[16,32,56],
 				pager : pager_selector,
 				altRows: true,
 				//toppager: true,
