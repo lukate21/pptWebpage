@@ -27,7 +27,7 @@
 <script src="${context }/resources/amcharts_3.21.6.free/amcharts/pie.js" type="text/javascript"></script>
 <style>
 	.main-content, body, html {
-	min-height: 95%
+	min-height: 100%
 }
 </style>
 </head>
@@ -72,13 +72,13 @@
 					updateList[0] += add;
 				else if (RTA[i].todayFluc == 'm')
 					updateList[1] += add;
-				else
+				else if(RTA[i].todayFluc == '-')
 					updateList[2] += add;
 				if (RTA[i].tomorrowFluc == 'p')
 					updateList[3] += add;
 				else if (RTA[i].tomorrowFluc == 'm')
 					updateList[4] += add;
-				else
+				else if(RTA[i].tomorrowFluc == '-')
 					updateList[5] += add;
 				map.set(newsCode, updateList);
 			} else {
@@ -87,13 +87,13 @@
 					list[0] += add;
 				else if (RTA[i].todayFluc == 'm')
 					list[1] += add;
-				else
+				else if (RTA[i].todayFluc == '-')
 					list[2] += add;
 				if (RTA[i].tomorrowFluc == 'p')
 					list[3] += add;
 				else if (RTA[i].tomorrowFluc == 'm')
 					list[4] += add;
-				else
+				else if (RTA[i].tomorrowFluc == '-')
 					list[5] += add;
 				map.set(newsCode, list);
 			}

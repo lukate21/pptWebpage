@@ -23,7 +23,7 @@ import org.springframework.core.io.Resource;
 
 public class Tool {
 	private static final Resource RESOURCE = new ClassPathResource("/openDate.txt");
-	public static List<String> realDate = getOpenDate(); 
+	//public static List<String> realDate = getOpenDate(); 
 	
 	//날짜 포멧 체크
 	private static String dateFormat(String date){
@@ -243,7 +243,7 @@ public class Tool {
 			return sortedMap;
 		}
 		
-	//장 열린 일자 얻기
+/*	//장 열린 일자 얻기
 	public static List<String> getOpenDate(){
 		List<String> dateRange = new ArrayList<String>();
 		try{
@@ -311,7 +311,7 @@ public class Tool {
 			return false;
 	}
 	
-	/*//주말 및 공휴일과 같은 장이 열리지 않은 날을 위한 morpVO 합치기
+	//주말 및 공휴일과 같은 장이 열리지 않은 날을 위한 morpVO 합치기
 	public static List<NewsMorpVO> mergeVO(NewsMorpVO morpVO, int predic, boolean checkOpen){
 		List<NewsMorpVO> morpList = new ArrayList<NewsMorpVO>();
 		String newsDate = morpVO.getNewsDate();
@@ -323,6 +323,6 @@ public class Tool {
 			}
 		}
 		return morpList;
-	}
-	*/
+	}*/
+	
 }

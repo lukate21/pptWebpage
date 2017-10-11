@@ -42,7 +42,7 @@
 				<div class="row">
 					<div class="col-sm-12">
 							<div align="center">
-								<h1>.PPT</h1>
+								<img src="${context }/resources/logo.png" width="20%"><br/><br/>
 							</div>
 					</div>
 				</div>
