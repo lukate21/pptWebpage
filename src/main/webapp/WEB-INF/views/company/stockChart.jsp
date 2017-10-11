@@ -168,10 +168,9 @@
 					}
 				});
 				chartData.unshift({
-					dateTime : chartData[0].dateTime.split('T')[0]+'T00:00:00Z',
+					dateTime : '${yesterday}T23:50:00Z',
 					value : yesterdayEnd.value
 				});
-				chartData[1].dateTime=chartData[1].dateTime.split('T')[0]+'T00:01:00Z'
 				var start = chartData[0].value;
 				var now = chartData[chartData.length-1].value;
 				if('${name}'=="KOSPI" || '${name}' == "KOSDAQ" || '${name}' == "KOSPI2"){

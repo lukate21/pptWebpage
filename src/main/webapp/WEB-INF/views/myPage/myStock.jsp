@@ -29,7 +29,9 @@
 <link rel="stylesheet" href="${context}/resources/assets/css/jquery-ui.min.css" />
 <link rel="stylesheet" href="${context}/resources/assets/css/bootstrap-datepicker3.min.css" />
 <link rel="stylesheet" href="${context}/resources/assets/css/ui.jqgrid.min.css" />
-
+<script>
+	console.log('${myStockList}');
+</script>
 </head>
 <body class="no-skin">
 <jsp:include page="../include/top-menu.jsp"></jsp:include>
