@@ -29,9 +29,6 @@
 <link rel="stylesheet" href="${context}/resources/assets/css/jquery-ui.min.css" />
 <link rel="stylesheet" href="${context}/resources/assets/css/bootstrap-datepicker3.min.css" />
 <link rel="stylesheet" href="${context}/resources/assets/css/ui.jqgrid.min.css" />
-<script>
-	console.log('${myStockList}');
-</script>
 </head>
 <body class="no-skin">
 <jsp:include page="../include/top-menu.jsp"></jsp:include>
@@ -72,8 +69,10 @@
 												</label>
 											</th>
 											<th>기업명</th>
-											<th>구매가</th>
-											<th class="hidden-480">보유량</th>
+											<th>매수가(원)</th>
+											<th class="hidden-480">매수량(주)</th>
+											<th class="hidden-480">총매수금액(원)</th>
+											<th class="hidden-480">평가손익</th>
 	
 											<th>
 												<i class="ace-icon fa fa-clock-o bigger-110 hidden-480"></i>
@@ -90,7 +89,7 @@
 												
 											</c:when>
 											<c:otherwise>
-												<c:forEach items="${myStockList}" var="myStock">
+												<c:forEach items="${myStockList}" var="myStock" varStatus="status">
 													<tr>
 											<td class="center">
 												<label class="pos-rel">
@@ -103,7 +102,16 @@
 												<a href="#">${myStock.comName}</a>
 											</td>
 											<td>${myStock.buyPrice}</td>
-											<td class="hidden-480">${myStock.volume}</td>
+											<td class="hidden-480" id="volume">${myStock.volume}</td>
+											<td class="hidden-480" id="base">${myStock.volume*myStock.buyPrice}</td>
+											<c:choose>
+												<c:when test="${myStock.buyPrice > myStock.nowPrice}">
+													<td class="hidden-480" style="color:blue;">${myStock.volume*(myStock.buyPrice-myStock.nowPrice)}</td>
+												</c:when>
+												<c:otherwise>
+													<td class="hidden-480" style="color:red;">${myStock.volume*(myStock.nowPrice-myStock.buyPrice)}</td>
+												</c:otherwise>
+											</c:choose>
 											<td>${myStock.buyDate}</td>
 											<td>
 												<div class="hidden-sm hidden-xs action-buttons">
@@ -179,7 +187,7 @@
 										<div class="row">
 											<div class="col-xs-12">
 												<!-- PAGE CONTENT BEGINS -->
-												<form id="frmStock" name="frmStock" class="form-horizontal" role="form" action="${context}/myPage/myStock.json" method="post" onSubmit="return checkEle()">
+												<form id="frmStock" name="frmStock" class="form-horizontal" role="form" action="${context}/myPage/myStock.do" method="post" onSubmit="return checkEle()">
 													<input type="hidden" id="comName" name="comName" value=""/>
 													<div class="form-group">
 														<label class="col-sm-3 control-label no-padding-right" for="form-field-2"> 기업명 </label>
@@ -264,8 +272,7 @@
 	$(document).ready(function(){
 		$('#btnReg').click(function(){
 			$('#frmStock').submit();
-		})
-		
+		});
 	});
 	
 	function change() {
@@ -337,7 +344,7 @@
 			bAutoWidth: false,
 			"aoColumns": [
 			  { "bSortable": false },
-			  null, null,null, null,
+			  null, null, null, null, null, null,
 			  { "bSortable": false }
 			],
 			"aaSorting": [],

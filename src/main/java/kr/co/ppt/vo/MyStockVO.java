@@ -9,10 +9,11 @@ public class MyStockVO {
 	private int buyPrice;
 	private int volume;
 	private String buyDate;
+	private int nowPrice;
 
 	public MyStockVO() {}
 
-	public MyStockVO(int no, String comName, int userNo, int comNo, int buyPrice, int volume, String buyDate) {
+	public MyStockVO(int no, String comName, int userNo, int comNo, int buyPrice, int volume, String buyDate, int nowPrice) {
 		this.no = no;
 		this.comName = comName;
 		this.userNo = userNo;
@@ -20,6 +21,7 @@ public class MyStockVO {
 		this.buyPrice = buyPrice;
 		this.volume = volume;
 		this.buyDate = buyDate;
+		this.nowPrice = nowPrice;
 	}
 
 	public int getNo() {
@@ -78,11 +80,21 @@ public class MyStockVO {
 		this.buyDate = buyDate;
 	}
 
+	public int getNowPrice() {
+		return nowPrice;
+	}
+
+	public void setNowPrice(int nowPrice) {
+		this.nowPrice = nowPrice;
+	}
+
 	@Override
 	public String toString() {
 		StringBuilder builder = new StringBuilder();
-		builder.append("MyStockVO [no=").append(no).append(", comName=").append(comName).append(", userNo=").append(userNo).append(", comNo=").append(comNo).append(", buyPrice=")
-				.append(buyPrice).append(", volume=").append(volume).append(", buyDate=").append(buyDate).append("]");
+		builder.append("MyStockVO [no=").append(no).append(", comName=").append(comName).append(", userNo=").append(userNo)
+				.append(", comNo=").append(comNo).append(", buyPrice=").append(buyPrice).append(", volume=")
+				.append(volume).append(", buyDate=").append(buyDate).append(", nowPrice=").append(nowPrice)
+				.append("]");
 		return builder.toString();
 	}
 	

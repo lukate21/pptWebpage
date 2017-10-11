@@ -19,4 +19,22 @@ public class MyStockDAOImpl {
 
 		return myStockList;
 	}
+	
+	public int getUserNo(String id){
+		int userNo = sqlSession.selectOne("myStock.getUserNo", id);
+		
+		return userNo;
+	}
+	
+	public int getComNo(String comName){
+		int comNo = sqlSession.selectOne("myStock.getComNo", comName);
+		
+		return comNo;
+	}
+	
+	public int insertMyStock(MyStockVO myStock){
+		int result = sqlSession.insert("myStock.insertMyStock", myStock);
+		
+		return result;
+	}
 }
