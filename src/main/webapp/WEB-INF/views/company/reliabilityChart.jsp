@@ -22,6 +22,8 @@
 	min-height: 90%;
 	margin-top : 0;
 	margin-bottom : 0;
+	argin-left:5px;
+	argin-right:5px;
 }
 </style>
 </head>
@@ -56,20 +58,6 @@
 			value : '${reliabilityVO.value }'
 		});
 	</c:forEach>
-	var sum=0;
-	var deviation=0;
-	for(i in reliability){
-		var value = Number(reliability[i].value);
-		sum += value;
-		deviation += (value*value);
-	}
-	var mean = sum/56;
-	deviation = Math.sqrt((deviation/56 - (mean*mean)));
-	var variance = deviation*deviation;
-	console.log('평균 : ' + mean);
-	console.log('표준편차 : '+ deviation);
-	console.log('분산 : '+variance);
-	
 	respons('${option}');
 	function respons(option){
 		var chart;
@@ -175,8 +163,6 @@
 	            valueAxis.title = "예측확률";
 	            valueAxis.dashLength = 5;
 	            valueAxis.axisAlpha = 0;
-	            valueAxis.minimum = 20;
-	            valueAxis.maximum = 80;
 	            valueAxis.integersOnly = true;
 	            valueAxis.gridCount = 10;
 	            valueAxis.reversed = false; // this line makes the value axis reversed
@@ -351,8 +337,6 @@
 	            valueAxis.title = "예측확률";
 	            valueAxis.dashLength = 5;
 	            valueAxis.axisAlpha = 0;
-	            valueAxis.minimum = 20;
-	            valueAxis.maximum = 80;
 	            valueAxis.integersOnly = true;
 	            valueAxis.gridCount = 10;
 	            valueAxis.reversed = false; // this line makes the value axis reversed

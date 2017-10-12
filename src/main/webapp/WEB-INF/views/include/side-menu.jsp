@@ -20,7 +20,6 @@
 						async : false,
 						success : function(data) {
 							comList = JSON.parse(data);
-							console.log(comList);
 						}
 					});
 					var i = 0;

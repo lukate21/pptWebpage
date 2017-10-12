@@ -49,6 +49,10 @@
 							onclick="addFavorite('${name}')" id="favorite">
 							<i class="fa fa-star-o bigger-150" aria-hidden="true"></i>
 						</button>
+						<button class="btn btn-white btn-xs no-border"
+							onclick="deleteFavorite('${name}')" id="favorite">
+							<i class="fa fa-star bigger-150" aria-hidden="true"></i>
+						</button>
 						<div class="form-group pull-right">
 							<div class="pos-rel">
 								<input class="typeahead scrollable" type="text"
@@ -149,7 +153,6 @@
 <script src="${context}/resources/assets/js/jquery-typeahead.js"></script>
 <script>
 	getNews('${name}');
-	checkFavorite('${name}');
 	$(document).on("click", ".tt-suggestion.tt-selectable", function() {
 		change();
 	});
@@ -216,60 +219,26 @@
 		});
 	}
 	
-	function checkFavorite(comName){
-		var userNo = '${loginUser.no}'; 
-		if(userNo == ''){
-			userNo=0;
-		}
-		$.ajax({
-			url : '${context}/my/favorite.json',
-			type : 'get',
-			data : {
-				'userNo' : userNo,
-				'comName' : comName
-			},
-			success : function(data){
-				console.log(data);
-				if(data == "able"){
-					$('#favorite i').attr("class","fa fa-star-o bigger-150");
-				}else if(data == 'disable'){
-					$('#favorite i').attr("class","fa fa-star bigger-150");
-				}
-			}
-		});
-	}
-	
 	function addFavorite(comName){
-		var method;
-		if($('#favorite i')[0].className.split(" ")[1] == "fa-star"){
-			if(confirm('이미 즐겨찾기에 등록되어 있습니다.\n목록에서 삭제하겠습니까?')){
-				method = "delete";
-			}else{
-				return false;
-			}
-		}else{
-			method = "insert";
-		}
 		if('${loginUser.no}' == ''){
 			alert('로그인이 필요합니다.');
 		}else{
-			$.ajax({
-				url : '${context}/my/favorite.json',
-				type : 'post',
-				data : {
-					'userNo' : '${loginUser.no}',
-					'comName' : comName,
-					'method' : method
-				},
-				contentType : 'application/x-www-form-urlencoded; charset=utf-8',
-				success : function(data){
-					if(method =="delete"){
-						$('#favorite i').attr("class","fa fa-star-o bigger-150");
-					}else{
-						$('#favorite i').attr("class","fa fa-star bigger-150");
+			var groupName = prompt('그룹명을 입력해 주세요.');
+			if(groupName != ''){
+				$.ajax({
+					url : '${context}/my/insertFavorite.json',
+					type : 'get',
+					data : {
+						'userNo' : '${loginUser.no}',
+						'comName' : comName,
+						'groupName' : groupName
+					},
+					contentType : 'application/x-www-form-urlencoded; charset=utf-8',
+					success : function(data){
+						alert(data);
 					}
-				}
-			});
+				});
+			}
 		}
 	}
 	

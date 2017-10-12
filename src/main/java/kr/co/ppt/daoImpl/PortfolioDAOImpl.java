@@ -28,12 +28,9 @@ public class PortfolioDAOImpl {
 	SqlSessionTemplate template;
 	
 	
-	public List<MyFavoriteVO> selectFavoriteList(int userNo){
-		return template.selectList("portfolio.selectFavoriteList",userNo);
-	}
 	
-	public MyFavoriteVO selectFavoriteAble(Map<String,Object> map){
-		return template.selectOne("portfolio.selectFavoriteAble",map);
+	public List<MyFavoriteVO> selectFavoriteList(Map<String,Object> map){
+		return template.selectList("portfolio.selectFavoriteList",map);
 	}
 	
 	public void insertFavorite(Map<String,Object> map){

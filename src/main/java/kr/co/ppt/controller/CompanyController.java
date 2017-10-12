@@ -77,7 +77,6 @@ public class CompanyController {
 		model.addAttribute("name", name);
 		model.addAttribute("RTA", cService.selectRTA(name, null));
 		model.addAttribute("reliability", cService.selectReliability(name));
-		model.addAttribute("bestAnalysis", cService.selectBestAnalysis(name));
 		return "company/RTAChart";
 	}
 
