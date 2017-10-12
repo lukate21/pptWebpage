@@ -7,6 +7,7 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.net.URLConnection;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -59,8 +60,12 @@ public class PortfolioController {
 	@RequestMapping(value="/favorite.do",method=RequestMethod.GET)
 	public String favorite(Model model,HttpSession session){
 		MemberVO memberVO = (MemberVO)session.getAttribute("loginUser");
+		List<MyFavoriteVO> list = pService.selectFavoriteGroup(memberVO.getNo());
 		Map<String,Object> map = new HashMap<>();
 		map.put("userNo", memberVO.getNo());
+		map.put("groupName", list.get(0).getGroupName());
+		model.addAttribute("groupName", list.get(0).getGroupName());
+		model.addAttribute("groupList", list);
 		model.addAttribute("favoriteList", pService.selectFavoriteList(map));
 		return "/my/favorite";
 	}
@@ -70,9 +75,9 @@ public class PortfolioController {
 		MemberVO memberVO = (MemberVO)session.getAttribute("loginUser");
 		Map<String,Object> map = new HashMap<>();
 		map.put("userNo", memberVO.getNo());
-		if(groupName != null && groupName !="all"){
-			map.put("groupName",groupName);
-		}
+		map.put("groupName", groupName);
+		model.addAttribute("groupName", groupName);
+		model.addAttribute("groupList", pService.selectFavoriteGroup(memberVO.getNo()));
 		model.addAttribute("favoriteList", pService.selectFavoriteList(map));
 		return "/my/favorite";
 	}
@@ -100,13 +105,10 @@ public class PortfolioController {
 	@RequestMapping(value="/selectFavoriteGroup.json",method=RequestMethod.GET)
 	@ResponseBody
 	public String selectFavoriteList(int userNo){
-		Map<String,Object> map = new HashMap<>();
-		map.put("userNo", userNo);
-		List<MyFavoriteVO> list = pService.selectFavoriteList(map);
+		List<MyFavoriteVO> list = pService.selectFavoriteGroup(userNo);
 		JSONArray arr = new JSONArray();
 		for(MyFavoriteVO myFavoriteVO : list){
 			JSONObject obj = new JSONObject();
-			obj.put("no", myFavoriteVO.getNo());
 			obj.put("groupName", myFavoriteVO.getGroupName());
 			arr.add(obj);
 		}
@@ -139,10 +141,11 @@ public class PortfolioController {
 	@ResponseBody
 	public String deletFavorite(String no, int userNo, String comNo, String comName, String groupName){
 		Map<String,Object> map = new HashMap<>();
-		map.put("userNo", userNo);
+		System.out.println(no);
 		if(no != null){
 			map.put("no", Integer.parseInt(no));
 		}else{
+			map.put("userNo", userNo);
 			if(comNo == null){
 				CompanyVO companyVO = new CompanyVO();
 				companyVO.setName(comName);

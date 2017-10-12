@@ -20,6 +20,13 @@
 		order by no
 	</select>
 	
+	<select id="selectFavoriteGroup" parameterType="int" resultType="myFavoriteVO">
+		select group_name as groupName
+		from MY_FAVORITE
+		where user_no = #{userNo}
+		group by group_name
+	</select>
+	
 	<insert id="insertFavorite" parameterType="java.util.Map">
 		insert into MY_FAVORITE(NO, user_no, com_no, group_name) 
 		values(MY_FAVORITE_SEQ.nextVal, #{userNo}, #{comNo}, #{groupName})

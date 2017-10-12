@@ -1,6 +1,8 @@
 package kr.co.ppt.serviceImpl;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
@@ -28,7 +30,25 @@ public class PortfolioServiceImpl {
 	PortfolioDAOImpl pDAO;
 	
 	public List<MyFavoriteVO> selectFavoriteList(Map<String,Object> map){
+		/*if(!map.containsKey("groupName")){
+			List<MyFavoriteVO> favoriteList = new ArrayList<>();
+			List<MyFavoriteVO> list = pDAO.selectFavoriteList(map);
+			Map<String,Integer> tmpMap = new HashMap<>();
+			for(int i=0; i<list.size(); i++){
+				tmpMap.put(list.get(i).getComName(), i);
+			}
+			Iterator<String> iter = tmpMap.keySet().iterator();
+			while(iter.hasNext()){
+				favoriteList.add(list.get(tmpMap.get(iter.next())));
+			}
+			return favoriteList;
+		}else{
+			return pDAO.selectFavoriteList(map);
+		}*/
 		return pDAO.selectFavoriteList(map);
+	}
+	public List<MyFavoriteVO> selectFavoriteGroup(int userNo){
+		return pDAO.selectFavoriteGroup(userNo);
 	}
 	public void insertFavorite(Map<String,Object> map){
 		pDAO.insertFavorite(map);

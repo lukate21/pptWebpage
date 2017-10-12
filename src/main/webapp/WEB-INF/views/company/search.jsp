@@ -18,11 +18,10 @@
 <link rel="stylesheet" href="${context}/resources/assets/css/fonts.googleapis.com.css" />
 <!-- ace styles -->
 <link rel="stylesheet" href="${context}/resources/assets/css/ace.min.css" class="ace-main-stylesheet" id="main-ace-style" />
-<link rel="stylesheet" href="${context}/resources/assets/css/ace-skins.min.css" />
-<link rel="stylesheet" href="${context}/resources/assets/css/ace-rtl.min.css" />
 <!-- ace settings handler -->
 <script src="${context}/resources/assets/js/ace-extra.min.js"></script>
 <script src="${context}/resources/assets/js/jquery-2.1.4.min.js"></script>
+<link rel="stylesheet" href="${context}/resources/assets/css/jquery-ui.min.css" />
 <!------------------------------------------------------------------------------------------------------------------------->
 
 <!-- page specific plugin styles -->
@@ -45,13 +44,8 @@
 				<div class="page-header">
 					<h1>
 						<span id="newsTitle"></span>
-						<button class="btn btn-white btn-xs no-border"
-							onclick="addFavorite('${name}')" id="favorite">
-							<i class="fa fa-star-o bigger-150" aria-hidden="true"></i>
-						</button>
-						<button class="btn btn-white btn-xs no-border"
-							onclick="deleteFavorite('${name}')" id="favorite">
-							<i class="fa fa-star bigger-150" aria-hidden="true"></i>
+						<button class="btn btn-white btn-info btn-bold" onclick="addFavorite('${name}')" id="favorite">
+							<i class="ace-icon fa fa-plus bigger-120 blue"></i> 관심기업등록
 						</button>
 						<div class="form-group pull-right">
 							<div class="pos-rel">
@@ -103,41 +97,14 @@
 			</div>
 			<div class="row">
 				<div class="col-xs-12">
-					<div id="right-menu" class="modal aside" data-body-scroll="false"
-						data-offset="true" data-placement="right" data-fixed="true"
-						data-backdrop="false" tabindex="-1">
-						<div class="modal-dialog">
-							<div class="modal-content">
-								<div class="modal-header no-padding">
-									<div class="table-header" id="newsTitle">
-										<button type="button" class="close" data-dismiss="modal"
-											aria-hidden="true">
-											<span class="white">&times;</span>
-										</button>
-										${name} 뉴스
-									</div>
-								</div>
-
-								<div class="modal-body">
-									<div class="section-seperator margin-b-50">
-										<div class="margin-b-50">
-											<div class="margin-b-30">
-												<!-- <div id="news"></div> -->
-											</div>
-										</div>
-									</div>
-								</div>
+					<div id="dialog-confirm" class="hide">
+						<div class="alert alert-info bigger-110">
+							<div class="clearfix center">
+								<input type="text" id="groupNameInput" size="30" maxlength="10" placeholder="그룹추가" />
 							</div>
-							<!-- /.modal-content -->
-
-							<button
-								class="aside-trigger btn btn-info btn-app btn-xs ace-settings-btn"
-								data-target="#right-menu" data-toggle="modal" type="button">
-								<i data-icon1="fa-plus" data-icon2="fa-minus"
-									class="ace-icon fa fa-plus bigger-110 icon-only"></i>
-							</button>
 						</div>
-						<!-- /.modal-dialog -->
+						<div class="control-group col-xs-10 col-xs-offset-1" id="groupNameList">
+						</div>
 					</div>
 				</div>
 			</div>
@@ -149,8 +116,12 @@
 	</footer>
 	<!-- javascript file -->
 <!-- page specific plugin scripts -->
-<script src="${context}/resources/assets/js/jquery.bootstrap-duallistbox.min.js"></script>
-<script src="${context}/resources/assets/js/jquery-typeahead.js"></script>
+	<script src="${context}/resources/assets/js/jquery.bootstrap-duallistbox.min.js"></script>
+	<script src="${context}/resources/assets/js/jquery-typeahead.js"></script>
+
+		<script src="${context}/resources/assets/js/jquery-ui.min.js"></script>
+		<script src="${context}/resources/assets/js/jquery.ui.touch-punch.min.js"></script>
+
 <script>
 	getNews('${name}');
 	$(document).on("click", ".tt-suggestion.tt-selectable", function() {
@@ -192,7 +163,6 @@
 		$('#RTAChartTable').html(tag5);
 		$('#favorite').attr('onclick','addFavorite("'+comName+'")');
 		getNews(comName);
-		checkFavorite(comName);
 	}
 
 	function getNews(comName) {
@@ -219,26 +189,71 @@
 		});
 	}
 	
+	function reName(groupName){
+		$('#groupNameInput').val(groupName);
+	}
 	function addFavorite(comName){
 		if('${loginUser.no}' == ''){
 			alert('로그인이 필요합니다.');
 		}else{
-			var groupName = prompt('그룹명을 입력해 주세요.');
-			if(groupName != ''){
-				$.ajax({
-					url : '${context}/my/insertFavorite.json',
-					type : 'get',
-					data : {
-						'userNo' : '${loginUser.no}',
-						'comName' : comName,
-						'groupName' : groupName
-					},
-					contentType : 'application/x-www-form-urlencoded; charset=utf-8',
-					success : function(data){
-						alert(data);
+			$.ajax({
+				url : '${context}/my/selectFavoriteGroup.json',
+				type : 'get',
+				async:false,
+				data : {
+					'userNo' : '${loginUser.no}'
+				},
+				contentType : 'application/x-www-form-urlencoded; charset=utf-8',
+				success : function(data){
+					var obj = JSON.parse(data);
+					$('#groupNameList').empty();
+					for(var i in obj){
+
+						$('#groupNameList').append('<div class="radio" onclick="reName(\''
+								+obj[i].groupName+'\')"><label><input name="form-field-radio" type="radio" class="ace"><span class="lbl">'
+								+obj[i].groupName+'</span></label></div>');
 					}
-				});
-			}
+				}
+			});
+			$( "#dialog-confirm" ).removeClass('hide').dialog({
+				resizable: false,
+				width: '320',
+				modal: true,
+				title: "관심기업 등록",
+				title_html: true,
+				buttons: [
+					{
+						html: "<i class='ace-icon fa fa-times bigger-110'></i>&nbsp; Cancel",
+						"class" : "btn btn-minier",
+						click: function() {
+							$( this ).dialog( "close" );
+						}
+					},
+					{
+						text: "OK",
+						"class" : "btn btn-primary btn-minier",
+						click: function() {
+							var groupName = $('#groupNameInput').val();
+							if(groupName != ''){
+								$.ajax({
+									url : '${context}/my/insertFavorite.json',
+									type : 'get',
+									data : {
+										'userNo' : '${loginUser.no}',
+										'comName' : comName,
+										'groupName' : groupName
+									},
+									contentType : 'application/x-www-form-urlencoded; charset=utf-8',
+									success : function(data){
+										alert(data);
+									}
+								});
+							}
+							$( this ).dialog( "close" );
+						} 
+					}
+				]
+			});
 		}
 	}
 	
