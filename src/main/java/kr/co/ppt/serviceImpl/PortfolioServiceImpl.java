@@ -27,12 +27,8 @@ public class PortfolioServiceImpl {
 	@Autowired
 	PortfolioDAOImpl pDAO;
 	
-	public List<MyFavoriteVO> selectFavoriteList(int userNo){
-		return pDAO.selectFavoriteList(userNo);
-	}
-	
-	public MyFavoriteVO selectFavoriteAble(Map<String,Object> map){
-		return pDAO.selectFavoriteAble(map);
+	public List<MyFavoriteVO> selectFavoriteList(Map<String,Object> map){
+		return pDAO.selectFavoriteList(map);
 	}
 	public void insertFavorite(Map<String,Object> map){
 		pDAO.insertFavorite(map);

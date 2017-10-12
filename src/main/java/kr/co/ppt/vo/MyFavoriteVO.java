@@ -6,14 +6,8 @@ public class MyFavoriteVO {
 	private int userNo;
 	private int comNo;
 	private String comName;
+	private String groupName;
 
-	public MyFavoriteVO() {}
-
-	public MyFavoriteVO(int no, int userNo, int comNo) {
-		this.no = no;
-		this.userNo = userNo;
-		this.comNo = comNo;
-	}
 	
 	public int getNo() {
 		return no;
@@ -48,11 +42,14 @@ public class MyFavoriteVO {
 		this.comName = comName;
 	}
 
-	@Override
-	public String toString() {
-		StringBuilder builder = new StringBuilder();
-		builder.append("MyFavoriteVO [no=").append(no).append(", userNo=").append(userNo).append(", comNo=").append(comNo).append("]");
-		return builder.toString();
+	
+	public String getGroupName() {
+		return groupName;
 	}
+
+	public void setGroupName(String groupName) {
+		this.groupName = groupName;
+	}
+
 	
 }

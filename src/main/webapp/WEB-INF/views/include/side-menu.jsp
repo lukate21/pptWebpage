@@ -2,6 +2,7 @@
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <c:set var="context" value="${pageContext.request.contextPath}" />
+
 <div class="main-container ace-save-state" id="main-container">
 	<div id="sidebar"
 		class="sidebar responsive ace-save-state sidebar-fixed"
@@ -11,32 +12,64 @@
 		<div class="nav-wrap-up pos-rel">
 			<div class="nav-wrap">
 				<div style="position: relative; top: 0px; transition-property: top; transition-duration: 0.15s;">
-					<div class="sidebar-shortcuts" id="sidebar-shortcuts">
-						<div class="sidebar-shortcuts-large" id="sidebar-shortcuts-large">
-							<button class="btn btn-success">
-								<i class="ace-icon fa fa-signal"></i>
-							</button>
 
-							<button class="btn btn-info">
-								<i class="ace-icon fa fa-pencil"></i>
-							</button>
-
-							<button class="btn btn-warning">
-								<i class="ace-icon fa fa-users"></i>
-							</button>
-
-							<button class="btn btn-danger">
-								<i class="ace-icon fa fa-cogs"></i>
-							</button>
-						</div>
-
-						<div class="sidebar-shortcuts-mini" id="sidebar-shortcuts-mini">
-							<span class="btn btn-success"></span> <span class="btn btn-info"></span>
-
-							<span class="btn btn-warning"></span> <span
-								class="btn btn-danger"></span>
-						</div>
+				<script>
+					var comList = [];
+					$.ajax({
+						url : '${context}/company/selectCompanyList.json',
+						async : false,
+						success : function(data) {
+							comList = JSON.parse(data);
+						}
+					});
+					var i = 0;
+					myFunction();
+					var test = setInterval(myFunction, 5000);
+					function myFunction() {
+						comName = comList[i].comName;
+						$.ajax({
+							url : '${context}/company/rtStock.json?name='+comName+'&timeFrame=1_DAY',
+							success : function(data){
+								var obj = JSON.parse(data)[0];
+								var chartData = obj.price;
+								var start = chartData[0].value;
+								var now = chartData[chartData.length-1].value;
+								if(start<now){
+									$('#sidebar-shortcuts-large').html('<h5>'+comName+'</h5>'+'<span class="text-danger"><h3 style="margin-top:0"><b>'+now+'</b><small class="text-danger">'
+													+'<br/><i class="fa fa-caret-up"></i>&nbsp;'+(now-start)
+													+'&nbsp;&nbsp;&nbsp;+'+((now-start)/start*100).toFixed(2)+'%</small></h3></span>');
+								}else if(start>now){
+									$('#sidebar-shortcuts-large').html('<h5>'+comName+'</h5>'+'<span class="text-primary"><h3 style="margin-top:0"><b>'+now+'</b><small class="text-primary">'
+											+'<br/><i class="fa fa-caret-down"></i>&nbsp;'+(start-now)
+											+'&nbsp;&nbsp;&nbsp;-'+((start-now)/start*100).toFixed(2)+'%</small></h3></span>');
+								}else{
+									$('#sidebar-shortcuts-large').html('<h5>'+comName+'</h5>'+'<span><h3 style="margin-top:0"><b>'+now+'</b><small>'
+											+'<br/>-'+(start-now)
+											+'&nbsp;&nbsp;&nbsp;-'+((start-now)/start*100).toFixed(2)+'%</small></h3></span>');
+								}
+							}
+						});
+						i++;
+						if(comList[i] == null){
+							i = 0;
+						}
+					}
+				</script>
+				<div class="sidebar-shortcuts" id="sidebar-shortcuts">
+					<div class="sidebar-shortcuts-large" id="sidebar-shortcuts-large">
 					</div>
+
+					<div class="sidebar-shortcuts-mini" id="sidebar-shortcuts-mini">
+						<span class="btn btn-success"></span>
+
+						<span class="btn btn-info"></span>
+
+						<span class="btn btn-warning"></span>
+
+						<span class="btn btn-danger"></span>
+					</div>
+				</div><!-- /.sidebar-shortcuts -->
+
 					<ul class="nav nav-list">
 						<li class="">
 							<a class="" href="${context}/hello.do">
@@ -159,15 +192,5 @@
 					</ul>
 				</div>
 			</div>
-			<div class="ace-scroll nav-scroll scroll-disabled">
-				<div class="scroll-track" style="display: none;">
-					<div class="scroll-bar"
-						style="top: 0px; transition-property: top; transition-duration: 0.1s;"></div>
-				</div>
-				<div class="scroll-content" style="">
-					<div></div>
-				</div>
-			</div>
 		</div>
-		<!-- /.nav-list -->
-	</div>
+		</div>

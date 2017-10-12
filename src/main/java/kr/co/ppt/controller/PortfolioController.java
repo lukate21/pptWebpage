@@ -59,52 +59,102 @@ public class PortfolioController {
 	@RequestMapping(value="/favorite.do",method=RequestMethod.GET)
 	public String favorite(Model model,HttpSession session){
 		MemberVO memberVO = (MemberVO)session.getAttribute("loginUser");
-		model.addAttribute("favoriteList", pService.selectFavoriteList(memberVO.getNo()));
+		Map<String,Object> map = new HashMap<>();
+		map.put("userNo", memberVO.getNo());
+		model.addAttribute("favoriteList", pService.selectFavoriteList(map));
 		return "/my/favorite";
 	}
 	
-	@RequestMapping(value="/favorite.json",method=RequestMethod.GET)
-	@ResponseBody
-	public String checkFavorite(int userNo, String comName){
+	@RequestMapping(value="/favorite.do",method=RequestMethod.POST)
+	public String favorite(Model model,HttpSession session, String groupName){
+		MemberVO memberVO = (MemberVO)session.getAttribute("loginUser");
 		Map<String,Object> map = new HashMap<>();
-		map.put("userNo", userNo);
-		map.put("comName", comName);
-		if(pService.selectFavoriteAble(map) == null)
-			return "able";
-		else
-			return "disable";
+		map.put("userNo", memberVO.getNo());
+		if(groupName != null && groupName !="all"){
+			map.put("groupName",groupName);
+		}
+		model.addAttribute("favoriteList", pService.selectFavoriteList(map));
+		return "/my/favorite";
 	}
 	
-	@RequestMapping(value="/favorite.json",method=RequestMethod.POST)
+	@RequestMapping(value="/selectFavoriteList.json",method=RequestMethod.GET)
 	@ResponseBody
-	public String addFavorite(int userNo, String comName, String method){
-		CompanyVO companyVO = new CompanyVO();
-		companyVO.setName(comName);
-		companyVO = cService.selectCom(companyVO);
+	public String selectFavoriteList(int userNo, String groupName){
 		Map<String,Object> map = new HashMap<>();
 		map.put("userNo", userNo);
-		map.put("comNo", companyVO.getNo());
-		if(method.equals("insert"))
-			pService.insertFavorite(map);
-		else if(method.equals("delete"))
-			pService.deleteFavorite(map);
-		return "성공";
-	}
-	
-	@RequestMapping(value="/favoriteList.json",method=RequestMethod.GET)
-	@ResponseBody
-	public String favoriteList(int userNo){
-		List<MyFavoriteVO> list = pService.selectFavoriteList(userNo);
+		map.put("groupName", groupName);
+		List<MyFavoriteVO> list = pService.selectFavoriteList(map);
 		JSONArray arr = new JSONArray();
-		for(MyFavoriteVO myFavoriteVO: list){
+		for(MyFavoriteVO myFavoriteVO : list){
 			JSONObject obj = new JSONObject();
 			obj.put("no", myFavoriteVO.getNo());
 			obj.put("userNo", myFavoriteVO.getUserNo());
 			obj.put("comNo", myFavoriteVO.getComNo());
 			obj.put("comName", myFavoriteVO.getComName());
+			obj.put("groupName", myFavoriteVO.getGroupName());
 			arr.add(obj);
 		}
 		return arr.toJSONString();
+	}
+	
+	@RequestMapping(value="/selectFavoriteGroup.json",method=RequestMethod.GET)
+	@ResponseBody
+	public String selectFavoriteList(int userNo){
+		Map<String,Object> map = new HashMap<>();
+		map.put("userNo", userNo);
+		List<MyFavoriteVO> list = pService.selectFavoriteList(map);
+		JSONArray arr = new JSONArray();
+		for(MyFavoriteVO myFavoriteVO : list){
+			JSONObject obj = new JSONObject();
+			obj.put("no", myFavoriteVO.getNo());
+			obj.put("groupName", myFavoriteVO.getGroupName());
+			arr.add(obj);
+		}
+		return arr.toJSONString();
+	}
+	
+	@RequestMapping(value="/insertFavorite.json",method=RequestMethod.GET)
+	@ResponseBody
+	public String insertFavorite(int userNo, String comNo, String comName, String groupName){
+		Map<String,Object> map = new HashMap<>();
+		map.put("userNo", userNo);
+		if(comNo == null){
+			CompanyVO companyVO = new CompanyVO();
+			companyVO.setName(comName);
+			companyVO = cService.selectCom(companyVO);
+			map.put("comNo", companyVO.getNo());
+		}else{
+			map.put("comNo", Integer.parseInt(comNo));
+		}
+		map.put("groupName", groupName);
+		if(pService.selectFavoriteList(map).size() == 0){
+			pService.insertFavorite(map);
+			return "등록 되었습니다.";
+		}else{
+			return "이미 존재합니다.";
+		}
+	}
+	
+	@RequestMapping(value="/deleteFavorite.json",method=RequestMethod.GET)
+	@ResponseBody
+	public String deletFavorite(String no, int userNo, String comNo, String comName, String groupName){
+		Map<String,Object> map = new HashMap<>();
+		map.put("userNo", userNo);
+		if(no != null){
+			map.put("no", Integer.parseInt(no));
+		}else{
+			if(comNo == null){
+				CompanyVO companyVO = new CompanyVO();
+				companyVO.setName(comName);
+				companyVO = cService.selectCom(companyVO);
+				map.put("comNo", companyVO.getNo());
+			}else{
+				map.put("comNo", Integer.parseInt(comNo));
+			}
+			map.put("groupName", groupName);
+		}
+		pService.deleteFavorite(map);
+		return "삭제되었습니다.";
 	}
 	
 	@RequestMapping("/analysis/getMorp.json")

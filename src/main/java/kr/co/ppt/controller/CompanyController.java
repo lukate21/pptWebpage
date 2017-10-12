@@ -5,6 +5,8 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.URL;
 import java.net.URLConnection;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -20,6 +22,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import kr.co.ppt.serviceImpl.CompanyServiceImpl;
 import kr.co.ppt.serviceImpl.DtreeService;
+import kr.co.ppt.util.Tool;
 import kr.co.ppt.vo.CompanyVO;
 
 @Controller
@@ -51,6 +54,10 @@ public class CompanyController {
 	
 	@RequestMapping("/chart/stock.do")
 	public String stock(Model model, String name, String draw){
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd");
+		String yesterday = Tool.getDate(sdf.format(new Date()), -1);
+		yesterday = yesterday.substring(0, 4) + "-" + yesterday.substring(4,6) + "-" + yesterday.substring(6);
+		model.addAttribute("yesterday",yesterday);
 		model.addAttribute("name", name);
 		model.addAttribute("draw", draw);
 		model.addAttribute("RTA", cService.selectRTA(name, null));
@@ -70,7 +77,6 @@ public class CompanyController {
 		model.addAttribute("name", name);
 		model.addAttribute("RTA", cService.selectRTA(name, null));
 		model.addAttribute("reliability", cService.selectReliability(name));
-		model.addAttribute("bestAnalysis", cService.selectBestAnalysis(name));
 		return "company/RTAChart";
 	}
 
