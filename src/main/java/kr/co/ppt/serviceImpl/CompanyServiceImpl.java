@@ -120,4 +120,8 @@ public class CompanyServiceImpl {
 	public List<NewsCountVO> selectNewsCount(){
 		return cDAO.selectNewsCount();
 	}
+	
+	public List<ReliabilityVO> selectBestCompany(){
+		return cDAO.selectBestCompany();
+	}
 }

@@ -172,4 +172,10 @@ public class CompanyController {
 	public String getRTA(String name, String newsCode){
 		return cService.selectRTA(name, newsCode).toJSONString();
 	}
+	
+	@RequestMapping("/bestCompany.do")
+	public String getBestCompany(Model model){
+		model.addAttribute("rList",cService.selectBestCompany());
+		return "company/bestCompanyChart";
+	}
 }

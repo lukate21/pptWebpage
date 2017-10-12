@@ -95,13 +95,16 @@
 							</div>
 							
 							<div class="form-group">
-								<label class="col-sm-3 control-label no-padding-right" for="form-filed-2"> 전화번호 </label>
-								
-								<div class="col-sm-9">
-									<input type="text" id="form-filed=2" class="col-xs-10 col-sm-5" name="tel" value="${sessionScope.loginUser.tel}"/>
-									<span class="help-inline col-xs-12 col-sm-7">
-										<span class="middle">"-"제외하고 입력해주세요.</span>
-									</span>
+								<label class="control-label col-xs-12 col-sm-3 no-padding-right" for="phone">전화번호</label>
+
+								<div class="col-xs-12 col-sm-9">
+									<div class="input-group">
+										<span class="input-group-addon">
+											<i class="ace-icon fa fa-phone"></i>
+										</span>
+
+										<input type="tel" id="phone" name="tel" value="${sessionScope.loginUser.tel}" />
+									</div>
 								</div>
 							</div>
 	
@@ -131,11 +134,19 @@
 <footer id="footer">
 	<jsp:include page="../include/bottom.jsp"></jsp:include>
 </footer>
+<!-- inline scripts related to this page -->
+<script src="${context}/resources/assets/js/jquery-ui.custom.min.js"></script>
+<script src="${context}/resources/assets/js/jquery.ui.touch-punch.min.js"></script>
+<script src="${context}/resources/assets/js/chosen.jquery.min.js"></script>
+<script src="${context}/resources/assets/js/moment.min.js"></script>
+<script src="${context}/resources/assets/js/autosize.min.js"></script>
+<script src="${context}/resources/assets/js/jquery.inputlimiter.min.js"></script>
+<script src="${context}/resources/assets/js/jquery.maskedinput.min.js"></script>
 <script>
-	$('document').ready(function(){
-		
-	});
-	
+jQuery(function($) {
+	$.mask.definitions['~']='[+-]';
+	$('#phone').mask('999-9999-9999');
+
 	function isNull(obj, msg){
 		if(obj.value == ""){
 			$('#fail').text(msg).css({
@@ -151,6 +162,7 @@
 		var mForm = document.modifyForm;
 		var password = mForm.password;	
 		var rePassword = mForm.repassword;
+		var tel = mForm.tel;
 		
 		if(isNull(password,"변경할 비밀번호를 입력하세요"))
 			return false;
@@ -158,6 +170,9 @@
 			return false;
 		else if(password.value !== rePassword.value){
 			$('#fail').text("입력한 비밀번호가 일치하지 않습니다").css({ 'color' : 'red'});
+			return false;
+		} else if(!/^[0-9]{2,3}-[0-9]{3,4}-[0-9]{4}$/.test(tel.value)){
+			alert("전화번호 형식에 맞지 않습니다.")
 			return false;
 		}
 		else{
@@ -167,8 +182,9 @@
 			else
 				return false;
 		}
-		
 	}
+		
+});
 </script>
 </body>
 </html>

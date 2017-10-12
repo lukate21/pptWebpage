@@ -39,14 +39,6 @@
 					<li><i class="ace-icon fa fa-home home-icon"></i> <a href="${context}/hello.do">Home</a></li>
 					<li class="active">회원가입</li>
 				</ul>
-				<div class="nav-search" id="nav-search">
-					<form class="form-search">
-						<span class="input-icon">
-							<input type="text" placeholder="Search ..." class="nav-search-input" id="nav-search-input" autocomplete="off" />
-							<i class="ace-icon fa fa-search nav-search-icon"></i>
-						</span>
-					</form>
-				</div><!-- /.nav-search -->
 				<!-- /.breadcrumb -->
 			</div>
 			<div class="page-content">
@@ -89,7 +81,7 @@
 								<label class="col-sm-3 control-label no-padding-right" for="form-field-2"> 비밀번호 재입력 </label>
 	
 								<div class="col-sm-9">
-									<input type="password" id="rePassword" name="repassword" placeholder="Password" class="col-xs-10 col-sm-5" />
+									<input type="password" id="rePassword" name="rePassword" placeholder="Password" class="col-xs-10 col-sm-5" />
 									<span class="help-inline col-xs-12 col-sm-7">
 										<span class="middle" id="rPassword"></span>
 									</span>
@@ -107,7 +99,7 @@
 							</div>
 							
 							<div class="form-group">
-								<label class="control-label col-xs-12 col-sm-3 no-padding-right" for="phone">Phone Number:</label>
+								<label class="control-label col-xs-12 col-sm-3 no-padding-right" for="phone">전화번호</label>
 
 								<div class="col-xs-12 col-sm-9">
 									<div class="input-group">
@@ -156,37 +148,41 @@
 <script src="${context}/resources/assets/js/jquery.inputlimiter.min.js"></script>
 <script src="${context}/resources/assets/js/jquery.maskedinput.min.js"></script>
 <script type="text/javascript">
+	var checkDup = false;
+	var dupId = false;
 jQuery(function($) {
-		$.mask.definitions['~']='[+-]';
-		$('#phone').mask('999-9999-9999');
-	
-		/* jQuery.validator.addMethod("phone", function (value, element) {
-			return this.optional(element) || /^\(\d{3}\) \d{4}\-\d{4}( x\d{1,6})?$/.test(value);
-		}, "올바른 전화번호를 입력해주세요."); */
-		
-		$('[data-rel=tooltip]').tooltip({container:'body'});
-		$('[data-rel=popover]').popover({container:'body'});
-		
-		$('#btnDup').click(function(){
-			var form = document.joinForm;
-			var email = form.email;
+	$.mask.definitions['~']='[+-]';
+	$('#phone').mask('999-9999-9999');
 
-			if(email.value == ""){
-				alert("이메일을 입력해주세요.")
-				email.focus();
-			}else{
-				var param = "email="+email.value;
-				$.ajax({
-					url : "${context}/idCheck.json",
-					data : param,
-					method : "post",
-					success : function(result){
-						if(result == 1) alert("이미 사용중인 이메일입니다.");
-						else alert("사용 가능한 이메일입니다.");
-					}
-				});
-			}
-		});
+	/* jQuery.validator.addMethod("phone", function (value, element) {
+		return this.optional(element) || /^\(\d{3}\) \d{4}\-\d{4}( x\d{1,6})?$/.test(value);
+	}, "올바른 전화번호를 입력해주세요."); */
+	
+	$('[data-rel=tooltip]').tooltip({container:'body'});
+	$('[data-rel=popover]').popover({container:'body'});
+	
+	$('#btnDup').click(function(){
+		setCheck();
+		var form = document.joinForm;
+		var email = form.email;
+
+		if(email.value == ""){
+			alert("이메일을 입력해주세요.")
+			email.focus();
+		}else{
+			var param = "email="+email.value;
+			$.ajax({
+				url : "${context}/idCheck.json",
+				data : param,
+				method : "post",
+				success : function(result){
+					if(result == 1) {alert("이미 사용중인 이메일입니다."); dupId = true;}
+					else {alert("사용 가능한 이메일입니다."); dupId = false;}
+				}
+			});
+		}
+	});
+	
 });
 
 function isNull(obj, msg){
@@ -231,18 +227,42 @@ function checkEle(){
 		alert("전화번호 형식에 맞지 않습니다.")
 		return false;
 	}
+	if(checkDup == false){
+		alert("이메일 중복확인 해주세요");
+		$('#btnDup').focus();
+		return false;
+	}
+	if(dupId == true){
+		alert("다른 이메일을 입력해 주세요.");
+		email.focus();
+		return false;
+	}
 	return true;
 }
 
+function setCheck(){
+	if(checkDup == false)
+		checkDup = true;
+	return checkDup;
+}
 function checkPassword(){
+	var form = document.joinForm;
+	var password = form.password;
+	var rePassword = form.rePassword;
 	
+	if(rePassword.value != password.value){
+		console.log("달라");
+		$('#rPassword').text("비밀번호가 일치하지 않습니다.").css("color","red");
+	}
 }
 
 $("#rePassword").keydown(function(key) {
 	if (key.keyCode == 13) {//키가 13이면 실행 (엔터는 13)
 		checkPassword();
 	}
+	console.log("1")
 });
+
 </script>
 </body>
 </html>

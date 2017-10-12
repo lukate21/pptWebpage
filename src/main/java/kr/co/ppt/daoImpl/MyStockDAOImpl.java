@@ -43,4 +43,16 @@ public class MyStockDAOImpl {
 		
 		return result;
 	}
+	
+	public int updateMyStock(MyStockVO myStock){
+		int result = sqlSession.update("myStock.updateMyStock", myStock);
+		
+		return result;
+	}
+	
+	public int deleteMyStock(MyStockVO myStock){
+		int result = sqlSession.delete("myStock.deleteMyStock", myStock);
+		
+		return result;
+	}
 }

@@ -170,7 +170,7 @@ public class MyPageController {
 	}
 	
 	@RequestMapping(value="myStock.do", method=RequestMethod.POST)
-	public String addMyStock(String comName, String buyPrice, String volume, String buyDate, HttpSession session ){
+	public String addMyStock(String comName, String buyPrice, String volume, String buyDate, HttpSession session){
 		System.out.println("comName : "+comName+", buyPrice :"+buyPrice+", volume :"+volume+", buyDate :"+buyDate);
 		
 		MemberVO member = (MemberVO)session.getAttribute("loginUser");
@@ -232,6 +232,44 @@ public class MyPageController {
 		obj.put("nowPrice", myStock.getNowPrice());
 		
 		return obj;
+	}
+	
+	@RequestMapping(value="myModify.do", method=RequestMethod.POST)
+	public String updateMyStock(String no, String comName, String buyPrice, String volume, String buyDate, HttpSession session){
+		MemberVO member = (MemberVO)session.getAttribute("loginUser");
+		String id = member.getId();
+		int userNo = myStockService.getUserNo(id);
+		int comNo = myStockService.getComNo(comName);
+		
+		MyStockVO myStock = new MyStockVO();
+		myStock.setUserNo(userNo);
+		myStock.setComNo(comNo);
+		myStock.setNo(Integer.parseInt(no));
+		if(!buyPrice.equals("")) myStock.setBuyPrice(Integer.parseInt(buyPrice));
+		if(!volume.equals("")) myStock.setVolume(Integer.parseInt(volume));
+		if(!buyDate.equals("")) myStock.setBuyDate(buyDate);
+		
+		System.out.println(myStock);
+		
+		String msg = myStockService.updateMyStock(myStock);
+		System.out.println("업데이트 결과 : "+msg);
+		
+		return "redirect:myStock.do";
+	}
+	
+	@RequestMapping(value="deleteMyStock.do", method=RequestMethod.POST)
+	public String deleteMyStock(String no, HttpSession session){
+		MemberVO member = (MemberVO)session.getAttribute("loginUser");
+		String id = member.getId();
+		int userNo = myStockService.getUserNo(id);
+		
+		MyStockVO myStock = new MyStockVO();
+		myStock.setNo(Integer.parseInt(no));
+		myStock.setUserNo(userNo);
+		
+		String msg = myStockService.deleteMyStock(myStock);
+		System.out.println("삭제 결과 : "+msg);
+		return "redirect:myStock.do";
 	}
 	
 	

@@ -64,4 +64,7 @@ public class CompanyDAOImpl {
 	public List<NewsCountVO> selectNewsCount(){
 		return template.selectList("company.selectNewsCount");
 	}
+	public List<ReliabilityVO> selectBestCompany(){
+		return template.selectList("company.selectBestCompany");
+	}
 }

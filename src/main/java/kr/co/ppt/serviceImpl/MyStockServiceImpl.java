@@ -50,4 +50,23 @@ public class MyStockServiceImpl {
 		
 		return msg;
 	}
+	
+	public String updateMyStock(MyStockVO myStockVO){
+		int result = myStock.updateMyStock(myStockVO);
+		String msg = "";
+		if(result == 0) msg = "실패";
+		else msg = "성공";
+		
+		return msg;
+	}
+	
+	public String deleteMyStock(MyStockVO myStockVO){
+		int result = myStock.deleteMyStock(myStockVO);
+		String msg = "";
+		
+		if(result == 0) msg = "실패";
+		else msg = "성공";
+		
+		return msg;
+	}
 }

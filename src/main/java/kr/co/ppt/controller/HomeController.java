@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import kr.co.ppt.annotation.AutoLogin;
 import kr.co.ppt.service.MemberService;
 import kr.co.ppt.util.SHA_ENC;
 import kr.co.ppt.util.UserUtil;
@@ -119,7 +120,7 @@ public class HomeController {
 				savedId.setMaxAge(60*60*24*15); // 단위는 (초)임으로 15일정도로 유효시간을 설정해 준다.
 				savedPassword.setMaxAge(60*60*24*15); // 단위는 (초)임으로 15일정도로 유효시간을 설정해 준다.
 				savedCheck.setMaxAge(60*60*24*15);
-
+				
 				response.addCookie(savedId);
 				response.addCookie(savedPassword);
 				response.addCookie(savedCheck);
