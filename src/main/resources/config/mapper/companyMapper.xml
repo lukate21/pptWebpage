@@ -67,4 +67,20 @@
 		select no, news_code as newsCode, today, total
 		from news_count
 	</select>
+	
+	<select id="selectBestCompany" resultType="reliabilityVO">
+		<![CDATA[
+		select com_name as comName, value
+		from(
+			select *
+			from(
+				select com_name, max(value) as value
+				from ANA_RELIABILITY
+				group by com_name
+				order by value desc
+			)
+		)
+		where rownum<=3
+		]]> 
+	</select>
 </mapper>

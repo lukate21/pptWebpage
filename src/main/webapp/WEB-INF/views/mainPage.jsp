@@ -174,9 +174,9 @@
 						<h4>
 							<a href="#">추천종목</a> <span class="text-uppercase margin-l-20">best</span>
 						</h4>
-						<p>Lorem ipsum dolor sit amet consectetur adipiscing elit sed
-							tempor incdidunt ut laboret dolor magna ut consequat siad esqudiat
-							dolor</p>
+						<div class="col-sm-12">
+							<iframe src="${context}/company/bestCompany.do"></iframe>
+						</div>
 					</div>
 	
 				</div>
@@ -228,8 +228,8 @@
 						</div>
 						<div class="bootbox-body">
 							<form class="bootbox-form">
-								<input type="checkbox" class="ace" value="noSee" /> 
-								<span class="lbl"> 다시 보지 않음</span>
+								<input type="checkbox" id="noSee"class="ace" name="noSee" /> 
+								<span class="lbl"><label for="noSee">&nbsp;다시 보지 않음</label></span>
 							</form>
 						</div>
 					</div>
@@ -249,9 +249,18 @@
 		</div>
 <!-- javascript file -->
 <script src="${context}/resources/assets/owlcarousel/owl.carousel.min.js"></script>
+<!-- Cookie JS for Modal -->
+<script src="http://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.0/jquery.cookie.min.js"></script>
 <script>
 	$(document).ready(function() {
-		$('#myModal').modal();
+		
+		if($.cookie("no_see") == null) {
+			$('#myModal').modal();
+		}
+		$("#noSee").click(function(){
+			document.cookie = "no_see=true; expires=Thu, 12 Oct 2017 10:00:00 UTC";
+		});
+		
 		$('#btnLogin').click(function() {
 			goLogin();
 		});
@@ -274,7 +283,10 @@
 				}
 			}
 		});
-		setInterval(getNews("main",8),1000*60);
+		
+		setInterval(function(){
+			getNews("main",8);
+		}, 1000*60);
 		
 		// news받아오기
 		getNews("main",8);

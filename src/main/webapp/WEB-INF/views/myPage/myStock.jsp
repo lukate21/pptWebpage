@@ -47,10 +47,10 @@
 			<div class="page-content">
 				<div class="page-header">
 					<h1>
-						보유 주식 현황
+						${sessionScope.loginUser.name}님
 						<small>
 							<i class="ace-icon fa fa-angle-double-right"></i>
-							${sessionScope.loginUser.name}님의 보유 주식
+							보유 주식 현황
 						</small>
 					</h1>
 				</div><!-- /.page-header -->
@@ -97,10 +97,16 @@
 											<td class="hidden-480" id="volume">${myStock.nowPrice}</td>
 											<c:choose>
 												<c:when test="${myStock.buyPrice > myStock.nowPrice}">
-													<td class="hidden-480" style="color:blue;">${myStock.volume*(myStock.buyPrice-myStock.nowPrice)}</td>
+													<td class="hidden-480" style="color:blue;">
+														<i class="ace-icon fa fa-caret-down blue"></i>
+														${myStock.volume*(myStock.buyPrice-myStock.nowPrice)}
+													</td>
 												</c:when>
 												<c:otherwise>
-													<td class="hidden-480" style="color:red;">${myStock.volume*(myStock.nowPrice-myStock.buyPrice)}</td>
+													<td class="hidden-480" style="color:red;">
+													<i class="ace-icon fa fa-caret-up red"></i>
+														${myStock.volume*(myStock.nowPrice-myStock.buyPrice)}
+													</td>
 												</c:otherwise>
 											</c:choose>
 											<td id="buyDate">${myStock.buyDate}</td>
@@ -493,6 +499,7 @@
 	
 		
 		$.fn.dataTable.Buttons.defaults.dom.container.className = 'dt-buttons btn-overlap btn-group btn-overlap';
+		
 		
 		myTable.buttons().container().appendTo( $('.tableTools-container') );
 		
