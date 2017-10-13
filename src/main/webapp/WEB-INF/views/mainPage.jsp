@@ -2,7 +2,6 @@
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <c:set var="context" value="${pageContext.request.contextPath}" />
-<!DOCTYPE html>
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
@@ -28,86 +27,6 @@
 <link rel="stylesheet" href="${context}/resources/assets/owlcarousel/assets/owl.theme.green.css" />
 <script src="${context}/resources/assets/owlcarousel/owl.carousel.js"></script>
 <!------------------------------------------------------------------------------------------------------------------------->
-<script>
-
-// news받아오기
-getNews("main",8);
-getNews("society",5);
-getNews("politics",5);
-getNews("economic",5);
-getNews("foreign",5);
-getNews("culture",5);
-getNews("entertain",5);
-getNews("digital",5);
-getNews = function(code, num) {
-	var param = "newsCode="+code+"&num="+num;
-	
-	$.ajax({
-		url : "${context}/crawler/recentNews.json",
-		method : 'get',
-		data : param,
-		async : false,
-		success : function(json){
-			var data = JSON.parse(json);
-				if(code === "main"){
-					$("#headline").empty();
-					for(var i = 0;i<data.length;i++)
-						setHeadline(data[i]);
-				} else if(code ==="society"){
-					for(var i = 0;i<data.length;i++)
-						setSociety(data[i]);	
-				} else if(code === "politics"){
-					for(var i = 0;i<data.length;i++)
-						setPolitics(data[i]);
-				} else if(code === "economic"){
-					for(var i = 0;i<data.length;i++)	
-						setEconomic(data[i]);
-				} else if(code === "foreign"){
-					for(var i = 0;i<data.length;i++)
-						setForeign(data[i]);
-				} else if(code === "culture"){
-					for(var i = 0;i<data.length;i++)
-						setCulture(data[i]);
-				} else if(code === "entertain"){
-					for(var i = 0;i<data.length;i++)
-						setEntertain(data[i]);
-				} else if(code === "digital"){
-					for(var i = 0;i<data.length;i++)
-						setDigital(data[i]);
-				}
-				
-		},
-		error : function(e){
-			console.log("error : "+ e);
-		}
-	});
-}
-setHeadline = function(data) {
-	$('#headline').append('<p><h3><a class="dark" href="'+data.link+'" target="_blank">'+data.title+'</a><br/></h3></p>');
-}
-setSociety = function(data) {
-	$('#societyNews').append('<p><h4><a class="dark" href="'+data.link+'" target="_blank">'+data.title+'</a></h4></p>');
-}
-setPolitics = function(data) {
-	$('#politicsNews').append('<p><h4><a class="dark" href="'+data.link+'" target="_blank">'+data.title+'</a></h4></p>');
-}
-setEconomic = function(data) {
-	$('#economicNews').append('<p><h4><a class="dark" href="'+data.link+'" target="_blank">'+data.title+'</a></h4></p>');
-}
-setForeign = function(data) {
-	$('#foreignNews').append('<p><h4><a class="dark" href="'+data.link+'" target="_blank">'+data.title+'</a></h4></p>');
-}
-setCulture = function(data) {
-	$('#cultureNews').append('<p><h4><a class="dark" href="'+data.link+'" target="_blank">'+data.title+'</a></h4></p>');
-}
-setEntertain = function(data) {
-	$('#entertainNews').append('<p><h4><a class="dark" href="'+data.link+'" target="_blank">'+data.title+'</a></h4></p>');
-}
-setDigital = function(data) {
-	$('#digitalNews').append('<p><h4><a class="dark" href="'+data.link+'" target="_blank">'+data.title+'</a></h4></p>');
-}
-
-</script>
 </head>
 <body class="no-skin">
 	<jsp:include page="include/top-menu.jsp"></jsp:include>
@@ -123,7 +42,7 @@ setDigital = function(data) {
 	
 			<div class="page-content">
 				<div class="row">
-					<div class="col-sm-6" style="margin-left:50px">
+					<div class="col-xs-12 col-sm-6" style="margin-left:50px">
 						<div class="row">
 							<div class="widget-box transparent">
 								<div class="widget-header widget-header-flat">
@@ -143,7 +62,51 @@ setDigital = function(data) {
 								</div><!-- /.widget-body -->
 							</div><!-- /.widget-box -->
 						</div>
-						<div class="space-24"></div>
+						<div class="space-12"></div>
+						<div class="row">
+							<div class="col-sm-7">
+								<div class="widget-box transparent">
+									<div class="widget-header widget-header-flat">
+										<h3 class="widget-title lighter">
+											<i class="fa fa-bar-chart fa-1x dark"></i><span class="dark"><b>뉴스 수집 차트</b></span>
+										</h3>
+										<div class="widget-toolbar">
+											<a href="#" data-action="collapse">
+												<i class="ace-icon fa fa-chevron-up"></i>
+											</a>
+										</div>
+									</div>
+									<div class="widget-body">
+										<div class="widget-main no-padding">
+											<iframe src="${context}/company/chart/newsCount.do"
+												width="100%" height="400px" frameBorder="0"> </iframe>
+										</div><!-- /.widget-main -->
+									</div><!-- /.widget-body -->
+								</div><!-- /.widget-box -->
+							</div>
+							<div class="col-sm-5">
+								<div class="widget-box transparent">
+									<div class="widget-header widget-header-flat">
+										<h3 class="widget-title lighter">
+											<i class="fa fa-pie-chart fa-1x dark"></i><span class="dark"><b> 베스트 확률 기업</b></span>
+										</h3>
+										<div class="widget-toolbar">
+											<a href="#" data-action="collapse">
+												<i class="ace-icon fa fa-chevron-up"></i>
+											</a>
+										</div>
+									</div>
+									<div class="widget-body">
+										<div class="widget-main no-padding">
+											<iframe src="${context}/company/bestCompany.do"
+												width="100%" height="400px" frameBorder="0"> </iframe>
+										</div><!-- /.widget-main -->
+									</div><!-- /.widget-body -->
+								</div><!-- /.widget-box -->
+							</div>
+						</div>
+					</div>
+					<div class="col-xs-12 col-sm-5" style="margin-left:50px">
 						<div class="row">
 							<div class="widget-box transparent">
 								<div class="widget-header widget-header-flat">
@@ -151,7 +114,7 @@ setDigital = function(data) {
 										<i class="fa fa-rss fa-1x orange"></i><span class="dark"><b> 실시간 뉴스</b></span>
 									</h3>
 									<div class="widget-toolbar">
-										<i id="btnPlay" class="fa fa-play-circle-o fa-2x" style="cursor:pointer; margin-top:7px" title="start" onclick="rotation"></i>
+										<i id="btnPlay" class="fa fa-play-circle-o fa-2x" style="cursor:pointer; margin-top:7px" title="start"></i>
 										<i id="btnStop" class="fa fa-pause-circle-o fa-2x" style="cursor:pointer; margin-top:7px" title="pause"></i>
 										<a href="#" data-action="collapse">
 											<i class="ace-icon fa fa-chevron-up"></i>
@@ -232,14 +195,8 @@ setDigital = function(data) {
 								</div><!-- /.widget-body -->
 							</div><!-- /.widget-box -->
 						</div>
-						<!-- Progress Box -->
-						<div>
-							
-						</div>
-						<!-- End Progress Box -->
-					</div>
-					<div class="col-sm-5" style="margin-left:50px">
-						<div>
+						<div class="space-12"></div>
+						<div class="row">
 							<div class="tabbable">
 								<ul class="nav nav-tabs nav-justified" id="myTab">
 									<li class="active"><a data-toggle="tab" href="#kospi"
@@ -256,31 +213,15 @@ setDigital = function(data) {
 								<div class="tab-content">
 									<div id="kospi" class="tab-pane fade active in">
 										<iframe src="${context}/company/chart/stock.do?name=KOSPI&draw=true"
-								width="100%" height="500px" frameBorder="0"> </iframe>
+								width="100%" height="450px" frameBorder="0"> </iframe>
 									</div>
 	
 									<div id="kosdaq" class="tab-pane fade">
 										<iframe src="${context}/company/chart/stock.do?name=KOSDAQ&draw=true"
-								width="100%" height="500px" frameBorder="0"> </iframe>
+								width="100%" height="450px" frameBorder="0"> </iframe>
 									</div>
 								</div>
 							</div>
-						</div>
-						<br />
-	
-						<h4>
-							<a href="#">즐겨찾기 인기 종목</a> 
-							<span class="text-uppercase margin-l-20">favorite</span>
-						</h4>
-						<p>Lorem ipsum dolor sit amet consectetur adipiscing elit sed
-							tempor incdidunt ut laboret dolor magna ut consequat siad esqudiat
-							dolor</p>
-						<br />
-						<h4>
-							<a href="#">추천종목</a> <span class="text-uppercase margin-l-20">best</span>
-						</h4>
-						<div class="col-sm-12">
-							<iframe src="${context}/company/bestCompany.do"></iframe>
 						</div>
 					</div>
 	
@@ -357,6 +298,7 @@ setDigital = function(data) {
 <!-- Cookie JS for Modal -->
 <script src="http://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.0/jquery.cookie.min.js"></script>
 <script>
+	var intervalIndex = 0;
 	$(document).ready(function() {
 		
 		if($.cookie("no_see") == null) {
@@ -393,6 +335,16 @@ setDigital = function(data) {
 			getNews("main",8);
 		}, 1000*60);
 		
+		// news받아오기
+		getNews("main",8);
+		getNews("society",5);
+		getNews("politics",5);
+		getNews("economic",5);
+		getNews("foreign",5);
+		getNews("culture",5);
+		getNews("entertain",5);
+		getNews("digital",5);
+		
 		//news탭 움직이기
 		var slideTab;
 		 slideTab = navtabSlide();
@@ -408,17 +360,84 @@ setDigital = function(data) {
 	
 	navtabSlide = function() {
 		var tab = ["#society","#politics","#economic","#foreign","#culture","#entertain","#digital"];
-		var i = 0;
 		interval = setInterval(function(){
-			$('.nav-tabs a[href='+tab[i]+']').tab('show');
-			i++;
-			if(i > 6) i = 0;
+			$('.nav-tabs a[href='+tab[intervalIndex]+']').tab('show');
+			intervalIndex++;
+			if(intervalIndex > 6) intervalIndex = 0;
 		},5000);
 		
 		return interval;
 		
 	}
 	
+	getNews = function(code, num) {
+		var param = "newsCode="+code+"&num="+num;
+		
+		$.ajax({
+			url : "${context}/crawler/recentNews.json",
+			method : 'get',
+			data : param,
+			success : function(json){
+				var data = JSON.parse(json);
+					if(code === "main"){
+						$("#headline").empty();
+						for(var i = 0;i<data.length;i++)
+							setHeadline(data[i]);
+					} else if(code ==="society"){
+						for(var i = 0;i<data.length;i++)
+							setSociety(data[i]);	
+					} else if(code === "politics"){
+						for(var i = 0;i<data.length;i++)
+							setPolitics(data[i]);
+					} else if(code === "economic"){
+						for(var i = 0;i<data.length;i++)	
+							setEconomic(data[i]);
+					} else if(code === "foreign"){
+						for(var i = 0;i<data.length;i++)
+							setForeign(data[i]);
+					} else if(code === "culture"){
+						for(var i = 0;i<data.length;i++)
+							setCulture(data[i]);
+					} else if(code === "entertain"){
+						for(var i = 0;i<data.length;i++)
+							setEntertain(data[i]);
+					} else if(code === "digital"){
+						for(var i = 0;i<data.length;i++)
+							setDigital(data[i]);
+					}
+					
+			},
+			error : function(e){
+				console.log("error : "+ e);
+			}
+		});
+	}
+	setHeadline = function(data) {
+		$('#headline').append('<p><h3><a class="dark" href="'+data.link+'" target="_blank">'+data.title+'</a><br/></h3></p>');
+	}
+	setSociety = function(data) {
+		$('#societyNews').append('<p><h4><a class="dark" href="'+data.link+'" target="_blank">'+data.title+'</a><br/></h4></p>');
+	}
+	setPolitics = function(data) {
+		$('#politicsNews').append('<p><h4><a class="dark" href="'+data.link+'" target="_blank">'+data.title+'</a><br/></h4></p>');
+	}
+	setEconomic = function(data) {
+		$('#economicNews').append('<p><h4><a class="dark" href="'+data.link+'" target="_blank">'+data.title+'</a><br/></h4></p>');
+	}
+	setForeign = function(data) {
+		$('#foreignNews').append('<p><h4><a class="dark" href="'+data.link+'" target="_blank">'+data.title+'</a><br/></h4></p>');
+	}
+	setCulture = function(data) {
+		$('#cultureNews').append('<p><h4><a class="dark" href="'+data.link+'" target="_blank">'+data.title+'</a><br/></h4></p>');
+	}
+	setEntertain = function(data) {
+		$('#entertainNews').append('<p><h4><a class="dark" href="'+data.link+'" target="_blank">'+data.title+'</a><br/></h4></p>');
+	}
+	setDigital = function(data) {
+		$('#digitalNews').append('<p><h4><a class="dark" href="'+data.link+'" target="_blank">'+data.title+'</a><br/></h4></p>');
+	}
+	
+		
 	function goLogin() {
 		location.href = "login.do"
 	}
