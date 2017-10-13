@@ -28,6 +28,86 @@
 <link rel="stylesheet" href="${context}/resources/assets/owlcarousel/assets/owl.theme.green.css" />
 <script src="${context}/resources/assets/owlcarousel/owl.carousel.js"></script>
 <!------------------------------------------------------------------------------------------------------------------------->
+<script>
+
+// news받아오기
+getNews("main",8);
+getNews("society",5);
+getNews("politics",5);
+getNews("economic",5);
+getNews("foreign",5);
+getNews("culture",5);
+getNews("entertain",5);
+getNews("digital",5);
+getNews = function(code, num) {
+	var param = "newsCode="+code+"&num="+num;
+	
+	$.ajax({
+		url : "${context}/crawler/recentNews.json",
+		method : 'get',
+		data : param,
+		async : false,
+		success : function(json){
+			var data = JSON.parse(json);
+				if(code === "main"){
+					$("#headline").empty();
+					for(var i = 0;i<data.length;i++)
+						setHeadline(data[i]);
+				} else if(code ==="society"){
+					for(var i = 0;i<data.length;i++)
+						setSociety(data[i]);	
+				} else if(code === "politics"){
+					for(var i = 0;i<data.length;i++)
+						setPolitics(data[i]);
+				} else if(code === "economic"){
+					for(var i = 0;i<data.length;i++)	
+						setEconomic(data[i]);
+				} else if(code === "foreign"){
+					for(var i = 0;i<data.length;i++)
+						setForeign(data[i]);
+				} else if(code === "culture"){
+					for(var i = 0;i<data.length;i++)
+						setCulture(data[i]);
+				} else if(code === "entertain"){
+					for(var i = 0;i<data.length;i++)
+						setEntertain(data[i]);
+				} else if(code === "digital"){
+					for(var i = 0;i<data.length;i++)
+						setDigital(data[i]);
+				}
+				
+		},
+		error : function(e){
+			console.log("error : "+ e);
+		}
+	});
+}
+setHeadline = function(data) {
+	$('#headline').append('<p><h3><a class="dark" href="'+data.link+'" target="_blank">'+data.title+'</a><br/></h3></p>');
+}
+setSociety = function(data) {
+	$('#societyNews').append('<p><h4><a class="dark" href="'+data.link+'" target="_blank">'+data.title+'</a></h4></p>');
+}
+setPolitics = function(data) {
+	$('#politicsNews').append('<p><h4><a class="dark" href="'+data.link+'" target="_blank">'+data.title+'</a></h4></p>');
+}
+setEconomic = function(data) {
+	$('#economicNews').append('<p><h4><a class="dark" href="'+data.link+'" target="_blank">'+data.title+'</a></h4></p>');
+}
+setForeign = function(data) {
+	$('#foreignNews').append('<p><h4><a class="dark" href="'+data.link+'" target="_blank">'+data.title+'</a></h4></p>');
+}
+setCulture = function(data) {
+	$('#cultureNews').append('<p><h4><a class="dark" href="'+data.link+'" target="_blank">'+data.title+'</a></h4></p>');
+}
+setEntertain = function(data) {
+	$('#entertainNews').append('<p><h4><a class="dark" href="'+data.link+'" target="_blank">'+data.title+'</a></h4></p>');
+}
+setDigital = function(data) {
+	$('#digitalNews').append('<p><h4><a class="dark" href="'+data.link+'" target="_blank">'+data.title+'</a></h4></p>');
+}
+
+</script>
 </head>
 <body class="no-skin">
 	<jsp:include page="include/top-menu.jsp"></jsp:include>
@@ -43,7 +123,7 @@
 	
 			<div class="page-content">
 				<div class="row">
-					<div class="col-sm-5 col-sm-offset-1">
+					<div class="col-sm-6" style="margin-left:50px">
 						<div class="row">
 							<div class="widget-box transparent">
 								<div class="widget-header widget-header-flat">
@@ -63,7 +143,7 @@
 								</div><!-- /.widget-body -->
 							</div><!-- /.widget-box -->
 						</div>
-						<div class="span-24"></div>
+						<div class="space-24"></div>
 						<div class="row">
 							<div class="widget-box transparent">
 								<div class="widget-header widget-header-flat">
@@ -118,7 +198,7 @@
 													</a>
 												</li>
 											</ul>
-											<div class="tab-content"><br/>
+											<div class="tab-content">
 												<div id="society" class="tab-pane fade active in">
 													<div id="societyNews"></div>
 												</div>
@@ -158,7 +238,7 @@
 						</div>
 						<!-- End Progress Box -->
 					</div>
-					<div class="col-sm-5">
+					<div class="col-sm-5" style="margin-left:50px">
 						<div>
 							<div class="tabbable">
 								<ul class="nav nav-tabs nav-justified" id="myTab">
@@ -313,16 +393,6 @@
 			getNews("main",8);
 		}, 1000*60);
 		
-		// news받아오기
-		getNews("main",8);
-		getNews("society",5);
-		getNews("politics",5);
-		getNews("economic",5);
-		getNews("foreign",5);
-		getNews("culture",5);
-		getNews("entertain",5);
-		getNews("digital",5);
-		
 		//news탭 움직이기
 		var slideTab;
 		 slideTab = navtabSlide();
@@ -349,74 +419,6 @@
 		
 	}
 	
-	getNews = function(code, num) {
-		var param = "newsCode="+code+"&num="+num;
-		
-		$.ajax({
-			url : "${context}/crawler/recentNews.json",
-			method : 'get',
-			data : param,
-			success : function(json){
-				var data = JSON.parse(json);
-					if(code === "main"){
-						$("#headline").empty();
-						for(var i = 0;i<data.length;i++)
-							setHeadline(data[i]);
-					} else if(code ==="society"){
-						for(var i = 0;i<data.length;i++)
-							setSociety(data[i]);	
-					} else if(code === "politics"){
-						for(var i = 0;i<data.length;i++)
-							setPolitics(data[i]);
-					} else if(code === "economic"){
-						for(var i = 0;i<data.length;i++)	
-							setEconomic(data[i]);
-					} else if(code === "foreign"){
-						for(var i = 0;i<data.length;i++)
-							setForeign(data[i]);
-					} else if(code === "culture"){
-						for(var i = 0;i<data.length;i++)
-							setCulture(data[i]);
-					} else if(code === "entertain"){
-						for(var i = 0;i<data.length;i++)
-							setEntertain(data[i]);
-					} else if(code === "digital"){
-						for(var i = 0;i<data.length;i++)
-							setDigital(data[i]);
-					}
-					
-			},
-			error : function(e){
-				console.log("error : "+ e);
-			}
-		});
-	}
-	setHeadline = function(data) {
-		$('#headline').append('<p><h3><a class="dark" href="'+data.link+'" target="_blank">'+data.title+'</a><br/></h3></p>');
-	}
-	setSociety = function(data) {
-		$('#societyNews').append('<p><h4><a class="dark" href="'+data.link+'" target="_blank">'+data.title+'</a></h4></p>');
-	}
-	setPolitics = function(data) {
-		$('#politicsNews').append('<p><h4><a class="dark" href="'+data.link+'" target="_blank">'+data.title+'</a></h4></p>');
-	}
-	setEconomic = function(data) {
-		$('#economicNews').append('<p><h4><a class="dark" href="'+data.link+'" target="_blank">'+data.title+'</a></h4></p>');
-	}
-	setForeign = function(data) {
-		$('#foreignNews').append('<p><h4><a class="dark" href="'+data.link+'" target="_blank">'+data.title+'</a></h4></p>');
-	}
-	setCulture = function(data) {
-		$('#cultureNews').append('<p><h4><a class="dark" href="'+data.link+'" target="_blank">'+data.title+'</a></h4></p>');
-	}
-	setEntertain = function(data) {
-		$('#entertainNews').append('<p><h4><a class="dark" href="'+data.link+'" target="_blank">'+data.title+'</a></h4></p>');
-	}
-	setDigital = function(data) {
-		$('#digitalNews').append('<p><h4><a class="dark" href="'+data.link+'" target="_blank">'+data.title+'</a></h4></p>');
-	}
-	
-		
 	function goLogin() {
 		location.href = "login.do"
 	}

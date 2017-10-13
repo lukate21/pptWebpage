@@ -28,6 +28,7 @@ import kr.co.ppt.serviceImpl.DictionaryServiceImpl;
 import kr.co.ppt.serviceImpl.PortfolioServiceImpl;
 import kr.co.ppt.vo.CompanyVO;
 import kr.co.ppt.vo.MemberVO;
+import kr.co.ppt.vo.MyAnalisysVO;
 import kr.co.ppt.vo.MyFavoriteVO;
 
 @Controller
@@ -55,6 +56,31 @@ public class PortfolioController {
 		model.addAttribute("myDic", arr.toJSONString());
 		model.addAttribute("comList", cService.selectComList());
 		return "/my/list";
+	}
+	
+	@RequestMapping("/myAnalysis.json")
+	public String list(int userNo, String dicName){
+		JSONArray arr = new JSONArray();
+		List<MyAnalisysVO> list = pService.selectMyAnalysis(userNo);
+		for(MyAnalisysVO mVO: list){
+			if(dicName.equals(mVO.getDicName())){
+				JSONObject obj = new JSONObject();
+				obj.put("no", mVO.getNo());
+				obj.put("comName", mVO.getComName());
+				obj.put("anaCode", mVO.getAnaCode());
+				obj.put("newsCode", mVO.getNewsCode());
+				obj.put("todayFluc", mVO.getTodayFluc());
+				obj.put("todayInc", mVO.getTodayInc());
+				obj.put("todayDec", mVO.getTodayDec());
+				obj.put("todayEqu", mVO.getTodayEqu());
+				obj.put("tomorrowFluc", mVO.getTomorrowFluc());
+				obj.put("tomorrowInc", mVO.getTomorrowInc());
+				obj.put("tomorrowDec", mVO.getTomorrowDec());
+				obj.put("tomorrowEqu", mVO.getTodayEqu());
+				return obj.toJSONString();
+			}
+		}
+		return "사전명이 잘못되었습니다.";
 	}
 	
 	@RequestMapping(value="/favorite.do",method=RequestMethod.GET)
