@@ -134,9 +134,7 @@
 				</div>
 			</div>
 			<div class="hr hr-12 hr-double"></div>
-			<div class="alert alert-info bigger-100">
-				이름과 전화번호, 이메일을 입력해 주세요
-			</div>
+			<div class="alert alert-info bigger-100" id="pResult"></div>
 		</div><!-- #dialog-confirm -->
 	<!-- jQuery UI -->
 		</div>
@@ -207,7 +205,15 @@
 			data : param,
 			method : "post",
 			success : function(result){
-				alert(result);
+				if(result == "찾는 비밀번호가 존재하지 않습니다.")
+					$('#pResult').html(result);
+				else
+					$('#pResult').html("임시 비밀번호는 "+result+"입니다.<br/>로그인 후 비밀번호를 변경해 주세요");
+				
+				$('#btn-findPass').attr("text","완료").click(function(){
+					$( "#dialog-findPassword" ).dialog("close");
+				});
+					
 			}
 		});
 	}
@@ -216,6 +222,8 @@ jQuery(function($) {
 	$( "#id-btn-dialog1" ).on('click', function(e) {
 		e.preventDefault();
 
+		iName.value="";
+		iPhone.value="";
 		var dialog = $( "#dialog-findId" ).removeClass('hide').dialog({
 			modal: true,
 			width: '360',
@@ -246,6 +254,10 @@ jQuery(function($) {
 	$( "#id-btn-dialog2" ).on('click', function(e) {
 		e.preventDefault();
 	
+		pName.value="";
+		pPhone.value="";
+		pEmail.value="";
+		
 		var dialog = $( "#dialog-findPassword" ).removeClass('hide').dialog({
 			modal: true,
 			width: '400',
@@ -256,9 +268,10 @@ jQuery(function($) {
 				{
 					text: "확인",
 					"class" : "btn btn-primary btn-minier",
+					"id" : "btn-findPass",
 					click: function() {
 						findPassword();
-						$( this ).dialog( "close" ); 
+						//$( this ).dialog( "close" ); 
 					} 
 				},
 				{

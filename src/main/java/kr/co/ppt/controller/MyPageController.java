@@ -311,5 +311,61 @@ public class MyPageController {
 		else return "redirect:myStock.do";
 	}
 	
+	@ResponseBody
+	@RequestMapping("updateMyStock.json")
+	public String mobileUpdateMyStock(int userNo, int comNo, int no, int buyPrice, int volume, String buyDate){
+		MyStockVO myStock = new MyStockVO();
+		myStock.setUserNo(userNo);
+		myStock.setComNo(comNo);
+		myStock.setNo(no);
+
+		myStock.setBuyPrice(buyPrice);
+		myStock.setVolume(volume);
+		if(buyDate != null) myStock.setBuyDate(buyDate);
+		
+		System.out.println(myStock);
+		
+		String msg = myStockService.updateMyStock(myStock);
+		System.out.println("업데이트 결과 : "+msg);
+		
+		return msg;
+	}
+	@ResponseBody
+	@RequestMapping("deleteMyStock.json")
+	public String deleteMyStock(int userNo, int no){
+		
+		MyStockVO myStock = new MyStockVO();
+		myStock.setNo(no);
+		myStock.setUserNo(userNo);
+		
+		String msg = myStockService.deleteMyStock(myStock);
+		System.out.println("삭제 결과 : "+msg);
+		
+		//관심기업 삭제
+		List<MyStockVO> list = myStockService.getStockInfoByUserNo(userNo);
+		int comNo=0;
+		int dupl = 0;
+		for(MyStockVO mVO : list){
+			if(mVO.getNo() == no){
+				comNo = mVO.getComNo();
+				break;
+			}
+		}
+		for(MyStockVO mVO : list){
+			if(mVO.getComNo() == comNo){
+				dupl++;
+			}
+		}
+		if(dupl ==1){
+			Map<String,Object> map = new HashMap<>();
+			map.put("userNo", userNo);
+			map.put("comNo", comNo);
+			map.put("groupName", "보유주식");
+			pService.deleteFavorite(map);
+		}
+		
+		return msg;
+	}
+	
 	
 }
