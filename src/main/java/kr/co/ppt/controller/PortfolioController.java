@@ -50,7 +50,7 @@ public class PortfolioController {
 	public String list(Model model,HttpSession session){
 		MemberVO memberVO = (MemberVO)session.getAttribute("loginUser");
 		int userNo = memberVO.getNo();
-		JSONArray arr = dService.selectUserDic(userNo, null);
+		JSONArray arr = dService.selectUserDic(userNo, null, false);
 		model.addAttribute("myAnalysisList", pService.selectMyAnalysis(userNo));
 		model.addAttribute("myDic", arr.toJSONString());
 		model.addAttribute("comList", cService.selectComList());
