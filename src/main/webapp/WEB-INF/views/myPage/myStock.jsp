@@ -88,11 +88,11 @@
 												<c:forEach items="${myStockList}" var="myStock" varStatus="status">
 													<tr id="row">
 											<td class="hidden-480" style="display:none">${myStock.no}</td>
-											<td id="comName">
+											<td>
 												<a href="#">${myStock.comName}</a>
 											</td>
-											<td id="buyPrice">${myStock.buyPrice}</td>
-											<td id="volume" class="hidden-480" id="volume">${myStock.volume}</td>
+											<td>${myStock.buyPrice}</td>
+											<td class="hidden-480" id="volume">${myStock.volume}</td>
 											<td class="hidden-480" id="base">${myStock.volume*myStock.buyPrice}</td>
 											<td class="hidden-480" id="volume">${myStock.nowPrice}</td>
 											<c:choose>
@@ -211,15 +211,13 @@
 															<input type="number" id="volume" name="volume" class="col-xs-10 col-sm-5" />
 														</div>
 													</div>
+													
 													<div class="form-group">
-														<label class="col-sm-3 control-label no-padding-right" for="id-date-picker-1"> 구매일 </label>
-														
+														<label class="col-sm-3 control-label no-padding-right" for="form-field-2"> 구매일 </label>
+							
 														<div class="col-sm-9">
-															<input class="col-xs-10 col-sm-5 form-control date-picker" id="id-date-picker-1" type="text" data-date-format="dd-mm-yyyy" />
+															<input type="date" id="buyDate" name="buyDate" class="col-xs-10 col-sm-5" data-date-format="yyyy-MM-dd"/>
 														</div>
-														<span class="input-group-addon">
-															<i class="fa fa-calendar"></i>
-														</span>
 													</div>
 												</form>
 											</div><!-- /.row -->
@@ -374,19 +372,10 @@
 <script src="${context}/resources/assets/js/buttons.colVis.min.js"></script>
 <script src="${context}/resources/assets/js/dataTables.select.min.js"></script>
 <!-- page specific plugin scripts -->
-		<script src="assets/js/jquery-ui.min.js"></script>
-		<script src="assets/js/jquery.ui.touch-punch.min.js"></script>
+<script src="${context}/resources/assets/js/jquery-ui.min.js"></script>
+<script src="${context}/resources/assets/js/jquery.ui.touch-punch.min.js"></script>
 <script>
-	jQuery(function($){
-		$('.date-picker').datepicker({
-			autoclose: true,
-			todayHighlight: true
-		})
-		//show datepicker when clicking on the icon
-		.next().on(ace.click_event, function(){
-			$(this).prev().focus();
-		});
-	});
+
 	$(document).on("click", ".fa-pencil", function() {
 		var tr = $(this).closest('tr');
 		var no = $(tr)[0].cells[0].innerText;
@@ -618,7 +607,10 @@
 		var volume = form.volume;
 		var buyDate = form.buyDate;
 		
-		
+		console.log(comName.value);
+		console.log(buyPrice.value);
+		console.log(volume.value);
+		console.log(buyDate.value);
 		if(comName.value == "" || buyPrice.value == "" || volume.value == "" || buyDate.value == ""){
 			alert("모든 항목을 입력하셔야 합니다.")
 			return false;
