@@ -140,7 +140,12 @@ public class DictionaryServiceImpl {
 		dDAO.insertUserDic(dom);
 	}
 	
-	public JSONArray selectUserDic(int userNo, String dicName){
+	public void deleteUserDic(int userNo, String dicName){
+		Bson query = Filters.and(Filters.eq("userNo",userNo),Filters.eq("dicName",dicName));
+		dDAO.deleteUserDic(query);
+	}
+	
+	public JSONArray selectUserDic(int userNo, String dicName, boolean dicInclude){
 		JSONArray arr = new JSONArray();
 		Bson query = null;
 		if(dicName != null)//selectOne
@@ -157,7 +162,10 @@ public class DictionaryServiceImpl {
 			obj.put("anaCode", dom.get("anaCode"));
 			obj.put("dicName", dom.get("dicName"));
 			obj.put("reliability", dom.get("reliability"));
-			obj.put("dictionary", dom.get("dictionary"));
+			if(dicInclude)
+				obj.put("dictionary", dom.get("dictionary"));
+			else
+				obj.put("dictionary", ((ArrayList)dom.get("dictionary")).size());
 			arr.add(obj);
 		}
 		return arr;

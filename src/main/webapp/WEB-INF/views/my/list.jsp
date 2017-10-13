@@ -193,6 +193,12 @@
 	<script>
 	var myDic = JSON.parse('${myDic}');
 	var myAnalysisList = [];
+	var todayIncList = [];
+	var todayDecList = [];
+	var todayEquList = [];
+	var tomorrowIncList = [];
+	var tomorrowDecList = [];
+	var tomorrowEquList = [];
 	<c:forEach items="${myAnalysisList}" var="myAnaysisVO">
 		myAnalysisList.push({
 			dicName : '${myAnaysisVO.dicName}',
@@ -205,7 +211,7 @@
 			tomorrowInc : ${myAnaysisVO.tomorrowInc},
 			tomorrowDec : ${myAnaysisVO.tomorrowDec},
 			tomorrowEqu : ${myAnaysisVO.tomorrowEqu},
-		})
+		});
 	</c:forEach>
 		for(var i in myDic){
 			var anaCode = '';
@@ -241,12 +247,12 @@
 			else if(myDic[i].newsCode == 'society')
 				newsCode = '사회';
 			$('#simple-table tbody').append('<tr id="'+i+'"><td>'+myDic[i].dicName+'</td><td>'+myDic[i].comName+'</td><td>'+anaCode
-											+'</td><td>'+newsCode+'</td><td>'+myDic[i].reliability+'%</td><td>'+myDic[i].dictionary.length
+											+'</td><td>'+newsCode+'</td><td>'+myDic[i].reliability+'%</td><td>'+myDic[i].dictionary
 											+'</td><td class="center"><div class="action-buttons"><a href="#" class="green bigger-140 show-details-btn" title="Show Details">'
 											+'<i class="ace-icon fa fa-angle-double-down"></i><span class="sr-only">Details</span></a></div></td>'
-											+'<td class="center"><div class="hidden-sm hidden-xs btn-group center"><button class="btn btn-xs btn-danger"><i class="ace-icon fa fa-trash-o bigger-120"></i></button></div></td></tr>');
+											+'<td class="center"><div class="hidden-sm hidden-xs btn-group center"><button class="btn btn-xs btn-danger" onclick="deleteMyDic(\''+myDic[i].dicName+'\')"><i class="ace-icon fa fa-trash-o bigger-120"></i></button></div></td></tr>');
 			var detail = '';
-			var dictionary = myDic[i].dictionary;
+			//var dictionary = myDic[i].dictionary;
 		/* 	for(var i in dictionary){
 				detail += '<span class="label label-lg label-yellow arrowed-in arrowed-in-right">'
 				detail += dictionary[i].term;
@@ -263,6 +269,12 @@
 					var tomorrowInc =  myAnalysisList[j].tomorrowInc;
 					var tomorrowDec =  myAnalysisList[j].tomorrowDec;
 					var tomorrowEqu =  myAnalysisList[j].tomorrowEqu;
+					todayIncList.push(todayInc);
+					todayDecList.push(todayDec);
+					todayEquList.push(todayEqu);
+					tomorrowIncList.push(tomorrowInc);
+					tomorrowDecList.push(tomorrowDec);
+					tomorrowEquList.push(tomorrowEqu);
 					if(todayPredict == 'p'){
 						todayPredict = '<span class="text-danger"><b><i class="fa fa-caret-up"></i>&nbsp;상승</b></span>';
 					}
@@ -284,25 +296,70 @@
 					}else if(tomorrowPredict == 'x'){
 						tomorrowPredict = '<b>데이터 부족</b>';
 					}
-					$('#simple-table tbody').append('<tr class="detail-row"><td colspan="8"><div class="table-detail"><div class="row">'
-							+'<div class="col-sm-9"><iframe src="${context}/company/chart/stock.do?name='+myDic[i].comName+'&draw=true" width="100%" height="400px" frameBorder="0"></iframe></div>'
-							+'<div class="col-sm-3"><div class="row">주가예측 : '+todayPredict+'(금일) | '+tomorrowPredict+'(익일)<br/>'
-							+'금일 상승치 : '+todayInc.toFixed(2)+' | 금일 하락치 : '+todayDec.toFixed(2)+' | 금일 동결치 : '+todayEqu.toFixed(2) + '<br/>'
-							+'익일 상승치 : '+tomorrowInc.toFixed(2)+' | 익일 하락치 : '+tomorrowDec.toFixed(2)+' | 익일 동결치 : '+tomorrowEqu.toFixed(2) + '</div></div>'
-							+'</div><div class="row"><div class="col-sm-6"><iframe src="${context}/company/chart/dTree.do'
-							+'?name='+myDic[i].comName+'&anaCode='+myDic[i].anaCode+'&newsCode='+myDic[i].newsCode+'&inc='+todayInc+'&dec='+todayDec+'&equ='+todayEqu
-							+'"width="100%" height="500px" frameBorder="0" id="today'+i+'"> </iframe></div>'
-							+'<div class="col-sm-6"><iframe src="${context}/company/chart/dTree.do'
-							+'?name='+myDic[i].comName+'&anaCode='+myDic[i].anaCode+'&newsCode='+myDic[i].newsCode+'&inc='+tomorrowInc+'&dec='+tomorrowDec+'&equ='+tomorrowEqu
-							+'"width="100%" height="500px" frameBorder="0" id="tomorrow'+i+'"> </iframe></div>'
-							+'</div></div></td></tr>');
+					$('#simple-table tbody').append('<tr class="detail-row"><td colspan="8"><div class="table-detail"><div class="row"><h1 class="center">'+myDic[i].comName+'</h1>'
+							+'<div class="col-sm-6" id="stockChart'+i+'"></div>'
+							+'<div class="col-sm-6"><div class="row center"><h5>주가예측 : '+todayPredict+'(금일) | '+tomorrowPredict+'(익일)</h5></div>'
+							+'<div class="row center"><span id="scoreSpan'+i+'"></span>'
+							+'<span class="pull-right"><label><input id="switch-field-'+i+'" class="ace ace-switch" type="checkbox">'
+							+'<span class="lbl" data-lbl="익일 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;금일"></span></label></span></div>'
+							+'<div class="row" id="dTree'+i+'"></div>'
+							+'</div></div></div></div></td></tr>');
 					break;
 				}
 			}
-			
+		}
+		function drawChart(i){
+			$('#stockChart'+i).html('<iframe src="${context}/company/chart/stock.do?name='+myDic[i].comName+'&draw=true" width="100%" height="500px" frameBorder="0"></iframe>');
+			dTreeSelector(i,'today');
+		}
+		
+		function dTreeSelector(i,day){
+			if(day=='today'){
+				$('#scoreSpan'+i).html('금일 상승치 : '+todayIncList[i].toFixed(4)+' | 하락치 : '+todayDecList[i].toFixed(4)+' | 동결치 : '+todayEquList[i].toFixed(4));
+				$('#dTree'+i).html('<iframe src="${context}/company/chart/dTree.do'
+						+'?name='+myDic[i].comName+'&anaCode='+myDic[i].anaCode+'&newsCode='+myDic[i].newsCode+'&inc='+todayIncList[i]+'&dec='+todayDecList[i]+'&equ='+todayEquList[i]
+						+'"width="100%" height="500px" frameBorder="0"> </iframe>');
+			}else if(day == 'tomorrow'){
+				$('#scoreSpan'+i).html('익일 상승치 : '+tomorrowIncList[i].toFixed(4)+' | 하락치 : '+tomorrowDecList[i].toFixed(4)+' | 동결치 : '+tomorrowEquList[i].toFixed(4));
+				$('#dTree'+i).html('<iframe src="${context}/company/chart/dTree.do'
+						+'?name='+myDic[i].comName+'&anaCode='+myDic[i].anaCode+'&newsCode='+myDic[i].newsCode+'&inc='+tomorrowIncList[i]+'&dec='+tomorrowDecList[i]+'&equ='+tomorrowEquList[i]
+						+'"width="100%" height="500px" frameBorder="0"> </iframe>');
+			}
+		}
+		
+		function deleteMyDic(dicName){
+			if(confirm('삭제되면 다시 확인할 수 없습니다.\n삭제 하시겠습니까?')){
+				$.ajax({
+					url : '${context}/dictionary/mongo/deleteUserDic.json',
+					type : 'get',
+					data : {
+						'userNo' : '${loginUser.no}',
+						'dicName' : dicName
+					},
+					contentType : 'application/x-www-form-urlencoded; charset=utf-8',
+					success : function(data){
+						alert(data);
+						location.href = '${context}/my/list.do';
+					}
+				});
+				
+			}
 		}
 </script>
 		<script type="text/javascript">
+		$(document).on("click", ".ace.ace-switch", function() {
+			var i = $(this).attr('id').split('-')[2];
+			var day = '';
+			if($('#scoreSpan'+i).text().includes('금일'))
+				day='tomorrow';
+			else
+				day='today';
+			dTreeSelector(i,day);
+		});
+		$(document).on("click", ".show-details-btn", function() {
+			var i = $(this).closest('tr').attr('id');
+			drawChart(i);
+		});
 			jQuery(function($) {
 				$('.show-details-btn').on('click', function(e) {
 					e.preventDefault();
@@ -310,7 +367,7 @@
 					$(this).find(ace.vars['.icon']).toggleClass('fa-angle-double-down').toggleClass('fa-angle-double-up');
 				});
 
-			})
+			});
 		</script>
 </body>
 </html>

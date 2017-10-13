@@ -16,7 +16,7 @@
 
 </head>
 <body>
-	<div class="chart" id="OrganiseChart-simple" style="width:500px;height:450px">
+	<div class="chart" id="OrganiseChart-simple" style="width:600px;height:450px">
 	</div>
 	<script src="${context }/resources/treant/vendor/raphael.js"></script>
 	<script src="${context }/resources/treant/Treant.js"></script>

@@ -54,8 +54,15 @@ public class DictionaryController {
 	
 	@RequestMapping("/mongo/selectUserDic.json")
 	@ResponseBody
-	public String selectUserDic (int userNo, String dicName){
-		JSONArray arr = dService.selectUserDic(userNo, dicName);
+	public String selectUserDic (int userNo, String dicName, String dicInclude){
+		boolean b = true;
+		if(dicInclude != null){
+			if(dicInclude.equals("true"))
+				b = true;
+			else if(dicInclude.equals("false"))
+				b = false;
+		}
+		JSONArray arr = dService.selectUserDic(userNo, dicName, b);
 		return arr.toJSONString();
 	}
 	
@@ -81,6 +88,13 @@ public class DictionaryController {
 		dService.insertUserDic(document);
 		return document.toJson();
 		//return dService.selectTFIDFMongo(comName,newsCode,anaCode).toJSONString();
+	}
+	
+	@RequestMapping(value = "/mongo/deleteUserDic.json", method=RequestMethod.GET)
+	@ResponseBody
+	public String deleteUserDic (int userNo, String dicName){
+		dService.deleteUserDic(userNo,dicName);
+		return "삭제 되었습니다.";
 	}
 	
 	
