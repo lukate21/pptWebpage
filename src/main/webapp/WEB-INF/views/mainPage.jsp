@@ -42,7 +42,7 @@
 	
 			<div class="page-content">
 				<div class="row">
-					<div class="col-xs-12 col-sm-6" style="margin-left:50px">
+					<div class="col-xs-12 col-sm-12 col-lg-6" style="margin-left:50px">
 						<div class="row">
 							<div class="widget-box transparent">
 								<div class="widget-header widget-header-flat">
@@ -106,7 +106,7 @@
 							</div>
 						</div>
 					</div>
-					<div class="col-xs-12 col-sm-5" style="margin-left:50px">
+					<div class="col-xs-12 col-sm-12 col-lg-5" style="margin-left:50px">
 						<div class="row">
 							<div class="widget-box transparent">
 								<div class="widget-header widget-header-flat">
