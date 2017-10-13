@@ -111,7 +111,6 @@ var RTA = ${RTA};
 				map.set(newsCode, list);
 			}
 		}
-		console.log(map);
 		var types = [ '상승', '하락', '동결', '상승', '하락', '동결' ]
 		var newsCodes = [ 'culture', 'digital', 'economic', 'entertain', 'foreign', 'politics', 'society'];
 		var chartData1 = [];

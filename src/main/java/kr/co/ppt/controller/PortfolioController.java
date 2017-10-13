@@ -63,8 +63,12 @@ public class PortfolioController {
 		List<MyFavoriteVO> list = pService.selectFavoriteGroup(memberVO.getNo());
 		Map<String,Object> map = new HashMap<>();
 		map.put("userNo", memberVO.getNo());
-		map.put("groupName", list.get(0).getGroupName());
-		model.addAttribute("groupName", list.get(0).getGroupName());
+		if(list.size() != 0){
+			map.put("groupName", list.get(0).getGroupName());
+			model.addAttribute("groupName", list.get(0).getGroupName());
+		}else{
+			model.addAttribute("groupName", "");
+		}
 		model.addAttribute("groupList", list);
 		model.addAttribute("favoriteList", pService.selectFavoriteList(map));
 		return "/my/favorite";
@@ -158,6 +162,17 @@ public class PortfolioController {
 		}
 		pService.deleteFavorite(map);
 		return "삭제되었습니다.";
+	}
+	
+	@RequestMapping(value="/updateGroupName.json",method=RequestMethod.GET)
+	@ResponseBody
+	public String updateGroupName(int userNo, String groupName, String newGroupName){
+		Map<String,Object> map = new HashMap<>();
+		map.put("userNo", userNo);
+		map.put("groupName", groupName);
+		map.put("newGroupName", newGroupName);
+		pService.updateGroupName(map);
+		return groupName;
 	}
 	
 	@RequestMapping("/analysis/getMorp.json")

@@ -109,9 +109,12 @@ function changeView(viewType){
 				<div class="page-header">
 					<h1>
 						관심기업 리스트
-						<small>
-							<i class="ace-icon fa fa-angle-double-right"></i>${groupName }
-						</small>
+						<c:if test="${favoriteList != null}">
+							<small>
+								<i class="ace-icon fa fa-angle-double-right"></i>
+								<span id="updateGroupName" style="cursor:pointer">${groupName }<i class="ace-icon fa fa-pencil bigger-100" ></i></span>
+							</small>
+						</c:if>
 						<span class="pull-right">
 							<button class="btn btn-info btn-sm" onclick="changeView('list')">
 								<i class="ace-icon fa fa-th icon-only bigger-150"></i>
@@ -227,15 +230,49 @@ function changeView(viewType){
 					contentType : 'application/x-www-form-urlencoded; charset=utf-8',
 					success : function(data) {
 							alert(data);
-							$('typeahead.scrollable.ace-scroll.tt-input').val('${groupName }');
+							$('#gorupForm input').val('${groupName }');
 							$('#gorupForm').submit();
 					}
 				});
 			}
 		}
+		function updateGroupName(newGroupName) {
+				if(newGroupName != '${groupName }'){
+					$.ajax({
+						url : '${context}/my/updateGroupName.json',
+						type : 'get',
+						data : {
+							'userNo' : '${loginUser.no}',
+							'groupName' : '${groupName }',
+							'newGroupName' : newGroupName
+						},
+						contentType : 'application/x-www-form-urlencoded; charset=utf-8',
+						success : function(data) {
+								alert(newGroupName +'으로 변경합니다.');
+								$('#gorupForm input').val(newGroupName);
+								$('#gorupForm').submit();
+						}
+					});
+				}else{
+					$('#updateGroupName').empty();
+					$('#updateGroupName').append('${groupName }<i class="ace-icon fa fa-pencil bigger-100"></i>');
+				}
+		}
 		
+		$(document).on("click", "#updateGroupName .fa-pencil", function() {
+			$('#updateGroupName').empty();
+			$('#updateGroupName').append('<input type="text" maxlength="10" value="${groupName }"/>'
+					+'<a class="green"><i class="ace-icon fa fa-check bigger-150"></i></a><a class="red"><i class="ace-icon fa fa-close bigger-150"></i></a>');
+		});
+		$(document).on("click", "#updateGroupName .fa-check", function() {
+			var newGroupName = $('#updateGroupName input').val();
+			updateGroupName(newGroupName);
+		});
 		
-		
+		$(document).on("click", "#updateGroupName .fa-close", function() {
+			$('#updateGroupName').empty();
+			$('#updateGroupName').append('${groupName }<i class="ace-icon fa fa-pencil bigger-100"></i>');
+		});
 		
 		//차트
 		function changeChart(divId, chart, height) {

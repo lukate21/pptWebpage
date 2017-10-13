@@ -56,6 +56,9 @@ public class PortfolioServiceImpl {
 	public void deleteFavorite(Map<String,Object> map){
 		pDAO.deleteFavorite(map);
 	}
+	public void updateGroupName(Map<String,Object> map){
+		pDAO.updateGroupName(map);
+	}
 	
 	public List<MyAnalisysVO> selectMyAnalysis(int userNo){
 		return pDAO.selectMyAnalysis(userNo);

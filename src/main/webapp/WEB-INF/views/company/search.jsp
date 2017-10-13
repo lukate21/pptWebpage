@@ -171,7 +171,6 @@
 			success : function(data) {
 				var obj = []
 				obj = JSON.parse(data);
-				console.log(obj);
 				$('#news').empty();
 				$('#newsTitle').text(' '+comName);
 				var str = '<div class="col-sm-5 col-sm-offset-1">'

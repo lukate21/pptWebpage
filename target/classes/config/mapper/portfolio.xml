@@ -47,6 +47,12 @@
 		
 	</delete>
 	
+	<update id="updateGroupName" parameterType="java.util.Map">
+		update MY_FAVORITE
+		set group_name = #{newGroupName}
+		where user_no=#{userNo} and group_name = #{groupName}
+	</update>
+	
 	<select id="selectMyAnalysis" parameterType="int" resultType="myAnalisysVO">
 		select no, user_no as userNo, dic_name as dicName, com_name as comName, ana_code as anaCode, news_code as newsCode,
 		yesterday_fluc as yesterdayFluc, today_fluc as todayFluc, today_inc as todayInc, today_dec as todayDec, today_equ as todayEqu,

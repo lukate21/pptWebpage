@@ -42,6 +42,10 @@ public class PortfolioDAOImpl {
 		template.delete("portfolio.deleteFavorite",map);
 	}
 	
+	public void updateGroupName(Map<String,Object> map){
+		template.update("portfolio.updateGroupName",map);
+	}
+	
 	public List<MyAnalisysVO> selectMyAnalysis(int userNo){
 		return template.selectList("portfolio.selectMyAnalysis",userNo);
 	}
