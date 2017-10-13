@@ -13,6 +13,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0" />
 <!-- bootstrap & fontawesome -->
 <link rel="stylesheet" href="${context}/resources/assets/css/bootstrap.min.css" />
+<link rel="stylesheet" href="${context}/resources/assets/css/jquery-ui.min.css" />
 <link rel="stylesheet" href="${context}/resources/assets/font-awesome/4.5.0/css/font-awesome.min.css" />
 <!-- text fonts -->
 <link rel="stylesheet" href="${context}/resources/assets/css/fonts.googleapis.com.css" />
@@ -62,13 +63,40 @@
 				<div class="row">
 					<div align="center" >
 						<div class="col-sm-12" align="center">
-							<a href="#">아이디를 잊으셨나요?</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;
-							<a href="#">비밀번호를 잊으셨나요?</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;
+							<a href="#" id="id-btn-dialog2">아이디를 잊으셨나요?</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;
+							<a href="#" id="id-btn-dialog1">비밀번호를 잊으셨나요?</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;
 							<a href="join.do">회원가입</a>
 						</div>
 					</div>
 				</div>
 			</div>
+		<!-- jQuery UI -->
+		<div id="dialog-message" class="hide">
+			<p>
+				This is the default dialog which is useful for displaying information. The dialog window can be moved, resized and closed with the 'x' icon.
+			</p>
+
+			<div class="hr hr-12 hr-double"></div>
+
+			<p>
+				Currently using
+				<b>36% of your storage space</b>.
+			</p>
+		</div><!-- #dialog-message -->
+
+		<div id="dialog-confirm" class="hide">
+			<div class="alert alert-info bigger-110">
+				These items will be permanently deleted and cannot be recovered.
+			</div>
+
+			<div class="space-6"></div>
+
+			<p class="bigger-110 bolder center grey">
+				<i class="ace-icon fa fa-hand-o-right blue bigger-120"></i>
+				Are you sure?
+			</p>
+		</div><!-- #dialog-confirm -->
+	<!-- jQuery UI -->
 		</div>
 	</div>
 </div>
@@ -76,7 +104,9 @@
 	<footer>
 		<jsp:include page="include/bottom.jsp"></jsp:include>
 	</footer>
-
+<!-- page specific plugin scripts -->
+<script src="${context}/resources/assets/js/jquery-ui.min.js"></script>
+<script src="${context}/resources/assets/js/jquery.ui.touch-punch.min.js"></script>
 <script>
 	
 	function isNull(obj, msg){
@@ -110,6 +140,64 @@
 		}
 		return true;
 	}
+	
+jQuery(function($) {
+	$( "#id-btn-dialog1" ).on('click', function(e) {
+		e.preventDefault();
+
+		var dialog = $( "#dialog-message" ).removeClass('hide').dialog({
+			modal: true,
+			title: "<div class='widget-header widget-header-small'><h4 class='smaller'><i class='ace-icon fa fa-check'></i> jQuery UI Dialog</h4></div>",
+			title_html: true,
+			buttons: [ 
+				{
+					text: "Cancel",
+					"class" : "btn btn-minier",
+					click: function() {
+						$( this ).dialog( "close" ); 
+					} 
+				},
+				{
+					text: "OK",
+					"class" : "btn btn-primary btn-minier",
+					click: function() {
+						$( this ).dialog( "close" ); 
+					} 
+				}
+			]
+		});
+	});
+
+
+	$( "#id-btn-dialog2" ).on('click', function(e) {
+		e.preventDefault();
+	
+		$( "#dialog-confirm" ).removeClass('hide').dialog({
+			resizable: false,
+			width: '320',
+			modal: true,
+			title: "<h4>비밀번호 찾기</h4>",
+			title_html: true,
+			buttons: [
+				{
+					html: "<i class='ace-icon fa fa-trash-o bigger-110'></i>&nbsp; Delete all items",
+					"class" : "btn btn-danger btn-minier",
+					click: function() {
+						$( this ).dialog( "close" );
+					}
+				}
+				,
+				{
+					html: "<i class='ace-icon fa fa-times bigger-110'></i>&nbsp; Cancel",
+					"class" : "btn btn-minier",
+					click: function() {
+						$( this ).dialog( "close" );
+					}
+				}
+			]
+		});
+	});
+});
 </script>
 </body>
 </html>

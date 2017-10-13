@@ -7,14 +7,14 @@
 	
 	
 	<select id="getInfo" parameterType="String" resultType="MyStockVO">
-		select m.no as no, m.com_no as comNo, c.name as comName, buy_price as buyPrice, volume, to_char(buy_date,'MM-dd-yy') as buyDate
+		select m.no as no, m.com_no as comNo, c.name as comName, buy_price as buyPrice, volume, to_char(buy_date,'yy-MM-dd') as buyDate
 		from my_stock m, company c, users u
 		where m.com_no = c.no and m.user_no = u.no and u.id = #{id}
 		order by m.no asc
 	</select>
 
 	<select id="getInfoByUserNo" parameterType="int" resultType="MyStockVO">
-		select m.no as no, m.com_no as comNo, c.name as comName, buy_price as buyPrice, volume, to_char(buy_date,'MM-dd-yy') as buyDate
+		select m.no as no, m.com_no as comNo, c.name as comName, buy_price as buyPrice, volume, to_char(buy_date,'yy-MM-dd') as buyDate
 		from my_stock m, company c, users u
 		where m.com_no = c.no and m.user_no = u.no and u.no = #{no}
 		order by m.no asc

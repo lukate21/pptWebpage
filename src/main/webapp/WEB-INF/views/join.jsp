@@ -50,7 +50,7 @@
 	
 				<div class="row">
 					<div class="col-xs-12">
-						<form class="form-horizontal" name="joinForm" role="form" action="${context}/join.do" onsubmit="return checkEle()" method="post">
+						<form class="form-horizontal" id="joinForm" name="joinForm" role="form" action="${context}/join.do" onsubmit="return checkEle()" method="post">
 							<div class="form-group">
 								<label class="col-sm-3 control-label no-padding-right" for="form-field-1"> 이메일 </label>
 	
@@ -65,20 +65,17 @@
 							<div class="space-4"></div>
 	
 							<div class="form-group">
-								<label class="col-sm-3 control-label no-padding-right" for="form-field-2"> 
+								<label class="col-sm-3 control-label no-padding-right" for="password"> 
 									비밀번호 <span class="help-button" data-rel="popover" data-trigger="hover" data-placement="top" data-content="대소문자와 숫자조합으로 5글자이상" title="비밀번호 작성시">?</span>
 								</label>
 								
 								<div class="col-sm-9">
-									<input type="password" name="password" id="form-field-2" placeholder="Password" class="col-xs-10 col-sm-5" />
-									<span class="help-inline col-xs-12 col-sm-7">
-										<span class="middle" id="password"></span>
-									</span>
+									<input type="password" name="password" id="password" placeholder="Password" class="col-xs-10 col-sm-5" />
 								</div>
 							</div>
 							
 							<div class="form-group">
-								<label class="col-sm-3 control-label no-padding-right" for="form-field-2"> 비밀번호 재입력 </label>
+								<label class="col-sm-3 control-label no-padding-right" for="rePassword"> 비밀번호 재입력 </label>
 	
 								<div class="col-sm-9">
 									<input type="password" id="rePassword" name="rePassword" placeholder="Password" class="col-xs-10 col-sm-5" />
@@ -91,10 +88,10 @@
 							<div class="space-4"></div> 
 							
 							<div class="form-group">
-								<label class="col-sm-3 control-label no-padding-right" for="form-field-6"> 이름 </label>
+								<label class="col-sm-3 control-label no-padding-right" for="name"> 이름 </label>
 	
 								<div class="col-sm-9">
-									<input data-rel="tooltip" type="text" name="name" id="form-field-6" placeholder="name" title="이름을 입력해 주세요" data-placement="bottom" />
+									<input data-rel="tooltip" type="text" name="name" id="name" placeholder="name" title="이름을 입력해 주세요" data-placement="bottom" />
 								</div>
 							</div>
 							
@@ -111,23 +108,21 @@
 									</div>
 								</div>
 							</div>
-	
-	
-							<div class="clearfix form-actions">
-								<div class="col-md-offset-3 col-md-9">
-									<button class="btn btn-info" type="submit">
-										<i class="ace-icon fa fa-check bigger-110"></i>
-										Submit
-									</button>
-	
-									&nbsp; &nbsp; &nbsp;
-									<button class="btn" type="reset">
-										<i class="ace-icon fa fa-undo bigger-110"></i>
-										Reset
-									</button>
-								</div>
-							</div>
 						</form>
+						<div class="clearfix form-actions">
+							<div class="col-md-offset-3 col-md-9">
+								<button class="btn btn-info" id="btnSubmit">
+									<i class="ace-icon fa fa-check bigger-110"></i>
+									Submit
+								</button>
+
+								&nbsp; &nbsp; &nbsp;
+								<button class="btn" type="reset">
+									<i class="ace-icon fa fa-undo bigger-110"></i>
+									Reset
+								</button>
+							</div>
+						</div>
 					</div>
 				</div>
 			</div><!-- /.page-content -->
@@ -153,43 +148,39 @@
 jQuery(function($) {
 	$.mask.definitions['~']='[+-]';
 	$('#phone').mask('999-9999-9999');
-
-	/* jQuery.validator.addMethod("phone", function (value, element) {
-		return this.optional(element) || /^\(\d{3}\) \d{4}\-\d{4}( x\d{1,6})?$/.test(value);
-	}, "올바른 전화번호를 입력해주세요."); */
 	
 	$('[data-rel=tooltip]').tooltip({container:'body'});
 	$('[data-rel=popover]').popover({container:'body'});
 	
-	$('#btnDup').click(function(){
-		setCheck();
-		var form = document.joinForm;
-		var email = form.email;
-
-		if(email.value == ""){
-			alert("이메일을 입력해주세요.")
-			email.focus();
-		}else{
-			var param = "email="+email.value;
-			$.ajax({
-				url : "${context}/idCheck.json",
-				data : param,
-				method : "post",
-				success : function(result){
-					if(result == 1) {alert("이미 사용중인 이메일입니다."); dupId = true;}
-					else {alert("사용 가능한 이메일입니다."); dupId = false;}
-				}
-			});
-		}
-	});
-	
+});
+$('#btnSubmit').click(function(){
+	$('#joinForm').submit();
 });
 
+$('#btnDup').click(function(){
+	setCheck();
+	var form = document.joinForm;
+	var email = form.email;
+
+	if(email.value == ""){
+		alert("이메일을 입력해주세요.")
+		email.focus();
+	}else{
+		var param = "email="+email.value;
+		$.ajax({
+			url : "${context}/idCheck.json",
+			data : param,
+			method : "post",
+			success : function(result){
+				if(result == 1) {alert("이미 사용중인 이메일입니다."); dupId = true;}
+				else {alert("사용 가능한 이메일입니다."); dupId = false;}
+			}
+		});
+	}
+});
 function isNull(obj, msg){
 	if(obj.value == ""){
-		$('#loginFail').text(msg).css({
-			'color' : 'red'
-		});
+		alert(msg);
 		obj.focus();
 		return true;
 	}
@@ -200,24 +191,26 @@ function checkEle(){
 	var form = document.joinForm;
 	var email = form.email;
 	var password = form.password;
+	var rePassword = form.rePassword;
+	var name = form.name;
 	var phone = form.phone;
-	
-	if(isNull(form.email,"아이디를 입력하시오.")){
+
+	if(isNull(email,"이메일을 입력해주세요.")){
 		return false;
 	}
-	if(isNull(form.password, '패스워드를 입력하세요')){
+	if(isNull(password, '패스워드를 입력해주세요')){
 		return false;
 	}
-	if(isNull(form.repassword, '패스워드를 입력하세요')){
+	if(isNull(rePassword, '패스워드를 재입력해주세요')){
 		return false;
 	}
-	if(isNull(form.name, '이름을 입력하세요')){
+	if(isNull(name, '이름을 입력해주세요')){
 		return false;
 	}
-	if(isNull(form.phone, '전화번호를 입력하세요')){
+	if(isNull(phone, '전화번호를 입력해주세요')){
 		return false;
 	}
-	if(!/^[a-zA-Z0-9]{4,15}$/.test(form.password.value)){
+	if(!/^[a-zA-Z0-9]{4,15}$/.test(password.value)){
 		$('#password').text('암호는 숫자와 영문자 조합으로 4~15자리를 사용해야 합니다.').css({
 			'color' : 'red'
 		});
@@ -237,6 +230,11 @@ function checkEle(){
 		email.focus();
 		return false;
 	}
+	if(password.value != rePassword.value){
+		alert("입력한 비밀번호와 재입력한 비밀번호는 일치해야 합니다.");
+		rePassword.focus();
+		return false;
+	}
 	return true;
 }
 
@@ -245,22 +243,38 @@ function setCheck(){
 		checkDup = true;
 	return checkDup;
 }
-function checkPassword(){
+
+function checkPassword(element){
 	var form = document.joinForm;
 	var password = form.password;
 	var rePassword = form.rePassword;
 	
-	if(rePassword.value != password.value){
-		console.log("달라");
-		$('#rPassword').text("비밀번호가 일치하지 않습니다.").css("color","red");
+	if(element == "password"){
+		
+	}else{
+		if(rePassword.value != password.value){
+			if(password.value == null) {
+				
+			}
+			else{
+				$('#rPassword').text("비밀번호가 일치하지 않습니다.").css("color","red");
+			}
+		}else{
+			if(password.value == null) {
+				
+			}else{
+				$('#rPassword').text("비밀번호가 일치합니다.").css("color","blue");
+			}
+		}
 	}
 }
 
-$("#rePassword").keydown(function(key) {
-	if (key.keyCode == 13) {//키가 13이면 실행 (엔터는 13)
-		checkPassword();
-	}
-	console.log("1")
+$("#password").keyup(function(key) {
+	checkPassword("password");
+});
+
+$("#rePassword").keyup(function(key) {
+	checkPassword("repassword");
 });
 
 </script>

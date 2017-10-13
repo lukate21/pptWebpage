@@ -29,8 +29,41 @@
 </div>
 		<script src="${context}/resources/assets/js/bootstrap.min.js"></script>
 		<!-- page specific plugin scripts -->
+		<script src="${context}/resources/assets/js/jquery-ui.min.js"></script>
+		<script src="${context}/resources/assets/js/jquery.ui.touch-punch.min.js"></script>
 		<!-- ace scripts -->
 		<script src="${context}/resources/assets/js/ace-elements.min.js"></script>
 		<script src="${context}/resources/assets/js/ace.min.js"></script>
-
+<script>
+jQuery(function($) {
+	$( "#id-btn-signOut" ).on('click', function(e) {
+		e.preventDefault();
+	
+		$( "#dialog-signOut" ).removeClass('hide').dialog({
+			resizable: false,
+			width: '320',
+			modal: true,
+			title: "     탈퇴하기",
+			title_html: true,
+			buttons: [
+				{
+					html: "<i class='ace-icon fa fa-trash-o bigger-110'></i>&nbsp; 탈퇴하기",
+					"class" : "btn btn-danger btn-minier",
+					click: function() {
+						$( this ).dialog( "close" );
+					}
+				}
+				,
+				{
+					html: "<i class='ace-icon fa fa-times bigger-110'></i>&nbsp; 취소",
+					"class" : "btn btn-minier",
+					click: function() {
+						$( this ).dialog( "close" );
+					}
+				}
+			]
+		});
+	});
+});
+</script>
 		<!-- inline scripts related to this page -->
