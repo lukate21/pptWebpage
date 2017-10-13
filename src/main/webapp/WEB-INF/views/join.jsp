@@ -250,18 +250,21 @@ function checkPassword(element){
 	var rePassword = form.rePassword;
 	
 	if(element == "password"){
-		
+		if(rePassword.value != "" && rePassword.value == password.value)
+			$('#rPassword').text("비밀번호가 일치합니다.").css("color","blue");
+		else
+			$('#rPassword').text("비밀번호가 일치하지 않습니다.").css("color","red");
 	}else{
 		if(rePassword.value != password.value){
 			if(password.value == null) {
-				
+				$('#rPassword').text("");
 			}
 			else{
 				$('#rPassword').text("비밀번호가 일치하지 않습니다.").css("color","red");
 			}
 		}else{
 			if(password.value == null) {
-				
+				$('#rPassword').text("");
 			}else{
 				$('#rPassword').text("비밀번호가 일치합니다.").css("color","blue");
 			}

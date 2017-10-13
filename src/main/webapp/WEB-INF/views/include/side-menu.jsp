@@ -199,7 +199,6 @@
 					</div>
 		
 					<div class="space-6"></div>
-		
 					<p class="bigger-110 bolder center grey">
 						<i class="ace-icon fa fa-hand-o-right blue bigger-120"></i>
 						탈퇴 하시겠습니까?

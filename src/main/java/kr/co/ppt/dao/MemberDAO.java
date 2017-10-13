@@ -11,7 +11,7 @@ public interface MemberDAO {
 	int insertUser(MemberVO member);
 	
 	// 탈퇴
-	int deleteUser(MemberVO member);
+	int deleteUser(int no);
 	
 	// 수정
 	int modifyUser(MemberVO member);

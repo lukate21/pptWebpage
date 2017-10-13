@@ -51,6 +51,7 @@ jQuery(function($) {
 					"class" : "btn btn-danger btn-minier",
 					click: function() {
 						$( this ).dialog( "close" );
+						location.href = "${context}/signOut.do";
 					}
 				}
 				,

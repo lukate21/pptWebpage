@@ -171,26 +171,6 @@ public class HomeController {
 		return "messageAlert";
 	}
 	
-	
-	
-	@ResponseBody
-	@RequestMapping("stock.json")
-	public void getStock(){
-		
-	}
-	
-	@ResponseBody
-	@RequestMapping("favorite.json")
-	public void getFavorite(){
-		
-	}
-	
-	@ResponseBody
-	@RequestMapping("recommend.json")
-	public void getRecommend(){
-		
-	}
-	
 	/**
 	 * mobileLogin
 	 * @param email
@@ -246,6 +226,37 @@ public class HomeController {
 		int result = memberService.join(member);
 		
 		return result;
+	}
+	
+	@RequestMapping("signOut.do")
+	public String signOut(HttpSession session, HttpServletRequest request, HttpServletResponse response){
+		MemberVO loginUser = (MemberVO)session.getAttribute("loginUser");
+		
+		int no = loginUser.getNo();
+		
+		String result = memberService.deleteUser(no);
+		if(result.equals("성공")){
+			session.invalidate();
+			Cookie[] cookies = request.getCookies();
+			if(cookies != null && cookies.length > 0)
+			for(Cookie cookie : cookies){
+				if(cookie.getName().equals("savedId") || 
+						cookie.getName().equals("savedPassword") || 
+						cookie.getName().equals("savedCheck")){
+					cookie.setMaxAge(0);
+					response.addCookie(cookie);
+				}
+			}
+			String msg = "탈퇴 되었습니다. 이용해 주셔서 감사합니다.";
+			String ref = "hello.do";
+			UserUtil.makeMessage(msg, ref, request);
+		}else{
+			String msg = "탈퇴 실패했습니다.";
+			String ref = "hello.do";
+			UserUtil.makeMessage(msg, ref, request);
+		}
+		
+		return "messageAlert";
 	}
 	
 }
