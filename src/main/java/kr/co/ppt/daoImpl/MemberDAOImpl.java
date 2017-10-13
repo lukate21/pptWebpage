@@ -68,5 +68,16 @@ public class MemberDAOImpl implements MemberDAO {
 		return memberVO;
 	}
 
+	@Override
+	public MemberVO findId(MemberVO member){
+		MemberVO memberVO = sqlSession.selectOne("memDAO.findId", member);
+		return memberVO;
+	}
+	
+	@Override
+	public String findPassword(MemberVO member){
+		String password = sqlSession.selectOne("memDAO.findPassword", member);
+		return password;
+	}
 	
 }

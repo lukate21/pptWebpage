@@ -2,7 +2,10 @@ package kr.co.ppt.controller;
 
 
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.Map;
+import java.util.Map.Entry;
+import java.util.Set;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
@@ -27,6 +30,7 @@ public class HomeController {
 	
 	@Autowired
 	MemberService memberService;
+	Map<String, String> tempPass = new HashMap<>();
 	
 	/**
 	 * 메인 홈 화면
@@ -106,7 +110,19 @@ public class HomeController {
 	public String login(String email,String password, 
 			HttpSession session, HttpServletRequest request, HttpServletResponse response){
 		
+		
 		MemberVO member = UserUtil.makeBasicInfo(email, password);
+		Set<Entry<String,String>> es = tempPass.entrySet();
+		Iterator iter = es.iterator();
+		while(iter.hasNext()){
+			System.out.println(iter.next());
+		}
+		System.out.println(tempPass.get(password));
+		if(tempPass.get(password) != null){
+			System.out.println(password+"key + SHA key"+tempPass.get(password));
+			password = tempPass.get(password);
+			member.setPassword(password);
+		}
 		String remember = request.getParameter("remember");
 		System.out.println("remember: "+remember);
 
@@ -257,6 +273,39 @@ public class HomeController {
 		}
 		
 		return "messageAlert";
+	}
+	
+	@ResponseBody
+	@RequestMapping(value="findId.json", method=RequestMethod.POST)
+	public String findId(String name, String tel){
+		MemberVO member = new MemberVO();
+		member.setName(name);
+		member.setTel(tel);
+		
+		String result = memberService.findId(member);
+		return result;
+	}
+	
+	@ResponseBody
+	@RequestMapping(value="findPassword.json", method=RequestMethod.POST)
+	public String findPassword(String name, String tel, String email){
+		MemberVO member = new MemberVO();
+		member.setId(email.split("@")[0]);
+		member.setDomain(email.split("@")[1]);
+		member.setName(name);
+		member.setTel(tel);
+		
+		String result = memberService.findPassword(member);
+		
+		if(!result.equals("찾는 비밀번호가 존재하지 않습니다.")){
+			String origin = result.split(",")[0];
+			String newOne = result.split(",")[1];
+			tempPass.put(newOne, origin);
+			System.out.println(result+", "+newOne);
+			System.out.println(tempPass.get(newOne));
+			result = newOne;
+		}
+		return result;
 	}
 	
 }

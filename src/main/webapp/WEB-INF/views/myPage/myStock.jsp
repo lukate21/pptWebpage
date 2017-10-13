@@ -211,13 +211,15 @@
 															<input type="number" id="volume" name="volume" class="col-xs-10 col-sm-5" />
 														</div>
 													</div>
-													
 													<div class="form-group">
-														<label class="col-sm-3 control-label no-padding-right" for="form-field-2"> 구매일 </label>
-							
+														<label class="col-sm-3 control-label no-padding-right" for="id-date-picker-1"> 구매일 </label>
+														
 														<div class="col-sm-9">
-															<input type="date" id="buyDate" name="buyDate" class="col-xs-10 col-sm-5" />
+															<input class="col-xs-10 col-sm-5 form-control date-picker" id="id-date-picker-1" type="text" data-date-format="dd-mm-yyyy" />
 														</div>
+														<span class="input-group-addon">
+															<i class="fa fa-calendar"></i>
+														</span>
 													</div>
 												</form>
 											</div><!-- /.row -->
@@ -375,7 +377,16 @@
 		<script src="assets/js/jquery-ui.min.js"></script>
 		<script src="assets/js/jquery.ui.touch-punch.min.js"></script>
 <script>
-
+	jQuery(function($){
+		$('.date-picker').datepicker({
+			autoclose: true,
+			todayHighlight: true
+		})
+		//show datepicker when clicking on the icon
+		.next().on(ace.click_event, function(){
+			$(this).prev().focus();
+		});
+	});
 	$(document).on("click", ".fa-pencil", function() {
 		var tr = $(this).closest('tr');
 		var no = $(tr)[0].cells[0].innerText;
@@ -607,7 +618,6 @@
 		var volume = form.volume;
 		var buyDate = form.buyDate;
 		
-		alert(typeof(comName.value)+typeof(buyPrice.value)+typeof(volume.value)+typeof(buyDate.value))
 		
 		if(comName.value == "" || buyPrice.value == "" || volume.value == "" || buyDate.value == ""){
 			alert("모든 항목을 입력하셔야 합니다.")

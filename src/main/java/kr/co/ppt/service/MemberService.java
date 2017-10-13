@@ -12,4 +12,6 @@ public interface MemberService {
 	public MemberVO getUserInfo(MemberVO member);
 	public int modifyUser(MemberVO member);
 	public String deleteUser(int no);
+	public String findId(MemberVO member);
+	public String findPassword(MemberVO member);
 }
