@@ -31,8 +31,9 @@ public class MemberDAOImpl implements MemberDAO {
 	}
 
 	@Override
-	public int deleteUser(MemberVO member) {
-		return 0;
+	public int deleteUser(int no) {
+		int result = sqlSession.delete("memDAO.deleteUser", no);
+		return result;
 	}
 
 	@Override

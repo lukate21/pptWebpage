@@ -169,7 +169,7 @@
 												</li>
 			
 												<li class="">
-													<a href="#">
+													<a href="#" id="id-btn-signOut">
 														<i class="menu-icon fa fa-caret-right"></i>
 														회원탈퇴
 													</a>
@@ -179,11 +179,12 @@
 											</ul>
 										</li>
 										<li class="">
-											<a href="${context}/logout.do">
+											<a href="${context}/logout.do" id="id-btn-signOut">
 												<i class="menu-icon fa fa-caret-right"></i>
 												로그아웃
 											</a>
 											<b class="arrow"></b>
+										
 										</li>
 									</ul>
 								</li>
@@ -192,5 +193,18 @@
 					</ul>
 				</div>
 			</div>
+				<div id="dialog-signOut" class="hide">
+					<div class="alert alert-info bigger-110">
+						탈퇴하실 경우, 등록 하신 주식 정보 등은 삭제되지 않고 30일 이후에 삭제됩니다.
+					</div>
+		
+					<div class="space-6"></div>
+					<p class="bigger-110 bolder center grey">
+						<i class="ace-icon fa fa-hand-o-right blue bigger-120"></i>
+						탈퇴 하시겠습니까?
+					</p>
+				</div><!-- #dialog-confirm -->
 		</div>
 		</div>
+		
+

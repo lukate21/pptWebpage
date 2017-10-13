@@ -53,43 +53,43 @@
 				<div class="row">
 					<div class="col-xs-12">
 						<!-- PAGE CONTENT BEGINS -->
-						<form class="form-horizontal" role="form" action="${context}/myPage/modify.do" method="post" onSubmit="return checkEle()">
+						<form class="form-horizontal" name="modifyForm" id="modifyForm" role="form" action="${context}/myPage/modify.do" method="post" onSubmit="return checkEle()">
 							<div class="form-group">
-								<label class="col-sm-3 control-label no-padding-right" for="form-input-readonly"> 이메일 </label>
+								<label class="col-sm-3 control-label no-padding-right" for="email"> 이메일 </label>
 	
 								<div class="col-sm-9">
-									<input readonly="" type="text" class="col-xs-10 col-sm-5" name="email" id="form-input-readonly" value="${sessionScope.loginUser.id}@${sessionScope.loginUser.domain}" />
+									<input readonly="" type="text" class="col-xs-10 col-sm-5" name="email" id="email" value="${sessionScope.loginUser.id}@${sessionScope.loginUser.domain}" />
 								</div>
 							</div>
 	
 							<div class="space-4"></div>
 	
 							<div class="form-group">
-								<label class="col-sm-3 control-label no-padding-right" for="form-field-2"> 현재 비밀번호 </label>
+								<label class="col-sm-3 control-label no-padding-right" for="prePassword"> 현재 비밀번호 </label>
 	
 								<div class="col-sm-9">
-									<input type="password" id="form-field-2" placeholder="현재 비밀번호" class="col-xs-10 col-sm-5" />
+									<input type="password" id="prePassword" name="prePassword" placeholder="현재 비밀번호" class="col-xs-10 col-sm-5" />
 									<span class="help-inline col-xs-12 col-sm-7">
-										<span class="middle">비밀번호를 확인합니다</span>
+										<span id="prePass" class="middle"></span>
 									</span>
 								</div>
 							</div>
 							
 							<div class="form-group">
-								<label class="col-sm-3 control-label no-padding-right" for="form-field-2"> 변경할 비밀번호 </label>
+								<label class="col-sm-3 control-label no-padding-right" for="password"> 변경할 비밀번호 </label>
 	
 								<div class="col-sm-9">
-									<input type="password" id="form-field-2" name="password" placeholder="변경할 비밀번호" class="col-xs-10 col-sm-5" />
+									<input type="password" id="password" name="password" placeholder="변경할 비밀번호" class="col-xs-10 col-sm-5" />
 								</div>
 							</div>
 							
 							<div class="form-group">
-								<label class="col-sm-3 control-label no-padding-right" for="form-field-2"> 비밀번호 재입력 </label>
+								<label class="col-sm-3 control-label no-padding-right" for="rePassword"> 비밀번호 재입력 </label>
 	
 								<div class="col-sm-9">
-									<input type="password" id="form-field-2" name="repassword" placeholder="비밀번호 재입력" class="col-xs-10 col-sm-5" />
+									<input type="password" id="rePassword" name="rePassword" placeholder="비밀번호 재입력" class="col-xs-10 col-sm-5" />
 									<span class="help-inline col-xs-12 col-sm-7">
-										<span class="middle">비밀번호가 일치하지 않습니다.</span>
+										<span id="rePass" class="middle"></span>
 									</span>
 								</div>
 							</div>
@@ -110,21 +110,21 @@
 	
 							<div class="space-4"></div>
 	
-							<div class="clearfix form-actions">
-								<div class="col-md-offset-3 col-md-9">
-									<button id="btnModify" class="btn btn-info" type="submit">
-										<i class="ace-icon fa fa-check bigger-110"></i>
-										완료
-									</button>
-	
-									&nbsp; &nbsp; &nbsp;
-									<button class="btn" type="reset">
-										<i class="ace-icon fa fa-undo bigger-110"></i>
-										초기화
-									</button>
-								</div>
-							</div>
 						</form>
+						<div class="clearfix form-actions">
+							<div class="col-md-offset-3 col-md-9">
+								<button id="btnModify" class="btn btn-info">
+									<i class="ace-icon fa fa-check bigger-110"></i>
+									완료
+								</button>
+
+								&nbsp; &nbsp; &nbsp;
+								<button class="btn" type="reset">
+									<i class="ace-icon fa fa-undo bigger-110"></i>
+									초기화
+								</button>
+							</div>
+						</div>
 					</div><!-- /.row -->
 				</div><!-- /.row -->
 			</div>
@@ -142,48 +142,84 @@
 <script src="${context}/resources/assets/js/autosize.min.js"></script>
 <script src="${context}/resources/assets/js/jquery.inputlimiter.min.js"></script>
 <script src="${context}/resources/assets/js/jquery.maskedinput.min.js"></script>
-<script>
+<script type="text/javascript">
 jQuery(function($) {
 	$.mask.definitions['~']='[+-]';
 	$('#phone').mask('999-9999-9999');
 
-	function isNull(obj, msg){
-		if(obj.value == ""){
-			$('#fail').text(msg).css({
-				'color' : 'red'
-			});
-			obj.focus();
-			return true;
-		}
+	$('#btnModify').click(function(){
+		$('#modifyForm').submit();
+	});
+});
+
+function isNull(obj, msg){
+	if(obj.value == ""){
+		$('#fail').text(msg).css({
+			'color' : 'red'
+		});
+		obj.focus();
+		return true;
+	}
+	return false;
+}
+
+function checkEle(){
+	var mForm = document.modifyForm;
+	var prePassword = mForm.prePassword;
+	var password = mForm.password;	
+	var rePassword = mForm.rePassword;
+	var tel = mForm.tel;
+	
+	if(isNull(password,"변경할 비밀번호를 입력하세요"))
+		return false;
+	if(isNull(rePassword,"변경할 비밀번호를 한번 더 입력하세요"))
+		return false;
+	if(password.value !== rePassword.value){
+		$('#fail').text("입력한 비밀번호가 일치하지 않습니다").css({ 'color' : 'red'});
 		return false;
 	}
+	if(!/^[0-9]{2,3}-[0-9]{3,4}-[0-9]{4}$/.test(tel.value)){
+		alert("전화번호 형식에 맞지 않습니다.")
+		return false;
+	} 	
+	var result = confirm("수정하시겠습니까?");
+	if(result == true)
+		return true;
+	else
+		return false;
+};
+
+function checkPassword(element){
+	var mForm = document.modifyForm;
+	var password = mForm.password;	
+	var rePassword = mForm.rePassword;
 	
-	checkInfo = function(){
-		var mForm = document.modifyForm;
-		var password = mForm.password;	
-		var rePassword = mForm.repassword;
-		var tel = mForm.tel;
+	if(element == "password"){
 		
-		if(isNull(password,"변경할 비밀번호를 입력하세요"))
-			return false;
-		else if(isNull(rePassword,"변경할 비밀번호를 한번 더 입력하세요"))
-			return false;
-		else if(password.value !== rePassword.value){
-			$('#fail').text("입력한 비밀번호가 일치하지 않습니다").css({ 'color' : 'red'});
-			return false;
-		} else if(!/^[0-9]{2,3}-[0-9]{3,4}-[0-9]{4}$/.test(tel.value)){
-			alert("전화번호 형식에 맞지 않습니다.")
-			return false;
-		}
-		else{
-			var result = confirm("수정하시겠습니까?");
-			if(result == true)
-				return true;
-			else
-				return false;
+	}else{
+		if(rePassword.value != password.value){
+			if(password.value == null) {
+				
+			}
+			else{
+				$('#rePass').text("비밀번호가 일치하지 않습니다.").css("color","red");
+			}
+		}else{
+			if(password.value == null) {
+				
+			}else{
+				$('#rePass').text("비밀번호가 일치합니다.").css("color","blue");
+			}
 		}
 	}
-		
+};
+
+$("#password").keyup(function(key) {
+	checkPassword("password");
+});
+
+$("#rePassword").keyup(function(key) {
+	checkPassword("repassword");
 });
 </script>
 </body>

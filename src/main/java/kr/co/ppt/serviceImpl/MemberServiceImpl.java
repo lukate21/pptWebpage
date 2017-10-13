@@ -64,4 +64,14 @@ public class MemberServiceImpl implements MemberService {
 		return result;
 	}
 	
+	@Override
+	public String deleteUser(int no){
+		int result = memberDAO.deleteUser(no);
+		String msg ="";
+		
+		if(result == 0) msg = "실패";
+		else msg = "성공";
+		
+		return msg;
+	}
 }

@@ -45,4 +45,9 @@
 		set tel=#{tel}
 		where id=#{id} and domain=#{domain} 
 	</update>
+	
+	<delete id="deleteUser" parameterType="int">
+		delete from users
+		where no=#{no}
+	</delete>
 </mapper>

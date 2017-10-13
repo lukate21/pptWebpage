@@ -258,7 +258,7 @@
 			$('#myModal').modal();
 		}
 		$("#noSee").click(function(){
-			document.cookie = "no_see=true; expires=Thu, 12 Oct 2017 10:00:00 UTC";
+			document.cookie = "no_see=true; expires=Fri, 31 Dec 2099 10:00:00 UTC";
 		});
 		
 		$('#btnLogin').click(function() {
@@ -367,28 +367,28 @@
 		});
 	}
 	setHeadline = function(data) {
-		$('#headline').append("<p><h4><a href="+data.link+">"+data.title+"</a><br/></h4></p>");
+		$('#headline').append("<p><h4><a href="+data.link+" target=\"_blank\">"+data.title+"</a><br/></h4></p>");
 	}
 	setSociety = function(data) {
-		$('#societyNews').append("<p><h3><a href="+data.link+">"+data.title+"</a><br/></h3></p>");
+		$('#societyNews').append("<p><h3><a href="+data.link+" target=\"_blank\">"+data.title+"</a><br/></h3></p>");
 	}
 	setPolitics = function(data) {
-		$('#politicsNews').append("<p><h3><a href="+data.link+">"+data.title+"</a><br/></h3></p>");
+		$('#politicsNews').append("<p><h3><a href="+data.link+" target=\"_blank\">"+data.title+"</a><br/></h3></p>");
 	}
 	setEconomic = function(data) {
-		$('#economicNews').append("<p><h3><a href="+data.link+">"+data.title+"</a><br/></h3></p>");
+		$('#economicNews').append("<p><h3><a href="+data.link+" target=\"_blank\">"+data.title+"</a><br/></h3></p>");
 	}
 	setForeign = function(data) {
-		$('#foreignNews').append("<p><h3><a href="+data.link+">"+data.title+"</a><br/></h3></p>");
+		$('#foreignNews').append("<p><h3><a href="+data.link+" target=\"_blank\">"+data.title+"</a><br/></h3></p>");
 	}
 	setCulture = function(data) {
-		$('#cultureNews').append("<p><h3><a href="+data.link+">"+data.title+"</a><br/></h3></p>");
+		$('#cultureNews').append("<p><h3><a href="+data.link+" target=\"_blank\">"+data.title+"</a><br/></h3></p>");
 	}
 	setEntertain = function(data) {
-		$('#entertainNews').append("<p><h3><a href="+data.link+">"+data.title+"</a><br/></h3></p>");
+		$('#entertainNews').append("<p><h3><a href="+data.link+" target=\"_blank\">"+data.title+"</a><br/></h3></p>");
 	}
 	setDigital = function(data) {
-		$('#digitalNews').append("<p><h3><a href="+data.link+">"+data.title+"</a><br/></h3></p>");
+		$('#digitalNews').append("<p><h3><a href="+data.link+" target=\"_blank\">"+data.title+"</a><br/></h3></p>");
 	}
 	
 		

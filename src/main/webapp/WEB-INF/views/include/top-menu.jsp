@@ -2,6 +2,7 @@
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <c:set var="context" value="${pageContext.request.contextPath}" />
+<link rel="stylesheet" href="${context}/resources/assets/css/jquery-ui.min.css" />
 <div id="navbar" 
 	class="navbar navbar-default ace-save-state navbar-fixed-top">
 	<div class="navbar-container ace-save-state" id="navbar-container">
