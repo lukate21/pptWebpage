@@ -50,4 +50,16 @@
 		delete from users
 		where no=#{no}
 	</delete>
+	
+	<select id="findId" parameterType="memberVO" resultType="memberVO">
+		select id, domain
+		from users
+		where name=#{name} and tel=#{tel}
+	</select>
+
+	<select id="findPassword" parameterType="memberVO" resultType="String">
+		select password
+		from users
+		where id=#{id} and domain=#{domain} and name=#{name} and tel=#{tel}
+	</select>
 </mapper>

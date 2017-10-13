@@ -13,7 +13,6 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0" />
 <!-- bootstrap & fontawesome -->
 <link rel="stylesheet" href="${context}/resources/assets/css/bootstrap.min.css" />
-<link rel="stylesheet" href="${context}/resources/assets/css/jquery-ui.min.css" />
 <link rel="stylesheet" href="${context}/resources/assets/font-awesome/4.5.0/css/font-awesome.min.css" />
 <!-- text fonts -->
 <link rel="stylesheet" href="${context}/resources/assets/css/fonts.googleapis.com.css" />
@@ -63,38 +62,81 @@
 				<div class="row">
 					<div align="center" >
 						<div class="col-sm-12" align="center">
-							<a href="#" id="id-btn-dialog2">아이디를 잊으셨나요?</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;
-							<a href="#" id="id-btn-dialog1">비밀번호를 잊으셨나요?</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;
+							<a href="#" id="id-btn-dialog1">아이디를 잊으셨나요?</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;
+							<a href="#" id="id-btn-dialog2">비밀번호를 잊으셨나요?</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;
 							<a href="join.do">회원가입</a>
 						</div>
 					</div>
 				</div>
 			</div>
 		<!-- jQuery UI -->
-		<div id="dialog-message" class="hide">
-			<p>
-				This is the default dialog which is useful for displaying information. The dialog window can be moved, resized and closed with the 'x' icon.
-			</p>
-
+		<div id="dialog-findId" class="hide">
+			<div class="alert alert-info bigger-100">
+				이름과 전화번호를 입력해 주세요
+			</div>
 			<div class="hr hr-12 hr-double"></div>
+			<div class="col-sm-12">
+				<div class="form-group">
+					<label class="col-sm-3 control-label no-padding-right" for="iName"> 이름 </label>
+					<div class="col-sm-9">
+						<input data-rel="tooltip" type="text" name="iName" id="iName" placeholder="name" title="이메일을 입력해 주세요" data-placement="top"/>
+					</div>
+				</div>
+				
+				<div class="space-4"></div>
+				
+				<div class="form-group">
+					<label class="control-label col-xs-12 col-sm-3 no-padding-right" for="phone">전화번호</label>
 
-			<p>
-				Currently using
-				<b>36% of your storage space</b>.
-			</p>
+					<div class="col-xs-12 col-sm-9">
+						<div class="input-group">
+							<input type="tel" id="iPhone" name="iPhone" placeholder="phone"/>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="hr hr-12 hr-double"></div>
+			<div>결과</div>
 		</div><!-- #dialog-message -->
 
-		<div id="dialog-confirm" class="hide">
-			<div class="alert alert-info bigger-110">
-				These items will be permanently deleted and cannot be recovered.
+		<div id="dialog-findPassword" class="hide">
+			<div class="alert alert-info bigger-100">
+				이름과 전화번호, 이메일을 입력해 주세요
 			</div>
-
-			<div class="space-6"></div>
-
-			<p class="bigger-110 bolder center grey">
-				<i class="ace-icon fa fa-hand-o-right blue bigger-120"></i>
-				Are you sure?
-			</p>
+			<div class="hr hr-12 hr-double"></div>
+			<div class="row">
+				<div class="col-xs-12">
+					<div class="form-group">
+						<label class="col-xs-3 control-label no-padding-right" for="pName"> 이름 </label>
+						<div class="col-xs-9">
+							<input data-rel="tooltip" type="text" class="input-large" name="pName" id="pName" placeholder="name" title="이메일을 입력해 주세요" data-placement="top"/>
+						</div>
+					</div>
+					<div class="space-4"></div>
+					<div class="form-group">
+						<label class="control-label col-xs-3 no-padding-right" for="phone">전화번호</label>
+	
+						<div class="col-xs-9">
+							<div class="input-group">
+								<input type="tel" id="pPhone" class="input-large" name="pPhone" placeholder="phone"/>
+							</div>
+						</div>
+					</div>
+					<div class="form-group">
+						<label class="control-label col-xs-3 no-padding-right" for="email">이메일</label>
+	
+						<div class="col-xs-9">
+							<div class="input-group">
+								<input type="text" id="pEmail" class="input-large" name="pEmail" placeholder="email"/>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="hr hr-12 hr-double"></div>
+			<div class="alert alert-info bigger-100">
+				이름과 전화번호, 이메일을 입력해 주세요
+			</div>
 		</div><!-- #dialog-confirm -->
 	<!-- jQuery UI -->
 		</div>
@@ -105,9 +147,15 @@
 		<jsp:include page="include/bottom.jsp"></jsp:include>
 	</footer>
 <!-- page specific plugin scripts -->
-<script src="${context}/resources/assets/js/jquery-ui.min.js"></script>
-<script src="${context}/resources/assets/js/jquery.ui.touch-punch.min.js"></script>
+<script src="${context}/resources/assets/js/chosen.jquery.min.js"></script>
+<script src="${context}/resources/assets/js/jquery.inputlimiter.min.js"></script>
+<script src="${context}/resources/assets/js/jquery.maskedinput.min.js"></script>
 <script>
+	jQuery(function($) {
+		$.mask.definitions['~']='[+-]';
+		$('#iPhone').mask('999-9999-9999');
+		$('#pPhone').mask('999-9999-9999');
+	});
 	
 	function isNull(obj, msg){
 		if(obj.value == ""){
@@ -141,25 +189,51 @@
 		return true;
 	}
 	
+	function findId(){
+		var param = "name="+iName.value+"&tel="+iPhone.value;
+		$.ajax({
+			url : "${context}/findId.json",
+			data : param,
+			method : "post",
+			success : function(result){
+				alert(result);
+			}
+		});
+	}
+	function findPassword(){
+		var param = "email="+pEmail.value+"&name="+pName.value+"&tel="+pPhone.value;
+		$.ajax({
+			url : "${context}/findPassword.json",
+			data : param,
+			method : "post",
+			success : function(result){
+				alert(result);
+			}
+		});
+	}
+	
 jQuery(function($) {
 	$( "#id-btn-dialog1" ).on('click', function(e) {
 		e.preventDefault();
 
-		var dialog = $( "#dialog-message" ).removeClass('hide').dialog({
+		var dialog = $( "#dialog-findId" ).removeClass('hide').dialog({
 			modal: true,
-			title: "<div class='widget-header widget-header-small'><h4 class='smaller'><i class='ace-icon fa fa-check'></i> jQuery UI Dialog</h4></div>",
+			width: '360',
+			height: '350',
+			title: "    아이디 찾기",
 			title_html: true,
 			buttons: [ 
 				{
-					text: "Cancel",
-					"class" : "btn btn-minier",
+					text: "확인",
+					"class" : "btn btn-primary btn-minier",
 					click: function() {
+						findId();
 						$( this ).dialog( "close" ); 
 					} 
 				},
 				{
-					text: "OK",
-					"class" : "btn btn-primary btn-minier",
+					text: "취소",
+					"class" : "btn btn-minier",
 					click: function() {
 						$( this ).dialog( "close" ); 
 					} 
@@ -172,27 +246,27 @@ jQuery(function($) {
 	$( "#id-btn-dialog2" ).on('click', function(e) {
 		e.preventDefault();
 	
-		$( "#dialog-confirm" ).removeClass('hide').dialog({
-			resizable: false,
-			width: '320',
+		var dialog = $( "#dialog-findPassword" ).removeClass('hide').dialog({
 			modal: true,
-			title: "<h4>비밀번호 찾기</h4>",
+			width: '400',
+			height: '400',
+			title: "    비밀번호 찾기",
 			title_html: true,
-			buttons: [
+			buttons: [ 
 				{
-					html: "<i class='ace-icon fa fa-trash-o bigger-110'></i>&nbsp; Delete all items",
-					"class" : "btn btn-danger btn-minier",
+					text: "확인",
+					"class" : "btn btn-primary btn-minier",
 					click: function() {
-						$( this ).dialog( "close" );
-					}
-				}
-				,
+						findPassword();
+						$( this ).dialog( "close" ); 
+					} 
+				},
 				{
-					html: "<i class='ace-icon fa fa-times bigger-110'></i>&nbsp; Cancel",
+					text: "취소",
 					"class" : "btn btn-minier",
 					click: function() {
-						$( this ).dialog( "close" );
-					}
+						$( this ).dialog( "close" ); 
+					} 
 				}
 			]
 		});

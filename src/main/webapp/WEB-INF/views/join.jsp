@@ -135,8 +135,6 @@
 	</footer>
 <!-- page specific plugin scripts -->
 <!-- inline scripts related to this page -->
-<script src="${context}/resources/assets/js/jquery-ui.custom.min.js"></script>
-<script src="${context}/resources/assets/js/jquery.ui.touch-punch.min.js"></script>
 <script src="${context}/resources/assets/js/chosen.jquery.min.js"></script>
 <script src="${context}/resources/assets/js/moment.min.js"></script>
 <script src="${context}/resources/assets/js/autosize.min.js"></script>
@@ -151,6 +149,10 @@ jQuery(function($) {
 	
 	$('[data-rel=tooltip]').tooltip({container:'body'});
 	$('[data-rel=popover]').popover({container:'body'});
+	
+	$('#password').focus(function(){
+		$('#rPassword').text("");
+	})
 	
 });
 $('#btnSubmit').click(function(){
@@ -252,8 +254,12 @@ function checkPassword(element){
 	if(element == "password"){
 		if(rePassword.value != "" && rePassword.value == password.value)
 			$('#rPassword').text("비밀번호가 일치합니다.").css("color","blue");
-		else
+		else if(rePassword.value != "" && rePassword.value != password.value)
 			$('#rPassword').text("비밀번호가 일치하지 않습니다.").css("color","red");
+		else if(password.value == "")
+			$('#rPassword').text("");
+		else if(rePassword.value == "")
+			$('#rPassword').text("");
 	}else{
 		if(rePassword.value != password.value){
 			if(password.value == null) {
@@ -273,7 +279,10 @@ function checkPassword(element){
 }
 
 $("#password").keyup(function(key) {
-	checkPassword("password");
+	if(password.value == "")
+		$('#rPassword').text("");
+	else
+		checkPassword("password");
 });
 
 $("#rePassword").keyup(function(key) {

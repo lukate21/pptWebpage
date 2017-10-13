@@ -235,7 +235,7 @@ public class MyPageController {
 	}
 	
 	@RequestMapping(value="myModify.do", method=RequestMethod.POST)
-	public String updateMyStock(String no, String comName, String buyPrice, String volume, String buyDate, HttpSession session){
+	public String updateMyStock(String no, String comName, String buyPrice, String volume, String buyDate, String type, HttpSession session){
 		MemberVO member = (MemberVO)session.getAttribute("loginUser");
 		String id = member.getId();
 		int userNo = myStockService.getUserNo(id);
@@ -254,11 +254,12 @@ public class MyPageController {
 		String msg = myStockService.updateMyStock(myStock);
 		System.out.println("업데이트 결과 : "+msg);
 		
-		return "redirect:myStock.do";
+		if(type.equals("m")) return msg;
+		else return "redirect:myStock.do";
 	}
 	
 	@RequestMapping(value="deleteMyStock.do", method=RequestMethod.POST)
-	public String deleteMyStock(String no, HttpSession session){
+	public String deleteMyStock(String no, String type, HttpSession session){
 		MemberVO member = (MemberVO)session.getAttribute("loginUser");
 		String id = member.getId();
 		int userNo = myStockService.getUserNo(id);
@@ -269,7 +270,9 @@ public class MyPageController {
 		
 		String msg = myStockService.deleteMyStock(myStock);
 		System.out.println("삭제 결과 : "+msg);
-		return "redirect:myStock.do";
+		
+		if(type.equals("m")) return msg;
+		else return "redirect:myStock.do";
 	}
 	
 	

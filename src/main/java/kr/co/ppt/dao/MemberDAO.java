@@ -27,4 +27,8 @@ public interface MemberDAO {
 	
 	MemberVO getUserInfo(MemberVO member);
 	
+	MemberVO findId(MemberVO member);
+	
+	String findPassword(MemberVO member);
+	
 }
