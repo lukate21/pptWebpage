@@ -22,7 +22,7 @@
 			<div class="row">
 				<div class="col-sm-6" id="now"></div>
 				<div class="col-sm-6 text-right">
-					<span id="yesterPredict"></span>
+					전일예측 | <span id="yesterPredict"></span>
 					<br/>주가예측  | 금일 <span id="todayPredict"></span> | 익일 <span id="tomorrowPredict"></span> 
 					<br/>베스트 분석 예측 | 금일 <span id="bestTodayPredict"></span> | 익일 <span id="bestTomorrowPredict"></span>
 				</div>
@@ -114,6 +114,7 @@
 		}
 	}
 	var predicValue;
+	var yesterdayTotal = yesterdayPcnt + yesterdayMcnt + yesterdayEcnt;
 	var todayTotal = todayPcnt + todayMcnt + todayEcnt;
 	var tomorrowTotal = tomorrowPcnt + tomorrowMcnt + tomorrowEcnt;
 	if(todayPcnt>todayMcnt){
@@ -139,6 +140,7 @@
 				var obj = JSON.parse(data)[0];
 				var chartData = obj.price;
 				var yesterdayEnd;
+				var yesterPredict;
 				$.ajax({
 					url : '${context}/company/rtStock.json?name=${name}&timeFrame=1_MONTH',
 					async:false,
@@ -146,7 +148,6 @@
 						var todayDate = chartData[0].dateTime.split('T')[0];
 						var obj = JSON.parse(data)[0];
 						var yesterdayData = obj.price;
-						var yesterPredict;
 						var d1,d2; //d1 = 하루전, d2 = 이틀전
 						if(todayDate == yesterdayData[yesterdayData.length-1].date){
 							yesterdayEnd = yesterdayData[yesterdayData.length-2];
@@ -188,10 +189,17 @@
 							+'&nbsp;&nbsp;&nbsp;-'+(start-now)
 							+'&nbsp;&nbsp;&nbsp;-'+((start-now)/start*100).toFixed(2)+'%</small></span></h3>');
 				}
+				if(yesterdayPcnt>yesterdayMcnt){
+					$('#yesterPredict').html('<span class="text-danger"><b><i class="fa fa-caret-up"></i>&nbsp'+(yesterdayPcnt/yesterdayTotal*100).toFixed(0)+'%</b></span>');
+				}else if(yesterdayPcnt<yesterdayMcnt){
+					$('#yesterPredict').html('<span class="text-primary"><b><i class="fa fa-caret-down"></i>&nbsp'+(yesterdayMcnt/yesterdayTotal*100).toFixed(0)+'%</b></span>');
+				}else{
+					$('#yesterPredict').html('<b>-</b>');
+				}
 				if((yesterdayPcnt>yesterdayMcnt && yesterPredict == '상승') || (yesterdayPcnt<yesterdayMcnt && yesterPredict == '하락')){
-					$('#yesterPredict').html('전일예측 <span class="text-success"><b>성공</b></span>');
+					$('#yesterPredict').append(' <span class="text-success"><b>(성공)</b></span>');
 				}else {
-					$('#yesterPredict').html('전일예측 <span class="text-danger"><b>실패</b></span>');
+					$('#yesterPredict').append(' <span class="text-danger"><b>(실패)</b></span>');
 				}
 				if('${draw}'== 'true'){
 					$('body').append('<span style="cursor:pointer;" class="badge badge-success pull-right" onclick="drawChart2(\'1_YEAR\')">1년</span>');
