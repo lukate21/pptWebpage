@@ -2,7 +2,6 @@
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <c:set var="context" value="${pageContext.request.contextPath}" />
-<!DOCTYPE html>
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
@@ -43,100 +42,161 @@
 	
 			<div class="page-content">
 				<div class="row">
-					<div class="col-sm-7">
-						<div class="section-seperator margin-b-50">
-							<div class="margin-b-50">
-								<div class="margin-b-30">
-									<h2>NEWS HEADLINE</h2>
-									<div id="headline">
-									</div>
-								</div>
-								
-							</div>
-						</div>
+					<div class="col-xs-12 col-sm-6" style="margin-left:50px">
 						<div class="row">
-							<div class="col-sm-10"><h2>RT NEWS IN CATEGORY</h2></div>
-							<div class="col-sm-2">
-								<i id="btnPlay" class="fa fa-play-circle-o fa-2x" style="cursor:pointer; margin-top:7px" title="start" onclick="rotation"></i>
-								<i id="btnStop" class="fa fa-pause-circle-o fa-2x" style="cursor:pointer; margin-top:7px" title="pause"></i>
-							</div>
-						</div>
-							
-						<!-- Progress Box -->
-						<div>
-							<div class="tabbable">
-								<ul class="nav nav-tabs nav-justified" id="myTab2">
-									<li class="active">
-										<a data-toggle="tab" href="#society" aria-expanded="true">
-											<h4>사회</h4>
+							<div class="widget-box transparent">
+								<div class="widget-header widget-header-flat">
+									<h3 class="widget-title lighter">
+										<i class="fa fa-newspaper-o fa-1x dark"></i><span class="dark"><b> 뉴스 헤드라인</b></span>
+									</h3>
+									<div class="widget-toolbar">
+										<a href="#" data-action="collapse">
+											<i class="ace-icon fa fa-chevron-up"></i>
 										</a>
-									</li>
-									<li class="">
-										<a data-toggle="tab" href="#politics" aria-expanded="true">
-											<h4>정치</h4>
-										</a>
-									</li>
-									<li class="">
-										<a data-toggle="tab" href="#economic" aria-expanded="true">
-											<h4>경제</h4>
-										</a>
-									</li>
-									<li class="">
-										<a data-toggle="tab" href="#foreign" aria-expanded="true">
-											<h4>국제</h4>
-										</a>
-									</li>
-									<li class="">
-										<a data-toggle="tab" href="#culture" aria-expanded="true">
-											<h4>문화</h4>
-										</a>
-									</li>
-									<li class="">
-										<a data-toggle="tab" href="#entertain" aria-expanded="true">
-											<h4>연예</h4>
-										</a>
-									</li>
-									<li class="">
-										<a data-toggle="tab" href="#digital" aria-expanded="true">
-											<h4>IT</h4>
-										</a>
-									</li>
-								</ul>
-								<div class="tab-content"><br/>
-									<div id="society" class="tab-pane fade active in">
-										<div id="societyNews"></div>
-									</div>
-	
-									<div id="politics" class="tab-pane fade">
-										<div id="politicsNews"></div>
-									</div>
-	
-									<div id="economic" class="tab-pane fade">
-										<div id="economicNews"></div>
-									</div>
-									
-									<div id="foreign" class="tab-pane fade">
-										<div id="foreignNews"></div>
-									</div>
-	
-									<div id="culture" class="tab-pane fade">
-										<div id="cultureNews"></div>
-									</div>
-	
-									<div id="entertain" class="tab-pane fade">
-										<div id="entertainNews"></div>
-									</div>
-	
-									<div id="digital" class="tab-pane fade">
-										<div id="digitalNews"></div>
 									</div>
 								</div>
+								<div class="widget-body">
+									<div class="widget-main no-padding">
+										<div id="headline"></div>
+									</div><!-- /.widget-main -->
+								</div><!-- /.widget-body -->
+							</div><!-- /.widget-box -->
+						</div>
+						<div class="space-12"></div>
+						<div class="row">
+							<div class="col-sm-7">
+								<div class="widget-box transparent">
+									<div class="widget-header widget-header-flat">
+										<h3 class="widget-title lighter">
+											<i class="fa fa-bar-chart fa-1x dark"></i><span class="dark"><b>뉴스 수집 차트</b></span>
+										</h3>
+										<div class="widget-toolbar">
+											<a href="#" data-action="collapse">
+												<i class="ace-icon fa fa-chevron-up"></i>
+											</a>
+										</div>
+									</div>
+									<div class="widget-body">
+										<div class="widget-main no-padding">
+											<iframe src="${context}/company/chart/newsCount.do"
+												width="100%" height="400px" frameBorder="0"> </iframe>
+										</div><!-- /.widget-main -->
+									</div><!-- /.widget-body -->
+								</div><!-- /.widget-box -->
+							</div>
+							<div class="col-sm-5">
+								<div class="widget-box transparent">
+									<div class="widget-header widget-header-flat">
+										<h3 class="widget-title lighter">
+											<i class="fa fa-pie-chart fa-1x dark"></i><span class="dark"><b> 베스트 확률 기업</b></span>
+										</h3>
+										<div class="widget-toolbar">
+											<a href="#" data-action="collapse">
+												<i class="ace-icon fa fa-chevron-up"></i>
+											</a>
+										</div>
+									</div>
+									<div class="widget-body">
+										<div class="widget-main no-padding">
+											<iframe src="${context}/company/bestCompany.do"
+												width="100%" height="400px" frameBorder="0"> </iframe>
+										</div><!-- /.widget-main -->
+									</div><!-- /.widget-body -->
+								</div><!-- /.widget-box -->
 							</div>
 						</div>
-						<!-- End Progress Box -->
 					</div>
-					<div class="col-sm-5 sm-margin-b-60">
-						<div>
+					<div class="col-xs-12 col-sm-5" style="margin-left:50px">
+						<div class="row">
+							<div class="widget-box transparent">
+								<div class="widget-header widget-header-flat">
+									<h3 class="widget-title lighter">
+										<i class="fa fa-rss fa-1x orange"></i><span class="dark"><b> 실시간 뉴스</b></span>
+									</h3>
+									<div class="widget-toolbar">
+										<i id="btnPlay" class="fa fa-play-circle-o fa-2x" style="cursor:pointer; margin-top:7px" title="start"></i>
+										<i id="btnStop" class="fa fa-pause-circle-o fa-2x" style="cursor:pointer; margin-top:7px" title="pause"></i>
+										<a href="#" data-action="collapse">
+											<i class="ace-icon fa fa-chevron-up"></i>
+										</a>
+									</div>
+								</div>
+								<div class="widget-body">
+									<div class="widget-main no-padding">
+										<div class="tabbable">
+											<ul class="nav nav-tabs nav-justified" id="myTab2">
+												<li class="active">
+													<a data-toggle="tab" href="#society" aria-expanded="true">
+														<h4>사회</h4>
+													</a>
+												</li>
+												<li class="">
+													<a data-toggle="tab" href="#politics" aria-expanded="true">
+														<h4>정치</h4>
+													</a>
+												</li>
+												<li class="">
+													<a data-toggle="tab" href="#economic" aria-expanded="true">
+														<h4>경제</h4>
+													</a>
+												</li>
+												<li class="">
+													<a data-toggle="tab" href="#foreign" aria-expanded="true">
+														<h4>국제</h4>
+													</a>
+												</li>
+												<li class="">
+													<a data-toggle="tab" href="#culture" aria-expanded="true">
+														<h4>문화</h4>
+													</a>
+												</li>
+												<li class="">
+													<a data-toggle="tab" href="#entertain" aria-expanded="true">
+														<h4>연예</h4>
+													</a>
+												</li>
+												<li class="">
+													<a data-toggle="tab" href="#digital" aria-expanded="true">
+														<h4>IT</h4>
+													</a>
+												</li>
+											</ul>
+											<div class="tab-content">
+												<div id="society" class="tab-pane fade active in">
+													<div id="societyNews"></div>
+												</div>
+				
+												<div id="politics" class="tab-pane fade">
+													<div id="politicsNews"></div>
+												</div>
+				
+												<div id="economic" class="tab-pane fade">
+													<div id="economicNews"></div>
+												</div>
+												
+												<div id="foreign" class="tab-pane fade">
+													<div id="foreignNews"></div>
+												</div>
+				
+												<div id="culture" class="tab-pane fade">
+													<div id="cultureNews"></div>
+												</div>
+				
+												<div id="entertain" class="tab-pane fade">
+													<div id="entertainNews"></div>
+												</div>
+				
+												<div id="digital" class="tab-pane fade">
+													<div id="digitalNews"></div>
+												</div>
+											</div>
+										</div>
+									</div><!-- /.widget-main -->
+								</div><!-- /.widget-body -->
+							</div><!-- /.widget-box -->
+						</div>
+						<div class="space-12"></div>
+						<div class="row">
 							<div class="tabbable">
 								<ul class="nav nav-tabs nav-justified" id="myTab">
 									<li class="active"><a data-toggle="tab" href="#kospi"
@@ -152,30 +212,16 @@
 	
 								<div class="tab-content">
 									<div id="kospi" class="tab-pane fade active in">
-										<svg class="svg2" width="500" height="300"></svg>
+										<iframe src="${context}/company/chart/stock.do?name=KOSPI&draw=true"
+								width="100%" height="450px" frameBorder="0"> </iframe>
 									</div>
 	
 									<div id="kosdaq" class="tab-pane fade">
-										<svg class="svg1" width="500" height="300"></svg>
+										<iframe src="${context}/company/chart/stock.do?name=KOSDAQ&draw=true"
+								width="100%" height="450px" frameBorder="0"> </iframe>
 									</div>
 								</div>
 							</div>
-						</div>
-						<br />
-	
-						<h4>
-							<a href="#">즐겨찾기 인기 종목</a> 
-							<span class="text-uppercase margin-l-20">favorite</span>
-						</h4>
-						<p>Lorem ipsum dolor sit amet consectetur adipiscing elit sed
-							tempor incdidunt ut laboret dolor magna ut consequat siad esqudiat
-							dolor</p>
-						<br />
-						<h4>
-							<a href="#">추천종목</a> <span class="text-uppercase margin-l-20">best</span>
-						</h4>
-						<div class="col-sm-12">
-							<iframe src="${context}/company/bestCompany.do"></iframe>
 						</div>
 					</div>
 	
@@ -252,6 +298,7 @@
 <!-- Cookie JS for Modal -->
 <script src="http://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.0/jquery.cookie.min.js"></script>
 <script>
+	var intervalIndex = 0;
 	$(document).ready(function() {
 		
 		if($.cookie("no_see") == null) {
@@ -313,12 +360,11 @@
 	
 	navtabSlide = function() {
 		var tab = ["#society","#politics","#economic","#foreign","#culture","#entertain","#digital"];
-		var i = 0;
 		interval = setInterval(function(){
-			$('.nav-tabs a[href='+tab[i]+']').tab('show');
-			i++;
-			if(i > 6) i = 0;
-		},10000);
+			$('.nav-tabs a[href='+tab[intervalIndex]+']').tab('show');
+			intervalIndex++;
+			if(intervalIndex > 6) intervalIndex = 0;
+		},5000);
 		
 		return interval;
 		
@@ -367,28 +413,28 @@
 		});
 	}
 	setHeadline = function(data) {
-		$('#headline').append("<p><h4><a href="+data.link+" target=\"_blank\">"+data.title+"</a><br/></h4></p>");
+		$('#headline').append('<p><h3><a class="dark" href="'+data.link+'" target="_blank">'+data.title+'</a><br/></h3></p>');
 	}
 	setSociety = function(data) {
-		$('#societyNews').append("<p><h3><a href="+data.link+" target=\"_blank\">"+data.title+"</a><br/></h3></p>");
+		$('#societyNews').append('<p><h4><a class="dark" href="'+data.link+'" target="_blank">'+data.title+'</a><br/></h4></p>');
 	}
 	setPolitics = function(data) {
-		$('#politicsNews').append("<p><h3><a href="+data.link+" target=\"_blank\">"+data.title+"</a><br/></h3></p>");
+		$('#politicsNews').append('<p><h4><a class="dark" href="'+data.link+'" target="_blank">'+data.title+'</a><br/></h4></p>');
 	}
 	setEconomic = function(data) {
-		$('#economicNews').append("<p><h3><a href="+data.link+" target=\"_blank\">"+data.title+"</a><br/></h3></p>");
+		$('#economicNews').append('<p><h4><a class="dark" href="'+data.link+'" target="_blank">'+data.title+'</a><br/></h4></p>');
 	}
 	setForeign = function(data) {
-		$('#foreignNews').append("<p><h3><a href="+data.link+" target=\"_blank\">"+data.title+"</a><br/></h3></p>");
+		$('#foreignNews').append('<p><h4><a class="dark" href="'+data.link+'" target="_blank">'+data.title+'</a><br/></h4></p>');
 	}
 	setCulture = function(data) {
-		$('#cultureNews').append("<p><h3><a href="+data.link+" target=\"_blank\">"+data.title+"</a><br/></h3></p>");
+		$('#cultureNews').append('<p><h4><a class="dark" href="'+data.link+'" target="_blank">'+data.title+'</a><br/></h4></p>');
 	}
 	setEntertain = function(data) {
-		$('#entertainNews').append("<p><h3><a href="+data.link+" target=\"_blank\">"+data.title+"</a><br/></h3></p>");
+		$('#entertainNews').append('<p><h4><a class="dark" href="'+data.link+'" target="_blank">'+data.title+'</a><br/></h4></p>');
 	}
 	setDigital = function(data) {
-		$('#digitalNews').append("<p><h3><a href="+data.link+" target=\"_blank\">"+data.title+"</a><br/></h3></p>");
+		$('#digitalNews').append('<p><h4><a class="dark" href="'+data.link+'" target="_blank">'+data.title+'</a><br/></h4></p>');
 	}
 	
 		

@@ -27,10 +27,12 @@ public class PortfolioDAOImpl {
 	@Autowired
 	SqlSessionTemplate template;
 	
-	
-	
 	public List<MyFavoriteVO> selectFavoriteList(Map<String,Object> map){
 		return template.selectList("portfolio.selectFavoriteList",map);
+	}
+	
+	public List<MyFavoriteVO> selectFavoriteGroup(int userNo){
+		return template.selectList("portfolio.selectFavoriteGroup",userNo);
 	}
 	
 	public void insertFavorite(Map<String,Object> map){
@@ -38,6 +40,10 @@ public class PortfolioDAOImpl {
 	}
 	public void deleteFavorite(Map<String,Object> map){
 		template.delete("portfolio.deleteFavorite",map);
+	}
+	
+	public void updateGroupName(Map<String,Object> map){
+		template.update("portfolio.updateGroupName",map);
 	}
 	
 	public List<MyAnalisysVO> selectMyAnalysis(int userNo){

@@ -27,6 +27,64 @@
 
 <!-- page specific plugin styles -->
 <link rel="stylesheet" href="${context}/resources/assets/css/bootstrap-duallistbox.min.css" />
+<script>
+//그리드 - 리스트
+var favoriteList = [];
+	<c:forEach items="${favoriteList }" var="favoriteVO">
+		favoriteList.push({
+			no : '${favoriteVO.no }',
+			name : '${favoriteVO.comName }'
+		});
+	</c:forEach>
+function changeView(viewType){
+	if(viewType == 'grid'){
+		$('#main-widget-container').empty();
+		for(var i in favoriteList){
+			var gridDiv = '<div class="col-xs-12 col-sm-6 widget-container-col" id="widget-container-col-'+favoriteList[i].no+'">'
+				+'<div class="widget-box" id="widget-box-'+favoriteList[i].no+'">'
+				+'<div class="widget-header">'
+				+'<h5 class="widget-title">'+favoriteList[i].name+'</h5>'
+				+'<div class="widget-toolbar">'
+				+'<div class="widget-menu">'
+				+'<a href="#" data-action="settings" data-toggle="dropdown">'
+				+'<i class="ace-icon fa fa-bars"></i></a>'
+				+'<ul class="dropdown-menu dropdown-menu-right dropdown-light-blue dropdown-caret dropdown-closer">'
+				+'<li><a style="cursor:pointer" onclick="changeChart(\'#widget-main-'+favoriteList[i].no+'\',\'stock.do?name='+favoriteList[i].name+'&draw=true\',500)">실시간 주가 차트</a>'
+				+'</li>'
+				+'<li><a style="cursor:pointer" onclick="changeChart(\'#widget-main-'+favoriteList[i].no+'\',\'RTA.do?name='+favoriteList[i].name+'&option=pie\',500)">주가 예측 차트</a>'
+				+'</li>'
+				+'<li><a style="cursor:pointer" onclick="changeChart(\'#widget-main-'+favoriteList[i].no+'\',\'RTA.do?name='+favoriteList[i].name+'&option=table\',500)">주가 예측 테이블</a>'
+				+'</li>'
+				+'<li><a style="cursor:pointer" onclick="changeChart(\'#widget-main-'+favoriteList[i].no+'\',\'reliability.do?name='+favoriteList[i].name+'&option=newsCode\',700)">신뢰도 차트</a>'
+				+'</li></ul></div>'
+				+'<a href="#" data-action="fullscreen" class="orange2"> <i class="ace-icon fa fa-expand"></i>'
+				+'</a> <a href="#" data-action="collapse"> <i class="ace-icon fa fa-chevron-up"></i>'
+				+'</a> <a href="" data-action="" onclick="deleteFavorite(\''+favoriteList[i].no+'\')"><i class="ace-icon fa fa-times"></i></a></div></div>'
+				+'<div class="widget-body"><div class="widget-main" id="widget-main-'+favoriteList[i].no+'">'
+				+'<iframe src="${context}/company/chart/stock.do?name='+favoriteList[i].name+'&draw=true"'
+				+'width="100%" height="500px" frameBorder="0"></iframe>'
+				+'</div></div></div></div>';
+			$('#main-widget-container').append(gridDiv);
+		}
+	}else if(viewType == 'list'){
+		$('#main-widget-container').empty();
+		for(var i in favoriteList){
+			var gridDiv = '<div class="col-xs-12 col-sm-6 col-lg-4 widget-container-col" id="widget-container-col-'+favoriteList[i].no+'">'
+				+'<div class="widget-box" id="widget-box-'+favoriteList[i].no+'">'
+				+'<div class="widget-header">'
+				+'<h5 class="widget-title">'+favoriteList[i].name+'</h5>'
+				+'<div class="widget-toolbar">'
+				+'<a href="#" data-action="collapse"> <i class="ace-icon fa fa-chevron-up"></i>'
+				+'</a> <a href="" data-action="" onclick="deleteFavorite(\''+favoriteList[i].no+'\')"><i class="ace-icon fa fa-times"></i></a></div></div>'
+				+'<div class="widget-body"><div class="widget-main" id="widget-main-'+favoriteList[i].no+'">'
+				+'<iframe src="${context}/company/chart/stock.do?name='+favoriteList[i].name+'&draw=false"'
+				+'width="100%" height="100px" frameBorder="0"></iframe>'
+				+'</div></div></div></div>';
+			$('#main-widget-container').append(gridDiv);
+		}
+	}
+}
+</script>
 </head>
 <body class="no-skin">
 	<jsp:include page="../include/top-menu.jsp"></jsp:include>
@@ -51,19 +109,24 @@
 				<div class="page-header">
 					<h1>
 						관심기업 리스트
+						<c:if test="${favoriteList != null}">
+							<small>
+								<i class="ace-icon fa fa-angle-double-right"></i>
+								<span id="updateGroupName" style="cursor:pointer">${groupName }<i class="ace-icon fa fa-pencil bigger-100" ></i></span>
+							</small>
+						</c:if>
 						<span class="pull-right">
-							<button class="btn btn-info btn-xs">
-								<i class="ace-icon fa fa-list icon-only bigger-150"></i>
+							<button class="btn btn-info btn-sm" onclick="changeView('list')">
+								<i class="ace-icon fa fa-th icon-only bigger-150"></i>
 							</button>
-							<button class="btn btn-info btn-xs">
+							<button class="btn btn-info btn-sm" onclick="changeView('grid')">
 								<i class="ace-icon fa fa-th-large icon-only bigger-150"></i>
 							</button>
 						</span>
-						<span>
+						<span class="form-group pull-right">
 							<form method="post" action="${context }/my/favorite.do" id="gorupForm">
-								<select id="groupList" name="groupName">
-									<option value="all">전체</option>
-								</select>
+								<input name="groupName" class="typeahead scrollable" type="text" placeholder="그룹명" />
+								&nbsp;
 							</form>
 						</span>
 					</h1>
@@ -72,7 +135,7 @@
 					<div class="col-xs-12">
 						<!-- PAGE CONTENT BEGINS -->
 						<div class="invisible" id="main-widget-container">
-							<c:forEach items="${favoriteList }" var="favoriteVO">
+							<%-- <c:forEach items="${favoriteList }" var="favoriteVO">
 								<div class="col-xs-12 col-sm-6 widget-container-col"
 									id="widget-container-col-${favoriteVO.no }">
 									<div class="widget-box" id="widget-box-${favoriteVO.no}">
@@ -113,7 +176,7 @@
 										</div>
 									</div>
 								</div>
-							</c:forEach>
+							</c:forEach> --%>
 							<div class="row">
 								<div class="text-center">
 									
@@ -139,53 +202,85 @@
 	</footer>
 	<script src="${context }/resources/assets/js/jquery-ui.custom.min.js"></script>
 	<script src="${context }/resources/assets/js/jquery.ui.touch-punch.min.js"></script>
-
+	<script src="${context}/resources/assets/js/jquery.bootstrap-duallistbox.min.js"></script>
+<script src="${context}/resources/assets/js/jquery-typeahead.js"></script>
 	<script type="text/javascript">
-		$.ajax({
-			url : '${context}/my/selectFavoriteGroup.json',
-			type : 'get',
-			data : {
-				'userNo' : '${loginUser.no}'
-			},
-			contentType : 'application/x-www-form-urlencoded; charset=utf-8',
-			success : function(data) {
-				var obj = JSON.parse(data);
-				for ( var i in obj) {
-					$('#groupList').append('<option>' + obj[i].groupName + '</option>');
-				}
-			}
-		});
-		$('#groupList').on('change', function() {
+		changeView('list');
+		//검색
+		$(document).on("click", ".tt-suggestion.tt-selectable", function() {
 			$('#gorupForm').submit();
 		});
-		function deleteFavorite(comName) {
-			if ('${loginUser.no}' == '') {
-				alert('로그인이 필요합니다.');
-			} else {
-				var groupName = prompt('그룹명을 입력해 주세요.');
-				if (groupName != '') {
-					$.ajax({
-								url : '${context}/my/deleteFavorite.json',
-								type : 'get',
-								data : {
-									'userNo' : '${loginUser.no}',
-									'comName' : comName,
-									'groupName' : groupName
-								},
-								contentType : 'application/x-www-form-urlencoded; charset=utf-8',
-								success : function(data) {
-									alert(data);
-								}
-							});
-				}
+	
+		$("input.typeahead").keydown(function(key) {
+			if (key.keyCode == 13) {//키가 13이면 실행 (엔터는 13)
+				$('#gorupForm').submit();
+			}
+		});
+		
+		//즐겨찾기
+		function deleteFavorite(groupNo) {
+			if(confirm('관심기업에서 삭제합니다.')){
+				$.ajax({
+					url : '${context}/my/deleteFavorite.json',
+					type : 'get',
+					data : {
+						'userNo' : '${loginUser.no}',
+						'no' : groupNo
+					},
+					contentType : 'application/x-www-form-urlencoded; charset=utf-8',
+					success : function(data) {
+							alert(data);
+							$('#gorupForm input').val('${groupName }');
+							$('#gorupForm').submit();
+					}
+				});
 			}
 		}
-
-		function changeChart(divId, chart) {
+		function updateGroupName(newGroupName) {
+				if(newGroupName != '${groupName }'){
+					$.ajax({
+						url : '${context}/my/updateGroupName.json',
+						type : 'get',
+						data : {
+							'userNo' : '${loginUser.no}',
+							'groupName' : '${groupName }',
+							'newGroupName' : newGroupName
+						},
+						contentType : 'application/x-www-form-urlencoded; charset=utf-8',
+						success : function(data) {
+								alert(newGroupName +'으로 변경합니다.');
+								$('#gorupForm input').val(newGroupName);
+								$('#gorupForm').submit();
+						}
+					});
+				}else{
+					$('#updateGroupName').empty();
+					$('#updateGroupName').append('${groupName }<i class="ace-icon fa fa-pencil bigger-100"></i>');
+				}
+		}
+		
+		$(document).on("click", "#updateGroupName .fa-pencil", function() {
+			$('#updateGroupName').empty();
+			$('#updateGroupName').append('<input type="text" maxlength="10" value="${groupName }"/>'
+					+'<a class="green"><i class="ace-icon fa fa-check bigger-150"></i></a><a class="red"><i class="ace-icon fa fa-close bigger-150"></i></a>');
+		});
+		$(document).on("click", "#updateGroupName .fa-check", function() {
+			var newGroupName = $('#updateGroupName input').val();
+			updateGroupName(newGroupName);
+		});
+		
+		$(document).on("click", "#updateGroupName .fa-close", function() {
+			$('#updateGroupName').empty();
+			$('#updateGroupName').append('${groupName }<i class="ace-icon fa fa-pencil bigger-100"></i>');
+		});
+		
+		//차트
+		function changeChart(divId, chart, height) {
 			var tag1 = '<iframe src="${context}/company/chart/' + chart
-					+ '" width="100%" height="500px" frameBorder="0"></iframe>'
+					+ '" width="100%" height="'+height+'px" frameBorder="0"></iframe>'
 			$(divId).html(tag1);
 		}
+		
 		jQuery(function($) {
 
 			$('#simple-colorpicker-1')
@@ -348,6 +443,49 @@
 				});
 
 			})();
+			var demo1 = $('select[name="duallistbox_demo1[]"]')
+			.bootstrapDualListbox(
+					{
+						infoTextFiltered : '<span class="label label-purple label-lg">Filtered</span>'
+					});
+	var container1 = demo1.bootstrapDualListbox('getContainer');
+	container1.find('.btn').addClass('btn-white btn-info btn-bold');
+	var groupList = [];
+	<c:forEach items="${groupList}" var="group">
+		groupList.push('${group.groupName}');
+	</c:forEach>
+		
+	//typeahead.js
+	//example taken from plugin's page at: https://twitter.github.io/typeahead.js/examples/
+	var substringMatcher = function(strs) {
+		return function findMatches(q, cb) {
+			var matches, substringRegex;
 
+			// an array that will be populated with substring matches
+			matches = [];
+
+			// regex used to determine if a string contains the substring `q`
+			substrRegex = new RegExp(q, 'i');
+
+			$.each(strs, function(i, str) {
+				if (substrRegex.test(str)) {
+					matches.push({
+						value : str
+					});
+				}
+			});
+			cb(matches);
+		}
+	}
+	$('input.typeahead').typeahead({
+		hint : true,
+		highlight : true,
+		minLength : 0
+	}, {
+		name : 'company',
+		displayKey : 'value',
+		source : substringMatcher(groupList),
+		limit : 20
+	});
 		});
 	</script>

@@ -91,13 +91,6 @@
 									</a>
 									<ul class="submenu" >
 										<li class="">
-											<a href="${context}/my/stock.do">
-												<i class="menu-icon fa fa-caret-right"></i>
-												보유주식
-											</a>
-											<b class="arrow"></b>
-										</li>
-										<li class="">
 											<a href="${context}/my/favorite.do">
 												<i class="menu-icon fa fa-caret-right"></i>
 												관심기업
@@ -120,12 +113,12 @@
 										</li>
 									</ul>
 								</li>
-						<li class="">
+						<!-- <li class="">
 							<a	class="" href="#">
 								<i class="menu-icon fa fa-globe globe-icon"></i>
 								<span class="menu-text">증권거래소</span>
 							</a>
-						</li>
+						</li> -->
 						<c:choose>
 							<c:when test="${ empty sessionScope.loginUser}">
 								<li class="">

@@ -20,6 +20,13 @@
 		order by no
 	</select>
 	
+	<select id="selectFavoriteGroup" parameterType="int" resultType="myFavoriteVO">
+		select group_name as groupName
+		from MY_FAVORITE
+		where user_no = #{userNo}
+		group by group_name
+	</select>
+	
 	<insert id="insertFavorite" parameterType="java.util.Map">
 		insert into MY_FAVORITE(NO, user_no, com_no, group_name) 
 		values(MY_FAVORITE_SEQ.nextVal, #{userNo}, #{comNo}, #{groupName})
@@ -39,6 +46,12 @@
 		</where>
 		
 	</delete>
+	
+	<update id="updateGroupName" parameterType="java.util.Map">
+		update MY_FAVORITE
+		set group_name = #{newGroupName}
+		where user_no=#{userNo} and group_name = #{groupName}
+	</update>
 	
 	<select id="selectMyAnalysis" parameterType="int" resultType="myAnalisysVO">
 		select no, user_no as userNo, dic_name as dicName, com_name as comName, ana_code as anaCode, news_code as newsCode,

@@ -64,6 +64,11 @@ public class DictionaryDAOImpl {
 		collection.insertOne(dom);
 	}
 	
+	public void deleteUserDic(Bson query){
+		collection = jsonReader.DB.getCollection("USER_DIC");
+		collection.deleteOne(query);
+	}
+	
 	public FindIterable<Document> selectUserDic(Bson query){
 		collection = jsonReader.DB.getCollection("USER_DIC"); 
 		return collection.find(query);

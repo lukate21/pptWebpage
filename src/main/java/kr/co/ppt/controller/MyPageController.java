@@ -28,6 +28,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import kr.co.ppt.service.MemberService;
 import kr.co.ppt.serviceImpl.CompanyServiceImpl;
 import kr.co.ppt.serviceImpl.MyStockServiceImpl;
+import kr.co.ppt.serviceImpl.PortfolioServiceImpl;
 import kr.co.ppt.util.SHA_ENC;
 import kr.co.ppt.util.UserUtil;
 import kr.co.ppt.vo.CompanyVO;
@@ -47,6 +48,9 @@ public class MyPageController {
 	@Autowired
 	MyStockServiceImpl myStockService;
 
+	@Autowired
+	PortfolioServiceImpl pService;
+	
 	@RequestMapping(value="modifyCheck.do", method=RequestMethod.GET)
 	public String myPage() {
 		return "myPage/myPageCheck";
@@ -188,7 +192,14 @@ public class MyPageController {
 		String msg = myStockService.insertMyStock(myStock);
 		System.out.println("추가 결과 : "+msg);
 		
-		
+		//관심기업 추가
+		Map<String,Object> map = new HashMap<>();
+		map.put("userNo", userNo);
+		map.put("comNo", comNo);
+		map.put("groupName", "보유주식");
+		if(pService.selectFavoriteList(map).size() == 0){
+			pService.insertFavorite(map);
+		}
 		return "redirect:myStock.do";
 	}
 	
@@ -271,6 +282,28 @@ public class MyPageController {
 		String msg = myStockService.deleteMyStock(myStock);
 		System.out.println("삭제 결과 : "+msg);
 		
+		//관심기업 삭제
+		List<MyStockVO> list = myStockService.getStockInfoByUserNo(userNo);
+		int comNo=0;
+		int dupl = 0;
+		for(MyStockVO mVO : list){
+			if(mVO.getNo() == Integer.parseInt(no)){
+				comNo = mVO.getComNo();
+				break;
+			}
+		}
+		for(MyStockVO mVO : list){
+			if(mVO.getComNo() == comNo){
+				dupl++;
+			}
+		}
+		if(dupl ==1){
+			Map<String,Object> map = new HashMap<>();
+			map.put("userNo", userNo);
+			map.put("comNo", comNo);
+			map.put("groupName", "보유주식");
+			pService.deleteFavorite(map);
+		}
 		if(type.equals("m")) return msg;
 		else return "redirect:myStock.do";
 	}
