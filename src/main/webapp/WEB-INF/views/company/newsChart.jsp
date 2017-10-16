@@ -51,7 +51,7 @@
             AmCharts.ready(function () {
                 // SERIAL CHART
                 chart = new AmCharts.AmSerialChart();
-                chart.addTitle("금일 뉴스("+todayCnt+"건 / "+totalCnt+"건)", 14);
+                chart.addTitle("뉴스(today : "+todayCnt+"건 / total : "+totalCnt+"건)", 14);
                 chart.dataProvider = chartData;
                 chart.categoryField = "newsCode";
                 chart.startDuration = 1;
