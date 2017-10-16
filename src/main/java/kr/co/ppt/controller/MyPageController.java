@@ -4,6 +4,7 @@ package kr.co.ppt.controller;
 import java.io.BufferedReader;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.math.BigDecimal;
 import java.net.URL;
 import java.net.URLConnection;
 import java.util.ArrayList;
@@ -332,30 +333,19 @@ public class MyPageController {
 	}
 	@ResponseBody
 	@RequestMapping("deleteMyStock.json")
-	public String deleteMyStock(int userNo, int no){
+	public String mobileDeleteMyStock(int no){
 		
 		MyStockVO myStock = new MyStockVO();
 		myStock.setNo(no);
-		myStock.setUserNo(userNo);
-		
-		String msg = myStockService.deleteMyStock(myStock);
-		System.out.println("삭제 결과 : "+msg);
-		
 		//관심기업 삭제
-		List<MyStockVO> list = myStockService.getStockInfoByUserNo(userNo);
-		int comNo=0;
-		int dupl = 0;
-		for(MyStockVO mVO : list){
-			if(mVO.getNo() == no){
-				comNo = mVO.getComNo();
-				break;
-			}
-		}
-		for(MyStockVO mVO : list){
-			if(mVO.getComNo() == comNo){
-				dupl++;
-			}
-		}
+		Map<String,BigDecimal> duplCheck = myStockService.countDupComByNo(no);
+		System.out.println(duplCheck.toString());
+		int dupl = (duplCheck.get("COUNT")).intValue();
+		int userNo = duplCheck.get("USERNO").intValue();
+		int comNo = duplCheck.get("COMNO").intValue();
+		System.out.println(dupl);
+		System.out.println(userNo);
+		System.out.println(comNo);
 		if(dupl ==1){
 			Map<String,Object> map = new HashMap<>();
 			map.put("userNo", userNo);
@@ -363,6 +353,10 @@ public class MyPageController {
 			map.put("groupName", "보유주식");
 			pService.deleteFavorite(map);
 		}
+		
+		String msg = myStockService.deleteMyStock(myStock);
+		System.out.println("삭제 결과 : "+msg);
+		
 		
 		return msg;
 	}

@@ -47,7 +47,12 @@
 		delete from my_stock
 		<where>
 			<if test="no != null">no=#{no}</if>
-			<if test="userNo != null">and user_no=#{userNo}</if>
+			<if test="userNo != 0">and user_no=#{userNo}</if>
 		</where>
 	</delete>
+	<select id="countDupComByNo" parameterType="int" resultType="java.util.Map">
+		select count(my2.com_no) as count, max(my2.user_no) as userNo, max(my2.com_no) as comNo
+		from (select no, user_no, com_no from my_stock where no = #{bo}) my1, my_stock my2
+		where my1.user_no = my2.user_no and my1.com_no = my2.com_no
+	</select>
 </mapper>

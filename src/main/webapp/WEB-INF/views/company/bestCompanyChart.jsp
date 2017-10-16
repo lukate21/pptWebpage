@@ -18,22 +18,27 @@
 <script src="${context}/resources/assets/js/jquery-2.1.4.min.js"></script>
 <script src="${context}/resources/assets/js/bootstrap.min.js"></script>
 </head>
-<body class="no-skin" style="margin:auto">
+<body style="margin:auto;background-color:white">
 <div class="main-content">
-		<div class="main-content-inner">
-	<div class="row">
-		<div class="col-xs-12">
+	<div class="main-content-inner">
+	<div class="space-12"></div>
 			<c:forEach items="${rList}" var="recommend" varStatus="rStatus">
 				<div class="row">
-					<span>${recommend.comName }</span>
-					<div id="chart${rStatus.index}" class="easy-pie-chart percentage" data-percent="${recommend.value}" data-color="#D15B47">
-						<span class="percent">${recommend.value}</span>%
+					<div class="col-xs-12 center">
+						<div >${recommend.comName }</div>
+						<div id="chart${rStatus.index}" class="easy-pie-chart percentage" data-percent="${recommend.value}" data-color="#D15B47">
+							<span class="percent">${recommend.value}</span>%
+						</div>
 					</div>
 				</div>
-				<hr>
+				<c:choose>
+					<c:when test="${rStatus.last }">
+					</c:when>
+					<c:otherwise>
+						<hr>
+					</c:otherwise>
+				</c:choose>
 			</c:forEach>
-		</div>
-	</div>
 	</div>
 	</div>
 <!-- ace scripts -->

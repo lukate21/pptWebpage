@@ -1,6 +1,8 @@
 package kr.co.ppt.daoImpl;
 
+import java.math.BigDecimal;
 import java.util.List;
+import java.util.Map;
 
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -52,6 +54,12 @@ public class MyStockDAOImpl {
 	
 	public int deleteMyStock(MyStockVO myStock){
 		int result = sqlSession.delete("myStock.deleteMyStock", myStock);
+		
+		return result;
+	}
+	
+	public Map<String,BigDecimal> countDupComByNo(int no) {
+		Map<String,BigDecimal> result = sqlSession.selectOne("myStock.countDupComByNo", no);
 		
 		return result;
 	}

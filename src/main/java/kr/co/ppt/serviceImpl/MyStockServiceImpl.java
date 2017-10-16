@@ -1,6 +1,8 @@
 package kr.co.ppt.serviceImpl;
 
+import java.math.BigDecimal;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -68,5 +70,11 @@ public class MyStockServiceImpl {
 		else msg = "성공";
 		
 		return msg;
+	}
+	
+	public Map<String,BigDecimal> countDupComByNo(int no) {
+		Map<String,BigDecimal> result = myStock.countDupComByNo(no);
+		
+		return result;
 	}
 }
