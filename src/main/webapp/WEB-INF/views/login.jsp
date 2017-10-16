@@ -210,7 +210,7 @@
 				else
 					$('#pResult').html("임시 비밀번호는 "+result+"입니다.<br/>로그인 후 비밀번호를 변경해 주세요");
 				
-				$('#btn-findPass').attr("text","완료").click(function(){
+				$('#btn-findPass span').html("닫기").click(function(){
 					$( "#dialog-findPassword" ).dialog("close");
 				});
 					
