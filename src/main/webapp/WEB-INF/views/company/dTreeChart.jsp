@@ -16,7 +16,7 @@
 
 </head>
 <body>
-	<div class="chart" id="OrganiseChart-simple" style="width:600px;height:450px">
+	<div class="chart" id="OrganiseChart-simple" style="width:700px;height:450px">
 	</div>
 	<script src="${context }/resources/treant/vendor/raphael.js"></script>
 	<script src="${context }/resources/treant/Treant.js"></script>
@@ -75,7 +75,7 @@
 			name = '동결치'+name;
 		}
 		var node0 = {
-				text : { name : name},
+				text : { name : name.substring(0,8)},
 				HTMLclass: "blue",
 				connectors: {
 					type : 'step',

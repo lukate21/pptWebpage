@@ -51,11 +51,11 @@
             AmCharts.ready(function () {
                 // SERIAL CHART
                 chart = new AmCharts.AmSerialChart();
-                chart.addTitle("뉴스(today : "+todayCnt+"건 / total : "+totalCnt+"건)", 14);
+                chart.addTitle("today : "+todayCnt+" / total : "+totalCnt, 14);
                 chart.dataProvider = chartData;
                 chart.categoryField = "newsCode";
                 chart.startDuration = 1;
-
+                
                 // AXES
                 // category
                 var categoryAxis = chart.categoryAxis;
@@ -68,13 +68,17 @@
 
                 // GRAPH
                 var graph = new AmCharts.AmGraph();
-                graph.valueField = "today";
                 graph.balloonText = "[[category]] 뉴스: <b>[[value]]건</b>";
+                graph.valueField = "today";
+                graph.descriptionField = "short";
                 graph.type = "column";
                 graph.lineAlpha = 0;
-                graph.fillAlphas = 0.8;
+                graph.fillAlphas = 1;
+                graph.fillColors = ["#ffe78e", "#bf1c25"];
+                graph.labelText = "[[description]]";
+                graph.balloonText = "[[category]]: [[value]] Litres";
                 chart.addGraph(graph);
-
+                
                 // CURSOR
                 var chartCursor = new AmCharts.ChartCursor();
                 chartCursor.cursorAlpha = 0;
@@ -88,7 +92,7 @@
                 $('a').remove();
             });
         </script>	
-
+	
 </body>
 </html>
 

@@ -71,7 +71,7 @@ function getDictionary(){
 	$.ajax({
 		url : "${context}/dictionary/getDictionary.json",
 		data : {
-			'id' : "test",//session ID로 바꿔야함
+			'id' : '${loginUser.id}',
 			'name' : comName,
 			'anaCode' : anaCode,
 			'newsCode' : newsCode

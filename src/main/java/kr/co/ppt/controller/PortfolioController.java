@@ -59,6 +59,7 @@ public class PortfolioController {
 	}
 	
 	@RequestMapping("/myAnalysis.json")
+	@ResponseBody
 	public String list(int userNo, String dicName){
 		JSONArray arr = new JSONArray();
 		List<MyAnalisysVO> list = pService.selectMyAnalysis(userNo);
