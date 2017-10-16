@@ -121,6 +121,7 @@ public class HomeController {
 		if(tempPass.get(password) != null){
 			System.out.println(password+"key + SHA key"+tempPass.get(password));
 			password = tempPass.get(password);
+			tempPass.remove(password);
 			member.setPassword(password);
 		}
 		String remember = request.getParameter("remember");
