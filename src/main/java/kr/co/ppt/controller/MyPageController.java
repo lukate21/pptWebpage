@@ -61,7 +61,16 @@ public class MyPageController {
 	public String modifyPage(String id, String domain, String password, HttpServletRequest request) {
 		String email = id+"@"+domain;
 		System.out.println(email);
+		
 		MemberVO member = UserUtil.makeBasicInfo(email, password);
+		
+		if(HomeController.tempPass.get(password) != null){
+			System.out.println(password+"key + SHA key"+HomeController.tempPass.get(password));
+			password = HomeController.tempPass.get(password);
+			HomeController.tempPass.remove(password);
+			member.setPassword(password);
+		}
+		
 		System.out.println(member);
 		
 		MemberVO loginUser = memberService.getUserInfo(member);
