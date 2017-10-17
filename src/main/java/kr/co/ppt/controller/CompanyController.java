@@ -49,6 +49,7 @@ public class CompanyController {
 	@RequestMapping(value="/search.do",method=RequestMethod.POST)
 	public String search(Model model, String name){
 		model.addAttribute("name", name);
+		model.addAttribute("comList", cService.selectComList());
 		return "company/search";
 	}
 	

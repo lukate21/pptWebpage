@@ -34,6 +34,7 @@
 		<!-- ace scripts -->
 		<script src="${context}/resources/assets/js/ace-elements.min.js"></script>
 		<script src="${context}/resources/assets/js/ace.min.js"></script>
+		<script src="${context}/resources/loading.js"></script>
 <script>
 jQuery(function($) {
 	$( "#id-btn-signOut" ).on('click', function(e) {

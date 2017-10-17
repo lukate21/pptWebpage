@@ -14,23 +14,23 @@
 				<div style="position: relative; top: 0px; transition-property: top; transition-duration: 0.15s;">
 
 				<script>
-					var comList = [];
+					var rotationComList = [];
 					$.ajax({
 						url : '${context}/company/selectCompanyList.json',
 						async : false,
 						success : function(data) {
-							comList = JSON.parse(data);
+							rotationComList = JSON.parse(data);
 						}
 					});
 					var i = 0;
 					myFunction();
 					var test = setInterval(myFunction, 5000);
 					function myFunction() {
-						comName = comList[i].comName;
+						var rotationComName = rotationComList[i].comName;
 						$.ajax({
 							url : '${context}/company/rtStock.json',
 							data : {
-								'name' : comName,
+								'name' : rotationComName,
 								'timeFrame' : '1_DAY'
 							},
 							success : function(data){
@@ -39,27 +39,27 @@
 								var start = chartData[0].value;
 								var now = chartData[chartData.length-1].value;
 								if(start<now){
-									$('#sidebar-shortcuts-large').html('<h5 style="cursor:pointer" onclick="goSearch(\''+comName+'\')"><b>'+comName+'</b></h5>'+'<span class="text-danger"><h3 style="margin-top:0"><b>'+now+'</b><small class="text-danger">'
+									$('#sidebar-shortcuts-large').html('<h5 style="cursor:pointer" onclick="goSearch(\''+rotationComName+'\')"><b>'+rotationComName+'</b></h5>'+'<span class="text-danger"><h3 style="margin-top:0"><b>'+now+'</b><small class="text-danger">'
 													+'<br/><i class="fa fa-caret-up"></i>&nbsp;'+(now-start)
 													+'&nbsp;&nbsp;&nbsp;+'+((now-start)/start*100).toFixed(2)+'%</small></h3></span>');
 								}else if(start>now){
-									$('#sidebar-shortcuts-large').html('<h5 style="cursor:pointer" onclick="goSearch(\''+comName+'\')"><b>'+comName+'</b></h5>'+'<span class="text-primary"><h3 style="margin-top:0"><b>'+now+'</b><small class="text-primary">'
+									$('#sidebar-shortcuts-large').html('<h5 style="cursor:pointer" onclick="goSearch(\''+rotationComName+'\')"><b>'+rotationComName+'</b></h5>'+'<span class="text-primary"><h3 style="margin-top:0"><b>'+now+'</b><small class="text-primary">'
 											+'<br/><i class="fa fa-caret-down"></i>&nbsp;'+(start-now)
 											+'&nbsp;&nbsp;&nbsp;-'+((start-now)/start*100).toFixed(2)+'%</small></h3></span>');
 								}else{
-									$('#sidebar-shortcuts-large').html('<h5 style="cursor:pointer" onclick="goSearch(\''+comName+'\')"><b>'+comName+'</b></h5>'+'<span><h3 style="margin-top:0"><b>'+now+'</b><small>'
+									$('#sidebar-shortcuts-large').html('<h5 style="cursor:pointer" onclick="goSearch(\''+rotationComName+'\')"><b>'+rotationComName+'</b></h5>'+'<span><h3 style="margin-top:0"><b>'+now+'</b><small>'
 											+'<br/>-'+(start-now)
 											+'&nbsp;&nbsp;&nbsp;-'+((start-now)/start*100).toFixed(2)+'%</small></h3></span>');
 								}
 							}
 						});
 						i++;
-						if(comList[i] == null){
+						if(rotationComList[i] == null){
 							i = 0;
 						}
 					}
-					function goSearch(comName){
-						$('#sideSearch').append('<input type="hidden" name="name" value="'+comName+'">');
+					function goSearch(rotationComName){
+						$('#sideSearch').append('<input type="hidden" name="name" value="'+rotationComName+'">');
 						$('#sideSearch').submit();
 					}
 				</script>

@@ -28,6 +28,9 @@
 <link rel="stylesheet" href="${context}/resources/assets/css/bootstrap-duallistbox.min.css" />
 </head>
 <body class="no-skin">
+	<div class="preloader">
+		<div class="status">&nbsp;</div>
+	</div>
 	<jsp:include page="../include/top-menu.jsp"></jsp:include>
 	<jsp:include page="../include/side-menu.jsp"></jsp:include>
 	<div class="main-content">
@@ -118,19 +121,15 @@
 <!-- page specific plugin scripts -->
 	<script src="${context}/resources/assets/js/jquery.bootstrap-duallistbox.min.js"></script>
 	<script src="${context}/resources/assets/js/jquery-typeahead.js"></script>
-
-		<script src="${context}/resources/assets/js/jquery-ui.min.js"></script>
-		<script src="${context}/resources/assets/js/jquery.ui.touch-punch.min.js"></script>
-
 <script>
 	getNews('${name}');
 	$(document).on("click", ".tt-suggestion.tt-selectable", function() {
-		change();
+		loading(change);
 	});
 
 	$("input.typeahead").keydown(function(key) {
 		if (key.keyCode == 13) {//키가 13이면 실행 (엔터는 13)
-			change();
+			loading(change);
 		}
 	});
 
