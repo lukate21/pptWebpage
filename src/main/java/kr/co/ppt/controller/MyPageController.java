@@ -184,7 +184,7 @@ public class MyPageController {
 	}
 	
 	@RequestMapping(value="myStock.do", method=RequestMethod.POST)
-	public String addMyStock(String comName, String buyPrice, String volume, String buyDate, String type, HttpSession session){
+	public String addMyStock(String comName, String buyPrice, String volume, String buyDate, HttpSession session){
 		System.out.println("comName : "+comName+", buyPrice :"+buyPrice+", volume :"+volume+", buyDate :"+buyDate);
 		
 		MemberVO member = (MemberVO)session.getAttribute("loginUser");
@@ -211,8 +211,7 @@ public class MyPageController {
 			pService.insertFavorite(map);
 		}
 		
-		if(type != null && type.equals("m")) return msg;
-		else return "redirect:myStock.do";
+		return "redirect:myStock.do";
 	}
 	
 	@ResponseBody
@@ -370,5 +369,33 @@ public class MyPageController {
 		return msg;
 	}
 	
+	@ResponseBody
+	@RequestMapping(value="addMyStock.json")
+	public String addMyStock(int userNo, String comName, String buyPrice, String volume, String buyDate){
+		System.out.println("comName : "+comName+", buyPrice :"+buyPrice+", volume :"+volume+", buyDate :"+buyDate);
+		
+		int comNo = myStockService.getComNo(comName);
+		
+		MyStockVO myStock = new MyStockVO();
+		myStock.setUserNo(userNo);
+		myStock.setComNo(comNo);
+		myStock.setBuyPrice(Integer.parseInt(buyPrice));
+		myStock.setVolume(Integer.parseInt(volume));
+		myStock.setBuyDate(buyDate);
+		
+		String msg = myStockService.insertMyStock(myStock);
+		System.out.println("추가 결과 : "+msg);
+		
+		//관심기업 추가
+		Map<String,Object> map = new HashMap<>();
+		map.put("userNo", userNo);
+		map.put("comNo", comNo);
+		map.put("groupName", "보유주식");
+		if(pService.selectFavoriteList(map).size() == 0){
+			pService.insertFavorite(map);
+		}
+		
+		return msg;
+	}
 	
 }
