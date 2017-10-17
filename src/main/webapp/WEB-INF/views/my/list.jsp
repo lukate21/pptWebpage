@@ -28,6 +28,9 @@
 <!------------------------------------------------------------------------------------------------------------------------->
 </head>
 <body class="no-skin">
+	<div class="preloader">
+		<div class="status">&nbsp;</div>
+	</div>
 	<jsp:include page="../include/top-menu.jsp"></jsp:include>
 	<jsp:include page="../include/side-menu.jsp"></jsp:include>
 	<div class="main-content">

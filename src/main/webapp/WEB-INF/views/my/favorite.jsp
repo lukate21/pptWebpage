@@ -36,38 +36,40 @@ var favoriteList = [];
 			name : '${favoriteVO.comName }'
 		});
 	</c:forEach>
-function changeView(viewType){
-	if(viewType == 'grid'){
+function gridView(){
+	$('#main-widget-container').empty();
+	for(var i in favoriteList){
+		var gridDiv = '<div class="col-xs-12 col-sm-6 widget-container-col" id="widget-container-col-'+favoriteList[i].no+'">'
+			+'<div class="widget-box" id="widget-box-'+favoriteList[i].no+'">'
+			+'<div class="widget-header">'
+			+'<h5 class="widget-title">'+favoriteList[i].name+'</h5>'
+			+'<div class="widget-toolbar">'
+			+'<div class="widget-menu">'
+			+'<a href="#" data-action="settings" data-toggle="dropdown">'
+			+'<i class="ace-icon fa fa-bars"></i></a>'
+			+'<ul class="dropdown-menu dropdown-menu-right dropdown-light-blue dropdown-caret dropdown-closer">'
+			+'<li><a style="cursor:pointer" onclick="changeChart(\'#widget-main-'+favoriteList[i].no+'\',\'stock.do?name='+favoriteList[i].name+'&draw=true\',500)">실시간 주가 차트</a>'
+			+'</li>'
+			+'<li><a style="cursor:pointer" onclick="changeChart(\'#widget-main-'+favoriteList[i].no+'\',\'RTA.do?name='+favoriteList[i].name+'&option=pie\',500)">주가 예측 차트</a>'
+			+'</li>'
+			+'<li><a style="cursor:pointer" onclick="changeChart(\'#widget-main-'+favoriteList[i].no+'\',\'RTA.do?name='+favoriteList[i].name+'&option=table\',500)">주가 예측 테이블</a>'
+			+'</li>'
+			+'<li><a style="cursor:pointer" onclick="changeChart(\'#widget-main-'+favoriteList[i].no+'\',\'reliability.do?name='+favoriteList[i].name+'&option=newsCode\',700)">신뢰도 차트</a>'
+			+'</li></ul></div>'
+			+'<a href="#" data-action="fullscreen" class="orange2"> <i class="ace-icon fa fa-expand"></i>'
+			+'</a> <a href="#" data-action="collapse"> <i class="ace-icon fa fa-chevron-up"></i>'
+			+'</a> <a href="" data-action="" onclick="deleteFavorite(\''+favoriteList[i].no+'\')"><i class="ace-icon fa fa-times"></i></a></div></div>'
+			+'<div class="widget-body"><div class="widget-main" id="widget-main-'+favoriteList[i].no+'">'
+			+'<iframe src="${context}/company/chart/stock.do?name='+favoriteList[i].name+'&draw=true"'
+			+'width="100%" height="500px" frameBorder="0"></iframe>'
+			+'</div></div></div></div>';
+		$('#main-widget-container').append(gridDiv);
+	}
+	widgetConfig();
+}
+function listView(){
 		$('#main-widget-container').empty();
-		for(var i in favoriteList){
-			var gridDiv = '<div class="col-xs-12 col-sm-6 widget-container-col" id="widget-container-col-'+favoriteList[i].no+'">'
-				+'<div class="widget-box" id="widget-box-'+favoriteList[i].no+'">'
-				+'<div class="widget-header">'
-				+'<h5 class="widget-title">'+favoriteList[i].name+'</h5>'
-				+'<div class="widget-toolbar">'
-				+'<div class="widget-menu">'
-				+'<a href="#" data-action="settings" data-toggle="dropdown">'
-				+'<i class="ace-icon fa fa-bars"></i></a>'
-				+'<ul class="dropdown-menu dropdown-menu-right dropdown-light-blue dropdown-caret dropdown-closer">'
-				+'<li><a style="cursor:pointer" onclick="changeChart(\'#widget-main-'+favoriteList[i].no+'\',\'stock.do?name='+favoriteList[i].name+'&draw=true\',500)">실시간 주가 차트</a>'
-				+'</li>'
-				+'<li><a style="cursor:pointer" onclick="changeChart(\'#widget-main-'+favoriteList[i].no+'\',\'RTA.do?name='+favoriteList[i].name+'&option=pie\',500)">주가 예측 차트</a>'
-				+'</li>'
-				+'<li><a style="cursor:pointer" onclick="changeChart(\'#widget-main-'+favoriteList[i].no+'\',\'RTA.do?name='+favoriteList[i].name+'&option=table\',500)">주가 예측 테이블</a>'
-				+'</li>'
-				+'<li><a style="cursor:pointer" onclick="changeChart(\'#widget-main-'+favoriteList[i].no+'\',\'reliability.do?name='+favoriteList[i].name+'&option=newsCode\',700)">신뢰도 차트</a>'
-				+'</li></ul></div>'
-				+'<a href="#" data-action="fullscreen" class="orange2"> <i class="ace-icon fa fa-expand"></i>'
-				+'</a> <a href="#" data-action="collapse"> <i class="ace-icon fa fa-chevron-up"></i>'
-				+'</a> <a href="" data-action="" onclick="deleteFavorite(\''+favoriteList[i].no+'\')"><i class="ace-icon fa fa-times"></i></a></div></div>'
-				+'<div class="widget-body"><div class="widget-main" id="widget-main-'+favoriteList[i].no+'">'
-				+'<iframe src="${context}/company/chart/stock.do?name='+favoriteList[i].name+'&draw=true"'
-				+'width="100%" height="500px" frameBorder="0"></iframe>'
-				+'</div></div></div></div>';
-			$('#main-widget-container').append(gridDiv);
-		}
-	}else if(viewType == 'list'){
-		$('#main-widget-container').empty();
+		
 		for(var i in favoriteList){
 			var gridDiv = '<div class="col-xs-12 col-sm-6 col-lg-4 widget-container-col" id="widget-container-col-'+favoriteList[i].no+'">'
 				+'<div class="widget-box" id="widget-box-'+favoriteList[i].no+'">'
@@ -82,7 +84,6 @@ function changeView(viewType){
 				+'</div></div></div></div>';
 			$('#main-widget-container').append(gridDiv);
 		}
-	}
 	widgetConfig();
 }
 function widgetConfig(){
@@ -245,6 +246,9 @@ function widgetConfig(){
 </script>
 </head>
 <body class="no-skin">
+	<div class="preloader">
+		<div class="status">&nbsp;</div>
+	</div>
 	<jsp:include page="../include/top-menu.jsp"></jsp:include>
 	<jsp:include page="../include/side-menu.jsp"></jsp:include>
 	<div class="main-content">
@@ -274,10 +278,10 @@ function widgetConfig(){
 							</small>
 						</c:if>
 						<span class="pull-right">
-							<button class="btn btn-info btn-sm" onclick="changeView('list')">
+							<button class="btn btn-info btn-sm" onclick="loading(listView)">
 								<i class="ace-icon fa fa-th icon-only bigger-150"></i>
 							</button>
-							<button class="btn btn-info btn-sm" onclick="changeView('grid')">
+							<button class="btn btn-info btn-sm" onclick="loading(gridView)">
 								<i class="ace-icon fa fa-th-large icon-only bigger-150"></i>
 							</button>
 						</span>
@@ -363,7 +367,7 @@ function widgetConfig(){
 	<script src="${context}/resources/assets/js/jquery.bootstrap-duallistbox.min.js"></script>
 <script src="${context}/resources/assets/js/jquery-typeahead.js"></script>
 	<script type="text/javascript">
-		changeView('list');
+		listView();
 		//검색
 		$(document).on("click", ".tt-suggestion.tt-selectable", function() {
 			$('#gorupForm').submit();

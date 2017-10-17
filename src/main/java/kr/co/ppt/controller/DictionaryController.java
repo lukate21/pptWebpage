@@ -77,6 +77,7 @@ public class DictionaryController {
 			obj.put("term", term);
 			dicArr.add(obj);
 		}
+		System.out.println(comName);
 		Document document = new Document();
 		document.append("userNo", userNo);
 		document.append("comName", comName);

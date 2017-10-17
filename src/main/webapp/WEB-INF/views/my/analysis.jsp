@@ -264,6 +264,10 @@ function insertUserDic(){
 		}
 	});
 }
+$(function(){
+	var target = document.getElementById('loadingSpinner');
+	var spinner = new Spinner(opts).spin(target);
+});
 
 </script>
 <style>
@@ -286,6 +290,7 @@ function insertUserDic(){
 	<jsp:include page="../include/side-menu.jsp"></jsp:include>
 	<div class="main-content">
 		<div class="main-content-inner">
+			
 			<div class="breadcrumbs ace-save-state breadcrumbs-fixed" id="breadcrumbs">
 				<ul class="breadcrumb">
 					<li><i class="ace-icon fa fa-home home-icon"></i> <a href="${context }">Home</a></li>

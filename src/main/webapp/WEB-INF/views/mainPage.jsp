@@ -29,6 +29,9 @@
 <!------------------------------------------------------------------------------------------------------------------------->
 </head>
 <body class="no-skin">
+	<div class="preloader">
+		<div class="status">&nbsp;</div>
+	</div>
 	<jsp:include page="include/top-menu.jsp"></jsp:include>
 	<jsp:include page="include/side-menu.jsp"></jsp:include>
 	<div class="main-content">
@@ -43,7 +46,7 @@
 			<div class="page-content">
 				<div class="space-12"></div>
 				<div class="row">
-					<div class="col-xs-12 col-sm-6 col-lg-6">
+					<div class="col-xs-12 col-sm-12 col-lg-6">
 						<div class="row">
 							<div class="col-sm-12">
 								<div class="widget-box transparent">
@@ -109,7 +112,7 @@
 							</div>
 						</div>
 					</div>
-					<div class="col-xs-12 col-sm-6 col-lg-6">
+					<div class="col-xs-12 col-sm-12 col-lg-6">
 						<div class="row">
 							<div class="col-sm-12">
 								<div class="widget-box transparent">

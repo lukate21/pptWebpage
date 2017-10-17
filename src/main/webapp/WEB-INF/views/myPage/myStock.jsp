@@ -372,8 +372,6 @@
 <script src="${context}/resources/assets/js/buttons.colVis.min.js"></script>
 <script src="${context}/resources/assets/js/dataTables.select.min.js"></script>
 <!-- page specific plugin scripts -->
-		<script src="assets/js/jquery-ui.min.js"></script>
-		<script src="assets/js/jquery.ui.touch-punch.min.js"></script>
 <script>
 
 	$(document).on("click", ".fa-pencil", function() {
