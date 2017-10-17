@@ -24,6 +24,9 @@
 				<div class="col-sm-6 text-right" id="predict">
 				</div>
 			</div>
+			<div id="chart">
+			
+			</div>
 	<script>
 	if('${name}'!="KOSPI" && '${name}' != "KOSDAQ" && '${name}' != "KOSPI2"){
 		$('#predict').append('전일예측 | <span id="yesterPredict"></span>'
@@ -212,17 +215,18 @@
 						$('#yesterPredict').html('<b>-</b>');
 					}
 					if((yesterdayPcnt>yesterdayMcnt && yesterPredict == '상승') || (yesterdayPcnt<yesterdayMcnt && yesterPredict == '하락')){
-						$('#yesterPredict').append(' <span class="text-success"><b>(성공)</b></span>');
+						$('#yesterPredict').append(' <span class="text-success"><b> | 예측성공 </b></span>');
 					}else {
-						$('#yesterPredict').append(' <span class="text-danger"><b>(실패)</b></span>');
+						$('#yesterPredict').append(' <span class="text-danger"><b> | 예측실패 </b></span>');
 					}
 				}
 				
 				if('${draw}'== 'true'){
-					$('body').append('<span style="cursor:pointer;" class="badge badge-success pull-right" onclick="drawChart2(\'1_YEAR\')">1년</span>');
-					$('body').append('<span style="cursor:pointer;" class="badge badge-success pull-right" onclick="drawChart2(\'1_MONTH\')">1개월</span>');
-					$('body').append('<span style="cursor:pointer;" class="badge badge-success pull-right" onclick="drawChart(\'1_DAY\')">1일</span> ');
-					$('body').append('<div id="chartdiv" class="col-sm-12" style="height:400px;"></div>');
+					$('#chart').empty();
+					$('#chart').append('<span style="cursor:pointer;" class="badge badge-success pull-right" onclick="drawChart2(\'1_YEAR\')">1년</span>');
+					$('#chart').append('<span style="cursor:pointer;" class="badge badge-success pull-right" onclick="drawChart2(\'1_MONTH\')">1개월</span>');
+					$('#chart').append('<span style="cursor:pointer;" class="badge badge-success pull-right" onclick="drawChart(\'1_DAY\')">1일</span> ');
+					$('#chart').append('<div id="chartdiv" class="col-sm-12" style="height:400px;"></div>');
 					
 					var chart = AmCharts.makeChart("chartdiv", {
 						type: "stock",

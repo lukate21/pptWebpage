@@ -28,22 +28,26 @@
 					function myFunction() {
 						comName = comList[i].comName;
 						$.ajax({
-							url : '${context}/company/rtStock.json?name='+comName+'&timeFrame=1_DAY',
+							url : '${context}/company/rtStock.json',
+							data : {
+								'name' : comName,
+								'timeFrame' : '1_DAY'
+							},
 							success : function(data){
 								var obj = JSON.parse(data)[0];
 								var chartData = obj.price;
 								var start = chartData[0].value;
 								var now = chartData[chartData.length-1].value;
 								if(start<now){
-									$('#sidebar-shortcuts-large').html('<h5>'+comName+'</h5>'+'<span class="text-danger"><h3 style="margin-top:0"><b>'+now+'</b><small class="text-danger">'
+									$('#sidebar-shortcuts-large').html('<h5 style="cursor:pointer" onclick="goSearch(\''+comName+'\')"><b>'+comName+'</b></h5>'+'<span class="text-danger"><h3 style="margin-top:0"><b>'+now+'</b><small class="text-danger">'
 													+'<br/><i class="fa fa-caret-up"></i>&nbsp;'+(now-start)
 													+'&nbsp;&nbsp;&nbsp;+'+((now-start)/start*100).toFixed(2)+'%</small></h3></span>');
 								}else if(start>now){
-									$('#sidebar-shortcuts-large').html('<h5>'+comName+'</h5>'+'<span class="text-primary"><h3 style="margin-top:0"><b>'+now+'</b><small class="text-primary">'
+									$('#sidebar-shortcuts-large').html('<h5 style="cursor:pointer" onclick="goSearch(\''+comName+'\')"><b>'+comName+'</b></h5>'+'<span class="text-primary"><h3 style="margin-top:0"><b>'+now+'</b><small class="text-primary">'
 											+'<br/><i class="fa fa-caret-down"></i>&nbsp;'+(start-now)
 											+'&nbsp;&nbsp;&nbsp;-'+((start-now)/start*100).toFixed(2)+'%</small></h3></span>');
 								}else{
-									$('#sidebar-shortcuts-large').html('<h5>'+comName+'</h5>'+'<span><h3 style="margin-top:0"><b>'+now+'</b><small>'
+									$('#sidebar-shortcuts-large').html('<h5 style="cursor:pointer" onclick="goSearch(\''+comName+'\')"><b>'+comName+'</b></h5>'+'<span><h3 style="margin-top:0"><b>'+now+'</b><small>'
 											+'<br/>-'+(start-now)
 											+'&nbsp;&nbsp;&nbsp;-'+((start-now)/start*100).toFixed(2)+'%</small></h3></span>');
 								}
@@ -54,20 +58,18 @@
 							i = 0;
 						}
 					}
+					function goSearch(comName){
+						$('#sideSearch').append('<input type="hidden" name="name" value="'+comName+'">');
+						$('#sideSearch').submit();
+					}
 				</script>
 				<div class="sidebar-shortcuts" id="sidebar-shortcuts">
-					<div class="sidebar-shortcuts-large" id="sidebar-shortcuts-large">
-					</div>
+					<form action="${context }/company/search.do" method="post" id="sideSearch">
+						<div class="sidebar-shortcuts-large" id="sidebar-shortcuts-large">
+						</div>
+					
+					</form>
 
-					<div class="sidebar-shortcuts-mini" id="sidebar-shortcuts-mini">
-						<span class="btn btn-success"></span>
-
-						<span class="btn btn-info"></span>
-
-						<span class="btn btn-warning"></span>
-
-						<span class="btn btn-danger"></span>
-					</div>
 				</div><!-- /.sidebar-shortcuts -->
 
 					<ul class="nav nav-list">
@@ -83,7 +85,18 @@
 								<span class="menu-text">기업검색</span>
 							</a>
 						</li>
-						<li class="js_nav-item nav-item">
+						<c:choose>
+							<c:when test="${ empty sessionScope.loginUser}">
+								<li class="js_nav-item nav-item">
+									<a  href="${context }/login.do" onclick="return confirm('로그인이 필요한 서비스입니다.\n로그인 하시겠습니까?');">
+										<i class="menu-icon fa fa-book book-icon"></i>
+										<span>사용자포트폴리오</span>
+										<b class="arrow fa fa-angle-down"></b>
+									</a>
+								</li>
+							</c:when>
+							<c:otherwise>
+								<li class="js_nav-item nav-item">
 									<a class="dropdown-toggle" href="">
 										<i class="menu-icon fa fa-book book-icon"></i>
 										<span>사용자포트폴리오</span>
@@ -113,6 +126,8 @@
 										</li>
 									</ul>
 								</li>
+							</c:otherwise>
+						</c:choose>
 						<!-- <li class="">
 							<a	class="" href="#">
 								<i class="menu-icon fa fa-globe globe-icon"></i>

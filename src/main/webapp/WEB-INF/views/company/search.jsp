@@ -193,7 +193,8 @@
 	}
 	function addFavorite(comName){
 		if('${loginUser.no}' == ''){
-			alert('로그인이 필요합니다.');
+			if(confirm('로그인이 필요한 서비스입니다.\n로그인 하시겠습니까?'))
+				location.href="${context }/login.do";
 		}else{
 			$.ajax({
 				url : '${context}/my/selectFavoriteGroup.json',

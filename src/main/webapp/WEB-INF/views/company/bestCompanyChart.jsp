@@ -21,21 +21,28 @@
 <body style="margin:auto;background-color:white">
 <div class="main-content">
 	<div class="main-content-inner">
-	<div class="space-12"></div>
+	<div class="space-24"></div>
+	<div class="space-24"></div>
 			<c:forEach items="${rList}" var="recommend" varStatus="rStatus">
-				<div class="row">
-					<div class="col-xs-12 center">
-						<div >${recommend.comName }</div>
-						<div id="chart${rStatus.index}" class="easy-pie-chart percentage" data-percent="${recommend.value}" data-color="#D15B47">
-							<span class="percent">${recommend.value}</span>%
-						</div>
-					</div>
-				</div>
 				<c:choose>
-					<c:when test="${rStatus.last }">
+					<c:when test="${rStatus.first }">
+						<div class="row">
+							<div class="col-xs-6 col-xs-offset-3 center">
+								<div >${recommend.comName }</div>
+								<div id="chart${rStatus.index}" class="easy-pie-chart percentage" data-percent="${recommend.value}" data-color="#D15B47">
+									<span class="percent">${recommend.value}</span>%
+								</div>
+							</div>
+						</div>
+						<div class="space-12"></div>
 					</c:when>
 					<c:otherwise>
-						<hr>
+						<div class="col-xs-6  center">
+							<div >${recommend.comName }</div>
+							<div id="chart${rStatus.index}" class="easy-pie-chart percentage" data-percent="${recommend.value}" data-color="#D15B47">
+								<span class="percent">${recommend.value}</span>%
+							</div>
+						</div>
 					</c:otherwise>
 				</c:choose>
 			</c:forEach>

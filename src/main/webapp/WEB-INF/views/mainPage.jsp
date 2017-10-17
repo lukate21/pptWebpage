@@ -41,26 +41,29 @@
 			</div>
 	
 			<div class="page-content">
+				<div class="space-12"></div>
 				<div class="row">
-					<div class="col-xs-12 col-sm-12 col-lg-6" style="margin-left:50px">
+					<div class="col-xs-12 col-sm-6 col-lg-6">
 						<div class="row">
-							<div class="widget-box transparent">
-								<div class="widget-header widget-header-flat">
-									<h3 class="widget-title lighter">
-										<i class="fa fa-newspaper-o fa-1x dark"></i><span class="dark"><b> 뉴스 헤드라인</b></span>
-									</h3>
-									<div class="widget-toolbar">
-										<a href="#" data-action="collapse">
-											<i class="ace-icon fa fa-chevron-up"></i>
-										</a>
+							<div class="col-sm-12">
+								<div class="widget-box transparent">
+									<div class="widget-header widget-header-flat">
+										<h3 class="widget-title lighter">
+											<i class="fa fa-newspaper-o grey bigger-110"></i><span class="dark"><b> 뉴스 헤드라인</b></span>
+										</h3>
+										<div class="widget-toolbar">
+											<a href="#" data-action="collapse">
+												<i class="ace-icon fa fa-chevron-up"></i>
+											</a>
+										</div>
 									</div>
-								</div>
-								<div class="widget-body">
-									<div class="widget-main no-padding">
-										<div id="headline"></div>
-									</div><!-- /.widget-main -->
-								</div><!-- /.widget-body -->
-							</div><!-- /.widget-box -->
+									<div class="widget-body">
+										<div class="widget-main no-padding">
+											<div id="headline"></div>
+										</div><!-- /.widget-main -->
+									</div><!-- /.widget-body -->
+								</div><!-- /.widget-box -->
+							</div>
 						</div>
 						<div class="space-12"></div>
 						<div class="row">
@@ -106,121 +109,141 @@
 							</div>
 						</div>
 					</div>
-					<div class="col-xs-12 col-sm-12 col-lg-5" style="margin-left:50px">
+					<div class="col-xs-12 col-sm-6 col-lg-6">
 						<div class="row">
-							<div class="widget-box transparent">
-								<div class="widget-header widget-header-flat">
-									<h3 class="widget-title lighter">
-										<i class="fa fa-rss fa-1x orange"></i><span class="dark"><b> 실시간 뉴스</b></span>
-									</h3>
-									<div class="widget-toolbar">
-										<i id="btnPlay" class="fa fa-play-circle-o fa-2x" style="cursor:pointer; margin-top:7px" title="start"></i>
-										<i id="btnStop" class="fa fa-pause-circle-o fa-2x" style="cursor:pointer; margin-top:7px" title="pause"></i>
-										<a href="#" data-action="collapse">
-											<i class="ace-icon fa fa-chevron-up"></i>
-										</a>
+							<div class="col-sm-12">
+								<div class="widget-box transparent">
+									<div class="widget-header widget-header-flat">
+										<h3 class="widget-title lighter">
+											<i class="fa fa-rss fa-1x orange"></i><span class="dark"><b> 실시간 뉴스</b></span>
+										</h3>
+										<div class="widget-toolbar">
+											<i id="btnPlay" class="fa fa-play-circle-o fa-2x" style="cursor:pointer; margin-top:7px" title="start"></i>
+											<i id="btnStop" class="fa fa-pause-circle-o fa-2x" style="cursor:pointer; margin-top:7px" title="pause"></i>
+											<a href="#" data-action="collapse">
+												<i class="ace-icon fa fa-chevron-up"></i>
+											</a>
+										</div>
 									</div>
-								</div>
-								<div class="widget-body">
-									<div class="widget-main no-padding">
-										<div class="tabbable">
-											<ul class="nav nav-tabs nav-justified" id="myTab2">
-												<li class="active">
-													<a data-toggle="tab" href="#society" aria-expanded="true">
-														<h4>사회</h4>
-													</a>
-												</li>
-												<li class="">
-													<a data-toggle="tab" href="#politics" aria-expanded="true">
-														<h4>정치</h4>
-													</a>
-												</li>
-												<li class="">
-													<a data-toggle="tab" href="#economic" aria-expanded="true">
-														<h4>경제</h4>
-													</a>
-												</li>
-												<li class="">
-													<a data-toggle="tab" href="#foreign" aria-expanded="true">
-														<h4>국제</h4>
-													</a>
-												</li>
-												<li class="">
-													<a data-toggle="tab" href="#culture" aria-expanded="true">
-														<h4>문화</h4>
-													</a>
-												</li>
-												<li class="">
-													<a data-toggle="tab" href="#entertain" aria-expanded="true">
-														<h4>연예</h4>
-													</a>
-												</li>
-												<li class="">
-													<a data-toggle="tab" href="#digital" aria-expanded="true">
-														<h4>IT</h4>
-													</a>
-												</li>
-											</ul>
-											<div class="tab-content">
-												<div id="society" class="tab-pane fade active in">
-													<div id="societyNews"></div>
-												</div>
-				
-												<div id="politics" class="tab-pane fade">
-													<div id="politicsNews"></div>
-												</div>
-				
-												<div id="economic" class="tab-pane fade">
-													<div id="economicNews"></div>
-												</div>
-												
-												<div id="foreign" class="tab-pane fade">
-													<div id="foreignNews"></div>
-												</div>
-				
-												<div id="culture" class="tab-pane fade">
-													<div id="cultureNews"></div>
-												</div>
-				
-												<div id="entertain" class="tab-pane fade">
-													<div id="entertainNews"></div>
-												</div>
-				
-												<div id="digital" class="tab-pane fade">
-													<div id="digitalNews"></div>
+									<div class="widget-body">
+										<div class="widget-main no-padding">
+											<div class="tabbable">
+												<ul class="nav nav-tabs nav-justified" id="myTab2">
+													<li class="active">
+														<a data-toggle="tab" href="#society" aria-expanded="true">
+															<h4>사회</h4>
+														</a>
+													</li>
+													<li class="">
+														<a data-toggle="tab" href="#politics" aria-expanded="true">
+															<h4>정치</h4>
+														</a>
+													</li>
+													<li class="">
+														<a data-toggle="tab" href="#economic" aria-expanded="true">
+															<h4>경제</h4>
+														</a>
+													</li>
+													<li class="">
+														<a data-toggle="tab" href="#foreign" aria-expanded="true">
+															<h4>국제</h4>
+														</a>
+													</li>
+													<li class="">
+														<a data-toggle="tab" href="#culture" aria-expanded="true">
+															<h4>문화</h4>
+														</a>
+													</li>
+													<li class="">
+														<a data-toggle="tab" href="#entertain" aria-expanded="true">
+															<h4>연예</h4>
+														</a>
+													</li>
+													<li class="">
+														<a data-toggle="tab" href="#digital" aria-expanded="true">
+															<h4>IT</h4>
+														</a>
+													</li>
+												</ul>
+												<div class="tab-content">
+													<div id="society" class="tab-pane fade active in">
+														<div id="societyNews"></div>
+													</div>
+					
+													<div id="politics" class="tab-pane fade">
+														<div id="politicsNews"></div>
+													</div>
+					
+													<div id="economic" class="tab-pane fade">
+														<div id="economicNews"></div>
+													</div>
+													
+													<div id="foreign" class="tab-pane fade">
+														<div id="foreignNews"></div>
+													</div>
+					
+													<div id="culture" class="tab-pane fade">
+														<div id="cultureNews"></div>
+													</div>
+					
+													<div id="entertain" class="tab-pane fade">
+														<div id="entertainNews"></div>
+													</div>
+					
+													<div id="digital" class="tab-pane fade">
+														<div id="digitalNews"></div>
+													</div>
 												</div>
 											</div>
-										</div>
-									</div><!-- /.widget-main -->
-								</div><!-- /.widget-body -->
-							</div><!-- /.widget-box -->
+										</div><!-- /.widget-main -->
+									</div><!-- /.widget-body -->
+								</div><!-- /.widget-box -->
+							</div>
 						</div>
 						<div class="space-12"></div>
 						<div class="row">
-							<div class="tabbable">
-								<ul class="nav nav-tabs nav-justified" id="myTab">
-									<li class="active"><a data-toggle="tab" href="#kospi"
-										aria-expanded="true">
-											<h3>KOSPI</h3>
-									</a></li>
-	
-									<li class=""><a data-toggle="tab" href="#kosdaq"
-										aria-expanded="true">
-											<h3>KOSDAQ</h3>
-									</a></li>
-								</ul>
-	
-								<div class="tab-content">
-									<div id="kospi" class="tab-pane fade active in">
-										<iframe src="${context}/company/chart/stock.do?name=KOSPI&draw=true"
-								width="100%" height="450px" frameBorder="0"> </iframe>
+							<div class="col-sm-12">
+								<div class="widget-box transparent">
+									<div class="widget-header widget-header-flat">
+										<h3 class="widget-title lighter">
+											<i class="fa fa-line-chart fa-1x dark"></i><span class="dark"><b> KOSPI / KOSDAQ</b></span>
+										</h3>
+										<div class="widget-toolbar">
+											<a href="#" data-action="collapse">
+												<i class="ace-icon fa fa-chevron-up"></i>
+											</a>
+										</div>
 									</div>
-	
-									<div id="kosdaq" class="tab-pane fade">
-										<iframe src="${context}/company/chart/stock.do?name=KOSDAQ&draw=true"
-								width="100%" height="450px" frameBorder="0"> </iframe>
-									</div>
-								</div>
+									<div class="widget-body">
+										<div class="widget-main no-padding">
+											<div class="tabbable">
+												<ul class="nav nav-tabs nav-justified" id="myTab">
+													<li class="active"><a data-toggle="tab" href="#kospi"
+														aria-expanded="true">
+															<h3>KOSPI</h3>
+													</a></li>
+					
+													<li class=""><a data-toggle="tab" href="#kosdaq"
+														aria-expanded="true">
+															<h3>KOSDAQ</h3>
+													</a></li>
+												</ul>
+					
+												<div class="tab-content">
+													<div id="kospi" class="tab-pane fade active in">
+														<iframe src="${context}/company/chart/stock.do?name=KOSPI&draw=true"
+												width="100%" height="500px" frameBorder="0"> </iframe>
+													</div>
+					
+													<div id="kosdaq" class="tab-pane fade">
+														<iframe src="${context}/company/chart/stock.do?name=KOSDAQ&draw=true"
+												width="100%" height="500px" frameBorder="0"> </iframe>
+													</div>
+												</div>
+											</div>
+										</div><!-- /.widget-main -->
+									</div><!-- /.widget-body -->
+								</div><!-- /.widget-box -->
 							</div>
 						</div>
 					</div>
