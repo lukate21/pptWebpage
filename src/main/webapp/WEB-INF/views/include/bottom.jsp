@@ -6,7 +6,7 @@
 	<div class="footer-inner">
 		<div class="footer-content">
 			<span class="bigger-120">
-				<i>Copywright &copy; 2017 by Jiman Kim, Ikhyeon Cho, Dongjoo Hwang. All rights reserved.</i>
+				<i>Copyright &copy; 2017 by Jiman Kim, Ikhyeon Cho, Dongjoo Hwang. All rights reserved.</i>
 			</span>
 
 			&nbsp; &nbsp;

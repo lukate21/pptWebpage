@@ -53,10 +53,10 @@
 					<div class="col-xs-12">
 						<form class="form-horizontal" id="joinForm" name="joinForm" role="form" action="${context}/join.do" onsubmit="return checkEle()" method="post">
 							<div class="form-group">
-								<label class="col-sm-3 control-label no-padding-right" for="form-field-1"> 이메일 </label>
+								<label class="col-sm-3 control-label no-padding-right" for="inputEmail"> 이메일 </label>
 	
 								<div class="col-sm-9">
-									<input data-rel="tooltip" type="text" name="email" id="form-field-1" placeholder="e-mail" class="col-xs-10 col-sm-5"  title="이메일을 입력해 주세요" data-placement="top"/>
+									<input data-rel="tooltip" type="text" name="email" id="inputEmail" placeholder="e-mail" class="col-xs-10 col-sm-5"  title="이메일을 입력해 주세요" data-placement="top"/>
 									<span class="help-inline col-xs-12 col-sm-7">
 										<span class="btn btn-xs btn-warning" id="btnDup">중복확인</span>
 									</span>
