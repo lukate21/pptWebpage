@@ -75,28 +75,31 @@
 				이름과 전화번호를 입력해 주세요
 			</div>
 			<div class="hr hr-12 hr-double"></div>
-			<div class="col-sm-12">
-				<div class="form-group">
-					<label class="col-sm-3 control-label no-padding-right" for="iName"> 이름 </label>
-					<div class="col-sm-9">
-						<input data-rel="tooltip" type="text" name="iName" id="iName" placeholder="name" title="이메일을 입력해 주세요" data-placement="top"/>
+			<div class="row">
+				<div class="col-sm-12">
+					<div class="form-group">
+						<label class="col-sm-3 control-label no-padding-right" for="iName"> 이름 </label>
+						<div class="col-sm-9">
+							<input data-rel="tooltip" type="text" name="iName" id="iName" placeholder="name" title="이메일을 입력해 주세요" data-placement="top"/>
+						</div>
 					</div>
-				</div>
-				
-				<div class="space-4"></div>
-				
-				<div class="form-group">
-					<label class="control-label col-xs-12 col-sm-3 no-padding-right" for="phone">전화번호</label>
-
-					<div class="col-xs-12 col-sm-9">
-						<div class="input-group">
-							<input type="tel" id="iPhone" name="iPhone" placeholder="phone"/>
+					
+					<div class="space-4"></div>
+					
+					<div class="form-group">
+						<label class="control-label col-xs-12 col-sm-3 no-padding-right" for="phone">전화번호</label>
+	
+						<div class="col-xs-12 col-sm-9">
+							<div class="input-group">
+								<input type="tel" id="iPhone" name="iPhone" placeholder="phone"/>
+							</div>
 						</div>
 					</div>
 				</div>
 			</div>
 			<div class="hr hr-12 hr-double"></div>
-			<div>결과</div>
+			<div class="alert alert-info bigger-100" id="iResult"></div>
+
 		</div><!-- #dialog-message -->
 
 		<div id="dialog-findPassword" class="hide">
@@ -194,7 +197,14 @@
 			data : param,
 			method : "post",
 			success : function(result){
-				alert(result);
+				if(result == "없습니다")
+					$('#iResult').html("찾으시는 이메일이 존재하지 않습니다.");
+				else
+					$('#iResult').html("이메일은 "+result+"입니다.");
+				
+				$('#btn-findId span').html("닫기").click(function(){
+					$( "#dialog-findId" ).dialog("close");
+				});
 			}
 		});
 	}
@@ -210,7 +220,7 @@
 				else
 					$('#pResult').html("임시 비밀번호는 "+result+"입니다.<br/>로그인 후 비밀번호를 변경해 주세요");
 				
-				$('#btn-findPass').attr("text","완료").click(function(){
+				$('#btn-findPass span').html("닫기").click(function(){
 					$( "#dialog-findPassword" ).dialog("close");
 				});
 					
@@ -224,6 +234,8 @@ jQuery(function($) {
 
 		iName.value="";
 		iPhone.value="";
+		$('#iResult').text("");
+		
 		var dialog = $( "#dialog-findId" ).removeClass('hide').dialog({
 			modal: true,
 			width: '360',
@@ -234,9 +246,10 @@ jQuery(function($) {
 				{
 					text: "확인",
 					"class" : "btn btn-primary btn-minier",
+					"id" : "btn-findId", 
 					click: function() {
 						findId();
-						$( this ).dialog( "close" ); 
+						//$( this ).dialog( "close" ); 
 					} 
 				},
 				{
@@ -257,6 +270,7 @@ jQuery(function($) {
 		pName.value="";
 		pPhone.value="";
 		pEmail.value="";
+		$('#pResult').text("");
 		
 		var dialog = $( "#dialog-findPassword" ).removeClass('hide').dialog({
 			modal: true,
