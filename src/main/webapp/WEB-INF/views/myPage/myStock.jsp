@@ -40,7 +40,7 @@
 				<ul class="breadcrumb">
 					<li><i class="ace-icon fa fa-home home-icon"></i> <a href="${context}/hello.do">Home</a></li>
 					<li>마이페이지</li>
-					<li class="active">주식현황</li>
+					<li class="active">보유주식</li>
 				</ul>
 				<!-- /.breadcrumb -->
 			</div>

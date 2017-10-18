@@ -90,7 +90,7 @@
 								<li class="js_nav-item nav-item">
 									<a  href="${context }/login.do" onclick="return confirm('로그인이 필요한 서비스입니다.\n로그인 하시겠습니까?');">
 										<i class="menu-icon fa fa-book book-icon"></i>
-										<span>사용자포트폴리오</span>
+										<span>MY포트폴리오</span>
 										<b class="arrow fa fa-angle-down"></b>
 									</a>
 								</li>
@@ -99,7 +99,7 @@
 								<li class="js_nav-item nav-item">
 									<a class="dropdown-toggle" href="">
 										<i class="menu-icon fa fa-book book-icon"></i>
-										<span>사용자포트폴리오</span>
+										<span>MY포트폴리오</span>
 										<b class="arrow fa fa-angle-down"></b>
 									</a>
 									<ul class="submenu" >
@@ -161,7 +161,7 @@
 												<li class="">
 													<a href="${context}/myPage/myStock.do">
 														<i class="menu-icon fa fa-caret-right"></i>
-														주식현황
+														보유주식
 													</a>
 			
 													<b class="arrow"></b>

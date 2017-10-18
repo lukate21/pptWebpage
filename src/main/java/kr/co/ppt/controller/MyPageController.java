@@ -20,7 +20,6 @@ import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.converter.json.GsonBuilderUtils;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -339,6 +338,7 @@ public class MyPageController {
 		
 		return msg;
 	}
+	
 	@ResponseBody
 	@RequestMapping("deleteMyStock.json")
 	public String mobileDeleteMyStock(int no){
@@ -370,8 +370,8 @@ public class MyPageController {
 	}
 	
 	@ResponseBody
-	@RequestMapping(value="addMyStock.json")
-	public String addMyStock(int userNo, String comName, String buyPrice, String volume, String buyDate){
+	@RequestMapping("addMyStock.json")
+	public String addMyStock(int userNo, String comName, int buyPrice, int volume, String buyDate){
 		System.out.println("comName : "+comName+", buyPrice :"+buyPrice+", volume :"+volume+", buyDate :"+buyDate);
 		
 		int comNo = myStockService.getComNo(comName);
@@ -379,8 +379,8 @@ public class MyPageController {
 		MyStockVO myStock = new MyStockVO();
 		myStock.setUserNo(userNo);
 		myStock.setComNo(comNo);
-		myStock.setBuyPrice(Integer.parseInt(buyPrice));
-		myStock.setVolume(Integer.parseInt(volume));
+		myStock.setBuyPrice(buyPrice);
+		myStock.setVolume(volume);
 		myStock.setBuyDate(buyDate);
 		
 		String msg = myStockService.insertMyStock(myStock);

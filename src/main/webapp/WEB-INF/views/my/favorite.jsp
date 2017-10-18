@@ -257,9 +257,8 @@ function widgetConfig(){
 			<div class="breadcrumbs ace-save-state breadcrumbs-fixed"
 				id="breadcrumbs">
 				<ul class="breadcrumb">
-					<li><i class="ace-icon fa fa-home home-icon"></i> <a
-						href="${context }">Home</a></li>
-					<li><a href="#">company</a></li>
+					<li><i class="ace-icon fa fa-home home-icon"></i> <a href="${context }">Home</a></li>
+					<li>MY포트폴리오</li>
 					<li class="active">관심기업</li>
 				</ul>
 				<!-- /.breadcrumb -->

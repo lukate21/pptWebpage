@@ -295,7 +295,8 @@ $(function(){
 			<div class="breadcrumbs ace-save-state breadcrumbs-fixed" id="breadcrumbs">
 				<ul class="breadcrumb">
 					<li><i class="ace-icon fa fa-home home-icon"></i> <a href="${context }">Home</a></li>
-					<li class="active">사용자 포트폴리오</li>
+					<li>MY포트폴리오</li>
+					<li class="active">나만의&nbsp;분석&nbsp;만들기</li>
 				</ul>
 				<!-- /.breadcrumb -->
 			</div>

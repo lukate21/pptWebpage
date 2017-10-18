@@ -277,7 +277,7 @@
 							<div class="owl-carousel owl-theme">
 								<div class="item">
 									<img width="565" height="450" alt="565x450"
-										src="${context}/resources/assets/images/gallery/image-1.jpg" />
+										src="${context}/resources/img/hello.png" />
 								</div>
 								<div class="item">
 									<img width="565" height="450" alt="565x450"

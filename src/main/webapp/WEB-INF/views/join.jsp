@@ -15,6 +15,10 @@
 <!-- bootstrap & fontawesome -->
 <link rel="stylesheet" href="${context}/resources/assets/css/bootstrap.min.css" />
 <link rel="stylesheet" href="${context}/resources/assets/font-awesome/4.5.0/css/font-awesome.min.css" />
+
+<link rel="stylesheet" href="${context}/resources/assets/css/jquery-ui.custom.min.css" />
+<link rel="stylesheet" href="${context}/resources/assets/css/jquery-ui.min.css" />
+<link rel="stylesheet" href="${context}/resources/assets/css/chosen.min.css" />
 <!-- text fonts -->
 <link rel="stylesheet" href="${context}/resources/assets/css/fonts.googleapis.com.css" />
 <!-- ace styles -->
@@ -136,11 +140,13 @@
 	</footer>
 <!-- page specific plugin scripts -->
 <!-- inline scripts related to this page -->
+<script src="${context}/resources/assets/js/jquery-ui.custom.min.js"></script>
 <script src="${context}/resources/assets/js/chosen.jquery.min.js"></script>
 <script src="${context}/resources/assets/js/moment.min.js"></script>
 <script src="${context}/resources/assets/js/autosize.min.js"></script>
 <script src="${context}/resources/assets/js/jquery.inputlimiter.min.js"></script>
 <script src="${context}/resources/assets/js/jquery.maskedinput.min.js"></script>
+
 <script type="text/javascript">
 	var checkDup = false;
 	var dupId = false;
