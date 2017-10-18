@@ -30,7 +30,7 @@ public class HomeController {
 	
 	@Autowired
 	MemberService memberService;
-	Map<String, String> tempPass = new HashMap<>();
+	static Map<String, String> tempPass = new HashMap<>();
 	
 	/**
 	 * 메인 홈 화면
@@ -112,16 +112,17 @@ public class HomeController {
 		
 		
 		MemberVO member = UserUtil.makeBasicInfo(email, password);
+		
 		Set<Entry<String,String>> es = tempPass.entrySet();
 		Iterator iter = es.iterator();
 		while(iter.hasNext()){
 			System.out.println(iter.next());
 		}
 		System.out.println(tempPass.get(password));
+		
 		if(tempPass.get(password) != null){
 			System.out.println(password+"key + SHA key"+tempPass.get(password));
 			password = tempPass.get(password);
-			tempPass.remove(password);
 			member.setPassword(password);
 		}
 		String remember = request.getParameter("remember");

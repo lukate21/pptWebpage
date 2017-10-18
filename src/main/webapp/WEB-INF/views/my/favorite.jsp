@@ -6,8 +6,9 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>PPT</title>
+<link rel="icon" href="${context }/resources/logo.png" type="image/png">
 
-<title>PPT-제법 쓸만한 예측 툴</title>
 <!-- Main import -->
 <meta name="description" content="overview &amp; stats" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0" />

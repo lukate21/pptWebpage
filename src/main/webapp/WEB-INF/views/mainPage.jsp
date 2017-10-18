@@ -359,7 +359,7 @@
 		
 		setInterval(function(){
 			getNews("main",8);
-		}, 1000*60);
+		}, 1000*5*60);
 		
 		// news받아오기
 		getNews("main",8);
