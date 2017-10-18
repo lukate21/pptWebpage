@@ -22,11 +22,11 @@
 							rotationComList = JSON.parse(data);
 						}
 					});
-					var i = 0;
-					myFunction();
-					var test = setInterval(myFunction, 5000);
-					function myFunction() {
-						var rotationComName = rotationComList[i].comName;
+					var rotationIndex = 0;
+					rotationFunction();
+					var rotationInterval = setInterval(myFunction, 5000);
+					function rotationFunction() {
+						var rotationComName = rotationComList[rotationIndex].comName;
 						$.ajax({
 							url : '${context}/company/rtStock.json',
 							data : {
@@ -53,9 +53,9 @@
 								}
 							}
 						});
-						i++;
+						rotationIndex++;
 						if(rotationComList[i] == null){
-							i = 0;
+							rotationIndex = 0;
 						}
 					}
 					function goSearch(rotationComName){
