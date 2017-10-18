@@ -269,33 +269,61 @@
 					<div class="modal-header">
 						<button type="button" class="bootbox-close-button close"
 							data-dismiss="modal" aria-hidden="true">×</button>
-						<h4 class="modal-title">PPT 모달</h4>
+						<h4 class="modal-title">PPT 이용안내</h4>
 					</div>
 					<div class="modal-body">
 						<div class="bootbox-form" data-rel="colorbox">
 							<!-- Slides Container -->
 							<div class="owl-carousel owl-theme">
 								<div class="item">
-									<img width="565" height="450" alt="565x450"
+									<img width="100%" height="" alt="800X600"
 										src="${context}/resources/img/hello.png" />
 								</div>
 								<div class="item">
-									<img width="565" height="450" alt="565x450"
-										src="${context}/resources/assets/images/gallery/image-2.jpg" />
+									<img width="100%" height="" alt="800X600"
+										src="${context}/resources/img/join.png" />
 								</div>
 								<div class="item">
-									<img width="565" height="450" alt="565x450"
-										src="${context}/resources/assets/images/gallery/image-3.jpg" />
+									<img width="100%" height="" alt="800X600"
+										src="${context}/resources/img/menu.png" />
 								</div>
 								<div class="item">
-									<img width="565" height="450" alt="565x450"
-
-										src="${context}/resources/assets/images/gallery/image-4.jpg" />
+									<img width="100%" height="" alt="800X600"
+										src="${context}/resources/img/search.png" />
 								</div>
 								<div class="item">
-									<img width="565" height="450" alt="565x450"
-										src="${context}/resources/assets/images/gallery/image-5.jpg" />
+									<img width="100%" height="" alt="800X600"
+										src="${context}/resources/img/myPortfolio1.png" />
 								</div>
+								<div class="item">
+									<img width="100%" height="" alt="800X600"
+										src="${context}/resources/img/myPortfolio2.png" />
+								</div>
+								<div class="item">
+									<img width="100%" height="" alt="800X600"
+										src="${context}/resources/img/myPortfolio3.png" />
+								</div>
+								<div class="item">
+									<img width="100%" height="" alt="800X600"
+										src="${context}/resources/img/myPortfolio4.png" />
+								</div>
+								<div class="item">
+									<img width="100%" height="" alt="800X600"
+										src="${context}/resources/img/myPortfolio5.png" />
+								</div>
+								<div class="item">
+									<img width="100%" height="" alt="800X600"
+										src="${context}/resources/img/myPortfolio6.png" />
+								</div>
+								<div class="item">
+									<img width="100%" height="" alt="800X600"
+										src="${context}/resources/img/myStock.png" />
+								</div>
+								<div class="item">
+									<img width="100%" height="" alt="800X600"
+										src="${context}/resources/img/bye.png" />
+								</div>
+								
 							</div>
 						</div>
 						<div class="bootbox-body">

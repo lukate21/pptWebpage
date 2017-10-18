@@ -24,7 +24,7 @@
 					});
 					var rotationIndex = 0;
 					rotationFunction();
-					var rotationInterval = setInterval(myFunction, 5000);
+					var rotationInterval = setInterval(rotationFunction, 5000);
 					function rotationFunction() {
 						var rotationComName = rotationComList[rotationIndex].comName;
 						$.ajax({
@@ -54,7 +54,7 @@
 							}
 						});
 						rotationIndex++;
-						if(rotationComList[i] == null){
+						if(rotationComList[rotationIndex] == null){
 							rotationIndex = 0;
 						}
 					}
