@@ -179,4 +179,31 @@ public class CompanyController {
 		model.addAttribute("rList",cService.selectBestCompany());
 		return "company/bestCompanyChart";
 	}
+	
+	@RequestMapping("/bestAnalysis.do")
+	@ResponseBody
+	public String getBestCompany(){
+		List<CompanyVO> list = cService.selectComList();
+		int sum = 0;
+		for(CompanyVO cVO : list){
+			int value = cService.selectBestAnalysis(cVO.getName()).getValue();
+			sum+= value;
+		}
+		
+		return String.valueOf(sum/list.size());
+	}
+	
+	@RequestMapping("/up70.do")
+	@ResponseBody
+	public String up70(){
+		List<CompanyVO> list = cService.selectComList();
+		int cnt = 0;
+		for(CompanyVO cVO : list){
+			int value = cService.selectBestAnalysis(cVO.getName()).getValue();
+			if(value>=70)
+				cnt++;
+		}
+		
+		return String.valueOf(cnt);
+	}
 }

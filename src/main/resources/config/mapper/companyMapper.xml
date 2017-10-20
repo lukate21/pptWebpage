@@ -63,6 +63,12 @@
 		where com_name = #{comName}
 	</select>
 	
+	<select id="selectOneReliability" parameterType="reliabilityVO" resultType="reliabilityVO">
+		select no, com_name as comName, ana_code as anaCode, news_code as newsCode, value
+		from ANA_RELIABILITY
+		where com_name = #{comName} and ana_code = #{anaCode} and news_code = #{newsCode}
+	</select>
+	
 	<select id="selectNewsCount" resultType="newsCountVO">
 		select no, news_code as newsCode, today, total
 		from news_count

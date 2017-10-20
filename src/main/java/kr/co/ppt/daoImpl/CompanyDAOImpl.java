@@ -61,6 +61,11 @@ public class CompanyDAOImpl {
 	public List<ReliabilityVO> selectReliability(String comName){
 		return template.selectList("company.selectReliability",comName);
 	}
+	
+	public ReliabilityVO selectOneReliability(ReliabilityVO reliabilityVO){
+		return template.selectOne("company.selectOneReliability",reliabilityVO);
+	}
+	
 	public List<NewsCountVO> selectNewsCount(){
 		return template.selectList("company.selectNewsCount");
 	}

@@ -209,9 +209,9 @@ function getReliability(){
 		},
 		contentType : 'application/x-www-form-urlencoded; charset=utf-8',
 		success : function(data){
-			reliability = data;
+			reliability = data.split(',')[1];
 			$('#reliabilityDiv').empty();
-			$('#reliabilityDiv').html('<i class="ace-icon fa fa-angle-double-right"></i>'+reliability+'%');
+			$('#reliabilityDiv').html('<i class="ace-icon fa fa-angle-double-right"></i>'+data.split(',')[0]+'->'+reliability+'%');
 		},
 		error : function(error){
 			console.log("error : "+ error);
@@ -243,6 +243,25 @@ function checkDicName(dicName){
 
 //last
 function insertUserDic(){
+	$.ajax({
+		url : "${context}/my/analysis/insertUserDic.json",
+		type: 'post',
+		data : {
+			'userNo' : '${loginUser.no}',
+			'dicName' : dicName,
+			'comName' : comName,
+			'newsCode' : newsCode,
+			'anaCode' : anaCode,
+			'userDic' : JSON.stringify(userDic)
+		},
+		contentType : 'application/x-www-form-urlencoded; charset=utf-8',
+		success : function(data){
+			console.log(data);
+		},
+		error : function(error){
+			console.log("error : "+ error);
+		}
+	});
 	$.ajax({
 		url : "${context}/dictionary/mongo/insertUserDic.json",
 		type: 'post',

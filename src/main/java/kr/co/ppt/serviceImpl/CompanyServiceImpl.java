@@ -117,6 +117,10 @@ public class CompanyServiceImpl {
 		return cDAO.selectReliability(comName);
 	}
 	
+	public ReliabilityVO selectOneReliability(ReliabilityVO reliabilityVO){
+		return cDAO.selectOneReliability(reliabilityVO);
+	}
+	
 	public List<NewsCountVO> selectNewsCount(){
 		return cDAO.selectNewsCount();
 	}
