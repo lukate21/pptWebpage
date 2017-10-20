@@ -69,6 +69,10 @@ public class DictionaryDAOImpl {
 		collection.deleteOne(query);
 	}
 	
+	public void deleteUserDic(Map map){
+		template.delete("portfolio.deleteUserDic", map);
+	}
+	
 	public FindIterable<Document> selectUserDic(Bson query){
 		collection = jsonReader.DB.getCollection("USER_DIC"); 
 		return collection.find(query);

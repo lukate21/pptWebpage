@@ -143,6 +143,10 @@ public class DictionaryServiceImpl {
 	public void deleteUserDic(int userNo, String dicName){
 		Bson query = Filters.and(Filters.eq("userNo",userNo),Filters.eq("dicName",dicName));
 		dDAO.deleteUserDic(query);
+		Map<String,Object> map = new HashMap<>();
+		map.put("userNo", userNo);
+		map.put("dicName", dicName);
+		dDAO.deleteUserDic(map);
 	}
 	
 	public JSONArray selectUserDic(int userNo, String dicName, boolean dicInclude){

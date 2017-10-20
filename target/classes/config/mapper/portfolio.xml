@@ -61,4 +61,9 @@
 		from MY_ANALISYS
 		where user_no = #{userNo}
 	</select>
+	
+	<delete id="deleteUserDic">
+		delete from my_analysis
+		where user_no = #{userNo} and dic_name = #{dicName}
+	</delete>
 </mapper>
