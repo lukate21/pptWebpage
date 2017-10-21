@@ -495,6 +495,8 @@ $(function(){
 							}
 						]
 					});
+				}else if(info.step == 4 && info.direction == "previous"){
+					successful = false;
 				}else if(info.step == 4 && info.direction == "next"){
 					insertUserDic();
 				}
