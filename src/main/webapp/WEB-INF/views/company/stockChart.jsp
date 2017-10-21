@@ -17,6 +17,11 @@
 <link rel="stylesheet" href="${context }/resources/amcharts_3.21.6.free/images/style.css" type="text/css">
 <script src="${context }/resources/amcharts_3.21.6.free/amcharts/amcharts.js" type="text/javascript"></script>
 <script src="${context }/resources/amcharts_3.21.6.free/amcharts/serial.js" type="text/javascript"></script>
+<script>
+function numberWithCommas(x) {
+    return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+}
+</script>
 </head>
 <body style="margin-top:0;margin-bottom:0">
 			<div class="row">
@@ -181,30 +186,30 @@
 					now = now.toFixed(2);
 					start = start.toFixed(2);
 					if(start<now){
-						$('#now').html('<h3 style="margin-top:0"><span class="text-danger"><b>'+now+'</b><small class="text-danger">'
-										+'&nbsp;&nbsp;&nbsp;<i class="fa fa-caret-up"></i>&nbsp;'+(now-start).toFixed(2)
+						$('#now').html('<h3 style="margin-top:0"><span class="text-danger"><b>'+numberWithCommas(now)+'</b><small class="text-danger">'
+										+'&nbsp;&nbsp;&nbsp;<i class="fa fa-caret-up"></i>&nbsp;'+numberWithCommas((now-start).toFixed(2))
 										+'&nbsp;&nbsp;&nbsp;+'+((now-start)/start*100).toFixed(2)+'%</small></span></h3>');
 					}else if(start>now){
-						$('#now').html('<h3 style="margin-top:0"><span class="text-primary"><b>'+now+'</b><small class="text-primary">'
-								+'&nbsp;&nbsp;&nbsp;<i class="fa fa-caret-down"></i>&nbsp;'+(start-now).toFixed(2)
+						$('#now').html('<h3 style="margin-top:0"><span class="text-primary"><b>'+numberWithCommas(now)+'</b><small class="text-primary">'
+								+'&nbsp;&nbsp;&nbsp;<i class="fa fa-caret-down"></i>&nbsp;'+numberWithCommas((start-now).toFixed(2))
 								+'&nbsp;&nbsp;&nbsp;-'+((start-now)/start*100).toFixed(2)+'%</small></span></h3>');
 					}else{
-						$('#now').html('<h3 style="margin-top:0"><span><b>'+now+'</b><small>'
-								+'&nbsp;&nbsp;&nbsp;-'+(start-now).toFixed(2)
+						$('#now').html('<h3 style="margin-top:0"><span><b>'+numberWithCommas(now)+'</b><small>'
+								+'&nbsp;&nbsp;&nbsp;-'+numberWithCommas((start-now).toFixed(2))
 								+'&nbsp;&nbsp;&nbsp;-'+((start-now)/start*100).toFixed(2)+'%</small></span></h3>');
 					}
 				}else{
 					if(start<now){
-						$('#now').html('<h3 style="margin-top:0"><span class="text-danger"><b>'+now+'</b><small class="text-danger">'
-										+'&nbsp;&nbsp;&nbsp;<i class="fa fa-caret-up"></i>&nbsp;'+(now-start)
+						$('#now').html('<h3 style="margin-top:0"><span class="text-danger"><b>'+numberWithCommas(now)+'</b><small class="text-danger">'
+										+'&nbsp;&nbsp;&nbsp;<i class="fa fa-caret-up"></i>&nbsp;'+numberWithCommas((now-start))
 										+'&nbsp;&nbsp;&nbsp;+'+((now-start)/start*100).toFixed(2)+'%</small></span></h3>');
 					}else if(start>now){
-						$('#now').html('<h3 style="margin-top:0"><span class="text-primary"><b>'+now+'</b><small class="text-primary">'
-								+'&nbsp;&nbsp;&nbsp;<i class="fa fa-caret-down"></i>&nbsp;'+(start-now)
+						$('#now').html('<h3 style="margin-top:0"><span class="text-primary"><b>'+numberWithCommas(now)+'</b><small class="text-primary">'
+								+'&nbsp;&nbsp;&nbsp;<i class="fa fa-caret-down"></i>&nbsp;'+numberWithCommas((start-now))
 								+'&nbsp;&nbsp;&nbsp;-'+((start-now)/start*100).toFixed(2)+'%</small></span></h3>');
 					}else{
-						$('#now').html('<h3 style="margin-top:0"><span><b>'+now+'</b><small>'
-								+'&nbsp;&nbsp;&nbsp;-'+(start-now)
+						$('#now').html('<h3 style="margin-top:0"><span><b>'+numberWithCommas(now)+'</b><small>'
+								+'&nbsp;&nbsp;&nbsp;-'+numberWithCommas((start-now))
 								+'&nbsp;&nbsp;&nbsp;-'+((start-now)/start*100).toFixed(2)+'%</small></span></h3>');
 					}
 					if(yesterdayPcnt>yesterdayMcnt){

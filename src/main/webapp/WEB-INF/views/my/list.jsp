@@ -66,117 +66,6 @@
 										</tr>
 									</thead>
 									<tbody>
-										<tr class="detail-row">
-											<td colspan="8">
-												<div class="table-detail">
-													<div class="row">
-														<div class="col-xs-12 col-sm-2">
-															<div class="text-center">
-																<img height="150"
-																	class="thumbnail inline no-margin-bottom"
-																	alt="Domain Owner's Avatar"
-																	src="assets/images/avatars/profile-pic.jpg" /> <br />
-																<div
-																	class="width-80 label label-info label-xlg arrowed-in arrowed-in-right">
-																	<div class="inline position-relative">
-																		<a class="user-title-label" href="#"> <i
-																			class="ace-icon fa fa-circle light-green"></i> &nbsp;
-																			<span class="white">Alex M. Doe</span>
-																		</a>
-																	</div>
-																</div>
-															</div>
-														</div>
-
-														<div class="col-xs-12 col-sm-7">
-															<div class="space visible-xs"></div>
-
-															<div class="profile-user-info profile-user-info-striped">
-																<div class="profile-info-row">
-																	<div class="profile-info-name">Username</div>
-
-																	<div class="profile-info-value">
-																		<span>alexdoe</span>
-																	</div>
-																</div>
-
-																<div class="profile-info-row">
-																	<div class="profile-info-name">Location</div>
-
-																	<div class="profile-info-value">
-																		<i class="fa fa-map-marker light-orange bigger-110"></i>
-																		<span>Netherlands, Amsterdam</span>
-																	</div>
-																</div>
-
-																<div class="profile-info-row">
-																	<div class="profile-info-name">Age</div>
-
-																	<div class="profile-info-value">
-																		<span>38</span>
-																	</div>
-																</div>
-
-																<div class="profile-info-row">
-																	<div class="profile-info-name">Joined</div>
-
-																	<div class="profile-info-value">
-																		<span>2010/06/20</span>
-																	</div>
-																</div>
-
-																<div class="profile-info-row">
-																	<div class="profile-info-name">Last Online</div>
-
-																	<div class="profile-info-value">
-																		<span>3 hours ago</span>
-																	</div>
-																</div>
-
-																<div class="profile-info-row">
-																	<div class="profile-info-name">About Me</div>
-
-																	<div class="profile-info-value">
-																		<span>Bio</span>
-																	</div>
-																</div>
-															</div>
-														</div>
-
-														<div class="col-xs-12 col-sm-3">
-															<div class="space visible-xs"></div>
-															<h4 class="header blue lighter less-margin">Send a
-																message to Alex</h4>
-
-															<div class="space-6"></div>
-
-															<form>
-																<fieldset>
-																	<textarea class="width-100" resize="none"
-																		placeholder="Type something…"></textarea>
-																</fieldset>
-
-																<div class="hr hr-dotted"></div>
-
-																<div class="clearfix">
-																	<label class="pull-left"> <input
-																		type="checkbox" class="ace" /> <span class="lbl">
-																			Email me a copy</span>
-																	</label>
-
-																	<button
-																		class="pull-right btn btn-sm btn-primary btn-white btn-round"
-																		type="button">
-																		Submit <i
-																			class="ace-icon fa fa-arrow-right icon-on-right bigger-110"></i>
-																	</button>
-																</div>
-															</form>
-														</div>
-													</div>
-												</div>
-											</td>
-										</tr>
 									</tbody>
 								</table>
 							</div>
@@ -190,7 +79,6 @@
 			</div>
 		</div>
 	</div>
-</div>
 	<footer>
 		<jsp:include page="../include/bottom.jsp"></jsp:include>
 	</footer>
@@ -208,15 +96,16 @@
 			dicName : '${myAnaysisVO.dicName}',
 			yesterdayFluc : '${myAnaysisVO.yesterdayFluc}',
 			todayFluc : '${myAnaysisVO.todayFluc}',
-			todayInc : ${myAnaysisVO.todayInc},
-			todayDec : ${myAnaysisVO.todayDec},
-			todayEqu : ${myAnaysisVO.todayEqu},
+			todayInc : Number('${myAnaysisVO.todayInc}'),
+			todayDec : Number('${myAnaysisVO.todayDec}'),
+			todayEqu : Number('${myAnaysisVO.todayEqu}'),
 			tomorrowFluc : '${myAnaysisVO.tomorrowFluc}',
-			tomorrowInc : ${myAnaysisVO.tomorrowInc},
-			tomorrowDec : ${myAnaysisVO.tomorrowDec},
-			tomorrowEqu : ${myAnaysisVO.tomorrowEqu},
+			tomorrowInc : Number('${myAnaysisVO.tomorrowInc}'),
+			tomorrowDec : Number('${myAnaysisVO.tomorrowDec}'),
+			tomorrowEqu : Number('${myAnaysisVO.tomorrowEqu}')
 		});
 	</c:forEach>
+	console.log(myAnalysisList);
 		for(var i in myDic){
 			var anaCode = '';
 			var newsCode = '';
@@ -313,6 +202,7 @@
 			}
 		}
 		function drawChart(i){
+			//if()
 			$('#stockChart'+i).html('<iframe src="${context}/company/chart/stock.do?name='+myDic[i].comName+'&draw=true" width="100%" height="500px" frameBorder="0"></iframe>');
 			dTreeSelector(i,'today');
 		}

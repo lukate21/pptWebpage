@@ -133,7 +133,6 @@
 			</div><!-- /.page-content -->
 		</div><!-- main-content-inner -->
 	</div><!-- main-content -->
-</div>
 <!--========== FOOTER ==========-->
 	<footer>
 		<jsp:include page="include/bottom.jsp"></jsp:include>

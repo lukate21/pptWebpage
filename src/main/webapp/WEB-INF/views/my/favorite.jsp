@@ -247,9 +247,9 @@ function widgetConfig(){
 </script>
 </head>
 <body class="no-skin">
-	<div class="preloader">
+	<!-- <div class="preloader">
 		<div class="status">&nbsp;</div>
-	</div>
+	</div> -->
 	<jsp:include page="../include/top-menu.jsp"></jsp:include>
 	<jsp:include page="../include/side-menu.jsp"></jsp:include>
 	<div class="main-content">
@@ -358,7 +358,6 @@ function widgetConfig(){
 	</div>
 	<!-- /.main-content -->
 
-	</div>
 	<footer>
 		<jsp:include page="../include/bottom.jsp"></jsp:include>
 	</footer>

@@ -29,9 +29,9 @@
 <link rel="stylesheet" href="${context}/resources/assets/css/bootstrap-duallistbox.min.css" />
 </head>
 <body class="no-skin">
-	<div class="preloader">
+	<!-- <div class="preloader">
 		<div class="status">&nbsp;</div>
-	</div>
+	</div> -->
 	<jsp:include page="../include/top-menu.jsp"></jsp:include>
 	<jsp:include page="../include/side-menu.jsp"></jsp:include>
 	<div class="main-content">
@@ -114,7 +114,6 @@
 			</div>
 		</div>
 	</div>
-</div>
 	<footer>
 			<jsp:include page="../include/bottom.jsp"></jsp:include>
 	</footer>

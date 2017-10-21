@@ -211,7 +211,7 @@ function getReliability(){
 		success : function(data){
 			reliability = data.split(',')[1];
 			$('#reliabilityDiv').empty();
-			$('#reliabilityDiv').html('<i class="ace-icon fa fa-angle-double-right"></i>'+data.split(',')[0]+'->'+reliability+'%');
+			$('#reliabilityDiv').html('<i class="ace-icon fa fa-angle-double-right"></i> '+data.split(',')[0]+'<i class="ace-icon fa fa-arrow-right dark"></i> '+reliability+'%');
 		},
 		error : function(error){
 			console.log("error : "+ error);
@@ -255,6 +255,7 @@ function insertUserDic(){
 			'userDic' : JSON.stringify(userDic)
 		},
 		contentType : 'application/x-www-form-urlencoded; charset=utf-8',
+		async:false,
 		success : function(data){
 			console.log(data);
 		},
@@ -402,10 +403,10 @@ $(function(){
 			<!-- /.page-content -->
 		</div>
 	</div>
-	</div>
 	<footer>
 		<jsp:include page="../include/bottom.jsp"></jsp:include>
 	</footer>
+
 	<script src="${context }/resources/assets/js/wizard.min.js"></script>
 	<script src="${context }/resources/assets/js/jquery.validate.min.js"></script>
 	<script src="${context }/resources/assets/js/jquery-additional-methods.min.js"></script>

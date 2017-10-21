@@ -257,7 +257,6 @@
 			<!-- /.page-content -->
 		</div>
 	</div>
-</div>
 		<footer>
 			<jsp:include page="include/bottom.jsp"></jsp:include>
 		</footer>

@@ -68,7 +68,7 @@
 						</h5>
 					</div>
 					<div class="col-xs-3">
-						<h5>예측신뢰도
+						<h5>신뢰도
 							<small id="reliabilityDiv"><div id="reliabilitySpinner"></div></small>
 						</h5>
 					</div>

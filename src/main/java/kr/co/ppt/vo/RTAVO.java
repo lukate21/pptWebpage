@@ -1,6 +1,6 @@
 package kr.co.ppt.vo;
 
-import java.sql.Date;
+import java.util.Date;
 
 public class RTAVO {
 	private int no;

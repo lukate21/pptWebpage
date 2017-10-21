@@ -143,7 +143,6 @@
 	<!-- jQuery UI -->
 		</div>
 	</div>
-</div>
 	<!--========== FOOTER ==========-->
 	<footer>
 		<jsp:include page="include/bottom.jsp"></jsp:include>

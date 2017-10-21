@@ -6,11 +6,12 @@
 	<div class="footer-inner">
 		<div class="footer-content">
 			<span class="bigger-120">
-				<i>Copyright &copy; 2017 by Jiman Kim, Ikhyeon Cho, Dongjoo Hwang. All rights reserved.</i>
-			</span><br/>
-				<p>PPT는 제공된 정보에 의한 투자결과에 대한 법적인 책임을 지지 않습니다. 게시된 정보를 무단으로 배포할 수 없습니다.</p>
+				PPT는 제공된 정보에 의한 투자결과에 대한 법적인 책임을 지지 않습니다. 게시된 정보를 무단으로 배포할 수 없습니다. &nbsp;
+				<br/><i>Copyright &copy; 2017 by Jiman Kim, Ikhyeon Cho, Dongjoo Hwang. All rights reserved.</i>
+			</span>
 		</div>
 	</div>
+</div>
 </div>
 		<script src="${context}/resources/assets/js/bootstrap.min.js"></script>
 		<!-- page specific plugin scripts -->

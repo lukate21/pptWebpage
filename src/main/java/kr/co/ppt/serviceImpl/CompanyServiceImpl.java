@@ -83,6 +83,7 @@ public class CompanyServiceImpl {
 	
 	public JSONArray selectRTA(String name, String newsCode){
 		JSONArray arr = new JSONArray();
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm");
 		for(RTAVO rta : cDAO.selectRTA(name)){
 			Map<Object,Object> map = new HashMap<>();
 			if(newsCode != null && !newsCode.equals(rta.getNewsCode())){
@@ -101,7 +102,7 @@ public class CompanyServiceImpl {
 				map.put("tomorrowInc", rta.getTomorrowInc());
 				map.put("tomorrowDec", rta.getTomorrowDec());
 				map.put("tomorrowEqu", rta.getTomorrowEqu());
-				map.put("regDate", rta.getRegDate().toString());
+				map.put("regDate", sdf.format(rta.getRegDate()));
 			}
 			JSONObject obj = new JSONObject(map);
 			arr.add(obj);

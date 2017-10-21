@@ -358,7 +358,6 @@
 			</div>
 		</div>
 	</div>
-</div>
 <footer class="footer">
 	<jsp:include page="../include/bottom.jsp"></jsp:include>
 </footer>
