@@ -7,10 +7,8 @@
 		<div class="footer-content">
 			<span class="bigger-120">
 				<i>Copyright &copy; 2017 by Jiman Kim, Ikhyeon Cho, Dongjoo Hwang. All rights reserved.</i>
-			</span>
-
-			&nbsp; &nbsp;
-			
+			</span><br/>
+				<p>PPT는 제공된 정보에 의한 투자결과에 대한 법적인 책임을 지지 않습니다. 게시된 정보를 무단으로 배포할 수 없습니다.</p>
 		</div>
 	</div>
 </div>

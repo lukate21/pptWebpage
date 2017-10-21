@@ -48,10 +48,10 @@ public class PortfolioController {
 		urlMap.put("foreign", "http://222.106.22.63:8080/ppt/analysis/insertUserDic.do");
 		urlMap.put("digital", "http://222.106.22.63:9000/PPTAnalysisServer/analysis/insertUserDic.do");
 		urlMap.put("culture", "http://222.106.22.63:9001/PPTAnalysisServer/analysis/insertUserDic.do");
-		urlMap.put("society", "http://121.138.83.126:9002/PPTAnalysisServer/analysis/insertUserDic.do");
-		urlMap.put("economic", "http://121.138.83.126:9003/PPTAnalysisServer/analysis/insertUserDic.do");
-		urlMap.put("politics", "http://121.138.83.126:9004/PPTAnalysisServer/analysis/insertUserDic.do");
-		urlMap.put("entertain", "http://121.138.83.126:9005/PPTAnalysisServer/analysis/insertUserDic.do");
+		urlMap.put("society", "http://121.138.83.24:9002/PPTAnalysisServer/analysis/insertUserDic.do");
+		urlMap.put("economic", "http://121.138.83.24:9003/PPTAnalysisServer/analysis/insertUserDic.do");
+		urlMap.put("politics", "http://121.138.83.24:9004/PPTAnalysisServer/analysis/insertUserDic.do");
+		urlMap.put("entertain", "http://121.138.83.24:9005/PPTAnalysisServer/analysis/insertUserDic.do");
 	}
 	
 	@RequestMapping("/analysis.do")
