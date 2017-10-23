@@ -176,10 +176,13 @@ function numberWithCommas(x) {
 							yesterPredict = '동결';
 					}
 				});
+				var yesterday = new Date(chartData[0].dateTime);
+				yesterday.setDate(yesterday.getDate() - 1);
 				chartData.unshift({
-					dateTime : '${yesterday}T23:50:00Z',
+					dateTime : (yesterday.getYear()+1900) + '-' + (yesterday.getMonth()+1) + '-' + yesterday.getDate() + 'T23:50:00Z',
 					value : yesterdayEnd.value
 				});
+				console.log(chartData);
 				var start = chartData[0].value;
 				var now = chartData[chartData.length-1].value;
 				if('${name}'=="KOSPI" || '${name}' == "KOSDAQ" || '${name}' == "KOSPI2"){
